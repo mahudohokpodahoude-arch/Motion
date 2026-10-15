@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>MILMO → ZONE 242 · Nuit</title>
+<style>
+  @font-face { font-family: M; font-weight: 600; src: url(../fonts/montserrat-latin-600-normal.woff2); }
+  @font-face { font-family: Mono; font-weight: 500; src: url(../fonts/ibm-plex-mono-latin-500-normal.woff2); }
+  html, body { margin: 0; background: #111214; }
+  svg { display: block; width: 1080px; height: 1920px; }
+  .mono { font-family: Mono; font-weight: 500; }
+</style>
+</head>
+<body>
+<svg id="stage" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="haloGrad">
+      <stop offset="0" stop-color="#F6FBC4" stop-opacity="1"/>
+      <stop offset=".25" stop-color="#E6F24A" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#E6F24A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx=".5" cy=".46" r=".75">
+      <stop offset=".55" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".55"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1080" height="1920" fill="#111214"/>
+
+  <g id="cam">
+    <!-- the MILMO world -->
+    <g id="world">
+      <circle id="limb" fill="none" stroke-width="2.5"/>
+      <path id="grid" fill="none" stroke-width="2" stroke-linecap="round" filter="url(#soft)"/>
+      <path id="fine" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <circle id="halo" r="0" fill="url(#haloGrad)"/>
+    <circle id="core" r="0" fill="#F6FBC4"/>
+
+    <text id="milmo" x="540" text-anchor="middle" font-family="M" font-weight="600" font-size="120" fill="#F2EEE6" letter-spacing="30">MILMO</text>
+
+    <!-- ZONE 242 -->
+    <g id="symbol">
+      <g id="corners"></g>
+      <rect id="center" fill="#E6F24A"/>
+    </g>
+    <g id="mono" fill="none" stroke-linecap="square" stroke-linejoin="miter"></g>
+  </g>
+
+  <rect id="flash" width="1080" height="1920" fill="#F4F8CF" opacity="0"/>
+  <rect width="1080" height="1920" fill="url(#vignette)" pointer-events="none"/>
+
+  <!-- editorial HUD, same grid as the brand book -->
+  <g class="mono" font-size="22" letter-spacing="5" fill="#8C8B86">
+    <text id="hudTL" x="80" y="110">MILMO</text>
+    <text id="hudTR" x="1000" y="110" text-anchor="end"></text>
+    <text id="hudBL" x="80" y="1830"></text>
+    <text id="hudBR" x="1000" y="1830" text-anchor="end"></text>
+  </g>
+  <text id="caption" class="mono" x="540" y="1560" text-anchor="middle" font-size="27" letter-spacing="6" fill="#F2EEE6"></text>
+  <text id="sig" class="mono" x="540" text-anchor="middle" font-size="30" letter-spacing="6" fill="#F2EEE6"></text>
+  <text id="by" class="mono" x="540" text-anchor="middle" font-size="24" letter-spacing="8" fill="#8C8B86">BY MILMO</text>
+</svg>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const $ = id => document.getElementById(id);
+const el = (tag, attrs, parent) => {
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(n);
+  return n;
+};
+const set = (n, attrs) => { for (const k in attrs) n.setAttribute(k, attrs[k]); };
+
+// ---------- brand ----------
+const NUIT = '#111214', CHAUX = '#F2EEE6', LUMIERE = '#E6F24A';
+const MILMO_Y = [255, 225, 0], LUM = [230, 242, 74], CHX = [242, 238, 230];
+const mix = (a, b, k) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * k)).join(',')})`;
+
+// ---------- easing ----------
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const eOutCubic = k => 1 - Math.pow(1 - k, 3);
+const eInCubic = k => k * k * k;
+const eInOut = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const eOutExpo = k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
+const eInExpo = k => k === 0 ? 0 : Math.pow(2, 10 * k - 10);
+const eOutBack = (k, s = 1.7) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2);
+const eInOutQuint = k => k < .5 ? 16 * k ** 5 : 1 - Math.pow(-2 * k + 2, 5) / 2;
+const DEG = Math.PI / 180;
+
+// ---------- globe: perspective graticule ----------
+const TARGET = { lat: 6.3654, lon: 2.4183 };   // Cotonou
+const GC = { x: 540, y: 880 };                 // globe centre on screen
+const F = 1162;                                // focal length: radius 300px at d = 4
+
+function project(lat, lon, st) {
+  const p = lat * DEG, l = (lon - st.yaw) * DEG;
+  const x = Math.cos(p) * Math.sin(l), y0 = Math.sin(p), z0 = Math.cos(p) * Math.cos(l);
+  const c = Math.cos(st.pitch * DEG), s = Math.sin(st.pitch * DEG);
+  const y = y0 * c - z0 * s, z = y0 * s + z0 * c;
+  const w = st.d - z;
+  return { x: GC.x + F * x / w, y: GC.y - F * y / w, vis: z > 1 / st.d + 0.002 };
+}
+
+function polyline(points, st, out) {
+  let pen = false;
+  for (const [la, lo] of points) {
+    const p = project(la, lo, st);
+    if (!p.vis || Math.abs(p.x - 540) > 4000 || Math.abs(p.y - 960) > 4000) { pen = false; continue; }
+    out.push((pen ? 'L' : 'M') + p.x.toFixed(1) + ' ' + p.y.toFixed(1));
+    pen = true;
+  }
+}
+
+const LINES = [];
+for (let la = -75; la <= 75; la += 15) {
+  const pts = []; for (let lo = -180; lo <= 180; lo += 1.5) pts.push([la, lo]); LINES.push(pts);
+}
+for (let lo = -180; lo < 180; lo += 15) {
+  const pts = []; for (let la = -90; la <= 90; la += 1.5) pts.push([la, lo]); LINES.push(pts);
+}
+// finer local grid around the target, revealed as we dive
+const FINE = [];
+for (let la = -9; la <= 21; la += 1) {
+  const pts = []; for (let lo = -13; lo <= 18; lo += 0.5) pts.push([la, lo]); FINE.push(pts);
+}
+for (let lo = -13; lo <= 18; lo += 1) {
+  const pts = []; for (let la = -9; la <= 21; la += 0.5) pts.push([la, lo]); FINE.push(pts);
+}
+
+// ---------- monogram (redrawn from the brand book, monoline) ----------
+// units: the brand-book page; viewport x 95..1022, y 485..920
+const MONO = {
+  box: { x: 95, y: 485, w: 927, h: 435 },
+  sw: 17,
+  paths: [
+    // Z flows into the O, the O's side falls into the E
+    { d: 'M105 503 H298 L122 688 H348 V503 H521 V712 H339 V901 H519', c: 'chaux' },
+    { d: 'M380 810 H489', c: 'chaux' },                       // E middle bar
+    { d: 'M114 910 V712 H292 V902 H281 V884', c: 'chaux' },    // N with its foot
+    { d: 'M605 503 H804 V701 H1004 V902 H605 Z', c: 'lum' },   // 242 stair frame
+    { d: 'M640 538 H770 V585 L645 600 V667 H770 V652', c: 'chaux' },  // 2
+    { d: 'M640 735 V840 H778 M738 735 V876', c: 'chaux' },     // 4
+    { d: 'M840 735 H968 V782 L845 797 V866 H970 V851', c: 'chaux' },  // 2
+  ],
+  slit: { x: 412, y: 562, w: 36, h: 86 },
+};
+
+// ---------- layout ----------
+const L = {};
+function layout() {
+  // symbol corners (brand proportions: thickness .13, arm .385, centre .23)
+  const cg = $('corners');
+  L.corners = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([sx, sy]) => {
+    const g = el('g', {}, cg);
+    const p = el('path', { fill: CHAUX }, g);
+    return { g, p, sx, sy };
+  });
+  L.symFinal = { x: 540, y: 600, S: 380 };
+  L.symLock = { x: GC.x, y: GC.y, S: 560 };
+
+  // monogram, scaled under the symbol
+  const m = $('mono');
+  const s = 800 / MONO.box.w;
+  L.monoT = { x: 540 - MONO.box.w * s / 2 - MONO.box.x * s, y: 900 - MONO.box.y * s, s };
+  L.monoPaths = MONO.paths.map(pd => {
+    const p = el('path', { d: pd.d, stroke: pd.c === 'lum' ? LUMIERE : CHAUX, 'stroke-width': MONO.sw }, m);
+    const len = p.getTotalLength();
+    set(p, { 'stroke-dasharray': len + ' ' + len, 'stroke-dashoffset': len });
+    return { p, len };
+  });
+  L.slit = el('rect', { ...MONO.slit, fill: LUMIERE }, m);
+  L.monoBottom = 900 + MONO.box.h * s;
+  $('sig').setAttribute('y', L.monoBottom + 120);
+  $('by').setAttribute('y', L.monoBottom + 185);
+  $('milmo').setAttribute('y', GC.y + 300 + 190);
+}
+
+function cornerPath(S) {
+  const th = S * 0.13, arm = S * 0.385;
+  return `M 0 0 H ${arm} V ${th} H ${th} V ${arm} H 0 Z`;
+}
+
+// deterministic "random" for text scramble
+const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789°′·/+';
+const hash = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+function scramble(str, t, t0, perChar, frame) {
+  let out = '';
+  for (let i = 0; i < str.length; i++) {
+    const at = t0 + i * perChar;
+    if (str[i] === ' ' || t >= at + 0.18) out += str[i];
+    else if (t >= at) out += GLYPHS[Math.floor(hash(i, frame) * GLYPHS.length)];
+    else out += ' ';
+  }
+  return out;
+}
+
+const fmtDM = (v, deg, hemi) => {
+  const d = Math.floor(v), m = Math.round((v - d) * 60);
+  return `${String(d).padStart(deg, '0')}°${String(m).padStart(2, '0')}′${hemi}`;
+};
+
+// ---------- timeline ----------
+const DUR = 10;
+function render(t) {
+  const frame = Math.round(t * 60);
+  // a slow breathing push-in for the end card
+  const camS = 1 + 0.03 * eInOut(prog(t, 5.2, DUR));
+  $('cam').setAttribute('transform', `translate(540,880) scale(${camS}) translate(-540,-880)`);
+
+  // ===== 1. light point, MILMO globe (0 – 2.6s) =====
+  const born = eOutExpo(prog(t, 0.35, 1.6));          // globe grows out of the point
+  const rot = eInOutQuint(prog(t, 0.0, 4.35));        // turn the world towards Cotonou
+  const dive = eInExpo(prog(t, 2.55, 4.45));          // camera dive
+  const through = eInCubic(prog(t, 4.55, 5.1));       // fly through after lock
+  let d = lerp(4, 1.32, eInOut(prog(t, 2.3, 3.6))) ;
+  d = lerp(d, 1.075, dive);
+  d = lerp(d, 1.0005, through);
+  const st = {
+    yaw: lerp(-150, TARGET.lon, rot),
+    pitch: lerp(24, TARGET.lat, rot),
+    d,
+  };
+  // grow-in: scale the whole world from the light point
+  const w = $('world');
+  const gs = Math.max(born, 0.0001);
+  w.setAttribute('transform', `translate(${GC.x},${GC.y}) scale(${gs}) translate(${-GC.x},${-GC.y})`);
+  const colK = eInOut(prog(t, 2.4, 4.0));
+  const lineCol = mix(MILMO_Y, CHX, colK);
+  const worldOp = (1 - prog(t, 4.6, 5.15)) * clamp(born * 1.5);
+  w.setAttribute('opacity', worldOp);
+
+  const parts = [];
+  for (const pts of LINES) polyline(pts, st, parts);
+  set($('grid'), { d: parts.join(''), stroke: lineCol, 'stroke-opacity': lerp(0.95, 0.5, colK) });
+  const fineOp = prog(t, 3.0, 3.9) * 0.45;
+  if (fineOp > 0) {
+    const fp = []; for (const pts of FINE) polyline(pts, st, fp);
+    set($('fine'), { d: fp.join(''), stroke: CHAUX, 'stroke-opacity': fineOp });
+  } else $('fine').setAttribute('d', '');
+  const limbR = F / Math.sqrt(Math.max(d * d - 1, 1e-6));
+  set($('limb'), { cx: GC.x, cy: GC.y, r: Math.min(limbR, 6000), stroke: lineCol, 'stroke-opacity': 0.9 * (1 - colK * 0.6) });
+
+  // the light of Cotonou
+  const tp = project(TARGET.lat, TARGET.lon, st);
+  const appear = eOutCubic(prog(t, 1.9, 2.8));
+  const lockPulse = Math.exp(-Math.pow((t - 4.56) / 0.12, 2));
+  const fadeLock = 1 - prog(t, 4.5, 4.75);
+  const haloR = (tp.vis ? 1 : 0) * (appear * lerp(110, 230, dive) * (0.92 + 0.08 * Math.sin(t * 9)) * fadeLock + lockPulse * 320);
+  set($('core'), { cx: tp.x, cy: tp.y, r: (tp.vis ? 1 : 0) * appear * lerp(7, 16, dive) * fadeLock });
+  // the very first light, before the globe exists
+  const seed = Math.sin(prog(t, 0.0, 1.0) * Math.PI) * 70 * (1 - prog(t, 0.6, 1.2));
+  if (t < 1.4) set($('halo'), { cx: GC.x, cy: GC.y, r: Math.max(seed, haloR) });
+  else set($('halo'), { cx: tp.x, cy: tp.y, r: Math.max(haloR, 0) });
+
+  // MILMO name under the globe
+  const mIn = eOutCubic(prog(t, 0.9, 1.7)), mOut = eInCubic(prog(t, 2.25, 2.75));
+  set($('milmo'), {
+    opacity: mIn * (1 - mOut),
+    'letter-spacing': lerp(60, 30, mIn) + mOut * 40,
+    transform: `translate(0,${(1 - mIn) * 20})`,
+  });
+
+  // ===== 2. lock-on: the open box finds the zone (3.75 – 4.6s) =====
+  const symMove = eInOutQuint(prog(t, 5.15, 6.05));
+  const S = lerp(L.symLock.S, L.symFinal.S, symMove);
+  const sx = lerp(tp.vis && t < 5.15 ? tp.x : L.symLock.x, L.symFinal.x, symMove);
+  const sy = lerp(tp.vis && t < 5.15 ? tp.y : L.symLock.y, L.symFinal.y, symMove);
+  // focus hunting: far -> 1.45 (hold) -> 1.0 (snap)
+  const h1 = eOutExpo(prog(t, 3.75, 4.15));
+  const h2 = eOutBack(prog(t, 4.36, 4.56), 2.2);
+  const spread = lerp(lerp(3.2, 1.45, h1), 1.0, h2);
+  L.corners.forEach((c, i) => {
+    c.p.setAttribute('d', cornerPath(S));
+    const off = (S / 2) * spread;
+    const x = sx + c.sx * off, y = sy + c.sy * off;
+    c.g.setAttribute('transform', `translate(${x},${y}) scale(${-c.sx},${-c.sy})`);
+    c.g.setAttribute('opacity', clamp(prog(t, 3.75, 3.95)));
+  });
+  // the light point becomes the centre square
+  const cK = eOutBack(prog(t, 4.5, 4.85), 2.5);
+  const cs = S * 0.23 * cK;
+  set($('center'), {
+    x: sx - cs / 2, y: sy - cs / 2, width: Math.max(cs, 0), height: Math.max(cs, 0),
+    rx: lerp(cs / 2, 0, eOutCubic(prog(t, 4.55, 4.9))),
+    opacity: t < 4.5 ? 0 : 1,
+  });
+  $('flash').setAttribute('opacity', 0.16 * Math.exp(-Math.max(t - 4.56, 0) * 14) * (t >= 4.56 ? 1 : 0));
+
+  // ===== 3. the name is drawn in one continuous line (5.8 – 7.6s) =====
+  const g = $('mono');
+  g.setAttribute('transform', `translate(${L.monoT.x},${L.monoT.y}) scale(${L.monoT.s})`);
+  const starts = [5.85, 6.55, 6.2, 6.35, 6.75, 6.9, 7.05];
+  const durs   = [1.05, 0.25, 0.55, 0.9,  0.45, 0.4, 0.45];
+  L.monoPaths.forEach((mp, i) => {
+    const k = eInOut(prog(t, starts[i], starts[i] + durs[i]));
+    mp.p.setAttribute('stroke-dashoffset', mp.len * (1 - k));
+    mp.p.setAttribute('opacity', k > 0 ? 1 : 0);
+  });
+  const slitK = eOutBack(prog(t, 6.75, 7.05), 2);
+  const sl = MONO.slit;
+  set(L.slit, { y: sl.y + sl.h * (1 - clamp(slitK)), height: sl.h * Math.max(slitK, 0) });
+
+  // ===== text =====
+  const coord = `${fmtDM(lerp(41.2, TARGET.lat, eOutCubic(prog(t, 2.6, 4.3))), 2, 'N')}  ${fmtDM(lerp(62.7, TARGET.lon, eOutCubic(prog(t, 2.6, 4.3))), 3, 'E')}`;
+  $('hudTR').textContent = t >= 2.6 ? coord : '';
+  $('hudTR').setAttribute('opacity', prog(t, 2.6, 2.9));
+  $('hudTL').textContent = t < 5.2 ? 'MILMO' : scramble('ZONE 242 BY MILMO', t, 5.2, 0.025, frame);
+  $('hudTL').setAttribute('opacity', prog(t, 0.6, 1.0));
+  $('hudBL').textContent = scramble('ACTES 2:42', t, 7.9, 0.03, frame);
+  $('hudBR').textContent = t >= 4.56 ? scramble('COTONOU', t, 4.6, 0.03, frame) : '';
+
+  // caption: the mission's name decodes into the birth of the zone
+  const cap = $('caption');
+  if (t < 4.56) cap.textContent = scramble('MISSION INTERNATIONALE LUMIÈRE DU MONDE', t, 1.15, 0.018, frame);
+  else cap.textContent = scramble('UNE NOUVELLE ZONE EST NÉE', t, 4.6, 0.03, frame);
+  cap.setAttribute('font-size', t < 4.56 ? 25 : 30);
+  cap.setAttribute('fill', t < 4.56 ? CHAUX : LUMIERE);
+  cap.setAttribute('opacity', (1 - prog(t, 3.9, 4.2)) * (t < 4.56 ? 1 : 1) * (t >= 4.2 && t < 4.56 ? 0 : 1) * (1 - prog(t, 6.3, 6.7)));
+
+  $('sig').textContent = scramble('CONNECTER · TRANSFORMER · ENVOYER', t, 7.55, 0.022, frame);
+  const byK = eOutCubic(prog(t, 8.5, 9.2));
+  set($('by'), { opacity: byK, 'letter-spacing': lerp(18, 8, byK) });
+}
+
+window.ready = document.fonts.ready.then(() => { layout(); render(0); });
+window.render = render;
+window.ready.then(() => {
+  const q = new URLSearchParams(location.search);
+  if (q.has('t')) { render(+q.get('t')); return; }
+  if (q.has('render')) return;
+  const t0 = performance.now();
+  const loop = now => { render(((now - t0) / 1000) % (DUR + 1)); requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+});
+</script>
+</body>
+</html>

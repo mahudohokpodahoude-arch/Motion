@@ -1,5 +1,5 @@
 // Renders index.html frame by frame and pipes the frames into ffmpeg.
-// Usage: node render.mjs [out.mp4] [fps]      |  node render.mjs --stills t1,t2,... outDir
+// Usage: node render.mjs [--page file.html] [out.mp4] [fps]      |  node render.mjs [--page file.html] --stills t1,t2,... outDir
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -7,8 +7,10 @@ import path from 'node:path';
 import fs from 'node:fs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const url = pathToFileURL(path.join(here, 'index.html')).href + '?render=1';
-const args = process.argv.slice(2);
+let args = process.argv.slice(2);
+let pageFile = 'index.html';
+if (args[0] === '--page') { pageFile = args[1]; args = args.slice(2); }
+const url = pathToFileURL(path.resolve(here, pageFile)).href + '?render=1';
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
