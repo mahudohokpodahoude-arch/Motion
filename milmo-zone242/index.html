@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>MILMO → ZONE 242</title>
+<style>
+  @font-face { font-family: M; font-weight: 500; src: url(fonts/montserrat-latin-500-normal.woff2); }
+  @font-face { font-family: M; font-weight: 600; src: url(fonts/montserrat-latin-600-normal.woff2); }
+  @font-face { font-family: M; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff2); }
+  @font-face { font-family: M; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff2); }
+  @font-face { font-family: M; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff2); }
+  @font-face { font-family: Mono; font-weight: 500; src: url(fonts/ibm-plex-mono-latin-500-normal.woff2); }
+  html, body { margin: 0; background: #000; }
+  svg { display: block; width: 1080px; height: 1920px; }
+  text { font-family: M; }
+</style>
+</head>
+<body>
+<svg id="stage" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="globeClip"><circle r="100"/></clipPath>
+    <clipPath id="milmoClip"><rect id="milmoClipRect" x="0" y="0" width="1080" height="0"/></clipPath>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#fff" stop-opacity=".9"/>
+      <stop offset=".45" stop-color="#fff6a8" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#fff6a8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect id="bgYellow" width="1080" height="1920" fill="#FFE100"/>
+  <circle id="wipe" cx="540" cy="960" r="0" fill="#F6F1E7"/>
+  <circle id="ring1" r="0" fill="none" stroke="#D05A2A" stroke-width="10" opacity="0"/>
+  <circle id="ring2" r="0" fill="none" stroke="#3A2FD1" stroke-width="4" opacity="0"/>
+
+  <g id="cam">
+    <!-- MILMO -->
+    <g id="milmo">
+      <g clip-path="url(#milmoClip)"><g id="milmoLetters"></g></g>
+      <text id="milmoTag" text-anchor="middle" font-weight="800" font-size="30" fill="#1B1A2E"
+            letter-spacing="0.5">MISSION INTERNATIONALE LUMIERE DU MONDE</text>
+    </g>
+
+    <!-- ZONE 242 -->
+    <g id="symbol"></g>
+    <g id="wordmark">
+      <text id="wZ" font-weight="900" font-size="200" fill="#0D63B8">Z</text>
+      <text id="wNE" font-weight="900" font-size="200" fill="#0D63B8">NE</text>
+      <path id="frame" fill="none" stroke="#D05A2A" stroke-width="14" stroke-linejoin="miter"/>
+      <text id="d2a" font-weight="800" font-size="200" fill="#0D63B8">2</text>
+      <text id="d4" font-weight="800" font-size="200" fill="#0D63B8">4</text>
+      <text id="d2b" font-weight="800" font-size="200" fill="#0D63B8">2</text>
+    </g>
+    <g id="tagline"></g>
+    <text id="byMilmo" text-anchor="middle" font-family="Mono" font-weight="500" font-size="30" fill="#6B6A70">by MILMO</text>
+
+    <text id="cap1" text-anchor="middle" font-family="Mono" font-weight="500" font-size="30" fill="#1B1A2E" x="540" y="1690">D’UNE MISSION, LUMIÈRE DU MONDE</text>
+    <text id="cap2" text-anchor="middle" font-family="Mono" font-weight="500" font-size="30" fill="#1B1F2A" x="540" y="1690">NAÎT UNE ZONE D’ACTION</text>
+    <circle id="glowDot" r="0" fill="url(#glow)"/>
+    <rect id="centerSq" fill="#D05A2A"/>
+    <!-- the globe travels across both identities -->
+    <g id="globe">
+      <g clip-path="url(#globeClip)">
+        <g id="globeBars"></g>
+        <g id="globeMeridians"></g>
+      </g>
+      <circle id="globeRim" r="95" fill="none" stroke-width="10"/>
+    </g>
+  </g>
+</svg>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const $ = id => document.getElementById(id);
+const el = (tag, attrs, parent) => {
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(n);
+  return n;
+};
+
+// ---------- palette ----------
+const INDIGO = [58, 47, 209];   // MILMO
+const BLUE = [13, 99, 184];     // ZONE 242
+const mix = (a, b, k) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * k)).join(',')})`;
+
+// ---------- easing ----------
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const eOutCubic = k => 1 - Math.pow(1 - k, 3);
+const eInCubic = k => k * k * k;
+const eInOut = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const eOutExpo = k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
+const eOutBack = (k, s = 1.7) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2);
+const eInOutQuint = k => k < .5 ? 16 * k ** 5 : 1 - Math.pow(-2 * k + 2, 5) / 2;
+
+// ---------- globe ----------
+const bars = $('globeBars'), mer = $('globeMeridians');
+for (const y of [-64, -32, 0, 32, 64]) el('line', { x1: -110, x2: 110, y1: y, y2: y, 'stroke-width': 10 }, bars);
+const meridians = [0, 1, 2, 3].map(() => el('ellipse', { cx: 0, cy: 0, ry: 100, fill: 'none', 'stroke-width': 10 }, mer));
+function drawGlobe(x, y, r, spin, colorK, opacity = 1) {
+  const g = $('globe');
+  g.setAttribute('transform', `translate(${x},${y}) scale(${r / 100})`);
+  g.setAttribute('opacity', opacity);
+  const c = mix(INDIGO, BLUE, colorK);
+  $('globeRim').setAttribute('stroke', c);
+  bars.setAttribute('stroke', c);
+  mer.setAttribute('stroke', c);
+  meridians.forEach((m, i) => {
+    const a = spin + i * Math.PI / 4;
+    m.setAttribute('rx', Math.max(0.5, Math.abs(Math.cos(a)) * 95));
+  });
+}
+
+// ---------- layout (measured once fonts are loaded) ----------
+const L = {};
+function layout() {
+  // MILMO wordmark : M I L M + globe
+  const ml = $('milmoLetters');
+  const FS = 235, chars = ['M', 'I', 'L', 'M'];
+  let x = 0;
+  L.milmo = chars.map(ch => {
+    const t = el('text', { 'font-weight': 600, 'font-size': FS, fill: mix(INDIGO, INDIGO, 0) }, ml);
+    t.textContent = ch;
+    const w = t.getComputedTextLength();
+    const item = { t, x, w };
+    x += w + 2;
+    return item;
+  });
+  const capH = FS * 0.70;
+  const gR = capH * 0.62;
+  const total = x + 6 + gR * 2;
+  const x0 = 540 - total / 2, base = 930;
+  L.milmo.forEach(m => { m.x += x0; m.base = base; });
+  L.milmoGlobe = { x: x0 + x + 6 + gR, y: base - capH / 2 - 4, r: gR };
+  L.milmoTagY = base + 70;
+  $('milmoTag').setAttribute('x', 540);
+  $('milmoTag').setAttribute('y', L.milmoTagY);
+  const tagW = $('milmoTag').getComputedTextLength();
+  if (tagW > total + 20) $('milmoTag').setAttribute('font-size', 30 * (total + 20) / tagW);
+  $('milmoClipRect').setAttribute('y', base - capH - 40);
+  $('milmoClipRect').setAttribute('height', capH + 60);
+
+  // ---- ZONE 242 wordmark in local units ----
+  const F = 200, cap = F * 0.70;
+  const wZ = $('wZ').getComputedTextLength();
+  const wNE = $('wNE').getComputedTextLength();
+  const w2 = $('d2a').getComputedTextLength(), w4 = $('d4').getComputedTextLength();
+  const y1 = cap, gapRow = 30, y2 = cap * 2 + gapRow;
+  const oR = cap * 0.56;
+  const oCx = wZ + 4 + oR, oCy = cap / 2;
+  const leftW = Math.max(oCx + oR, wNE);
+  const fx = leftW + 30, pad = 26, sw = 14;
+  const topW = pad + w2 + pad;
+  const fullW = pad + w4 + 6 + w2 + pad;
+  const yStep = cap + gapRow / 2;
+  $('wZ').setAttribute('x', 0); $('wZ').setAttribute('y', y1);
+  $('wNE').setAttribute('x', 0); $('wNE').setAttribute('y', y2);
+  $('d2a').setAttribute('x', fx + pad); $('d2a').setAttribute('y', y1);
+  $('d4').setAttribute('x', fx + pad); $('d4').setAttribute('y', y2);
+  $('d2b').setAttribute('x', fx + pad + w4 + 6); $('d2b').setAttribute('y', y2);
+  const top = -pad + 4, bottom = y2 + pad - 4;
+  const d = `M ${fx} ${top} H ${fx + topW} V ${yStep} H ${fx + fullW} V ${bottom} H ${fx} Z`;
+  $('frame').setAttribute('d', d);
+  L.frameLen = $('frame').getTotalLength();
+  $('frame').setAttribute('stroke-dasharray', L.frameLen);
+  const wmW = fx + fullW + sw / 2, wmH = bottom - top + sw;
+
+  // ---- vertical lockup on screen ----
+  const S = 380;                               // symbol size
+  const wmScale = 800 / wmW;
+  const blockH = S + 110 + wmH * wmScale + 120 + 60;
+  const topY = 960 - blockH / 2 - 10;
+  L.sym = { cx: 540, cy: topY + S / 2, S };
+  L.wm = { x: 540 - (wmW * wmScale) / 2, y: topY + S + 110 - top * wmScale, s: wmScale };
+  L.oScreen = { x: L.wm.x + oCx * wmScale, y: L.wm.y + oCy * wmScale, r: oR * wmScale };
+  L.wmLocal = { y1, y2, cap, wZ };
+  L.tagY = L.wm.y + bottom * wmScale + 115;
+  L.byY = L.tagY + 72;
+
+  // ---- symbol: four corners + centre ----
+  const sym = $('symbol');
+  const th = S * 0.15, arm = S * 0.40;
+  L.corners = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([sx, sy]) => {
+    const g = el('g', {}, sym);
+    // L shape drawn for the top-left, mirrored for the others
+    el('path', {
+      d: `M 0 0 H ${arm} V ${th} H ${th} V ${arm} H 0 Z`,
+      fill: '#0D63B8', stroke: '#0D63B8', 'stroke-width': 6, 'stroke-linejoin': 'round',
+      transform: `translate(${sx * S / 2},${sy * S / 2}) scale(${-sx},${-sy})`
+    }, g);
+    return { g, sx, sy };
+  });
+  L.cSq = S * 0.25;
+
+  // ---- tagline words ----
+  const tg = $('tagline');
+  const words = ['CONNECTER', 'TRANSFORMER', 'ENVOYER'];
+  const TF = 32, sp = 4;
+  L.words = words.map(w => {
+    const t = el('text', { 'font-weight': 700, 'font-size': TF, fill: '#1B1F2A', 'letter-spacing': sp }, tg);
+    t.textContent = w;
+    return { t, w: t.getComputedTextLength() };
+  });
+  const dotGap = 34;
+  let tw = L.words.reduce((a, b) => a + b.w, 0) + dotGap * 4;
+  let tx = 540 - tw / 2;
+  L.dots = [];
+  L.words.forEach((wd, i) => {
+    wd.x = tx; wd.t.setAttribute('y', L.tagY);
+    tx += wd.w;
+    if (i < 2) {
+      const c = el('circle', { cx: tx + dotGap - sp / 2, cy: L.tagY - TF * 0.36, r: 0, fill: '#D05A2A' }, tg);
+      L.dots.push(c);
+      tx += dotGap * 2;
+    }
+  });
+  $('byMilmo').setAttribute('x', 540);
+  $('byMilmo').setAttribute('y', L.byY);
+}
+
+// ---------- the timeline ----------
+const DUR = 10;
+function render(t) {
+  // camera: slow push-in over the whole film
+  const camS = 1 + 0.035 * eInOut(prog(t, 0, DUR));
+  $('cam').setAttribute('transform', `translate(540,960) scale(${camS}) translate(-540,-960)`);
+
+  // ===== 1. MILMO (0 – 2.7s) =====
+  const outK = eInCubic(prog(t, 2.55, 3.15));
+  L.milmo.forEach((m, i) => {
+    const k = eOutExpo(prog(t, 0.15 + i * 0.09, 0.95 + i * 0.09));
+    const ko = eInCubic(prog(t, 2.5 + (3 - i) * 0.06, 3.0 + (3 - i) * 0.06));
+    const dy = (1 - k) * 230 + ko * 260;
+    m.t.setAttribute('x', m.x);
+    m.t.setAttribute('y', m.base + dy);
+    m.t.setAttribute('fill', mix(INDIGO, INDIGO, 0));
+  });
+  const tagK = eOutCubic(prog(t, 0.9, 1.6));
+  const tag = $('milmoTag');
+  tag.setAttribute('opacity', tagK * (1 - outK));
+  tag.setAttribute('letter-spacing', lerp(9, 0.5, tagK));
+  tag.setAttribute('transform', `translate(0,${(1 - tagK) * 14 + outK * 40})`);
+
+  // ===== globe journey =====
+  const G = L.milmoGlobe, O = L.oScreen;
+  const gIn = eOutBack(prog(t, 0.45, 1.15), 1.4);
+  const toCenter = eInOutQuint(prog(t, 2.6, 3.6));
+  const toO = eInOutQuint(prog(t, 4.35, 5.45));
+  let gx = lerp(G.x, 540, toCenter), gy = lerp(G.y, 960, toCenter);
+  let gr = G.r * gIn * lerp(1, 1.55, toCenter);
+  // breathing pulse when the globe sits at the centre (the "birth")
+  const pulse = Math.sin(prog(t, 3.5, 4.35) * Math.PI) * 0.07;
+  gr *= 1 + pulse;
+  gx = lerp(gx, O.x, toO); gy = lerp(gy, O.y, toO); gr = lerp(gr, O.r, toO);
+  const spin = t * 2.4 + eInOut(prog(t, 2.6, 4.4)) * 6 + eOutCubic(prog(t, 8.6, 9.6)) * 3;
+  const colorK = eInOut(prog(t, 3.2, 4.2));
+  drawGlobe(gx, gy, Math.max(gr, 0.001), spin, colorK);
+
+  // ===== 2. Birth: light + wipe (3.2 – 4.3s) =====
+  const wipeK = eInOutQuint(prog(t, 3.25, 4.25));
+  $('wipe').setAttribute('r', wipeK * 1150);
+  const glowK = prog(t, 3.0, 4.4);
+  $('glowDot').setAttribute('cx', 540); $('glowDot').setAttribute('cy', 960);
+  $('glowDot').setAttribute('r', Math.sin(glowK * Math.PI) * 520);
+  const r1 = prog(t, 3.35, 4.4), r2 = prog(t, 3.5, 4.6);
+  for (const [id, k, max] of [['ring1', r1, 760], ['ring2', r2, 980]]) {
+    const n = $(id);
+    n.setAttribute('cx', 540); n.setAttribute('cy', 960);
+    n.setAttribute('r', eOutCubic(k) * max);
+    n.setAttribute('opacity', k > 0 && k < 1 ? (1 - k) * 0.9 : 0);
+  }
+
+  // ===== 3. ZONE 242 assembles (4.3 – 7s) =====
+  // the centre (Jesus) is born out of the globe and rises into the symbol
+  const sq = $('centerSq');
+  const sqBirth = eOutBack(prog(t, 4.25, 4.75), 2);
+  const sqRise = eInOutQuint(prog(t, 4.55, 5.45));
+  const sx0 = 540, sy0 = 960;
+  const scx = lerp(sx0, L.sym.cx, sqRise), scy = lerp(sy0, L.sym.cy, sqRise);
+  const size = L.cSq * sqBirth * (1 + 0.35 * Math.sin(sqRise * Math.PI));
+  const rot = (1 - sqRise) * 90;
+  sq.setAttribute('x', scx - size / 2); sq.setAttribute('y', scy - size / 2);
+  sq.setAttribute('width', Math.max(size, 0)); sq.setAttribute('height', Math.max(size, 0));
+  sq.setAttribute('transform', `rotate(${rot} ${scx} ${scy})`);
+  sq.setAttribute('opacity', t < 4.25 ? 0 : 1);
+
+  // four corners gather around the centre: the family
+  L.corners.forEach((c, i) => {
+    const k = eOutBack(prog(t, 5.05 + i * 0.07, 5.75 + i * 0.07), 1.3);
+    const dist = (1 - k) * 300;
+    const x = L.sym.cx + c.sx * dist, y = L.sym.cy + c.sy * dist;
+    c.g.setAttribute('transform', `translate(${x},${y}) scale(${lerp(0.6, 1, clamp(k))})`);
+    c.g.setAttribute('opacity', clamp(prog(t, 5.05 + i * 0.07, 5.3 + i * 0.07)));
+  });
+
+  // wordmark
+  const wm = $('wordmark');
+  wm.setAttribute('transform', `translate(${L.wm.x},${L.wm.y}) scale(${L.wm.s})`);
+  const zK = eOutExpo(prog(t, 5.3, 6.0));
+  $('wZ').setAttribute('transform', `translate(${(1 - zK) * -160},0)`);
+  $('wZ').setAttribute('opacity', zK);
+  const neK = eOutExpo(prog(t, 5.45, 6.15));
+  $('wNE').setAttribute('transform', `translate(0,${(1 - neK) * 120})`);
+  $('wNE').setAttribute('opacity', neK);
+  const fK = eInOut(prog(t, 5.6, 6.7));
+  $('frame').setAttribute('stroke-dashoffset', L.frameLen * (1 - fK));
+  $('frame').setAttribute('opacity', t < 5.6 ? 0 : 1);
+  [['d2a', 6.0], ['d4', 6.15], ['d2b', 6.3]].forEach(([id, s]) => {
+    const k = eOutBack(prog(t, s, s + 0.45), 2.2);
+    const n = $(id);
+    const bb = { x: +n.getAttribute('x'), y: +n.getAttribute('y') };
+    const cx = bb.x + 60, cy = bb.y - 70;
+    n.setAttribute('transform', `translate(${cx},${cy}) scale(${Math.max(k, 0.0001)}) translate(${-cx},${-cy})`);
+    n.setAttribute('opacity', clamp(k * 3));
+  });
+
+  // ===== 4. Signature (6.9 – 8.4s) =====
+  L.words.forEach((wd, i) => {
+    const k = eOutExpo(prog(t, 6.85 + i * 0.32, 7.55 + i * 0.32));
+    wd.t.setAttribute('x', wd.x);
+    wd.t.setAttribute('transform', `translate(0,${(1 - k) * 30})`);
+    wd.t.setAttribute('opacity', k);
+  });
+  L.dots.forEach((d, i) => d.setAttribute('r', 7 * eOutBack(prog(t, 7.1 + i * 0.32, 7.45 + i * 0.32), 3)));
+
+  // ===== captions =====
+  for (const [id, a, b] of [['cap1', 1.25, 3.2], ['cap2', 4.45, 6.6]]) {
+    const kin = eOutCubic(prog(t, a, a + 0.6)), kout = eInCubic(prog(t, b - 0.4, b));
+    const n = $(id);
+    n.setAttribute('opacity', kin * (1 - kout));
+    n.setAttribute('letter-spacing', lerp(14, 6, kin));
+  }
+
+  // ===== 5. by MILMO (8.3 – 10s) =====
+  const byK = eOutCubic(prog(t, 8.3, 9.1));
+  const by = $('byMilmo');
+  by.setAttribute('opacity', byK);
+  by.setAttribute('letter-spacing', lerp(22, 8, byK));
+}
+
+window.ready = document.fonts.ready.then(() => { layout(); render(0); });
+window.render = render;
+// live preview when opened in a browser: ?t=4.2 freezes a frame, otherwise loops
+window.ready.then(() => {
+  const q = new URLSearchParams(location.search);
+  if (q.has('t')) { render(+q.get('t')); return; }
+  if (q.has('render')) return;
+  const t0 = performance.now();
+  const loop = now => { render(((now - t0) / 1000) % (DUR + 1)); requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+});
+</script>
+</body>
+</html>
