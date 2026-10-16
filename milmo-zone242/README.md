@@ -23,3 +23,12 @@ Charte officielle (Nuit, Chaux, Lumière). La lumière de MILMO dessine un globe
 node render.mjs --page v2-nuit/index.html silent.mp4 60
 python3 v2-nuit/sound.py sound.wav
 ```
+
+## Version 3 · 3D (`v3-3d/`)
+Logo officiel ZONE 242 et logo MILMO vectorisés (`trace.mjs`, potrace) puis extrudés en 3D (three.js). Rendu image par image en WebGL, son synthétisé à 120 BPM (la naissance tombe sur le temps 8, à 4,0 s).
+- `v3-3d/MILMO_ZONE242_3D.mp4` : vidéo finale 1080×1920, 60 i/s, 10 s, avec son (-14 LUFS).
+```
+cd v3-3d && npm install && node trace.mjs
+node render.mjs silent.mp4 60
+python3 sound.py sound.wav
+```
