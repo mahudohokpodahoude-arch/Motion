@@ -25,19 +25,20 @@ const groove = (from, to, opts = {}) => {
 groove(2, 4, { bassline: false, chords: false, gain: 0.7 });  // MILMO: just the pulse
 groove(4, 18, { fill: [5, 11, 17] });                          // vision → the three movements
 groove(18, 20, { drums: false });                              // sunday: breathe
-groove(20, 23, { fill: [22] });                                // the goal, building
-groove(26, 29, {});                                            // the finale
+groove(20, 35, { fill: [23, 27, 31, 34] });                    // the life of the Zone
+groove(35, 38, { fill: [37] });                                // the goal, building
+groove(41, 44, {});                                            // the finale
 // the intro: a soft kick on 1 and 3 under the letters
 for (let b = 0; b < 2; b++) for (const beat of [0, 2]) { drums.addMono(I.kick({ tail: 0.25 }), T(b, beat), 0.5); kicks.push(T(b, beat)); }
 
 // pads: the chords all the way, darker under the held moments
 for (const c of sc.chords) {
-  const held = c.t0 >= T(23) && c.t0 < T(26);
+  const held = c.t0 >= sc.S.isaiah[0] && c.t0 < sc.S.isaiah[1];
   const opts = held ? { cutoff: 1800, attack: 0.6, release: 1.4 } : { cutoff: 1300, attack: 0.25, release: 0.8 };
   for (const n of c.notes) { const { L, R } = I.padNote(n, c.t1 - c.t0, opts); pad.addStereo(L, R, c.t0, held ? 0.14 : 0.06); }
 }
 // strings swell under Isaiah, into the light
-for (const c of sc.chords.filter((c) => c.t0 >= T(23) && c.t0 < T(26))) {
+for (const c of sc.chords.filter((c) => c.t0 >= sc.S.isaiah[0] && c.t0 < sc.S.isaiah[1])) {
   for (const n of c.notes) { const s = I.strings(n + 12, c.t1 - c.t0, { attack: 0.5, release: 0.6, bright: 0.7 }); pad.addStereo(s.L, s.R, c.t0, 0.1); verb.addStereo(s.L, s.R, c.t0, 0.08); }
 }
 
@@ -80,7 +81,7 @@ assemble({ cube: o.cube, corners: o.corners, zne: o.zne, frame: o.frame, digits:
 
 // ================= 2D scenes =================
 // every word stamp is a soft knock; every scene cut a whoosh
-for (const t of [T(4), T(6), T(8), T(10), T(12), T(14), T(16), T(18), T(20), T(23)]) fx.addMono(I.noiseSweep(0.3, 4000, 600, { q: 1.2, pink: true }), t - 0.05, 0.2);
+for (const t of Object.values(sc.S).map((r) => r[0]).filter((t) => t > 0 && t < sc.S.final3d[0])) fx.addMono(I.noiseSweep(0.3, 4000, 600, { q: 1.2, pink: true }), t - 0.05, 0.2);
 ev.vision.words.forEach((t, i) => hits.addMono(I.thud(140 - i * 6, 0.07), t, i === 3 ? 0.75 : 0.45));
 drums.addMono(I.crash(9), ev.vision.words[3], 0.25, 0.3);
 ev.rooted.lines.forEach((t) => fx.addMono(I.paperFwip(1, Math.round(t * 10)), t, 0.25));
@@ -104,6 +105,37 @@ for (const [mv, notes] of [[ev.connect, [m('D4'), m('F#4'), m('A4')]], [ev.trans
   steps.forEach((t, i) => { keys.addMono(I.marimba(notes[i] + 12), t, 0.3, -0.4 + i * 0.4); hits.addMono(I.pop(1300 + i * 250), t, 0.5, -0.4 + i * 0.4); hits.addMono(I.thud(120, 0.06), t, 0.35, -0.4 + i * 0.4); });
   for (const n of notes) { const b = I.brassNote(n + 12, 0.6); brass.addStereo(b.L, b.R, mv.tag, 0.12); verb.addStereo(b.L, b.R, mv.tag, 0.05); }
 }
+// ---------- the life of the Zone ----------
+// the week: each row slides in with a whoosh and a marimba note climbing the scale
+const scale = ['D5', 'E5', 'F#5', 'A5', 'B5'].map(m);
+ev.week.items.forEach((t, i) => { fx.addMono(I.noiseSweep(0.22, 900, 5000, { q: 2, pink: true }), t - 0.15, 0.14, -0.5); keys.addMono(I.marimba(scale[i]), t, 0.3, -0.3 + i * 0.15); hits.addMono(I.thud(120, 0.06), t, 0.35); });
+// generations: the photo pops, then four bubbles
+hits.addMono(I.pop(1100), ev.gens.photo, 0.45); fx.addMono(I.noiseSweep(0.4, 600, 4000, { q: 1.5, pink: true }), ev.gens.photo - 0.3, 0.16);
+ev.gens.items.forEach((t, i) => { hits.addMono(I.pop(1400 + i * 250), t, 0.45, -0.45 + i * 0.3); keys.addMono(I.bell(scale[i] + 12, 0.8), t, 0.06, -0.45 + i * 0.3); });
+// the photo pairs: each photo sweeps in, its label slams on
+for (const e of [ev.menwomen, ev.couples, ev.camps]) {
+  [e.a, e.b].forEach((t, i) => {
+    fx.addMono(I.noiseSweep(0.5, i ? 5000 : 400, i ? 500 : 5000, { q: 1.1, pink: true }), t - 0.08, 0.28, i ? 0.6 : -0.6);
+    hits.addMono(I.thwack(), t + 0.2, 0.35, i ? 0.4 : -0.4);
+    hits.addMono(I.thud(90, 0.1), t + 0.2, 0.45);
+  });
+  drums.addMono(I.crash(Math.round(e.a * 3)), e.a, 0.22);
+  for (const n of ['D4', 'F#4', 'A4']) { const b = I.brassNote(m(n) + 12, 0.55); brass.addStereo(b.L, b.R, e.tag, 0.1); verb.addStereo(b.L, b.R, e.tag, 0.04); }
+}
+// signature programmes: four tiles flip in
+drums.addMono(I.crash(61), ev.signature.title, 0.3);
+ev.signature.items.forEach((t, i) => { hits.addMono(I.woodTick(1.3 + i * 0.12), t, 0.4, [-0.5, 0.5, -0.5, 0.5][i]); hits.addMono(I.pop(1200 + i * 200), t, 0.35, [-0.5, 0.5, -0.5, 0.5][i]); keys.addMono(I.marimba(scale[i] + 12), t, 0.2); });
+for (const n of ['G4', 'B4', 'D5']) { const b = I.brassNote(m(n), 0.6); brass.addStereo(b.L, b.R, ev.signature.tag, 0.12); }
+// the big gatherings: each card slams over the last, heavier and heavier
+drums.addMono(I.crash(71), ev.gather.title, 0.3);
+ev.gather.items.forEach((t, i) => {
+  fx.addMono(I.noiseSweep(0.35, i % 2 ? 6000 : 300, i % 2 ? 400 : 6000, { q: 1, pink: true }), t - 0.2, 0.26, i % 2 ? 0.5 : -0.5);
+  hits.addMono(I.subBoom(0.9), t, 0.3 + i * 0.08);
+  hits.addMono(I.thwack(), t, 0.35);
+  const b = I.brassNote(m(['D4', 'F#4', 'A4', 'D5'][i]), 0.45, { stab: 1 }); brass.addStereo(b.L, b.R, t, 0.13);
+});
+for (const n of ['A4', 'C#5', 'E5']) { const b = I.brassNote(m(n), 0.8); brass.addStereo(b.L, b.R, ev.gather.tag, 0.12); verb.addStereo(b.L, b.R, ev.gather.tag, 0.05); }
+
 // sunday gathers, monday sends
 fx.addMono(I.noiseSweep(0.6, 6000, 300, { q: 1, pink: true }), ev.sunday.gather, 0.3);
 hits.addMono(I.thud(80, 0.14), ev.sunday.gather + 0.55, 0.6);

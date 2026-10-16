@@ -365,7 +365,7 @@
     const e = ev.isaiah;
     bg(ctx, NAVY);
     // the light rises from the centre, then floods the frame into the 3D finale
-    const grow = ease.inCubic(prog(t, T(23), T(26) - T(23)));
+    const grow = ease.inCubic(prog(t, S.S.isaiah[0], S.S.isaiah[1] - S.S.isaiah[0]));
     const flood = ease.inExpo(prog(t, e.swell, e.cut - e.swell));
     const r = lerp(120, Math.max(W, H) * 0.8, grow);
     const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
@@ -385,11 +385,222 @@
     if (flood > 0) { ctx.fillStyle = `rgba(255,253,240,${flood})`; ctx.fillRect(0, 0, W, H); }
   }
 
+  // ---------- assets: photos (from the V18 document) and icons (Lucide, ISC) ----------
+  const IMG = {}, ICON = {};
+  const PHOTOS = ['men', 'women', 'couples', 'celibataires', 'camp_teens', 'camp_youth', 'puissance', 'aigles', 'generations'];
+  const ICONS = ['sun', 'users', 'house', 'flame', 'smartphone', 'baby', 'star', 'rocket', 'party-popper', 'hand-heart',
+    'hand-helping', 'zap', 'trophy', 'briefcase', 'calendar-clock'];
+  async function loadIcon(name, color) {
+    const svg = (await (await fetch(`assets/icons/${name}.svg`)).text()).replace(/currentColor/g, color).replace(/<!--.*?-->/s, '');
+    const img = new Image();
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    await img.decode();
+    ICON[`${name}|${color}`] = img;
+  }
+  function icon(ctx, name, color, x, y, size, alpha = 1) {
+    const img = ICON[`${name}|${color}`];
+    if (!img || alpha <= 0) return;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.drawImage(img, x - size / 2, y - size / 2, size, size); ctx.restore();
+  }
+  // a photo that covers its box, with a slow push (Ken Burns)
+  function photo(ctx, name, x, y, w, h, k, o = {}) {
+    const img = IMG[name];
+    if (!img) return;
+    const z = (o.zoom ?? 1) * (1 + 0.08 * k);
+    const sc = Math.max(w / img.width, h / img.height) * z;
+    const dw = img.width * sc, dh = img.height * sc;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+    ctx.drawImage(img, x + (w - dw) / 2 + (o.panX ?? 0) * k * 40, y + (h - dh) * (o.focusY ?? 0.5), dw, dh);
+    ctx.restore();
+  }
+  function tagLine(ctx, str, t, t0, color = WHITE, lineColor = ORANGE, y = cy + 470 * VS) {
+    const ts = fit(ctx, str, 54 * VS);
+    rise(ctx, str, cx, y, ts, t, t0, { color });
+    const u = ease.outExpo(prog(t, t0 + 0.15, 0.4));
+    if (u > 0) { const tw = G.measure(ctx, str, ts, F, 900); ctx.fillStyle = lineColor; ctx.fillRect(cx - tw / 2, y + ts * 0.62, tw * u, 9); }
+  }
+  function title(ctx, small, big, t, t0, colors) {
+    kicker(ctx, small, cx, cy - 560 * VS, t, t0, colors[0], 32);
+    stamp(ctx, big, cx, cy - 480 * VS, fit(ctx, big, 76 * VS), t, t0 + 0.05, { color: colors[1] });
+  }
+
+  // the week: one row per rhythm, landing on the beat
+  function week(ctx, t) {
+    bg(ctx, WHITE);
+    drift(ctx, t, BLUE, 0.05, 11);
+    const e = ev.week;
+    title(ctx, 'VIVRE LA ZONE', 'UNE SEMAINE, UNE VIE', t, e.title, [ORANGE, INK]);
+    const rows = [
+      ['DIM', 'sun', 'CULTE ZONE', 'Toute la maison'],
+      ['SEM. A', 'users', 'ZONE DE CROISSANCE', '≈ 8 personnes autour d’un Berger'],
+      ['SEM. B', 'house', 'ZONE FAMILY', 'La foi vécue à la maison'],
+      ['VEN', 'flame', 'PRIÈRE ENSEMBLE', '60 à 90 minutes'],
+      ['7/7', 'smartphone', 'ZONE DIGITAL', 'L’application ZONE 242'],
+    ];
+    const rw = Math.min(maxW, 860), rh = 128 * VS, x0 = cx - rw / 2, y0 = cy - 360 * VS;
+    rows.forEach(([day, ic, name, sub], i) => {
+      const k = ease.outExpo(prog(t, e.items[i], 0.4));
+      if (k <= 0) return;
+      const y = y0 + i * (rh + 16 * VS);
+      const x = x0 - (1 - k) * W;
+      ctx.fillStyle = i % 2 ? '#EEF0FF' : '#F4F4F8'; ctx.fillRect(x, y, rw, rh);
+      ctx.fillStyle = i === 0 ? ORANGE : BLUE; ctx.fillRect(x, y, 150 * VS, rh);
+      G.text(ctx, day, x + 75 * VS, y + rh / 2, { size: fit(ctx, day, 38 * VS, 130 * VS, 900), fam: F, weight: 900, color: WHITE, align: 'center', baseline: 'middle' });
+      icon(ctx, ic, BLUE, x + 210 * VS, y + rh / 2, 62 * VS);
+      const tx = x + 270 * VS, room = rw - 290 * VS;
+      G.text(ctx, name, tx, y + rh * 0.38, { size: fit(ctx, name, 40 * VS, room, 900), fam: F, weight: 900, color: INK, baseline: 'middle' });
+      G.text(ctx, sub, tx, y + rh * 0.72, { size: fit(ctx, sub, 27 * VS, room, 700), fam: F, weight: 700, color: '#5A5874', baseline: 'middle' });
+    });
+    tagLine(ctx, 'UNE FOI QUI SE VIT CHAQUE JOUR.', t, e.tag, BLUE, ORANGE);
+  }
+
+  // all the generations: a family photo and four age groups
+  function gens(ctx, t) {
+    bg(ctx, BLUE);
+    drift(ctx, t, WHITE, 0.07, 12);
+    const e = ev.gens;
+    title(ctx, 'TOUTES LES GÉNÉRATIONS', 'UNE MÊME MISSION', t, e.title, [ORANGE, WHITE]);
+    const pk = ease.outBack(prog(t, e.photo, 0.5), 1.4);
+    const ps = (WIDE ? 380 : 440) * VS * Math.max(pk, 0);
+    if (pk > 0) {
+      const px = cx - ps / 2, py = cy - 150 * VS - ps / 2;
+      ctx.fillStyle = WHITE; ctx.fillRect(px - 10, py - 10, ps + 20, ps + 20);
+      photo(ctx, 'generations', px, py, ps, ps, prog(t, e.photo, 4), { focusY: 0.3 });
+      ctx.fillStyle = ORANGE; ctx.fillRect(px + ps - 50 * VS, py - 26 * VS, 66 * VS, 66 * VS);
+    }
+    const items = [['baby', 'ZONE KIDS', '0 – 10 ANS'], ['star', 'ZONE TEENS', '11 – 15 ANS'], ['rocket', 'ZONE YOUTH', '16 ANS ET +'], ['house', 'ADULTES', '& FAMILLES']];
+    const cw = Math.min(maxW / 4, 230 * VS), yy = cy + 230 * VS;
+    items.forEach(([ic, a, b], i) => {
+      const k = ease.outBack(prog(t, e.items[i], 0.3), 2.2);
+      if (k <= 0) return;
+      const x = cx + (i - 1.5) * cw;
+      ctx.save(); ctx.translate(x, yy); ctx.scale(k, k);
+      ctx.fillStyle = WHITE; ctx.beginPath(); ctx.arc(0, -40 * VS, 52 * VS, 0, Math.PI * 2); ctx.fill();
+      icon(ctx, ic, BLUE, 0, -40 * VS, 56 * VS);
+      G.text(ctx, a, 0, 48 * VS, { size: fit(ctx, a, 30 * VS, cw - 12, 900), fam: F, weight: 900, color: WHITE, align: 'center', baseline: 'middle' });
+      G.text(ctx, b, 0, 84 * VS, { size: fit(ctx, b, 22 * VS, cw - 12, 500), fam: MONO, weight: 500, color: '#C9C4FF', align: 'center', baseline: 'middle' });
+      ctx.restore();
+    });
+    tagLine(ctx, 'CHAQUE GÉNÉRATION COMPTE.', t, e.tag, WHITE, ORANGE);
+  }
+
+  // two photos, two communities: stacked in 9:16, side by side in 16:9
+  function pair(ctx, t, o) {
+    bg(ctx, NAVY);
+    drift(ctx, t, WHITE, 0.05, o.seed);
+    const e = o.e;
+    kicker(ctx, o.kicker, cx, cy - 560 * VS, t, e.a, ORANGE, 32);
+    const cards = [[o.A, e.a, -1], [o.B, e.b, 1]];
+    cards.forEach(([c, t0, side], i) => {
+      const k = ease.outExpo(prog(t, t0, 0.55));
+      if (k <= 0) return;
+      let x, y, w, h;
+      if (WIDE) { w = (maxW - 40) / 2; h = 600 * VS; x = cx - maxW / 2 + i * (w + 40); y = cy - 470 * VS; }
+      else { w = W; h = 400 * VS; x = 0; y = cy - 480 * VS + i * (h + 90 * VS); }
+      const dx = (1 - k) * W * side;
+      photo(ctx, c.img, x + dx, y, w, h, prog(t, t0, 4), { panX: side * -1, focusY: 0.4 });
+      // label plate over the photo's lower edge
+      const name = c.name, sub = c.sub;
+      const ns = fit(ctx, name, 66 * VS, w - 150), ss = fit(ctx, sub, 28 * VS, w - 150, 700);
+      const ph = ns * 1.1 + ss * 1.5 + 30;
+      const py = y + h - ph * 0.55;
+      const pw = Math.max(G.measure(ctx, name, ns, F, 900), G.measure(ctx, sub, ss, F, 700)) + 60;
+      const plx = (WIDE ? x + 24 : x + 40) + dx;
+      const lk = ease.outExpo(prog(t, t0 + 0.2, 0.4));
+      ctx.fillStyle = i ? ORANGE : BLUE; ctx.fillRect(plx, py, pw * lk, ph);
+      if (lk > 0.6) {
+        G.text(ctx, name, plx + 30, py + ns * 0.72 + 8, { size: ns, fam: F, weight: 900, color: WHITE, baseline: 'middle' });
+        G.text(ctx, sub, plx + 30, py + ns * 1.1 + ss + 10, { size: ss, fam: F, weight: 700, color: WHITE, baseline: 'middle', alpha: 0.95 });
+      }
+      if (c.icon) { const ik = ease.outBack(prog(t, t0 + 0.3, 0.3), 2.5); if (ik > 0) { const ix = x + w - 70 + dx, iy = y + 60; ctx.fillStyle = WHITE; ctx.beginPath(); ctx.arc(ix, iy, 40 * ik, 0, Math.PI * 2); ctx.fill(); icon(ctx, c.icon, i ? ORANGE : BLUE, ix, iy, 46 * ik); } }
+    });
+    tagLine(ctx, o.tag, t, e.tag, WHITE, ORANGE, cy + (WIDE ? 330 : 590) * VS);
+  }
+  const menwomen = (ctx, t) => pair(ctx, t, { e: ev.menwomen, seed: 13, kicker: 'DEUX UNIVERS · TOUTE L’ANNÉE',
+    A: { img: 'men', name: 'ZONE MEN', sub: 'Des hommes de foi, de caractère et d’impact.' },
+    B: { img: 'women', name: 'ZONE WOMEN', sub: 'Des femmes de foi, d’influence et de destinée.' },
+    tag: 'FOI · IDENTITÉ · INFLUENCE · DESTINÉE.' });
+  const couples = (ctx, t) => pair(ctx, t, { e: ev.couples, seed: 14, kicker: 'CHAQUE SAISON COMPTE',
+    A: { img: 'couples', name: 'GALA DES COUPLES', sub: 'Honorer l’alliance. Célébrer l’amour.', icon: 'hand-heart' },
+    B: { img: 'celibataires', name: 'RENCONTRE DES CÉLIBATAIRES', sub: 'Bien vivre sa saison, préparer son avenir.', icon: 'users' },
+    tag: 'BÂTIR LA FAMILLE, PRÉPARER L’AVENIR.' });
+  const camps = (ctx, t) => pair(ctx, t, { e: ev.camps, seed: 15, kicker: '242 CAMPS · IMMERSION',
+    A: { img: 'camp_teens', name: 'CAMP TEENS · 11–15 ANS', sub: 'Une identité solide en Christ.', icon: 'star' },
+    B: { img: 'camp_youth', name: 'CAMP YOUTH · 16 ANS ET +', sub: 'Vocation, leadership, mission.', icon: 'rocket' },
+    tag: 'UNE GÉNÉRATION QUI IMPACTE.' });
+
+  // signature programmes: four tiles
+  function signature(ctx, t) {
+    bg(ctx, ORANGE);
+    drift(ctx, t, WHITE, 0.08, 16);
+    const e = ev.signature;
+    title(ctx, 'NOS PROGRAMMES SIGNATURE', 'TOUTE L’ANNÉE', t, e.title, [NAVY, WHITE]);
+    const tiles = [['flame', 'CHAMBRE HAUTE', 'Présence · adoration · 4 fois par an'], ['party-popper', 'ZONE OUT', 'La Zone hors les murs'],
+      ['hand-heart', 'ZONE SERVES', 'Servir la ville'], ['hand-helping', 'SERVE DAY', 'Découvrir un service']];
+    const cols = WIDE ? 4 : 2, gap = 26;
+    const tw = (Math.min(maxW, WIDE ? 1500 : 860) - gap * (cols - 1)) / cols, th = 330 * VS;
+    const gx = cx - (tw * cols + gap * (cols - 1)) / 2, gy = WIDE ? cy - 200 * VS : cy - 360 * VS;
+    tiles.forEach(([ic, name, sub], i) => {
+      const k = ease.outBack(prog(t, e.items[i], 0.35), 1.8);
+      if (k <= 0) return;
+      const x = gx + (i % cols) * (tw + gap), y = gy + Math.floor(i / cols) * (th + gap);
+      ctx.save(); ctx.translate(x + tw / 2, y + th / 2); ctx.scale(k, k); ctx.rotate((1 - Math.min(k, 1)) * 0.2);
+      ctx.fillStyle = WHITE; ctx.fillRect(-tw / 2, -th / 2, tw, th);
+      ctx.fillStyle = BLUE; ctx.beginPath(); ctx.arc(0, -th * 0.2, 62 * VS, 0, Math.PI * 2); ctx.fill();
+      icon(ctx, ic, WHITE, 0, -th * 0.2, 64 * VS);
+      G.text(ctx, name, 0, th * 0.12, { size: fit(ctx, name, 40 * VS, tw - 30, 900), fam: F, weight: 900, color: INK, align: 'center', baseline: 'middle' });
+      G.text(ctx, sub, 0, th * 0.3, { size: fit(ctx, sub, 24 * VS, tw - 30, 700), fam: F, weight: 700, color: '#5A5874', align: 'center', baseline: 'middle' });
+      ctx.restore();
+    });
+    tagLine(ctx, 'MOINS DE PLATEFORME, PLUS DE PRÉSENCE.', t, e.tag, WHITE, NAVY, WIDE ? cy + 300 * VS : cy + 470 * VS);
+  }
+
+  // the big gatherings: a stack of cards, each one slams over the last
+  function gather(ctx, t) {
+    bg(ctx, NAVY);
+    drift(ctx, t, WHITE, 0.05, 17);
+    const e = ev.gather;
+    title(ctx, 'LES GRANDS RASSEMBLEMENTS 242', 'UNE FOIS PAR AN', t, e.title, [ORANGE, WHITE]);
+    const cards = [
+      { img: 'puissance', name: 'PUISSANCE & GUÉRISON', sub: 'Deux séminaires pour rencontrer Dieu', icon: 'zap', col: BLUE },
+      { img: 'aigles', name: 'AIGLES & OUVRIERS', sub: 'Célébrer ceux qui font vivre la Zone', icon: 'trophy', col: ORANGE },
+      { name: '242 BUSINESS CONFERENCE', sub: 'Foi · business · leadership · impact', icon: 'briefcase', col: '#0B7FD8' },
+      { name: '14 JOURS · 242 HOURS', sub: 'Jeûne et prière en chaîne, chaque janvier', icon: 'calendar-clock', col: BLUE },
+    ];
+    const cw = Math.min(maxW, WIDE ? 1100 : 900), ch = (WIDE ? 560 : 640) * VS;
+    const x0 = cx - cw / 2, y0 = cy - ch / 2 - 40 * VS;
+    let shown = -1;
+    e.items.forEach((s, i) => { if (t >= s) shown = i; });
+    for (let i = Math.max(0, shown - 1); i <= shown; i++) {
+      const c = cards[i];
+      const k = ease.outExpo(prog(t, e.items[i], 0.45));
+      const under = i < shown ? ease.outCubic(prog(t, e.items[shown], 0.45)) : 0;
+      ctx.save();
+      ctx.translate(cx, y0 + ch / 2);
+      ctx.scale(1 - under * 0.08, 1 - under * 0.08);
+      ctx.translate(-cx + (1 - k) * W * (i % 2 ? -1 : 1), -(y0 + ch / 2));
+      ctx.globalAlpha = 1 - under * 0.5;
+      const ph = ch * 0.66;
+      if (c.img) photo(ctx, c.img, x0, y0, cw, ph, prog(t, e.items[i], 3), { focusY: 0.35 });
+      else { ctx.fillStyle = c.col; ctx.fillRect(x0, y0, cw, ph); for (let j = 0; j < 3; j++) symbol(ctx, x0 + cw * (0.2 + j * 0.3), y0 + ph / 2, ph * 0.5, { color: WHITE, alpha: 0.07, center: 0 }); icon(ctx, c.icon, WHITE, cx, y0 + ph / 2, ph * 0.42); }
+      ctx.fillStyle = WHITE; ctx.fillRect(x0, y0 + ph, cw, ch - ph);
+      ctx.fillStyle = c.col; ctx.fillRect(x0, y0 + ph, 16, ch - ph);
+      G.text(ctx, c.name, x0 + 50, y0 + ph + (ch - ph) * 0.38, { size: fit(ctx, c.name, 58 * VS, cw - 100), fam: F, weight: 900, color: INK, baseline: 'middle' });
+      G.text(ctx, c.sub, x0 + 50, y0 + ph + (ch - ph) * 0.7, { size: fit(ctx, c.sub, 30 * VS, cw - 100, 700), fam: F, weight: 700, color: '#5A5874', baseline: 'middle' });
+      G.text(ctx, `0${i + 1}/04`, x0 + cw - 30, y0 + 46, { size: 30, fam: MONO, weight: 500, color: WHITE, align: 'right', baseline: 'middle' });
+      ctx.restore();
+    }
+    tagLine(ctx, 'PAS UN CALENDRIER : UN SYSTÈME.', t, e.tag, WHITE, ORANGE, cy + (WIDE ? 380 : 470) * VS);
+  }
+
   function placeholder3d(ctx) { bg(ctx, '#000'); }
 
   const SCENES = [
     [S.S.open3d, placeholder3d], [S.S.vision, vision], [S.S.rooted, rooted], [S.S.crowd, crowd], [S.S.acts, acts],
-    [S.S.connect, connect], [S.S.transform, transform], [S.S.send, send], [S.S.sunday, sunday], [S.S.cap, cap],
+    [S.S.connect, connect], [S.S.transform, transform], [S.S.send, send], [S.S.sunday, sunday],
+    [S.S.week, week], [S.S.gens, gens], [S.S.menwomen, menwomen], [S.S.couples, couples], [S.S.camps, camps],
+    [S.S.signature, signature], [S.S.gather, gather], [S.S.cap, cap],
     [S.S.isaiah, isaiah], [S.S.final3d, placeholder3d],
   ];
   const WIPE = 0.26;
@@ -400,6 +611,8 @@
       await Studio.loadFont(F, 'assets/fonts/montserrat-latin-800-normal.woff2', 800);
       await Studio.loadFont(F, 'assets/fonts/montserrat-latin-900-normal.woff2', 900);
       await Studio.loadFont(MONO, 'assets/fonts/ibm-plex-mono-latin-500-normal.woff2', 500);
+      for (const p of PHOTOS) IMG[p] = await Studio.loadImage(`assets/photos/${p}.jpg`);
+      for (const n of ICONS) for (const c of [BLUE, WHITE, ORANGE]) await loadIcon(n, c);
     },
     draw(ctx, t) {
       const i = SCENES.findIndex(([[a, b]]) => t >= a && t < b);

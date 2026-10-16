@@ -18,7 +18,7 @@
   const WIDE = W / H > 1.2;
   const clock = makeClock({ bpm: 120, offset: 0 });
   const { T, BEAT } = clock;
-  const DURATION = 60;
+  const DURATION = 90;
 
   // ---------- scenes (bar lines) ----------
   const S = {
@@ -31,11 +31,19 @@
     transform: [T(14), T(16)],
     send: [T(16), T(18)],
     sunday: [T(18), T(20)],
-    cap: [T(20), T(23)],
-    isaiah: [T(23), T(26)],
-    final3d: [T(26), DURATION],
+    // the life of the Zone: the week, the generations, the communities, the events
+    week: [T(20), T(22)],
+    gens: [T(22), T(24)],
+    menwomen: [T(24), T(26)],
+    couples: [T(26), T(28)],
+    camps: [T(28), T(30)],
+    signature: [T(30), T(32)],
+    gather: [T(32), T(35)],
+    cap: [T(35), T(38)],
+    isaiah: [T(38), T(41)],
+    final3d: [T(41), DURATION],
   };
-  const D3_OFFSET = { open3d: 0, final3d: T(26) - 4 }; // film time - 3D time
+  const D3_OFFSET = { open3d: 0, final3d: T(41) - 4 }; // film time - 3D time
 
   // ---------- harmony: D major, warm and lifting ----------
   const { chords, chordAt } = makeChords(clock, {
@@ -48,8 +56,8 @@
   }, (() => {
     const rows = [];
     const prog = ['D', 'Bm', 'G', 'A'];
-    for (let b = 0; b < 30; b++) rows.push([b, 0, 4, b >= 23 && b < 26 ? ['Gmaj7', 'A', 'Bm'][b - 23] : prog[b % 4]]);
-    rows[29] = [29, 0, 4, 'Dadd9'];
+    for (let b = 0; b < 45; b++) rows.push([b, 0, 4, b >= 38 && b < 41 ? ['Gmaj7', 'A', 'Bm'][b - 38] : prog[b % 4]]);
+    rows[44] = [44, 0, 4, 'Dadd9'];
     return rows;
   })());
 
@@ -58,7 +66,7 @@
     a: [['F#5', 0, 1], ['A5', 1, 1], ['B5', 2, 2], ['A5', 4, 1], ['F#5', 5, 1], ['E5', 6, 2]],
     b: [['D5', 0, 1], ['F#5', 1, 1], ['A5', 2, 2], ['B5', 4, 1], ['A5', 5, 1], ['F#5', 6, 1], ['E5', 7, 1]],
   };
-  const hookBars = [4, 5, 6, 7, 12, 13, 14, 15, 16, 17];
+  const hookBars = [4, 5, 6, 7, 12, 13, 14, 15, 16, 17, 20, 21, 24, 25, 28, 29, 30, 31];
   const hook = hookBars.flatMap((b, i) => placeBar(clock, i % 2 ? HOOK.b : HOOK.a, b));
 
   // ---------- events ----------
@@ -76,12 +84,19 @@
     transform: { word: T(14), steps: [T(14, 2), T(14, 3), T(15, 0)], tag: T(15, 2) },
     send: { word: T(16), arrows: [T(16, 2), T(16, 3), T(17, 0)], tag: T(17, 2) },
     sunday: { gather: T(18), line1: T(18, 1), send: T(19), line2: T(19, 1) },
-    cap: { start: T(20), countFrom: T(20, 1), countTo: T(22), label: T(22, 1), stamp: T(22, 2) },
-    isaiah: { l1: T(23, 1), l2: T(24, 0), l3: T(24, 2), ref: T(25, 0), swell: T(25, 0), cut: T(25, 3.85) },
-    // 3D finale (film time = 3D time + 48)
-    fin: { birth: T(26), cube: T(26) + 0.12, corners: [5.15, 5.22, 5.29, 5.36].map((x) => x + 48),
-      zne: [5.55, 5.7, 5.82].map((x) => x + 48), frame: 6.05 + 48, digits: [6.2, 6.32, 6.44].map((x) => x + 48),
-      swing: 6.6 + 48, tag: 8.0 + 48, welcome: 10.3 + 48 },
+    week: { title: T(20), items: [T(20, 1), T(20, 2), T(20, 3), T(21, 0), T(21, 1)], tag: T(21, 2) },
+    gens: { title: T(22), photo: T(22, 0.5), items: [T(22, 2), T(22, 3), T(23, 0), T(23, 1)], tag: T(23, 2) },
+    menwomen: { a: T(24), b: T(24, 2), tag: T(25, 2) },
+    couples: { a: T(26), b: T(26, 2), tag: T(27, 2) },
+    camps: { a: T(28), b: T(28, 2), tag: T(29, 2) },
+    signature: { title: T(30), items: [T(30, 1), T(30, 2), T(30, 3), T(31, 0)], tag: T(31, 2) },
+    gather: { title: T(32), items: [T(32, 1), T(32, 3), T(33, 1), T(33, 3)], tag: T(34, 1) },
+    cap: { start: T(35), countFrom: T(35, 1), countTo: T(37), label: T(37, 1), stamp: T(37, 2) },
+    isaiah: { l1: T(38, 1), l2: T(39, 0), l3: T(39, 2), ref: T(40, 0), swell: T(40, 0), cut: T(40, 3.85) },
+    // 3D finale (film time = 3D time + D3_OFFSET.final3d)
+    fin: (() => { const o = D3_OFFSET.final3d; return { birth: 4.0 + o, cube: 4.12 + o, corners: [5.15, 5.22, 5.29, 5.36].map((x) => x + o),
+      zne: [5.55, 5.7, 5.82].map((x) => x + o), frame: 6.05 + o, digits: [6.2, 6.32, 6.44].map((x) => x + o),
+      swing: 6.6 + o, tag: 8.0 + o, welcome: 10.3 + o }; })(),
   };
 
   const markers = {
@@ -93,9 +108,13 @@
     transform: { t: T(14), sync: 'av' },
     send: { t: T(16), sync: 'av' },
     sunday: { t: T(18), sync: 'av' },
+    week: { t: T(20), sync: 'av' },
+    menwomen: { t: T(24), sync: 'av' },
+    signature: { t: T(30), sync: 'av' },
+    gather: { t: T(32), sync: 'av' },
     stamp: { t: ev.cap.stamp, sync: 'av' },
-    isaiah: { t: T(23), sync: 'v' },
-    final: { t: T(26), sync: 'a' },
+    isaiah: { t: T(38), sync: 'v' },
+    final: { t: T(41), sync: 'a' },
   };
 
   const SCORE = { FPS, STYLE, FORMAT, W, H, SAFE, WIDE, DURATION, clock, T, BEAT, S, D3_OFFSET, m, chords, chordAt, HOOK, hook, ev, markers };
