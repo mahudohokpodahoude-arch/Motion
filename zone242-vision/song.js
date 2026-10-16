@@ -1,6 +1,6 @@
 // THE SONG — every sound of the ZONE 242 vision film, rendered from score.js into out/music.wav.
 //   node song.js      (STEMS=1 also writes out/stem-*.wav, LUFS=-14 masters to a target loudness)
-// An uplifting corporate track at 120 BPM, a piano hook, and one effect per event.
+// An energetic corporate track at 120 BPM (follows score.js ENERGY), a piano hook, and one effect per event.
 const path = require('path');
 const { Bus, reverb, pingpong } = require('./engine/audio/dsp');
 const { SR } = require('./engine/audio/dsp');
@@ -15,45 +15,59 @@ const drums = bus(), bass = bus(), pad = bus(), keys = bus(), brass = bus(), fx 
 const verb = bus(), dly = bus();
 const kicks = [];
 
-// ================= backing: uplifting corporate =================
-// four-on-the-floor kick, claps on 2 and 4, off-beat hats, an 8th-note pulsing bass,
-// a 16th-note pluck arpeggio and soft piano chords. The effects below are unchanged.
-const K = I.kick({ punch: 0.7, tail: 0.18 }), CL = I.clap({ spread: 0.9 }), HC = [I.hat(false, 31), I.hat(false, 32)], HO = I.hat(true, 33);
-const SH = [I.shaker(1, 34), I.shaker(0.6, 35)];
-const arp = bus();
-const corporate = (from, to, o = {}) => {
-  clock.eachStep(from, to, 16, (t, b, st) => {
-    const c = chordAt(t);
-    if (!c) return;
-    const full = o.full !== false;
-    if (o.drums !== false) {
-      if (st % 4 === 0 && (full || st % 8 === 0)) { drums.addMono(K, t, full ? 0.8 : 0.55); kicks.push(t); }
-      if (full && st % 8 === 4) { drums.addMono(CL, t, 0.42); verb.addMono(CL, t, 0.18); }
-      if (st % 4 === 2) drums.addMono(st % 8 === 6 && full ? HO : HC[st % 2], t, 0.13, 0.25);
-      if (full) drums.addMono(SH[st % 2], t, 0.05, -0.35);
-    }
-    // 8th-note bass on the root, octave jump on the last 8th of each bar
-    if (o.bass !== false && st % 2 === 0) bass.addMono(I.bass(c.bass + 12 + (st === 14 ? 12 : 0), BEAT / 2 * 0.75, { bright: 0.45, sub: 0.7 }), t, full ? 0.5 : 0.35);
-    // 16th-note pluck arpeggio through the chord, one octave up
-    if (o.arp !== false) {
-      const notes = [...c.notes, c.notes[0] + 12];
-      const n = notes[[0, 1, 2, 3, 2, 1, 2, 3][st % 8]] + 12;
-      const x = I.pluck(n, { decay: 0.18, cutoff: 3200 });
-      arp.addMono(x, t, 0.09 * (st % 4 === 0 ? 1.3 : 1), st % 2 ? 0.35 : -0.35);
-      dly.addMono(x, t, 0.025);
-    }
-    // soft piano chords on 1 and the "and" of 2
-    if (o.keys !== false && (st === 0 || st === 6)) for (const n of c.notes) keys.addMono(I.epiano(n + 12, BEAT * 1.4, { index: 0.7 }), t, 0.07);
-  });
-};
-corporate(2, 4, { full: false, bass: false, keys: false });     // MILMO: a light pulse
-corporate(4, 18, {});                                           // vision -> the three movements
-corporate(18, 20, { drums: false });                            // sunday: breathe
-corporate(20, 35, {});                                          // the life of the Zone
-corporate(35, 38, {});                                          // the goal, building
-corporate(41, 44, {});                                          // the finale
-// risers into the big sections
-for (const b of [4, 20, 35]) fx.addMono(I.noiseSweep(1.9, 300, 8000, { q: 0.9, shape: (x) => x * x, pink: true }), T(b) - 1.95, 0.16);
+// ================= backing: energetic corporate =================
+// driven by the score's energy map: four-on-the-floor kick, clap + snare on 2 and 4, 16th hats,
+// a pumping octave bass, syncopated supersaw stabs, a 16th pluck arpeggio; snare rolls into
+// every drop and a crash on the downbeat. The sound effects further down are unchanged.
+const K = I.kick({ punch: 1, tail: 0.16 }), KS = I.kick({ punch: 0.6, tail: 0.25, seed: 5 });
+const CL = I.clap({ spread: 0.9 }), SN = I.snare({ tone: 0.8, snap: 1.2, decay: 0.12 });
+const HC = [I.hat(false, 31), I.hat(false, 32)], HO = I.hat(true, 33), SH = [I.shaker(1, 34), I.shaker(0.6, 35)];
+const arp = bus(), saw = bus();
+const ARP = [0, 1, 2, 3, 2, 1, 2, 3, 0, 2, 3, 4, 3, 2, 1, 2];
+const BASS8 = [0, 0, 12, 0, 0, 12, 0, 7];
+clock.eachStep(2, 44, 16, (t, b, st) => {
+  if (t >= sc.S.isaiah[0] && t < sc.S.final3d[0]) return;     // Isaiah keeps its own strings
+  const c = chordAt(t);
+  if (!c) return;
+  const e = sc.energyAt(t), full = e >= 1, roll = sc.rolls.includes(b);
+  // drums
+  if (e >= 0.6 && !(roll && st >= 15)) {
+    if (st % 4 === 0 && (full || st % 8 === 0) && !(roll && st >= 8)) { drums.addMono(full ? K : KS, t, full ? 0.85 : 0.55); kicks.push(t); }
+    if (full && st % 8 === 4 && !roll) { drums.addMono(CL, t, 0.4); drums.addMono(SN, t, 0.22); verb.addMono(CL, t, 0.16); }
+    if (full) drums.addMono(st % 4 === 2 ? HO : HC[st % 2], t, st % 4 === 2 ? 0.1 : (st % 2 ? 0.07 : 0.11), 0.25);
+    else if (st % 2 === 0) drums.addMono(HC[st % 4 === 0 ? 0 : 1], t, 0.09, 0.25);
+    if (full) drums.addMono(SH[st % 2], t, 0.04, -0.35);
+  }
+  // bass: pumping 8ths with octave jumps (long notes in the breakdown)
+  if (st % 2 === 0 && e >= 0.6 && !(roll && st >= 14)) {
+    bass.addMono(I.bass(c.bass + 12 + BASS8[st / 2], BEAT / 2 * 0.7, { bright: full ? 0.7 : 0.4, sub: 0.8 }), t, full ? 0.55 : 0.38);
+  } else if (e < 0.6 && st === 0) bass.addMono(I.bass(c.bass + 12, BEAT * 3.8, { bright: 0.2, sub: 1 }), t, 0.35);
+  // supersaw stabs on the 3-3-2 syncopation (16ths 0, 6, 12) in the full sections
+  if (full && (st === 0 || st === 6 || st === 12)) {
+    for (const n of c.notes) { const x = I.supersaw(n + 12, BEAT * 0.55, { cutoff: 4200, release: 0.12, seed: n }); saw.addStereo(x.L, x.R, t, 0.05); }
+  }
+  // pluck arpeggio, 16ths, through the chord and a ninth on top
+  if (e >= 0.3) {
+    const notes = [...c.notes, c.notes[0] + 12, c.notes[1] + 12];
+    const n = notes[ARP[st]] + 12;
+    const x = I.pluck(n, { decay: full ? 0.16 : 0.24, cutoff: full ? 4200 : 2400 });
+    arp.addMono(x, t, (full ? 0.1 : 0.08) * (st % 4 === 0 ? 1.3 : 1), st % 2 ? 0.4 : -0.4);
+    dly.addMono(x, t, 0.03);
+  }
+  // piano chords: on 1 in the full sections, held in the breakdown
+  if (st === 0) for (const n of c.notes) keys.addMono(I.epiano(n + 12, full ? BEAT * 1.2 : BEAT * 3.5, { index: 0.8 }), t, full ? 0.06 : 0.09);
+});
+// snare rolls: 8ths, then 16ths, louder and louder, a 16th of air before the drop
+for (const b of sc.rolls) {
+  for (let st = 0; st < 15; st++) {
+    if (st < 8 && st % 2) continue;
+    const k = st / 15;
+    drums.addMono(SN, T(b, st / 4), 0.12 + 0.3 * k, (st % 2 ? 0.15 : -0.15));
+  }
+  fx.addMono(I.noiseSweep(BEAT * 3.7, 300, 9000, { q: 0.9, shape: (x) => x * x, pink: true }), T(b), 0.22);
+}
+// drops: crash + sub on the downbeat (the 3D finale brings its own)
+for (const t of sc.drops.filter((t) => t < sc.S.final3d[0])) { drums.addMono(I.crash(Math.round(t)), t, 0.4); hits.addMono(I.subBoom(1.4), t, 0.35); }
 // the intro: a soft kick on 1 and 3 under the letters
 for (let b = 0; b < 2; b++) for (const beat of [0, 2]) { drums.addMono(I.kick({ tail: 0.25 }), T(b, beat), 0.5); kicks.push(T(b, beat)); }
 
@@ -68,10 +82,10 @@ for (const c of sc.chords.filter((c) => c.t0 >= sc.S.isaiah[0] && c.t0 < sc.S.is
   for (const n of c.notes) { const s = I.strings(n + 12, c.t1 - c.t0, { attack: 0.5, release: 0.6, bright: 0.7 }); pad.addStereo(s.L, s.R, c.t0, 0.1); verb.addStereo(s.L, s.R, c.t0, 0.08); }
 }
 
-// the hook on bright piano
+// the hook: bright piano doubled by a pluck lead
 for (const n of sc.hook) {
-  const x = I.epiano(n.midi, n.dur * 1.6, { index: 1.4 });
-  keys.addMono(x, n.t, 0.2, 0.1); verb.addMono(x, n.t, 0.1); dly.addMono(x, n.t, 0.05);
+  const x = I.epiano(n.midi, n.dur * 1.6, { index: 1.4 }), p = I.pluck(n.midi + 12, { decay: 0.3, cutoff: 5200 });
+  keys.addMono(x, n.t, 0.18, 0.1); keys.addMono(p, n.t, 0.12, -0.1); verb.addMono(x, n.t, 0.1); dly.addMono(p, n.t, 0.06);
 }
 
 // ================= 3D opening (0 – 8 s) =================
@@ -195,13 +209,13 @@ for (const n of ['D5', 'F#5', 'A5']) keys.addMono(I.bell(m(n), 3), f.tag + 0.03 
 keys.addMono(I.bell(m('D6'), 2), f.welcome, 0.12);
 
 // ================= mix =================
-MIX.sidechain([pad, bass, arp], kicks.filter((t) => t >= T(4)), { depth: 0.35 });
+MIX.sidechain([pad, bass, arp, saw], kicks.filter((t) => t >= T(4)), { depth: 0.55 });
 const stems = {
-  drums, bass, pad, keys, arp, brass, fx, hits,
+  drums, bass, pad, keys, arp, saw, brass, fx, hits,
   verb: reverb(verb, { room: 0.85, damp: 0.35 }),
   dly: pingpong(dly, BEAT * 0.75, 0.35, 3500),
 };
-const GAIN = { arp: 2.2, drums: 0.55, bass: 0.5, pad: 1.8, keys: 0.9, brass: 1.6, fx: 0.8, hits: 0.9, verb: 1, dly: 1 };
+const GAIN = { saw: 10, arp: 2, drums: 0.6, bass: 0.5, pad: 1.8, keys: 0.9, brass: 1.6, fx: 0.8, hits: 0.9, verb: 1, dly: 1 };
 const out = path.join(__dirname, 'out');
 const mix = MIX.mixdown(stems, GAIN, { stemDir: process.env.STEMS ? out : null });
 MIX.highpass(mix, 24);

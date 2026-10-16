@@ -99,6 +99,14 @@
       swing: 6.6 + o, tag: 8.0 + o, welcome: 10.3 + o }; })(),
   };
 
+  // ---------- energy map: shared by the music (song.js) and the camera (film.js) ----------
+  // 0 = silence, 0.3 = breakdown, 0.6 = light groove, 1 = full groove
+  const ENERGY = [[0, 0.4], [T(2), 0.6], [T(4), 1], [S.sunday[0], 0.3], [S.week[0], 1], [S.isaiah[0], 0.2], [S.final3d[0], 1]];
+  const energyAt = (t) => { let e = 0; for (const [t0, v] of ENERGY) if (t >= t0) e = v; return e; };
+  // drops: a crash, a flash and a camera hit on the downbeat; rolls: a snare build in the bar before
+  const drops = [T(4), T(12), T(20), T(35), T(41)];
+  const rolls = [3, 11, 19, 34];
+
   const markers = {
     birth: { t: ev.open.birth, sync: 'a' },
     vision: { t: T(4), sync: 'av' },
@@ -117,6 +125,6 @@
     final: { t: T(41), sync: 'a' },
   };
 
-  const SCORE = { FPS, STYLE, FORMAT, W, H, SAFE, WIDE, DURATION, clock, T, BEAT, S, D3_OFFSET, m, chords, chordAt, HOOK, hook, ev, markers };
+  const SCORE = { ENERGY, energyAt, drops, rolls, FPS, STYLE, FORMAT, W, H, SAFE, WIDE, DURATION, clock, T, BEAT, S, D3_OFFSET, m, chords, chordAt, HOOK, hook, ev, markers };
   if (node) module.exports = SCORE; else globalThis.SCORE = SCORE;
 })();

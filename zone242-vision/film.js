@@ -21,20 +21,73 @@
     const m = G.measure(ctx, str, size, F, weight);
     return m > w ? size * w / m : size;
   };
-  function bg(ctx, color) { ctx.fillStyle = color; ctx.fillRect(0, 0, W, H); }
+  // the frame's clock: set by draw() so every helper can follow the music
+  let NOW = 0;
+  const pulseBeat = (t) => Math.exp(-clock.phase(t) * 7);           // 1 on each beat, decays
+  const energy = (t) => S.energyAt(t);
+  const dropHit = (t) => S.drops.reduce((k, d) => (t >= d ? Math.max(k, Math.exp(-(t - d) * 6)) : k), 0);
+  // the background lives on the beat: a light band sweeps each bar, corner brackets breathe on each beat
+  function bg(ctx, color) {
+    ctx.fillStyle = color; ctx.fillRect(0, 0, W, H);
+    const t = NOW, e = energy(t), ink = color === WHITE ? BLUE : WHITE;
+    if (e >= 1) {
+      const bar = clock.BAR, ph = ((t % bar) + bar) % bar / bar;
+      const k = clamp(ph / 0.35);
+      if (k < 1) {
+        const x = lerp(-W * 0.4, W * 1.4, ease.inOutCubic(k));
+        ctx.save(); ctx.globalAlpha = color === WHITE ? 0.05 : 0.07; ctx.fillStyle = ink;
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x + 260, 0); ctx.lineTo(x + 260 - H * 0.45, H); ctx.lineTo(x - H * 0.45, H); ctx.fill();
+        ctx.restore();
+      }
+    }
+    const p = e >= 0.6 ? pulseBeat(t) : 0, m = 46 + 10 * (1 - p), L = 54, th = 7;
+    ctx.save(); ctx.globalAlpha = 0.28 + 0.3 * p; ctx.fillStyle = ink;
+    [[m, m, 1, 1], [W - m, m, -1, 1], [W - m, H - m, -1, -1], [m, H - m, 1, -1]].forEach(([x, y, sx, sy]) => {
+      ctx.fillRect(x, y, sx * L, sy * th); ctx.fillRect(x, y, sx * th, sy * L);
+    });
+    ctx.restore();
+  }
+  // an impact: a square shockwave and a spray of brand squares
+  function burst(ctx, x, y, t, t0, color = ORANGE, scale = 1) {
+    const a = t - t0;
+    if (a < 0 || a > 0.7) return;
+    const k = a / 0.7, r = ease.outExpo(k) * 260 * scale;
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(Math.PI / 4 * ease.outCubic(k));
+    ctx.globalAlpha = 1 - k; ctx.strokeStyle = color; ctx.lineWidth = 14 * (1 - k) + 1;
+    ctx.strokeRect(-r / 2, -r / 2, r, r);
+    ctx.restore();
+    ctx.save(); ctx.globalAlpha = 1 - k; ctx.fillStyle = color;
+    for (let i = 0; i < 12; i++) {
+      const an = (i / 12) * Math.PI * 2 + U.hash(t0 * 7, i) * 0.5, d = ease.outExpo(k) * (180 + U.hash(t0, i) * 160) * scale, sz = (10 + U.hash(i, t0) * 12) * (1 - k);
+      ctx.fillRect(x + Math.cos(an) * d - sz / 2, y + Math.sin(an) * d - sz / 2, sz, sz);
+    }
+    ctx.restore();
+  }
 
   // a word that lands on its beat: drops in from above-scale, overshoots, settles
+  // each letter lands on its own: it drops from above, spins upright and overshoots
   function stamp(ctx, str, x, y, size, t, t0, o = {}) {
-    const k = prog(t, t0, 0.24);
-    if (k <= 0) return;
-    const s = lerp(o.from ?? 1.6, 1, ease.outBack(k, 2.2));
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.scale(s, s);
-    if (o.rot) ctx.rotate(o.rot);
-    G.text(ctx, str, 0, 0, { size, fam: o.fam ?? F, weight: o.weight ?? 900, color: o.color ?? WHITE,
-      align: o.align ?? 'center', baseline: 'middle', alpha: clamp(k * 4) * (o.alpha ?? 1) });
-    ctx.restore();
+    if (t < t0) return;
+    if (o.burst) burst(ctx, x, y, t, t0 + 0.12, o.burstColor ?? ORANGE, size / 120);
+    const fam = o.fam ?? F, weight = o.weight ?? 900, align = o.align ?? 'center';
+    const total = G.measure(ctx, str, size, fam, weight);
+    const x0 = align === 'center' ? x - total / 2 : align === 'right' ? x - total : x;
+    const stag = Math.min(0.03, 0.3 / str.length);
+    for (let i = 0; i < str.length; i++) {
+      const ch = str[i];
+      if (ch === ' ') continue;
+      const k = prog(t, t0 + i * stag, 0.3);
+      if (k <= 0) continue;
+      const px = x0 + G.measure(ctx, str.slice(0, i), size, fam, weight), w = G.measure(ctx, ch, size, fam, weight);
+      const b = ease.outBack(k, 2.4), s = lerp(o.from ?? 1.9, 1, b);
+      ctx.save();
+      ctx.translate(px + w / 2, y - (1 - ease.outExpo(k)) * size * 0.7);
+      ctx.rotate((1 - Math.min(b, 1)) * (i % 2 ? 0.5 : -0.5) + (o.rot ?? 0));
+      ctx.scale(s, s);
+      G.text(ctx, ch, 0, 0, { size, fam, weight, color: o.color ?? WHITE, align: 'center', baseline: 'middle', alpha: clamp(k * 5) * (o.alpha ?? 1) });
+      ctx.restore();
+    }
   }
   // a line that rises out of a mask
   function rise(ctx, str, x, y, size, t, t0, o = {}) {
@@ -42,6 +95,12 @@
     if (k <= 0) return;
     const w = G.measure(ctx, str, size, o.fam ?? F, o.weight ?? 900) + 40;
     const x0 = o.align === 'left' ? x - 20 : x - w / 2;
+    // a block of colour sweeps through first, the words appear in its wake
+    const sw = prog(t, t0, 0.32);
+    if (sw > 0 && sw < 1 && !o.noBar) {
+      const a = ease.inOutCubic(sw), l = x0 + w * Math.max(0, a * 2 - 1), r = x0 + w * Math.min(1, a * 2);
+      ctx.fillStyle = o.barColor ?? ORANGE; ctx.fillRect(l, y - size * 0.62, r - l, size * 1.24);
+    }
     ctx.save();
     ctx.beginPath(); ctx.rect(x0, y - size * 0.75, w, size * 1.5); ctx.clip();
     G.text(ctx, str, x, y + (1 - ease.outExpo(k)) * size * 1.3, { size, fam: o.fam ?? F, weight: o.weight ?? 900,
@@ -87,8 +146,8 @@
     ctx.fillStyle = color;
     for (let i = 0; i < 26; i++) {
       const r = U.hash(seed, i), r2 = U.hash(seed, i, 2), r3 = U.hash(seed, i, 3);
-      const s = 8 + r3 * 26;
-      const x = ((r * W + t * (20 + r2 * 40)) % (W + 80)) - 40;
+      const s = (8 + r3 * 26) * (1 + 0.6 * (energy(t) >= 1 ? pulseBeat(t + r * 0.25) : 0));
+      const x = ((r * W + t * (20 + r2 * 40) * (energy(t) >= 1 ? 2.2 : 1)) % (W + 80)) - 40;
       const y = (r2 * H + Math.sin(t * 0.8 + i) * 30);
       ctx.globalAlpha = alpha * (0.4 + r3 * 0.6);
       ctx.fillRect(x, y, s, s);
@@ -109,7 +168,7 @@
       ['BÂTIR', 120, WHITE, -300], ['À COTONOU', 120, WHITE, -165], ['UNE ÉGLISE DE', 82, WHITE, -40],
       ['MILLIERS', 210, ORANGE, 110], ['DE DISCIPLES', 120, WHITE, 270],
     ];
-    rows.forEach(([w, s, c, dy], i) => stamp(ctx, w, cx, cy + sz(dy), fit(ctx, w, sz(s)), t, e.words[i], { color: c }));
+    rows.forEach(([w, s, c, dy], i) => stamp(ctx, w, cx, cy + sz(dy), fit(ctx, w, sz(s)), t, e.words[i], { color: c, burst: i === 3, burstColor: WHITE }));
   }
 
   function rooted(ctx, t) {
@@ -163,7 +222,7 @@
     if (t >= e.text1) plate(cy - 330 * VS, 150 * VS);
     if (t >= e.text2) plate(cy + 400 * VS, 150 * VS);
     rise(ctx, 'UNE GRANDE ÉGLISE,', cx, cy - 330 * VS, fit(ctx, 'UNE GRANDE ÉGLISE,', 84 * VS), t, e.text1, { color: INK });
-    stamp(ctx, 'OÙ CHACUN EST CONNU.', cx, cy + 400 * VS, fit(ctx, 'OÙ CHACUN EST CONNU.', 84 * VS), t, e.text2, { color: ORANGE });
+    stamp(ctx, 'OÙ CHACUN EST CONNU.', cx, cy + 400 * VS, fit(ctx, 'OÙ CHACUN EST CONNU.', 84 * VS), t, e.text2, { color: ORANGE, burst: true });
   }
 
   function acts(ctx, t) {
@@ -174,7 +233,8 @@
     const sy = cy - 20 * VS;
     kicker(ctx, 'ACTES 2:42', cx, cy - 470 * VS, t, e.ref, ORANGE, 40);
     const ck = e.corners.map((c) => ease.outBack(prog(t, c, 0.3), 2));
-    symbol(ctx, cx, sy, size, { color: WHITE, corners: ck, center: ease.outBack(prog(t, e.center, 0.35), 2.4) });
+    burst(ctx, cx, sy, t, e.center, ORANGE, 1.6);
+    symbol(ctx, cx, sy, size, { color: WHITE, corners: ck, center: ease.outBack(prog(t, e.center, 0.35), 2.4), rot: (1 - ease.outBack(prog(t, e.corners[0], 0.8), 1.5)) * 0.8 });
     // labels sit outside each corner
     // two-line labels beside each corner, aligned away from the symbol
     const labels = [['LA', 'PAROLE'], ['LA', 'COMMUNION'], ['LE PAIN', 'PARTAGÉ'], ['LA', 'PRIÈRE']];
@@ -200,9 +260,11 @@
     ctx.translate(cx + (1 - k) * W * o.dir, cy - 390 * VS);
     const p = beatPunch(t);
     ctx.scale(p, p);
+    ctx.transform(1, 0, (1 - k) * -0.6 * o.dir, 1, 0, 0);   // leans into its motion, straightens on arrival
     G.text(ctx, o.word, 0, 0, { size: ws, fam: F, weight: 900, color: WHITE, align: 'center', baseline: 'middle', alpha: clamp(k * 3) });
     ctx.restore();
     kicker(ctx, o.kicker, cx, cy - 510 * VS, t, e.word + 0.1, o.kickerColor, 32);
+    burst(ctx, cx, cy - 390 * VS, t, e.word + 0.3, o.bg === ORANGE ? WHITE : ORANGE, 2);
     o.draw(ctx, t);
     // tagline
     const tag = o.tag;
@@ -320,7 +382,7 @@
         ctx.fillRect(cx + Math.cos(a) * r - s / 2, y0 + Math.sin(a) * r - s / 2, s, s);
       }
       rise(ctx, 'LE LUNDI', cx, cy - 360 * VS, fit(ctx, 'LE LUNDI', 110 * VS), t, e.line2 - 0.25);
-      stamp(ctx, 'ENVOIE.', cx, cy + 330 * VS, fit(ctx, 'ENVOIE.', 150 * VS), t, e.line2, { color: ORANGE });
+      stamp(ctx, 'ENVOIE.', cx, cy + 330 * VS, fit(ctx, 'ENVOIE.', 150 * VS), t, e.line2, { color: ORANGE, burst: true, burstColor: WHITE });
     }
   }
 
@@ -349,6 +411,7 @@
     rise(ctx, 'PERSONNES ACTIVES,', cx, cy + 190 * VS, fit(ctx, 'PERSONNES ACTIVES,', 58 * VS), t, e.label);
     rise(ctx, 'INTÉGRÉES ET ENGAGÉES', cx, cy + 260 * VS, fit(ctx, 'INTÉGRÉES ET ENGAGÉES', 58 * VS), t, e.label + 0.12);
     // the stamp: an orange tag that slams on
+    burst(ctx, cx, cy + 400 * VS, t, e.stamp, ORANGE, 1.4);
     const sk = prog(t, e.stamp, 0.22);
     if (sk > 0) {
       const s = lerp(2.2, 1, ease.outBack(sk, 1.8));
@@ -423,7 +486,7 @@
   }
   function title(ctx, small, big, t, t0, colors) {
     kicker(ctx, small, cx, cy - 560 * VS, t, t0, colors[0], 32);
-    stamp(ctx, big, cx, cy - 480 * VS, fit(ctx, big, 76 * VS), t, t0 + 0.05, { color: colors[1] });
+    stamp(ctx, big, cx, cy - 480 * VS, fit(ctx, big, 76 * VS), t, t0 + 0.05, { color: colors[1], burst: true, burstColor: colors[0] });
   }
 
   // the week: one row per rhythm, landing on the beat
@@ -600,7 +663,67 @@
     [S.S.signature, signature], [S.S.gather, gather], [S.S.cap, cap],
     [S.S.isaiah, isaiah], [S.S.final3d, placeholder3d],
   ];
-  const WIPE = 0.26;
+  const TW = 0.28;   // half-length of a transition, centred on the scene cut
+  const TYPES = ['bars', 'slide', 'iris'];
+  const is2D = (j) => j >= 1 && j < SCENES.length - 1;
+
+  // the camera: a punch on every beat in the full sections, a zoom settle at each cut,
+  // a hit with shake on every drop
+  function camera(ctx, t, a, f) {
+    const e = energy(t), hit = dropHit(t);
+    const push = 1 + 0.03 * clamp((t - a) / 4) + (e >= 1 ? 0.012 * pulseBeat(t) : 0) + 0.07 * Math.exp(-(t - a) * 7) + 0.05 * hit;
+    const rot = 0.004 * Math.sin(t * 0.9) + 0.02 * hit * U.noise1(t * 25, 3);
+    const sh = 16 * hit;
+    ctx.save();
+    ctx.translate(W / 2 + U.noise1(t * 30, 1) * sh, H / 2 + U.noise1(t * 30, 2) * sh);
+    ctx.rotate(rot); ctx.scale(push, push);
+    ctx.translate(-W / 2, -H / 2);
+    f(ctx, t);
+    ctx.restore();
+  }
+
+  function transition(ctx, t, a, kind, prevFn, nextFn, prevA) {
+    const k = clamp((t - (a - TW)) / (2 * TW));        // 0 .. 1 across the cut
+    if (kind === 'bars') {
+      // five brand bars rise to cover the old scene, then leave upward over the new one
+      const cols = [ORANGE, BLUE, NAVY, ORANGE, BLUE];
+      if (t < a) camera(ctx, t, prevA, prevFn); else camera(ctx, t, a, nextFn);
+      cols.forEach((c, i) => {
+        const bw = W / cols.length, d = i * 0.06;
+        const kin = ease.inOutCubic(clamp((k - d) / (0.5 - 0.06 * 4) / 1)), kout = ease.inOutCubic(clamp((k - 0.5 - d) / (0.5 - 0.06 * 4)));
+        const top = kout > 0 ? -H * kout : H * (1 - kin);
+        ctx.fillStyle = c; ctx.fillRect(i * bw - 1, top, bw + 2, H);
+      });
+    } else if (kind === 'iris') {
+      // the new scene opens inside the ZONE symbol's frame
+      camera(ctx, t, prevA, (c2, tt) => { c2.save(); c2.translate(W / 2, H / 2); c2.scale(1 + 0.25 * k, 1 + 0.25 * k); c2.translate(-W / 2, -H / 2); prevFn(c2, tt); c2.restore(); });
+      if (t >= a - TW * 0.4) {
+        const q = ease.inOutCubic(clamp((t - (a - TW * 0.4)) / (TW * 1.4)));
+        const rw = W * 1.05 * q, rh = H * 1.05 * q;
+        ctx.save(); ctx.beginPath(); ctx.rect(W / 2 - rw / 2, H / 2 - rh / 2, rw, rh); ctx.clip();
+        camera(ctx, t, a, nextFn); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 1 - q * 0.6;
+        ctx.fillStyle = ORANGE; const th = 18, L = 120;
+        [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(([sx, sy]) => {
+          const x = W / 2 + sx * rw / 2, y = H / 2 + sy * rh / 2;
+          ctx.fillRect(x, y, -sx * L, -sy * th); ctx.fillRect(x, y, -sx * th, -sy * L);
+        });
+        ctx.restore();
+      }
+    } else {
+      // slide: the new scene pushes the old one out, led by an orange edge and speed lines
+      const q = ease.inOutCubic(k), dir = 1;  // always pushes to the left
+      ctx.save(); ctx.translate(-W * q * 0.35 * dir, 0); camera(ctx, t, prevA, prevFn); ctx.restore();
+      ctx.save(); ctx.translate(W * (1 - q) * dir, 0); camera(ctx, t, a, nextFn);
+      ctx.fillStyle = ORANGE; ctx.fillRect(-26, 0, 26, H); ctx.restore();
+      ctx.save(); ctx.globalAlpha = Math.sin(Math.PI * k) * 0.8; ctx.fillStyle = WHITE;
+      for (let i = 0; i < 9; i++) {
+        const y = U.hash(a, i) * H, len = 200 + U.hash(i, a) * 500, x = W * (1 - q) + (U.hash(a, i, 2) - 0.5) * 400;
+        ctx.fillRect(x, y, len, 4 + U.hash(i, a, 3) * 6);
+      }
+      ctx.restore();
+    }
+  }
 
   Studio.film({
     async init() {
@@ -611,24 +734,18 @@
       for (const n of ICONS) for (const c of [BLUE, WHITE, ORANGE]) await loadIcon(n, c);
     },
     draw(ctx, t) {
+      NOW = t;
       const i = SCENES.findIndex(([[a, b]]) => t >= a && t < b);
       const idx = i < 0 ? SCENES.length - 1 : i;
       const [[a], fn] = SCENES[idx];
-      const prev = idx > 1 && idx < SCENES.length - 1 ? SCENES[idx - 1][1] : null;
-      // a slight push-in over each scene keeps the frame moving
-      const push = 1 + 0.03 * clamp((t - a) / 4);
-      const drawScene = (f) => { ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(push, push); ctx.translate(-W / 2, -H / 2); f(ctx, t); ctx.restore(); };
-      if (prev && t < a + WIPE) {
-        // wipe: the new scene slides over the old one, led by an orange edge
-        prev(ctx, t);
-        const k = ease.inOutCubic((t - a) / WIPE);
-        const dir = idx % 2 ? 1 : -1;
-        const edge = dir > 0 ? W * k : W * (1 - k);
-        ctx.save(); ctx.beginPath();
-        if (dir > 0) ctx.rect(0, 0, edge, H); else ctx.rect(edge, 0, W - edge, H);
-        ctx.clip(); drawScene(fn); ctx.restore();
-        ctx.fillStyle = ORANGE; ctx.fillRect(edge - (dir > 0 ? 24 : 0), 0, 24, H);
-      } else drawScene(fn);
+      // is a cut near? (the one that starts this scene, or the next one)
+      const next = SCENES[idx + 1];
+      if (is2D(idx) && is2D(idx - 1) && t < a + TW) transition(ctx, t, a, TYPES[idx % 3], SCENES[idx - 1][1], fn, SCENES[idx - 1][0][0]);
+      else if (next && is2D(idx) && is2D(idx + 1) && t >= next[0][0] - TW) transition(ctx, t, next[0][0], TYPES[(idx + 1) % 3], fn, next[1], a);
+      else camera(ctx, t, a, fn);
+      // the drop: a white flash on the downbeat
+      const fl = S.drops.reduce((m, d) => (t >= d && t < d + 0.4 ? Math.max(m, 0.6 * Math.exp(-(t - d) * 12)) : m), 0);
+      if (fl > 0.01 && is2D(idx)) { ctx.fillStyle = `rgba(255,255,255,${fl})`; ctx.fillRect(0, 0, W, H); }
     },
     post: { paper: 0, vignette: 0.12, grain: 0.025 },
     fadeOut: 0,
