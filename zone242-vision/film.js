@@ -8,10 +8,10 @@
 //
 // Every visual hit lands on an event of score.js, so the sound effects stay exactly in sync.
 // No camera: the frame never zooms, shakes or pulses; only the elements inside it move.
-// No icons, no photos: type and brand shapes only, sharp at any resolution.
+// No icons, no photos: type, brand shapes and flat illustrations drawn in code (illus.js), sharp at any size.
 // [0, 8) and [82, 90) are 3D: tools/build.sh replaces them with the three.js renders.
 (function () {
-  const U = globalThis.U, G = globalThis.G, S = globalThis.SCORE, Studio = globalThis.Studio;
+  const U = globalThis.U, G = globalThis.G, S = globalThis.SCORE, Studio = globalThis.Studio, IL = globalThis.IL;
   const { ev } = S;
   const { clamp, lerp, ease } = U;
   const W = G.W, H = G.H;
@@ -406,91 +406,92 @@
     },
   };
 
-  // ---------- 09 · the week ----------
-  const Wk = { lx: X0 + 14, y0: 390, dy: 110 };
+  // ---------- 09 · the week: five moments, five pictures on one line ----------
+  const Wk = { pw: 296, gap: 30, py: 318, ph: 300, ly: 664 };
+  const wkX = (i) => X0 + i * (Wk.pw + Wk.gap);
+  const WEEK = [
+    ['DIM', 'CULTE ZONE', ['Toute la maison,', 'chaque dimanche'], IL.culte],
+    ['SEM. A', 'ZONE DE CROISSANCE', ['Environ 8 personnes', 'autour d’un Berger'], IL.groupe],
+    ['SEM. B', 'ZONE FAMILY', ['La foi vécue', 'à la maison'], IL.famille],
+    ['VEN', 'PRIÈRE ENSEMBLE', ['60 à 90 minutes pour', 'apprendre à prier'], IL.priere],
+    ['7/7', 'ZONE DIGITAL', ['L’application ZONE 242,', 'chaque jour'], IL.digital],
+  ];
   const week = {
     range: S.S.week,
     draw(ctx, t) {
       bg(ctx, NAVY);
       const e = ev.week;
-      kicker(ctx, 'VIVRE LA ZONE', X0, 168, t, e.title);
-      reveal(ctx, 'UNE SEMAINE, UNE VIE', X0, 262, 72, t, e.title + 0.05);
-      line(ctx, Wk.lx, Wk.y0 - 30, Wk.lx, Wk.y0 + 4 * Wk.dy + 30, ease.inOutCubic(prog(t, e.title, 0.6)), 'rgba(255,255,255,0.25)', 3);
-      [['DIM', 'CULTE ZONE', 'Toute la maison, chaque dimanche'],
-        ['SEM. A', 'ZONE DE CROISSANCE', 'Environ 8 personnes autour d’un Berger'],
-        ['SEM. B', 'ZONE FAMILY', 'La foi vécue à la maison'],
-        ['VEN', 'PRIÈRE ENSEMBLE', '60 à 90 minutes pour apprendre à prier'],
-        ['7/7', 'ZONE DIGITAL', 'L’application ZONE 242, chaque jour']].forEach(([d, n, s], i) => {
-        const y = Wk.y0 + i * Wk.dy, t0 = e.items[i];
-        kicker(ctx, d, X0 + 60, y, t, t0, ORANGE, 26);
-        reveal(ctx, n, X0 + 250, y - 14, 42, t, t0);
-        reveal(ctx, s, X0 + 250, y + 30, 26, t, t0 + 0.1, { color: SOFT, weight: 700 });
+      kicker(ctx, 'VIVRE LA ZONE', X0, 160, t, e.title);
+      reveal(ctx, 'UNE SEMAINE, UNE VIE', X0, 240, 64, t, e.title + 0.05);
+      line(ctx, X0, Wk.ly, XR, Wk.ly, ease.inOutCubic(prog(t, e.title, 0.7)), 'rgba(255,255,255,0.22)', 3);
+      WEEK.forEach(([d, n, sub, art], i) => {
+        const x = wkX(i), t0 = e.items[i];
+        // the picture rises with the whoosh and lands on the beat
+        IL.panel(ctx, x, Wk.py, Wk.pw, Wk.ph, IL.pop(t, t0 - 0.15, 0.45, 1.5), 'rise', (c, w, h) => art(c, w, h, t, t0), 20);
+        const nk = IL.pop(t, t0 - 0.05, 0.3, 2);
+        if (nk > 0) { ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.fillRect(x + 12 - 5 * nk, Wk.ly - 5 * nk, 10 * nk, 10 * nk); }
+        kicker(ctx, d, x, Wk.ly + 40, t, t0, ORANGE, 22);
+        reveal(ctx, n, x, Wk.ly + 86, fit(ctx, n, 30, Wk.pw), t, t0 + 0.06);
+        sub.forEach((s, j) => reveal(ctx, s, x, Wk.ly + 128 + j * 30, 20, t, t0 + 0.12 + j * 0.05, { color: SOFT, weight: 700 }));
       });
-      reveal(ctx, 'UNE FOI', 1110, 480, 72, t, e.tag);
-      reveal(ctx, 'QUI SE VIT', 1110, 578, 72, t, e.tag + 0.12);
-      reveal(ctx, 'CHAQUE JOUR.', 1110, 676, 72, t, e.tag + 0.24, { underline: ORANGE });
+      reveal(ctx, 'UNE FOI QUI SE VIT CHAQUE JOUR.', X0, 948, 54, t, e.tag, { underline: ORANGE });
     },
-    sq(ctx, t) { return hops(t, ev.week.items.map((tt, i) => ({ t: tt, x: Wk.lx, y: Wk.y0 + i * Wk.dy, s: 26 })), 0.28, 30); },
+    sq(ctx, t) { return hops(t, ev.week.items.map((tt, i) => ({ t: tt, x: wkX(i) + 12, y: Wk.ly, s: 24 })), 0.28, 40); },
   };
 
-  // ---------- 10 · all the generations ----------
-  const Gn = { sx: 1430, sy: 520, size: 380 };
+  // ---------- 10 · all the generations: they grow up side by side, the light over each one ----------
+  const GY = 628;
+  const genX = (i) => X0 + 200 + i * 400;
+  const GEN = [
+    { age: '0–10', names: ['ZONE KIDS'], halo: 120, head: 170, hx: 0,
+      draw(ctx, x, t, t0) {
+        const k = IL.pop(t, t0, 0.42), s = 170 / 300;
+        // a balloon on a string
+        const bk = IL.pop(t, t0 + 0.1, 0.5, 1.4), bx = x - 74, by = GY - 300 + Math.sin(t * 2.2) * 6 + (1 - Math.min(bk, 1)) * 120;
+        if (bk > 0) {
+          ctx.strokeStyle = MUTE; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x - 64 * s, GY - 250 * s); ctx.quadraticCurveTo(bx - 10, by + 80, bx, by + 38); ctx.stroke();
+          ctx.save(); ctx.globalAlpha *= U.clamp(bk * 3); ctx.fillStyle = IL.C.LILAC; ctx.beginPath(); ctx.ellipse(bx, by, 30, 37, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.beginPath(); ctx.ellipse(bx - 10, by - 13, 6, 10, -0.5, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+        }
+        IL.person(ctx, x, GY, 170, { k, kid: true, top: ORANGE, bottom: NAVY, skin: IL.SKIN[2], hair: 'puffs', hands: [[-64, -250], [48, -108]], t });
+      } },
+    { age: '11–15', names: ['ZONE TEENS'], halo: 140, head: 240, hx: 0,
+      draw(ctx, x, t, t0) { IL.person(ctx, x, GY, 240, { k: IL.pop(t, t0, 0.42), top: IL.C.LILAC, bottom: IL.C.DENIM, skin: IL.SKIN[1], hair: 'cap', capCol: ORANGE, pack: BLUE, pose: 'wave', t }); } },
+    { age: '16 +', names: ['ZONE YOUTH'], halo: 160, head: 290, hx: 0,
+      draw(ctx, x, t, t0) { IL.person(ctx, x, GY, 290, { k: IL.pop(t, t0, 0.42), outfit: 'hoodie', top: BLUE, bottom: NAVY, skin: IL.SKIN[3], hair: 'long', phones: NAVY, pose: 'pocket', t }); } },
+    { age: 'TOUS', names: ['ADULTES', '& FAMILLES'], halo: 185, head: 300, hx: -45,
+      draw(ctx, x, t, t0) {
+        const fx = x - 95, mx = x + 5, gx = x + 112, meet = [x - 45, GY - 112];
+        IL.person(ctx, gx, GY, 252, { k: IL.pop(t, t0 + 0.12, 0.42), outfit: 'gown', top: IL.C.LILAC, hair: 'wrap', wrap: NAVY, skin: IL.SKIN[4], item: 'cane', flip: true, t });
+        IL.person(ctx, fx, GY, 300, { k: IL.pop(t, t0, 0.42), outfit: 'shirt', top: NAVY, bottom: NAVY, skin: IL.SKIN[0], hands: [[-48, -108], IL.u(fx, GY, 300, ...meet)], t });
+        IL.person(ctx, mx, GY, 282, { k: IL.pop(t, t0 + 0.06, 0.42), outfit: 'dress', top: ORANGE, pattern: '#FFD3C7', hair: 'wrap', wrap: BLUE, skin: IL.SKIN[2], hands: [IL.u(mx, GY, 282, ...meet), [48, -108]], t });
+      } },
+  ];
   const gens = {
     range: S.S.gens,
     draw(ctx, t) {
       bg(ctx, WHITE);
       const e = ev.gens;
-      kicker(ctx, 'TOUTES LES GÉNÉRATIONS', X0, 168, t, e.title);
-      reveal(ctx, 'UNE MÊME MISSION', X0, 262, 72, t, e.title + 0.05, { color: INK });
-      const ck = prog(t, e.photo - 0.3, 0.42);
-      corners(ctx, Gn.sx, Gn.sy, Gn.size, BLUE, [ck, ck, ck, ck]);
-      // one line of life runs from the youngest to the oldest
-      [['0–10', ['ZONE KIDS']], ['11–15', ['ZONE TEENS']], ['16 +', ['ZONE YOUTH']], ['TOUS', ['ADULTES', '& FAMILLES']]].forEach(([age, name], i) => {
-        const x = X0 + i * 230, y = 470, t0 = e.items[i];
-        line(ctx, x, y, x + 210, y, ease.inOutCubic(prog(t, t0 - 0.25, 0.4)), ORANGE, 5);
-        spin(ctx, age, x, y + 76, 58, t, t0, { color: BLUE });
-        name.forEach((n, j) => reveal(ctx, n, x, y + 146 + j * 36, 28, t, t0 + 0.1 + j * 0.06, { color: INK }));
+      kicker(ctx, 'TOUTES LES GÉNÉRATIONS', X0, 160, t, e.title);
+      reveal(ctx, 'UNE MÊME MISSION', X0, 240, 64, t, e.title + 0.05, { color: INK });
+      line(ctx, X0, GY, XR, GY, ease.inOutCubic(prog(t, e.photo - 0.05, 0.5)), '#DCD8F2', 4);
+      GEN.forEach((g, i) => {
+        const t0 = e.items[i], x = genX(i);
+        const hk = IL.pop(t, t0 - 0.06, 0.4, 2);
+        if (hk > 0) { ctx.fillStyle = '#EEEBFF'; ctx.beginPath(); ctx.arc(x, GY - g.halo, g.halo * hk, Math.PI, 0); ctx.lineTo(x + g.halo * hk, GY); ctx.lineTo(x - g.halo * hk, GY); ctx.closePath(); ctx.fill(); }
+        g.draw(ctx, x, t, t0);
+        spin(ctx, g.age, x, GY + 80, 58, t, t0, { color: BLUE, align: 'center' });
+        g.names.forEach((n, j) => reveal(ctx, n, x, GY + 142 + j * 34, 26, t, t0 + 0.1 + j * 0.06, { color: INK, align: 'center' }));
       });
-      reveal(ctx, 'CHAQUE GÉNÉRATION COMPTE.', X0, 840, 60, t, e.tag, { color: INK, underline: ORANGE });
+      reveal(ctx, 'CHAQUE GÉNÉRATION COMPTE.', X0, 930, 56, t, e.tag, { color: INK, underline: ORANGE });
     },
-    sq(ctx, t) {
-      const k = prog(t, ev.gens.photo - 0.1, 0.4);
-      return { x: Gn.sx, y: Gn.sy, s: Gn.size * 0.229 * (1 + 0.3 * Math.sin(Math.PI * k)), r: -ease.inOutCubic(k) * Math.PI / 2, a: 1 };
-    },
+    // the light waits over the first place, then hops from head to head
+    sq(ctx, t) { return hops(t, ev.gens.items.map((tt, i) => ({ t: tt, x: genX(i) + GEN[i].hx, y: GY - GEN[i].head - 48, s: 26 })), 0.3, 70); },
   };
 
-  // ---------- 11 · 12 · 13 · two communities side by side ----------
-  // marks drawn from type and squares: no icons
-  const letterMark = (L) => (ctx, x, y, t, t0) => spin(ctx, L, x, y, 230, t, t0, { align: 'center' });
-  const textMark = (str, size) => (ctx, x, y, t, t0) => spin(ctx, str, x, y, size, t, t0, { align: 'center' });
-  // two squares come together; where they meet, the light
-  const unionMark = (ctx, x, y, t, t0) => {
-    const k = ease.outBack(prog(t, t0, 0.6), 1.4);
-    if (k <= 0) return;
-    const off = lerp(220, 52, k), s = 160;
-    ctx.save(); ctx.globalAlpha = clamp(k * 3); ctx.strokeStyle = WHITE; ctx.lineWidth = 10;
-    ctx.strokeRect(x - off - s / 2, y - s / 2, s, s); ctx.strokeRect(x + off - s / 2, y - s / 2, s, s);
-    const ov = s - 2 * off;
-    if (ov > 0) { ctx.fillStyle = ORANGE; ctx.fillRect(x - ov / 2, y - s / 2 + 5, ov, s - 10); }
-    ctx.restore();
-  };
-  // one square, and a ring of others around it: a meeting
-  const meetMark = (ctx, x, y, t, t0) => {
-    const k = prog(t, t0, 0.8);
-    if (k <= 0) return;
-    ctx.save(); ctx.strokeStyle = WHITE; ctx.lineWidth = 8; ctx.globalAlpha = clamp(k * 3);
-    const c = 64 * ease.outBack(clamp(k * 2), 2); ctx.strokeRect(x - c / 2, y - c / 2, c, c);
-    ctx.fillStyle = WHITE;
-    for (let i = 0; i < 8; i++) {
-      const q = ease.outBack(prog(t, t0 + 0.1 + i * 0.05, 0.3), 2);
-      if (q <= 0) continue;
-      const a = (i / 8) * Math.PI * 2 + t * 0.4, r = 130, s = 28 * q;
-      ctx.fillRect(x + Math.cos(a) * r - s / 2, y + Math.sin(a) * r - s / 2, s, s);
-    }
-    ctx.restore();
-  };
+  // ---------- 11 · 12 · 13 · two communities side by side, each in its own picture ----------
   function pairScene(key, bgc, kick, cards, tag) {
-    const cx = [X0, 990], cw = 770, y0 = 250, y1 = 820;
+    const cx = [X0, 990], cw = 770, y0 = 250, y1 = 820, win = { dx: 40, y: 282, w: 690, h: 326 };
     return {
       range: S.S[key],
       draw(ctx, t) {
@@ -500,9 +501,10 @@
         cards.forEach((c, i) => {
           const t0 = i ? e.b : e.a, x = cx[i], mx = x + cw / 2;
           frame(ctx, x, y0, cw, y1 - y0, prog(t, t0 - 0.15, 0.4), WHITE);   // the frame lands with the thwack
-          c.mark(ctx, mx, 445, t, t0 + 0.05);
-          reveal(ctx, c.name, mx, 650, fit(ctx, c.name, 48, cw - 80), t, t0 + 0.2, { align: 'center' });
-          reveal(ctx, c.sub, mx, 708, fit(ctx, c.sub, 28, cw - 80, 700), t, t0 + 0.3, { color: SOFT, weight: 700, align: 'center' });
+          // the picture sweeps in from its side with the whoosh
+          IL.panel(ctx, x + win.dx, win.y, win.w, win.h, ease.outExpo(prog(t, t0 - 0.1, 0.5)), i ? 'slideR' : 'slideL', (c2, w, h) => c.art(c2, w, h, t, t0 + 0.15), 16);
+          reveal(ctx, c.name, mx, 668, fit(ctx, c.name, 46, cw - 80), t, t0 + 0.2, { align: 'center' });
+          reveal(ctx, c.sub, mx, 722, fit(ctx, c.sub, 27, cw - 80, 700), t, t0 + 0.3, { color: SOFT, weight: 700, align: 'center' });
         });
         reveal(ctx, tag, CX, 930, fit(ctx, tag, 52, XR - X0), t, e.tag, { align: 'center', underline: ORANGE });
       },
@@ -513,84 +515,102 @@
     };
   }
   const menwomen = pairScene('menwomen', BLUE, 'DEUX UNIVERS · TOUTE L’ANNÉE', [
-    { mark: letterMark('M'), name: 'ZONE MEN', sub: 'Des hommes de foi, de caractère et d’impact.' },
-    { mark: letterMark('W'), name: 'ZONE WOMEN', sub: 'Des femmes de foi, d’influence et de destinée.' },
+    { art: IL.men, name: 'ZONE MEN', sub: 'Des hommes de foi, de caractère et d’impact.' },
+    { art: IL.women, name: 'ZONE WOMEN', sub: 'Des femmes de foi, d’influence et de destinée.' },
   ], 'FOI · IDENTITÉ · INFLUENCE · DESTINÉE.');
   const couples = pairScene('couples', NAVY, 'CHAQUE SAISON COMPTE', [
-    { mark: unionMark, name: 'GALA DES COUPLES', sub: 'Honorer l’alliance. Célébrer l’amour.' },
-    { mark: meetMark, name: 'RENCONTRE DES CÉLIBATAIRES', sub: 'Bien vivre sa saison, préparer son avenir.' },
+    { art: IL.gala, name: 'GALA DES COUPLES', sub: 'Honorer l’alliance. Célébrer l’amour.' },
+    { art: IL.singles, name: 'RENCONTRE DES CÉLIBATAIRES', sub: 'Bien vivre sa saison, préparer son avenir.' },
   ], 'BÂTIR LA FAMILLE, PRÉPARER L’AVENIR.');
   const camps = pairScene('camps', BLUE, '242 CAMPS · IMMERSION', [
-    { mark: textMark('11–15', 170), name: 'CAMP TEENS', sub: 'Une identité solide en Christ.' },
-    { mark: textMark('16 +', 190), name: 'CAMP YOUTH', sub: 'Vocation, leadership, mission.' },
+    { art: IL.campTeens, name: 'CAMP TEENS', sub: 'Une identité solide en Christ.' },
+    { art: IL.campYouth, name: 'CAMP YOUTH', sub: 'Vocation, leadership, mission.' },
   ], 'UNE GÉNÉRATION QUI IMPACTE.');
 
-  // ---------- 14 · signature programmes ----------
+  // ---------- 14 · signature programmes: four pictures, and the light lands in each ----------
+  const SG = { y: 316, w: 370, h: 250, step: 410 };
+  const sgX = (i) => X0 + i * SG.step;
+  const SIG = [
+    ['CHAMBRE HAUTE', ['Présence, adoration,', 'intercession · 4 fois par an'], IL.chambre],
+    ['ZONE OUT', ['La Zone hors les murs,', 'des souvenirs ensemble'], IL.zoneOut],
+    ['ZONE SERVES', ['La Zone sort', 'pour servir la ville'], IL.serves],
+    ['SERVE DAY', ['Découvrir un service,', 'trouver sa place'], IL.serveDay],
+  ];
   const signature = {
     range: S.S.signature,
     draw(ctx, t) {
       bg(ctx, WHITE);
       const e = ev.signature;
-      kicker(ctx, 'NOS PROGRAMMES SIGNATURE', X0, 168, t, e.title);
-      reveal(ctx, 'TOUTE L’ANNÉE', X0, 262, 72, t, e.title + 0.05, { color: INK });
-      [['CHAMBRE HAUTE', ['Présence, adoration,', 'intercession · 4 fois par an']],
-        ['ZONE OUT', ['La Zone hors les murs,', 'des souvenirs ensemble']],
-        ['ZONE SERVES', ['La Zone sort', 'pour servir la ville']],
-        ['SERVE DAY', ['Découvrir un service,', 'trouver sa place']]].forEach(([name, sub], i) => {
-        const x = X0 + i * 400, t0 = e.items[i];
-        line(ctx, x, 380, x, 700, ease.inOutCubic(prog(t, t0 - 0.2, 0.45)), BLUE, 4);
-        spin(ctx, `0${i + 1}`, x + 36, 452, 92, t, t0, { color: BLUE });
-        reveal(ctx, name, x + 36, 562, fit(ctx, name, 40, 340), t, t0 + 0.1, { color: INK });
-        sub.forEach((s, j) => reveal(ctx, s, x + 36, 616 + j * 36, fit(ctx, s, 25, 340, 700), t, t0 + 0.18 + j * 0.05, { color: MUTE, weight: 700 }));
+      kicker(ctx, 'NOS PROGRAMMES SIGNATURE', X0, 160, t, e.title);
+      reveal(ctx, 'TOUTE L’ANNÉE', X0, 240, 64, t, e.title + 0.05, { color: INK });
+      SIG.forEach(([name, sub, art], i) => {
+        const x = sgX(i), t0 = e.items[i];
+        // each picture flips in on its tick
+        IL.panel(ctx, x, SG.y, SG.w, SG.h, IL.pop(t, t0 - 0.12, 0.4, 1.6), 'flip', (c, w, h) => art(c, w, h, t, t0), 18, 10);
+        spin(ctx, `0${i + 1}`, x, 628, 40, t, t0 + 0.05, { color: BLUE });
+        reveal(ctx, name, x + 66, 628, fit(ctx, name, 34, SG.w - 66), t, t0 + 0.1, { color: INK });
+        sub.forEach((s, j) => reveal(ctx, s, x, 678 + j * 32, fit(ctx, s, 22, SG.w, 700), t, t0 + 0.16 + j * 0.05, { color: MUTE, weight: 700 }));
       });
-      reveal(ctx, 'MOINS DE PLATEFORME, PLUS DE PRÉSENCE.', X0, 850, 54, t, e.tag, { color: INK, underline: ORANGE });
+      reveal(ctx, 'MOINS DE PLATEFORME, PLUS DE PRÉSENCE.', X0, 856, 54, t, e.tag, { color: INK, underline: ORANGE });
     },
-    sq(ctx, t) { return hops(t, ev.signature.items.map((tt, i) => ({ t: tt, x: X0 + i * 400, y: 380, s: 24 })), 0.28, 70); },
+    // the light becomes the upper-room window, the sun, the box handed over, the empty place
+    sq(ctx, t) {
+      return hops(t, ev.signature.items.map((tt, i) => {
+        const [fx, fy, s] = SIG[i][2].spot;
+        return { t: tt, x: sgX(i) + fx * SG.w, y: SG.y + fy * SG.h, s };
+      }), 0.3, 90);
+    },
   };
 
-  // ---------- 15 · the big gatherings: one stage, then they line up into a system ----------
-  const GA = [['PUISSANCE & GUÉRISON', 'Deux séminaires pour rencontrer Dieu'],
-    ['AIGLES & OUVRIERS', 'Célébrer ceux qui font vivre la Zone'],
-    ['242 BUSINESS CONFERENCE', 'Foi · business · leadership · impact'],
-    ['14 JOURS · 242 HOURS', 'Jeûne et prière, chaque janvier']];
+  // ---------- 15 · the big gatherings: each slams onto the stage, then docks into one system ----------
+  const GA = [
+    ['PUISSANCE & GUÉRISON', 'Deux séminaires pour rencontrer Dieu', IL.arena, ['PUISSANCE', '& GUÉRISON']],
+    ['AIGLES & OUVRIERS', 'Célébrer ceux qui font vivre la Zone', IL.eagles, ['AIGLES', '& OUVRIERS']],
+    ['242 BUSINESS CONFERENCE', 'Foi · business · leadership · impact', IL.business, ['242 BUSINESS', 'CONFERENCE']],
+    ['14 JOURS · 242 HOURS', 'Jeûne et prière, chaque janvier', IL.fasting, ['14 JOURS', '242 HOURS']],
+  ];
+  const GS = { x: 960, y: 300, w: 800, h: 440 }, CH = { y: 790, w: 384, h: 104, step: 405 };
   const gather = {
     range: S.S.gather,
     draw(ctx, t) {
       bg(ctx, NAVY);
       const e = ev.gather;
-      ghost(ctx, t, 1560, 520, 820, WHITE, 0.05);
-      kicker(ctx, 'LES GRANDS RASSEMBLEMENTS 242', X0, 168, t, e.title);
-      reveal(ctx, 'UNE FOIS PAR AN', X0, 262, 72, t, e.title + 0.05);
+      ghost(ctx, t, 1560, 520, 820, WHITE, 0.04);
+      kicker(ctx, 'LES GRANDS RASSEMBLEMENTS 242', X0, 160, t, e.title);
+      reveal(ctx, 'UNE FOIS PAR AN', X0, 240, 64, t, e.title + 0.05);
       const leaveAt = (i) => (i < 3 ? e.items[i + 1] : e.tag) - 0.12;
-      GA.forEach(([n, s], i) => {
-        if (t < e.items[i] || t > leaveAt(i) + 0.35) return;
+      GA.forEach(([n, s, art], i) => {
+        const t0 = e.items[i];
+        if (t < t0 - 0.2 || t > leaveAt(i) + 0.35) return;
         const out = ease.inCubic(prog(t, leaveAt(i), 0.3));
         ctx.save(); ctx.globalAlpha = 1 - out; ctx.translate(0, -out * 70);
-        G.text(ctx, `0${i + 1}`, XR, 520, { size: 220, fam: F, weight: 900, color: WHITE, align: 'right', baseline: 'middle', alpha: 0.12 });
-        spin(ctx, n, X0 + 60, 500, fit(ctx, n, 100, 1300), t, e.items[i]);
-        reveal(ctx, s, X0 + 60, 590, 34, t, e.items[i] + 0.15, { color: SOFT, weight: 700 });
+        kicker(ctx, `0${i + 1} / 04`, X0 + 60, 410, t, t0, ORANGE, 24);
+        spin(ctx, n, X0 + 60, 500, fit(ctx, n, 76, 690), t, t0);
+        reveal(ctx, s, X0 + 60, 580, 30, t, t0 + 0.15, { color: SOFT, weight: 700 });
+        IL.panel(ctx, GS.x, GS.y, GS.w, GS.h, ease.outCubic(prog(t, t0 - 0.2, 0.2)), 'slam', (c, w, h) => art(c, w, h, t, t0), 22);
         ctx.restore();
       });
-      // each event docks on the shelf as the next one takes the stage
-      GA.forEach(([n], i) => {
+      // each one docks on the shelf, with its picture, as the next one takes the stage
+      GA.forEach(([, , art, lines], i) => {
         const k = ease.outCubic(prog(t, leaveAt(i), 0.4));
         if (k <= 0) return;
-        const x = X0 + i * 404, y = 760 + (1 - k) * 40;
+        const x = X0 + i * CH.step, y = CH.y + (1 - k) * 40, th = CH.h - 16, tw = 150;
         ctx.save(); ctx.globalAlpha = k;
-        ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 2; ctx.strokeRect(x, y, 384, 84);
-        G.text(ctx, `0${i + 1}`, x + 22, y + 42, { size: 22, fam: MONO, weight: 500, color: ORANGE, baseline: 'middle' });
-        G.text(ctx, n, x + 70, y + 42, { size: fit(ctx, n, 22, 296, 800), fam: F, weight: 800, color: WHITE, baseline: 'middle' });
+        ctx.strokeStyle = 'rgba(255,255,255,0.4)'; ctx.lineWidth = 2; ctx.strokeRect(x, y, CH.w, CH.h);
+        IL.panel(ctx, x + 8, y + 8, tw, th, 1, null, (c) => { c.scale(th / GS.h, th / GS.h); art(c, GS.w, GS.h, t, e.items[i]); }, 8);
+        G.text(ctx, `0${i + 1}`, x + 176, y + 26, { size: 20, fam: MONO, weight: 500, color: ORANGE, baseline: 'middle' });
+        lines.forEach((l, j) => G.text(ctx, l, x + 176, y + 56 + j * 28, { size: fit(ctx, l, 22, CH.w - 190, 800), fam: F, weight: 800, color: WHITE, baseline: 'middle' }));
         ctx.restore();
       });
       // and one line ties them together: a system, not a calendar
-      line(ctx, X0, 900, X0 + 3 * 404 + 384, 900, ease.inOutCubic(prog(t, e.tag, 0.6)), ORANGE, 5);
-      reveal(ctx, 'PAS UN CALENDRIER :', X0 + 60, 470, 84, t, e.tag);
-      reveal(ctx, 'UN SYSTÈME.', X0 + 60, 572, 84, t, e.tag + 0.12, { underline: ORANGE });
+      line(ctx, X0, 926, X0 + 3 * CH.step + CH.w, 926, ease.inOutCubic(prog(t, e.tag, 0.6)), ORANGE, 5);
+      reveal(ctx, 'PAS UN CALENDRIER :', CX, 450, 96, t, e.tag, { align: 'center' });
+      reveal(ctx, 'UN SYSTÈME.', CX, 566, 96, t, e.tag + 0.12, { align: 'center', underline: ORANGE });
     },
-    // the light is the stage's bullet: a turn for each new event, then it marks the conclusion
+    // the light is the stage's bullet: a hop for each new event, then it crowns the conclusion
     sq(ctx, t) {
       const e = ev.gather;
-      return hops(t, e.items.map((tt) => ({ t: tt, x: X0 + 18, y: 500, s: 32 })).concat([{ t: e.tag, x: X0 + 18, y: 470, s: 32 }]), 0.3, 0);
+      return hops(t, e.items.map((tt) => ({ t: tt, x: X0 + 18, y: 410, s: 28 })).concat([{ t: e.tag, x: CX, y: 340, s: 36 }]), 0.3, 60);
     },
   };
 
