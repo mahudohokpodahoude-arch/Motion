@@ -1,0 +1,121 @@
+/* Styles des 7 scènes (1080×1920). Zone sûre réseaux sociaux : textes entre y≈220 et y≈1490. */
+
+/* ---------- S1 accroche ---------- */
+#s1 .panel { position: absolute; inset: 0; background: linear-gradient(180deg, #02060f, #040a18); }
+#s1 .panel .edge { position: absolute; left: -60px; width: 1200px; height: 6px; background: linear-gradient(90deg, rgba(255,191,31,0), #ffd34d 25%, #fff6d0 50%, #ffd34d 75%, rgba(255,191,31,0)); box-shadow: 0 0 26px 6px rgba(255,191,31,.65); }
+#s1-line { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: visible; }
+#s1-geo { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: visible; }
+#s1-title { top: 240px; }
+#s1-title .l1 { font-size: 104px; color: #fff; }
+#s1-title .l2 { font-size: 214px; line-height: 1; }
+#s1-title .l3 { font-size: 128px; color: #fff; }
+#s1-title .l4 { font-size: 134px; }
+#s1-title .q { display: inline-block; color: var(--gold); font-size: 1.15em; margin-left: .2em; }
+
+/* ---------- S2 produit ---------- */
+#s2-head { top: 236px; }
+#s2-head .pill { font-size: 38px; }
+#s2-head .h1 { font-size: 132px; margin-top: 14px; color: #fff; }
+#s2-head .h2 { font-size: 112px; }
+.shine { background: linear-gradient(100deg, var(--gold-lo) 0%, var(--gold) 38%, #fff7d6 50%, var(--gold) 62%, var(--gold-lo) 100%); background-size: 300% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; color: transparent; }
+#s2-l1 { top: 1222px; }
+#s2-l1 .a { font-size: 84px; color: #fff; }
+#s2-l1 .b { font-size: 138px; }
+#s2-under { position: absolute; left: 290px; top: 1490px; width: 500px; height: 30px; overflow: visible; }
+#s2-l2 { top: 1218px; }
+#s2-l2 .a { font-size: 84px; color: #fff; }
+#s2-l2 .b { font-size: 132px; }
+#s2-l2 .c { font-family: "Montserrat"; font-weight: 800; font-size: 40px; letter-spacing: .14em; color: var(--soft); text-transform: uppercase; margin-top: 6px; }
+#s2-screen { position: absolute; left: 185px; top: 236px; width: 710px; height: 400px; }
+#s2-screen .fill { position: absolute; inset: 0; border-radius: 16px; background: radial-gradient(120% 120% at 50% 100%, #ffffff 0%, #cfe6ff 35%, #6aa8ff 70%, #2b5fb8 100%); }
+#s2-screen svg { position: absolute; left: -10px; top: -10px; width: 730px; height: 420px; overflow: visible; }
+
+/* ---------- S3 usages ---------- */
+#s3-screen { position: absolute; left: 70px; top: 280px; width: 940px; height: 529px; }
+#s3-screen .scr-in { position: absolute; inset: 0; border-radius: 16px; overflow: hidden; background: #000; }
+#s3-screen .vig { position: absolute; inset: 0; }
+#s3-screen .vig svg { width: 940px; height: 529px; display: block; }
+#s3-screen .scr-flash { position: absolute; inset: 0; background: radial-gradient(120% 120% at 50% 100%, #ffffff 0%, #cfe6ff 35%, #6aa8ff 70%, #2b5fb8 100%); }
+#s3-screen .frame { position: absolute; left: -10px; top: -10px; width: 960px; height: 549px; overflow: visible; }
+#s3-halo { position: absolute; left: -60px; top: 160px; width: 1200px; height: 800px; background: radial-gradient(closest-side, rgba(120,180,255,.30), rgba(120,180,255,0)); }
+#s3-fg { position: absolute; left: 0; top: 640px; width: 1080px; height: 420px; }
+#s3-fg .fg { position: absolute; inset: 0; }
+#s3-fg .fg svg { width: 1080px; height: 420px; display: block; overflow: visible; }
+#s3-lights { position: absolute; inset: 0; }
+#s3-badge { position: absolute; left: 480px; top: 1060px; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffe37a, #ffbf1f 55%, #e88f00); box-shadow: 0 0 40px rgba(255,191,31,.55); }
+#s3-badge svg { position: absolute; left: 26px; top: 26px; width: 68px; height: 68px; overflow: visible; }
+#s3-labels { position: absolute; left: 0; right: 0; top: 1196px; height: 300px; }
+#s3-labels .lab { position: absolute; left: 0; right: 0; top: 0; text-align: center; }
+#s3-labels .a { font-size: 88px; color: #fff; }
+#s3-labels .b { font-size: 132px; }
+#s3-dots { position: absolute; left: 0; right: 0; top: 1500px; display: flex; justify-content: center; gap: 14px; }
+#s3-dots i { display: block; width: 46px; height: 9px; border-radius: 6px; background: rgba(255,255,255,.28); }
+#s3-recap { position: absolute; inset: 0; }
+#s3-recap .tile { position: absolute; width: 440px; height: 330px; border-radius: 28px; background: linear-gradient(160deg, #163a74, #0b1f45); border: 3px solid rgba(255,191,31,.85); box-shadow: 0 20px 50px rgba(0,0,0,.45), 0 0 30px rgba(255,191,31,.18); }
+#s3-recap .tile .ti { position: absolute; left: 150px; top: 50px; width: 140px; height: 140px; color: var(--gold); }
+#s3-recap .tile .tl { position: absolute; left: 0; right: 0; top: 222px; text-align: center; font-family: "Montserrat"; font-weight: 800; font-size: 38px; letter-spacing: .04em; color: #fff; }
+#s3-recap .tile .tl small { display: block; font-size: 26px; font-weight: 700; color: var(--soft); letter-spacing: .06em; margin-top: 4px; }
+#s3-recap .title { position: absolute; left: 0; right: 0; top: 1100px; text-align: center; }
+#s3-recap .title .a { font-size: 96px; color: #fff; }
+#s3-recap .title .b { font-size: 128px; }
+
+/* ---------- S4 fonctionnalités ---------- */
+#s4-top { top: 238px; }
+#s4-top .pill { font-size: 34px; }
+.s4-head { position: absolute; left: 0; right: 0; top: 330px; text-align: center; font-size: 124px; color: #fff; }
+.s4-list { position: absolute; left: 70px; right: 60px; }
+.s4-list .row { position: absolute; left: 0; right: 0; height: 170px; }
+.s4-list .tile { position: absolute; left: 0; top: 10px; width: 150px; height: 150px; border-radius: 30px; background: linear-gradient(160deg, #18407e, #0c2149); border: 3px solid rgba(255,191,31,.9); box-shadow: 0 0 34px rgba(255,191,31,.22); color: var(--gold); }
+.s4-list .tile .ico { position: absolute; left: 30px; top: 30px; width: 90px; height: 90px; }
+.s4-list .txt { position: absolute; left: 184px; right: 0; top: 18px; }
+.s4-list .t { font-family: "Oswald"; font-weight: 700; font-size: 60px; line-height: 1.05; text-transform: uppercase; color: #fff; white-space: nowrap; }
+.s4-list .d { font-family: "Montserrat"; font-weight: 600; font-size: 34px; color: var(--soft); margin-top: 6px; white-space: nowrap; }
+.s4-list .cursor { display: inline-block; width: .08em; height: .8em; background: var(--gold); margin-left: .06em; vertical-align: -.05em; }
+
+/* ---------- S5 prix ---------- */
+#s5-rays { position: absolute; left: -360px; top: -100px; width: 1800px; height: 1800px; border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(255,191,31,.16) 0deg 7deg, rgba(255,191,31,0) 7deg 18deg);
+  -webkit-mask: radial-gradient(closest-side, #000 20%, transparent 100%); mask: radial-gradient(closest-side, #000 20%, transparent 100%); }
+#s5-rings { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: visible; }
+#s5-top { top: 452px; }
+#s5-top .pill { font-size: 36px; }
+#s5-top .tag { font-family: "Montserrat"; font-weight: 800; font-size: 52px; letter-spacing: .32em; color: #fff; margin-top: 26px; padding-left: .32em; }
+#s5-price { top: 660px; font-family: "Oswald"; font-weight: 700; font-size: 320px; line-height: 1; height: 330px; white-space: nowrap; }
+#s5-price .odo { display: inline-flex; align-items: flex-start; filter: drop-shadow(0 0 30px rgba(255,191,31,.45)); }
+#s5-price .wheel { display: block; height: 330px; overflow: hidden; }
+#s5-price .strip { display: block; }
+#s5-price .strip span { display: block; height: 330px; line-height: 330px; }
+#s5-price .gap { display: block; width: .22em; }
+#s5-cur { top: 1000px; font-size: 150px; color: #fff; letter-spacing: .06em; }
+#s5-day { top: 1210px; }
+#s5-day .box { display: inline-block; padding: 14px 54px 18px; border-radius: 18px; background: linear-gradient(180deg, #ffe37a, #ffbf1f 55%, #f0a000); color: #0a1530; font-family: "Oswald"; font-weight: 700; font-size: 104px; line-height: 1.05; box-shadow: 0 0 60px rgba(255,191,31,.55); }
+
+/* ---------- S6 livraison ---------- */
+#s6-title { top: 236px; }
+#s6-title .a { font-size: 150px; color: #fff; }
+#s6-title .b { font-size: 150px; }
+#s6-map { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: visible; }
+#s6-moto { position: absolute; left: 0; top: 0; width: 170px; height: 120px; }
+#s6-moto svg { width: 170px; height: 120px; overflow: visible; }
+#s6-city { top: 1290px; font-size: 118px; color: #fff; }
+
+/* ---------- S7 appel à l'action ---------- */
+#s7-head { top: 628px; }
+#s7-head .a { font-size: 94px; color: #fff; }
+#s7-head .b { font-size: 116px; }
+#s7-price { top: 876px; font-family: "Montserrat"; font-weight: 800; font-size: 46px; letter-spacing: .02em; color: #fff; }
+#s7-deliv { top: 958px; font-family: "Montserrat"; font-weight: 800; font-size: 42px; letter-spacing: .06em; color: var(--gold); }
+#s7-deliv .ico, #s7-city .ico { display: inline-block; width: 56px; height: 56px; vertical-align: -12px; margin-right: 14px; }
+#s7-box { position: absolute; left: 70px; top: 1050px; width: 940px; height: 310px; }
+#s7-box .bgfill { position: absolute; inset: 0; border-radius: 30px; background: linear-gradient(160deg, rgba(24,64,126,.92), rgba(10,26,58,.92)); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+#s7-box .frame { position: absolute; left: -8px; top: -8px; width: 956px; height: 326px; overflow: visible; }
+#s7-box .cta-top { position: absolute; left: 0; right: 0; top: 34px; text-align: center; font-family: "Montserrat"; font-weight: 800; font-size: 44px; letter-spacing: .05em; color: #fff; }
+#s7-box .wa-wrap { position: absolute; left: 58px; top: 128px; width: 132px; height: 132px; }
+#s7-box .wa-wrap svg { width: 132px; height: 132px; display: block; }
+#s7-box .wa-ring { position: absolute; left: 58px; top: 128px; width: 132px; height: 132px; border-radius: 50%; border: 5px solid #25D366; }
+#s7-box .num { position: absolute; left: 200px; right: 28px; top: 112px; height: 170px; text-align: center; font-family: "Oswald"; font-weight: 700; font-size: 120px; line-height: 170px; color: #fff; letter-spacing: .01em; white-space: nowrap; }
+#s7-city { top: 1392px; font-family: "Montserrat"; font-weight: 800; font-size: 44px; letter-spacing: .08em; color: #fff; }
+#s7-city .ico { color: var(--gold); }
+#s7-deliv .tk, #s7-city .pn { display: inline-block; width: 56px; height: 56px; vertical-align: -12px; margin-right: 14px; }
+#s7-deliv .tk .ico, #s7-city .pn .ico { width: 100%; height: 100%; margin: 0; }
+#s7-deliv .tx, #s7-city .tx { display: inline-block; }

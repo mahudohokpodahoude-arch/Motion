@@ -1,0 +1,16 @@
+{
+  "name": "projecteur-location-pub",
+  "version": "1.0.0",
+  "description": "Publicité motion design 2D — location de projecteur home cinéma (HyperFrames, 1080x1920, 45 s)",
+  "scripts": {
+    "son": "node sound/song.js && ffmpeg -y -v error -i assets/audio/soundtrack.wav -c:a pcm_s24le assets/audio/tmp.wav && mv assets/audio/tmp.wav assets/audio/soundtrack.wav",
+    "apercu": "hyperframes preview",
+    "verifier": "hyperframes check .",
+    "rendu": "sh tools/build.sh"
+  },
+  "dependencies": {
+    "gsap": "3.13.0",
+    "hyperframes": "0.8.166"
+  },
+  "private": true
+}
