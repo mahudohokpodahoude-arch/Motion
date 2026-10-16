@@ -5,6 +5,7 @@
 <title>MILMO → ZONE 242 · 3D</title>
 <style>
   @font-face { font-family: Mono; font-weight: 500; src: url(../fonts/ibm-plex-mono-latin-500-normal.woff2); }
+  @font-face { font-family: M; font-weight: 900; src: url(../fonts/montserrat-latin-900-normal.woff2); }
   @font-face { font-family: M; font-weight: 700; src: url(../fonts/montserrat-latin-700-normal.woff2); }
   html, body { margin: 0; background: #fff; }
   #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
@@ -13,6 +14,7 @@
   .txt { position: absolute; left: 0; right: 0; text-align: center; opacity: 0; }
   #tag { top: 1530px; font: 700 30px M; letter-spacing: 5px; color: #1A1830; }
   #tag b { color: #FF5A36; font-weight: 700; padding: 0 14px; }
+  #welcome { top: 1520px; font: 900 46px M; letter-spacing: 2px; color: #1900CF; }
   #by { top: 1592px; font: 500 26px Mono; letter-spacing: 10px; color: #6E6C78; }
 </style>
 <script type="importmap">
@@ -27,6 +29,7 @@
   <div id="flash"></div>
   <div id="tag" class="txt">CONNECTER<b>•</b>TRANSFORMER<b>•</b>ENVOYER</div>
   <div id="by" class="txt">BY MILMO</div>
+  <div id="welcome" class="txt">BIENVENUE DANS LA ZONE.</div>
 </div>
 <script type="module">
 import * as THREE from 'three';
@@ -42,6 +45,7 @@ document.getElementById('stage').style.height = H + 'px';
 if (LAND) {
   document.getElementById('tag').style.top = '918px';
   document.getElementById('by').style.top = '972px';
+  document.getElementById('welcome').style.top = '905px';
 }
 const BLUE = 0x1900CF, ORANGE = 0xFF5A36, MILMO_BLUE = 0x2A10E0;
 const YELLOW = new THREE.Color(0xFEDF08), WHITE = new THREE.Color(0xFFFFFF);
@@ -343,7 +347,12 @@ function render(t) {
   // overlay text
   const tagK = eOutCubic(prog(t, 8.0, 8.7)), byK = eOutCubic(prog(t, 8.45, 9.15));
   const tag = document.getElementById('tag'), byEl = document.getElementById('by');
-  tag.style.opacity = tagK; tag.style.transform = `translateY(${(1 - tagK) * 18}px)`;
+  // ?finale=1 (the vision film's ending): the signature hands over to "Bienvenue dans la Zone."
+  const handOver = Q.has('finale') ? prog(t, 9.9, 10.2) : 0;
+  tag.style.opacity = tagK * (1 - handOver); tag.style.transform = `translateY(${(1 - tagK) * 18 - handOver * 20}px)`;
+  const wk = Q.has('finale') ? eOutBack(prog(t, 10.2, 10.6), 1.8) : 0;
+  const wel = document.getElementById('welcome');
+  wel.style.opacity = clamp(wk * 3); wel.style.transform = `scale(${lerp(1.5, 1, clamp(wk, 0, 2))})`;
   byEl.style.opacity = byK; byEl.style.letterSpacing = `${lerp(22, 10, byK)}px`;
 
   renderer.render(scene, camera);

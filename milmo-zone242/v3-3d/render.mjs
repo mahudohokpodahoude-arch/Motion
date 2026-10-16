@@ -1,5 +1,5 @@
 // Renders the 3D page frame by frame (WebGL) and pipes the frames into ffmpeg.
-// Usage: node render.mjs [--size 1920x1080] [out.mp4] [fps]   |   node render.mjs [--size WxH] --stills t1,t2,... outDir
+// Usage: node render.mjs [--size 1920x1080] [--range from,to] [--query k=v] [out.mp4] [fps]   |   node render.mjs [--size WxH] --stills t1,t2,... outDir
 // The page is served over a local HTTP server: ES modules and fetch() do not work from file://.
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
@@ -22,8 +22,14 @@ await new Promise(r => server.listen(0, '127.0.0.1', r));
 
 let args = process.argv.slice(2);
 let [VW, VH] = [1080, 1920];
-if (args[0] === '--size') { [VW, VH] = args[1].split('x').map(Number); args = args.slice(2); }
-const url = `http://127.0.0.1:${server.address().port}/v3-3d/index.html?render=1&w=${VW}&h=${VH}`;
+let FROM = 0, TO = 10, EXTRA = '';
+for (;;) {
+  if (args[0] === '--size') { [VW, VH] = args[1].split('x').map(Number); args = args.slice(2); }
+  else if (args[0] === '--range') { [FROM, TO] = args[1].split(',').map(Number); args = args.slice(2); }
+  else if (args[0] === '--query') { EXTRA = '&' + args[1]; args = args.slice(2); }
+  else break;
+}
+const url = `http://127.0.0.1:${server.address().port}/v3-3d/index.html?render=1&w=${VW}&h=${VH}${EXTRA}`;
 const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const page = await browser.newPage({ viewport: { width: VW, height: VH }, deviceScaleFactor: 1 });
 page.on('pageerror', e => console.error('page error:', e.message));
@@ -46,10 +52,10 @@ if (args[0] === '--stills') {
   const ff = spawn('ffmpeg', ['-y', '-f', 'image2pipe', '-framerate', String(fps), '-i', '-',
     '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-preset', 'slow', '-crf', '16', '-movflags', '+faststart', out],
     { stdio: ['pipe', 'inherit', 'inherit'] });
-  const n = Math.round(10 * fps);
+  const n = Math.round((TO - FROM) * fps);
   const t0 = Date.now();
   for (let i = 0; i < n; i++) {
-    await page.evaluate(t => window.render(t), i / fps);
+    await page.evaluate(t => window.render(t), FROM + i / fps);
     const buf = await shot();
     if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
     if (i % 60 === 0) console.log(`frame ${i}/${n} · ${((Date.now() - t0) / 1000).toFixed(0)}s`);
