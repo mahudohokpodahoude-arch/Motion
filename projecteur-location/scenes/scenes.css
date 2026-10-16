@@ -1,4 +1,4 @@
-/* Styles des 7 scènes (1080×1920). Zone sûre réseaux sociaux : textes entre y≈220 et y≈1490. */
+/* Styles des scènes (1080×1920). Zone sûre réseaux sociaux : textes entre y≈220 et y≈1490. */
 
 /* ---------- S1 accroche ---------- */
 #s1 .panel { position: absolute; inset: 0; background: linear-gradient(180deg, #02060f, #040a18); }
@@ -26,17 +26,21 @@
 #s2-l2 .a { font-size: 84px; color: #fff; }
 #s2-l2 .b { font-size: 132px; }
 #s2-l2 .c { font-family: "Montserrat"; font-weight: 800; font-size: 40px; letter-spacing: .14em; color: var(--soft); text-transform: uppercase; margin-top: 6px; }
-#s2-screen { position: absolute; left: 185px; top: 236px; width: 710px; height: 400px; }
-#s2-screen .fill { position: absolute; inset: 0; border-radius: 16px; background: radial-gradient(120% 120% at 50% 100%, #ffffff 0%, #cfe6ff 35%, #6aa8ff 70%, #2b5fb8 100%); }
-#s2-screen svg { position: absolute; left: -10px; top: -10px; width: 730px; height: 420px; overflow: visible; }
+/* grands mots en contour (parallaxe typographique, zone basse décorative) */
+.bigword { position: absolute; left: -200px; top: 1470px; font-size: 330px; line-height: 1; white-space: nowrap; color: rgba(255,191,31,.035); -webkit-text-stroke: 3px rgba(255,191,31,.24); letter-spacing: .02em; pointer-events: none; }
+#s6-big { top: 1450px; }
 
-/* ---------- S3 usages ---------- */
-#s3-screen { position: absolute; left: 70px; top: 280px; width: 940px; height: 529px; }
-#s3-screen .scr-in { position: absolute; inset: 0; border-radius: 16px; overflow: hidden; background: #000; }
-#s3-screen .vig { position: absolute; inset: 0; }
-#s3-screen .vig svg { width: 940px; height: 529px; display: block; }
-#s3-screen .scr-flash { position: absolute; inset: 0; background: radial-gradient(120% 120% at 50% 100%, #ffffff 0%, #cfe6ff 35%, #6aa8ff 70%, #2b5fb8 100%); }
-#s3-screen .frame { position: absolute; left: -10px; top: -10px; width: 960px; height: 549px; overflow: visible; }
+/* ---------- S3 le grand écran (partagé : usages, streaming, téléphone) ---------- */
+#scr { position: absolute; left: 70px; top: 280px; width: 940px; height: 529px; }
+#scr .scr-in { position: absolute; inset: 0; border-radius: 16px; overflow: hidden; background: #000; }
+#scr .scr-l { position: absolute; inset: 0; overflow: hidden; }
+.ill, .ill svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.ph { position: absolute; inset: 0; overflow: hidden; }
+.ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ph-grade { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 90% at 50% 45%, rgba(0,0,0,0) 55%, rgba(4,11,27,.55) 100%), linear-gradient(180deg, rgba(10,26,58,0) 60%, rgba(10,26,58,.35)); }
+#scr .scr-glare { position: absolute; top: -20%; left: 0; width: 40%; height: 140%; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.22), rgba(255,255,255,0)); }
+#scr .scr-flash { position: absolute; inset: 0; background: radial-gradient(120% 120% at 50% 100%, #ffffff 0%, #cfe6ff 35%, #6aa8ff 70%, #2b5fb8 100%); }
+#scr .frame { position: absolute; left: -10px; top: -10px; width: 960px; height: 549px; overflow: visible; }
 #s3-halo { position: absolute; left: -60px; top: 160px; width: 1200px; height: 800px; background: radial-gradient(closest-side, rgba(120,180,255,.30), rgba(120,180,255,0)); }
 #s3-fg { position: absolute; left: 0; top: 640px; width: 1080px; height: 420px; }
 #s3-fg .fg { position: absolute; inset: 0; }
@@ -48,29 +52,68 @@
 #s3-labels .lab { position: absolute; left: 0; right: 0; top: 0; text-align: center; }
 #s3-labels .a { font-size: 88px; color: #fff; }
 #s3-labels .b { font-size: 132px; }
-#s3-dots { position: absolute; left: 0; right: 0; top: 1500px; display: flex; justify-content: center; gap: 14px; }
+#labS .b { font-size: 118px; }
+#labS .note { font-size: 30px; font-weight: 600; color: var(--soft); line-height: 1.25; margin-top: 4px; text-transform: none; }
+#s3-dots { position: absolute; left: 0; right: 0; top: 1470px; display: flex; justify-content: center; gap: 14px; }
 #s3-dots i { display: block; width: 46px; height: 9px; border-radius: 6px; background: rgba(255,255,255,.28); }
-#s3-recap { position: absolute; inset: 0; }
-#s3-recap .tile { position: absolute; width: 440px; height: 330px; border-radius: 28px; background: linear-gradient(160deg, #163a74, #0b1f45); border: 3px solid rgba(255,191,31,.85); box-shadow: 0 20px 50px rgba(0,0,0,.45), 0 0 30px rgba(255,191,31,.18); }
-#s3-recap .tile .ti { position: absolute; left: 150px; top: 50px; width: 140px; height: 140px; color: var(--gold); }
-#s3-recap .tile .tl { position: absolute; left: 0; right: 0; top: 222px; text-align: center; font-family: "Montserrat"; font-weight: 800; font-size: 38px; letter-spacing: .04em; color: #fff; }
-#s3-recap .tile .tl small { display: block; font-size: 26px; font-weight: 700; color: var(--soft); letter-spacing: .06em; margin-top: 4px; }
-#s3-recap .title { position: absolute; left: 0; right: 0; top: 1100px; text-align: center; }
-#s3-recap .title .a { font-size: 96px; color: #fff; }
-#s3-recap .title .b { font-size: 128px; }
 
-/* ---------- S4 fonctionnalités ---------- */
-#s4-top { top: 238px; }
-#s4-top .pill { font-size: 34px; }
-.s4-head { position: absolute; left: 0; right: 0; top: 330px; text-align: center; font-size: 124px; color: #fff; }
-.s4-list { position: absolute; left: 70px; right: 60px; }
-.s4-list .row { position: absolute; left: 0; right: 0; height: 170px; }
-.s4-list .tile { position: absolute; left: 0; top: 10px; width: 150px; height: 150px; border-radius: 30px; background: linear-gradient(160deg, #18407e, #0c2149); border: 3px solid rgba(255,191,31,.9); box-shadow: 0 0 34px rgba(255,191,31,.22); color: var(--gold); }
-.s4-list .tile .ico { position: absolute; left: 30px; top: 30px; width: 90px; height: 90px; }
-.s4-list .txt { position: absolute; left: 184px; right: 0; top: 18px; }
-.s4-list .t { font-family: "Oswald"; font-weight: 700; font-size: 60px; line-height: 1.05; text-transform: uppercase; color: #fff; white-space: nowrap; }
-.s4-list .d { font-family: "Montserrat"; font-weight: 600; font-size: 34px; color: var(--soft); margin-top: 6px; white-space: nowrap; }
-.s4-list .cursor { display: inline-block; width: .08em; height: .8em; background: var(--gold); margin-left: .06em; vertical-align: -.05em; }
+/* écran d'accueil des applications (générique : noms, pas de logos) */
+.lch { position: absolute; inset: 0; background: linear-gradient(160deg, #0d1426, #1a1030); font-family: "Montserrat"; color: #fff; }
+.lch-top { position: absolute; left: 40px; right: 40px; top: 18px; height: 44px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 24px; color: rgba(255,255,255,.75); }
+.lch-r { display: flex; align-items: center; gap: 10px; }
+.lch-r svg { width: 26px; height: 26px; }
+.app { position: absolute; top: 76px; width: 410px; height: 200px; border-radius: 18px; background: linear-gradient(160deg, #26314f, #141a30); box-shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 0 0 2px rgba(255,255,255,.08); }
+#app1 { left: 40px; }
+#app2 { left: 490px; }
+.app-in { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+.app-in .pl { width: 54px; height: 54px; }
+.app-in b { font-weight: 900; font-size: 58px; letter-spacing: -.01em; }
+.row-t { position: absolute; left: 40px; top: 302px; font-weight: 700; font-size: 22px; color: rgba(255,255,255,.7); }
+.thumb { position: absolute; top: 340px; width: 200px; height: 112px; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,.4); }
+#th0 { left: 40px; } #th1 { left: 260px; } #th2 { left: 480px; } #th3 { left: 700px; }
+.thumb > svg { width: 100%; height: 100%; display: block; }
+.thumb .ph-grade { display: none; }
+.focus { position: absolute; left: 32px; top: 68px; width: 426px; height: 216px; border-radius: 24px; border: 6px solid #ffbf1f; box-shadow: 0 0 30px rgba(255,191,31,.8); }
+.player { position: absolute; left: 0; right: 0; bottom: 0; height: 110px; }
+.pl-grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.65)); }
+.pl-ic { position: absolute; left: 34px; bottom: 30px; width: 34px; height: 34px; }
+.pl-bar { position: absolute; left: 90px; right: 120px; bottom: 44px; height: 7px; border-radius: 4px; background: rgba(255,255,255,.3); }
+.pl-bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 4px; background: #ffbf1f; display: block; }
+.pl-time { position: absolute; right: 34px; bottom: 32px; font-family: "Montserrat"; font-weight: 700; font-size: 22px; color: #fff; }
+
+/* attente de connexion + téléphone */
+.wait { position: absolute; inset: 0; background: radial-gradient(80% 80% at 50% 45%, #13254a, #070d1c); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; font-family: "Montserrat"; font-weight: 700; font-size: 30px; color: rgba(255,255,255,.82); }
+.wait svg { width: 120px; height: 120px; }
+#s3-phone { position: absolute; inset: 0; }
+#ph-waves { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: visible; }
+#phone { position: absolute; }
+#phone .ph-body { position: absolute; inset: 0; border-radius: 40px; background: linear-gradient(160deg, #1b2236, #05070d); box-shadow: 0 0 0 3px rgba(255,191,31,.85), 0 24px 60px rgba(0,0,0,.6), 0 0 40px rgba(255,191,31,.25); }
+#phone .ph-disp { position: absolute; border-radius: 26px; overflow: hidden; background: #000; }
+#phone .ph-off, #phone .ph-img { position: absolute; inset: 0; }
+#phone .ph-off { background: #05070d; }
+#phone .ph-cam { position: absolute; left: 7px; top: 124px; width: 6px; height: 28px; border-radius: 3px; background: #2a3350; }
+#fly { position: absolute; overflow: hidden; border-radius: 18px; box-shadow: 0 0 40px rgba(255,191,31,.6); }
+#ph-text { top: 1200px; }
+#ph-text .a { font-size: 92px; }
+#ph-text .b { font-size: 78px; color: #fff; }
+#ph-text .c { font-family: "Montserrat"; font-weight: 700; font-size: 34px; color: var(--soft); letter-spacing: .04em; }
+
+/* ---------- S4 caractéristiques (grille 2×4) ---------- */
+#s4-grid { position: absolute; inset: 0; }
+#s4-head { top: 236px; font-size: 104px; color: #fff; }
+#s4-head svg { display: block; width: 520px; height: 24px; margin: 4px auto 0; overflow: visible; }
+.ft { position: absolute; width: 455px; height: 196px; border-radius: 28px; background: linear-gradient(160deg, #18407e, #0c2149); border: 3px solid rgba(255,191,31,.85); box-shadow: 0 16px 40px rgba(0,0,0,.4), 0 0 26px rgba(255,191,31,.16); overflow: hidden; }
+.ft-ic { position: absolute; left: 22px; top: 43px; width: 110px; height: 110px; border-radius: 24px; background: rgba(255,191,31,.1); color: var(--gold); }
+.ft-ic .ico { position: absolute; left: 20px; top: 20px; width: 70px; height: 70px; }
+.ft-tx { position: absolute; left: 150px; right: 12px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; }
+.ft .t { font-family: "Oswald"; font-weight: 700; font-size: 46px; line-height: 1.05; color: #fff; white-space: nowrap; }
+.ft .d { font-family: "Montserrat"; font-weight: 600; font-size: 26px; color: var(--soft); margin-top: 4px; white-space: nowrap; }
+.ft.hot { background: linear-gradient(160deg, #ffe37a, #ffbf1f 55%, #f0a000); border-color: #fff3c4; }
+.ft.hot .ft-ic { background: rgba(10,21,48,.12); color: #0a1530; }
+.ft.hot .t { color: #0a1530; font-size: 42px; }
+.ft.hot .d { color: #0a1530; font-weight: 800; }
+.ft-sh { position: absolute; top: -20%; left: 0; width: 35%; height: 140%; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.35), rgba(255,255,255,0)); }
+#s4-note { top: 1278px; font-size: 27px; font-weight: 600; color: var(--soft); }
 
 /* ---------- S5 prix ---------- */
 #s5-rays { position: absolute; left: -360px; top: -100px; width: 1800px; height: 1800px; border-radius: 50%;

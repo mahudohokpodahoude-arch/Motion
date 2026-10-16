@@ -1,4 +1,4 @@
-// SCÈNE 6 — LIVRAISON ET LOCALISATION (35 – 39 s)
+// SCÈNE 6 — LIVRAISON ET LOCALISATION (35 – 39 s) — v2 : la caméra suit le scooter
 // Ouverture en iris doré ; plan de ville abstrait (aucune géographie réelle n'est affirmée) ;
 // un scooter de livraison suit un trajet en pointillés qui se dessine ; le repère tombe sur l'impact ;
 // « LIVRAISON POSSIBLE » et « COTONOU, BÉNIN ». Aucun délai, frais ou zone n'est promis.
@@ -14,6 +14,8 @@ window.SCENES.push({
     for (let i = 0; i < 26; i++) blocks += `<rect class="blk" x="${(r() * 1000).toFixed(0)}" y="${(620 + r() * 620).toFixed(0)}" width="${(40 + r() * 70).toFixed(0)}" height="${(30 + r() * 50).toFixed(0)}" rx="6" fill="#123063" opacity="${(0.35 + r() * 0.4).toFixed(2)}"/>`;
     return `
       <div id="s6w" class="full">
+        <div id="s6-big" class="bigword osw">COTONOU</div>
+        <div id="s6-world" class="full">
         <svg id="s6-map" viewBox="0 0 1080 1920">
           <defs>
             <radialGradient id="s6rg" cx="540" cy="950" r="620" gradientUnits="userSpaceOnUse"><stop offset=".55" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
@@ -42,6 +44,7 @@ window.SCENES.push({
           <g class="wh"><circle cx="38" cy="94" r="20" fill="#0a1530" stroke="#ffbf1f" stroke-width="6"/><path d="M38 80 V108 M24 94 H52" stroke="#ffbf1f" stroke-width="3"/></g>
           <g class="wh"><circle cx="134" cy="94" r="20" fill="#0a1530" stroke="#ffbf1f" stroke-width="6"/><path d="M134 80 V108 M120 94 H148" stroke="#ffbf1f" stroke-width="3"/></g>
         </svg></div>
+        </div>
         <div id="s6-title" class="abs center osw"><div class="lmask"><span class="a">${w1}</span></div><div class="lmask"><span class="b goldfx glow">${rest.join(' ')}</span></div></div>
         <div id="s6-city" class="abs center osw"><div class="lmask"><span>${V.ville}</span></div></div>
       </div>`;
@@ -80,6 +83,15 @@ window.SCENES.push({
     tl.fromTo('#s6-pin', { scaleY: 0.75, scaleX: 1.15, svgOrigin: '800 792' }, { scaleY: 1, scaleX: 1, duration: 0.6, ease: 'elastic.out(1.2, 0.4)' }, d.pin);
     $$('#s6 .rip').forEach((r, i) => tl.fromTo(r, { opacity: 1, scale: 0.3 }, { opacity: 0, scale: 2.2 + i * 0.4, duration: 0.9, ease: 'power2.out' }, d.pin + i * 0.12));
     tl.to('#s6-moto', { x: '+=26', opacity: 0, duration: 0.35, ease: 'power2.in' }, d.pin + 0.25);
+    // la caméra suit le scooter : le « monde » (plan + scooter + repère) glisse en sens inverse
+    tl.set('#s6-world', { x: 110, y: -50 }, 0);
+    tl.fromTo('#s6-world', { x: 110, y: -50 }, { x: -70, y: 50, duration: b - t0, ease: 'power1.inOut' }, t0);
+    tl.fromTo('#s6-world', { x: -70, y: 50 }, { x: -40, y: 30, duration: 0.6, ease: 'expo.out' }, b);
+    // grand mot en contour qui dérive derrière (parallaxe typographique)
+    tl.set('#s6-big', { opacity: 0, x: 320 }, 0);
+    tl.fromTo('#s6-big', { x: 320 }, { x: -320, duration: S.S.cta[0] - t0, ease: 'none' }, t0);
+    tl.fromTo('#s6-big', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, t0 + 0.2);
+    tl.to('#s6-big', { opacity: 0, duration: 0.3 }, S.S.cta[0] - 0.15);
     A.flash(d.pin, 0.25, 0.4);
     // ville
     tl.fromTo('#s6-city span', { yPercent: 115, letterSpacing: '0.3em' }, { yPercent: 0, letterSpacing: '0.02em', duration: 0.6, ease: 'expo.out' }, d.city - 0.05);

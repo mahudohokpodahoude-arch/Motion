@@ -1,4 +1,4 @@
-// SCÈNE 1 — ACCROCHE (0 – 5 s)
+// SCÈNE 1 — ACCROCHE (0 – 5 s) — v2 : caméra 2D (zoom arrière à l'ouverture, impacts sur chaque mot)
 // Écran presque noir, une ligne jaune traverse, les panneaux s'ouvrent le long de la ligne et révèlent
 // le projecteur ; titre cinétique « ET SI LE CINÉMA VENAIT CHEZ VOUS ? » mot par mot sur les temps.
 window.SCENES.push({
@@ -13,6 +13,7 @@ window.SCENES.push({
     const dia = (r) => `M${cx} ${cy - r} L${cx + r} ${cy} L${cx} ${cy + r} L${cx - r} ${cy} Z`;
     const hex = (r) => Array.from({ length: 6 }, (_, i) => { const a = Math.PI / 6 + i * Math.PI / 3; return `${i ? 'L' : 'M'}${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`; }).join(' ') + ' Z';
     return `
+      <div id="s1-big" class="bigword osw">CINÉMA</div>
       <svg id="s1-geo" viewBox="0 0 1080 1920">
         <path class="g1" d="${dia(300)}" fill="none" stroke="#ffbf1f" stroke-width="5"/>
         <path class="g2" d="${hex(420)}" fill="none" stroke="#ffbf1f" stroke-width="3" opacity=".8"/>
@@ -64,9 +65,13 @@ window.SCENES.push({
     tl.set(q, { scale: 0, rotation: -40, opacity: 0 }, 0);
     // ET SI LE
     A.lineIn(l1, h.words[0] - 0.05, 0.55);
-    // CINÉMA : les lettres tombent en cascade
-    tl.fromTo(c2, { yPercent: -120, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.55, ease: 'back.out(2.2)', stagger: 0.035 }, h.words[1] - 0.06);
-    tl.fromTo(l2, { scale: 1.12 }, { scale: 1, duration: 0.8, ease: 'expo.out' }, h.words[1]);
+    // CINÉMA : les lettres tombent en cascade, le mot claque (échelle + flou -> net)
+    tl.fromTo(c2, { yPercent: -120, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.5, ease: 'back.out(2.2)', stagger: 0.03 }, h.words[1] - 0.06);
+    tl.fromTo(l2, { scale: 1.35, filter: 'blur(8px)' }, { scale: 1, filter: 'blur(0px)', duration: 0.6, ease: 'expo.out' }, h.words[1]);
+    // grand mot en contour qui dérive derrière (parallaxe typographique)
+    tl.set('#s1-big', { opacity: 0, x: 260 }, 0);
+    tl.fromTo('#s1-big', { x: 260 }, { x: -220, duration: A.S.S.product[0] - h.open, ease: 'none' }, h.open);
+    tl.fromTo('#s1-big', { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.out' }, h.open + 0.2);
     // VENAIT : balayage horizontal avec inclinaison
     tl.fromTo(l3, { yPercent: 0, clipPath: 'inset(0% 100% 0% 0%)', skewX: -14, x: -40 }, { clipPath: 'inset(0% 0% 0% 0%)', skewX: 0, x: 0, duration: 0.5, ease: 'expo.out' }, h.words[2] - 0.05);
     // CHEZ VOUS : les lettres montent
@@ -75,7 +80,8 @@ window.SCENES.push({
     tl.fromTo(q, { scale: 0, rotation: -40, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.6, ease: 'back.out(3)' }, h.words[4] - 0.02);
     // léger travelling : le titre recule, les formes avancent (parallaxe)
     tl.fromTo('#s1-title', { y: 0, scale: 1 }, { y: -18, scale: 0.98, duration: 1.8, ease: 'sine.inOut' }, h.push);
-    // sortie du titre vers le haut, ligne par ligne
-    [l1, l2, l3, l4].forEach((el, i) => tl.to(el, { yPercent: -120, duration: 0.32, ease: 'power3.in' }, A.S.S.product[0] - 0.42 + i * 0.04));
+    // sortie du titre vers le haut, ligne par ligne, avec flou de mouvement
+    [l1, l2, l3, l4].forEach((el, i) => tl.to(el, { yPercent: -120, filter: 'blur(6px)', duration: 0.3, ease: 'power3.in' }, A.S.S.product[0] - 0.4 + i * 0.04));
+    tl.to('#s1-big', { opacity: 0, duration: 0.3 }, A.S.S.product[0] - 0.3);
   }
 });

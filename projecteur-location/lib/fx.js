@@ -77,6 +77,14 @@
     '<path d="M50 22a27 27 0 0 0-23.3 40.6L23 77l14.8-3.7A27 27 0 1 0 50 22Z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>' +
     '<path d="M40.5 36.5c-1.2 0-2.6 1.5-2.6 4 0 6.5 8.4 15.8 15.6 18.4 3.2 1.2 5.6.3 6.4-1.6l.8-2.2c.3-.8-.1-1.5-.8-1.9l-4.9-2.4c-.7-.3-1.4-.1-1.8.5l-1.7 2.2c-3.4-1.3-6.6-4.4-8-7.8l2.2-1.7c.6-.5.8-1.2.5-1.9l-2.3-5c-.3-.7-1-1.1-1.8-.9Z" fill="#fff"/></svg>';
 
+  // ---------- photos réelles (assets/photos/manifest.js) avec repli sur l'illustration ----------
+  FX.hasPhoto = (key) => !!(window.PHOTOS || {})[key];
+  FX.photo = function (key, fallback) {
+    const p = (window.PHOTOS || {})[key];
+    if (!p) return fallback;
+    return `<div class="ph"><img src="${p.src}" alt="" style="object-position:${p.pos || '50% 50%'}"/></div><div class="ph-grade"></div>`;
+  };
+
   // ---------- particules (deux calques canvas, dessin = fonction pure de t) ----------
   FX.particles = function (backCanvas, frontCanvas, S) {
     const W = S.W, H = S.H;

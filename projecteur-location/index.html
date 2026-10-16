@@ -109,28 +109,38 @@
       </div>
       <canvas id="fx-back" class="fx" width="1080" height="1920" style="z-index:5"></canvas>
 
-      <!-- scènes : chaque section est remplie par scenes/sN-*.js -->
-      <section id="s1" class="scene clip" data-start="0" data-duration="5.05" data-track-index="1" style="z-index:11"></section>
-      <section id="s2" class="scene clip" data-start="4.8" data-duration="6.5" data-track-index="2" style="z-index:12"></section>
-      <section id="s3" class="scene clip" data-start="10.95" data-duration="10.35" data-track-index="3" style="z-index:13"></section>
-      <section id="s4" class="scene clip" data-start="20.7" data-duration="8.3" data-track-index="4" style="z-index:14"></section>
-      <section id="s5" class="scene clip" data-start="28.6" data-duration="6.95" data-track-index="5" style="z-index:15"></section>
-      <section id="s6" class="scene clip" data-start="34.95" data-duration="4.55" data-track-index="6" style="z-index:16"></section>
-      <section id="s7" class="scene clip" data-start="38.95" data-duration="6.05" data-track-index="7" style="z-index:17"></section>
+      <!-- caméra 2D : #cam (mouvements lents) > #cam2 (impacts) ; le fond reste dehors -> parallaxe -->
+      <div id="cam" class="layer" style="z-index:10">
+        <div id="cam2" class="layer">
+          <!-- scènes : chaque section est remplie par scenes/sN-*.js -->
+          <section id="s1" class="scene clip" data-start="0" data-duration="5.05" data-track-index="1" style="z-index:11"></section>
+          <section id="s2" class="scene clip" data-start="4.8" data-duration="4.45" data-track-index="2" style="z-index:12"></section>
+          <section id="s3" class="scene clip" data-start="7.9" data-duration="15.45" data-track-index="3" style="z-index:13"></section>
+          <section id="s4" class="scene clip" data-start="22.7" data-duration="6.3" data-track-index="4" style="z-index:14"></section>
+          <section id="s5" class="scene clip" data-start="28.6" data-duration="6.95" data-track-index="5" style="z-index:15"></section>
+          <section id="s6" class="scene clip" data-start="34.95" data-duration="4.55" data-track-index="6" style="z-index:16"></section>
+          <section id="s7" class="scene clip" data-start="38.95" data-duration="6.05" data-track-index="7" style="z-index:17"></section>
 
-      <!-- le projecteur : un seul calque qui voyage d'une scène à l'autre -->
-      <svg id="beam" style="z-index:44" viewBox="0 0 1080 1920"></svg>
-      <div id="hero">
-        <div id="hero-in">
-          <div id="hero-glow"></div>
-          <div id="hero-shadow"></div>
-          <img id="hero-img" src="assets/projector.png" alt="Projecteur" />
-          <svg id="hero-outline" viewBox="0 0 1094 748"></svg>
-          <div id="lens-flare"><div class="flare-streak"></div><div class="flare-core"></div><div class="flare-star"></div></div>
+          <!-- le projecteur : un seul calque qui voyage d'une scène à l'autre -->
+          <svg id="beam" style="z-index:44" viewBox="0 0 1080 1920"></svg>
+          <div id="hero">
+            <div id="hero-in">
+              <div id="hero-glow"></div>
+              <div id="hero-shadow"></div>
+              <img id="hero-img" src="assets/projector.png" alt="Projecteur" />
+              <svg id="hero-outline" viewBox="0 0 1094 748"></svg>
+              <div id="lens-flare"><div class="flare-streak"></div><div class="flare-core"></div><div class="flare-star"></div></div>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- flous de mouvement directionnels (animés par la timeline) -->
+      <svg width="0" height="0" style="position:absolute">
+        <filter id="mbx" x="-20%" y="-5%" width="140%" height="110%"><feGaussianBlur stdDeviation="0 0"/></filter>
+        <filter id="mby" x="-5%" y="-20%" width="110%" height="140%"><feGaussianBlur stdDeviation="0 0"/></filter>
+      </svg>
 
-      <canvas id="fx-front" class="fx" width="1080" height="1920" style="z-index:60"></canvas>
+      <canvas id="fx-front" class="fx" data-layout-allow-occlusion width="1080" height="1920" style="z-index:60"></canvas>
       <div id="tr" class="layer"></div>
       <div id="flash" class="layer" style="z-index:90"></div>
       <div id="vignette" class="layer" style="z-index:95"></div>
@@ -140,11 +150,16 @@
 
     <script src="score.js"></script>
     <script src="assets/projector-data.js"></script>
+    <script src="assets/photos/manifest.js"></script>
     <script src="lib/fx.js"></script>
+    <script src="lib/illus.js"></script>
     <script>window.SCENES = [];</script>
     <script src="scenes/s1-accroche.js"></script>
     <script src="scenes/s2-produit.js"></script>
+    <script src="scenes/s3-ecran.js"></script>
     <script src="scenes/s3-usages.js"></script>
+    <script src="scenes/s3-streaming.js"></script>
+    <script src="scenes/s3-telephone.js"></script>
     <script src="scenes/s4-fonctions.js"></script>
     <script src="scenes/s5-prix.js"></script>
     <script src="scenes/s6-livraison.js"></script>

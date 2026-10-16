@@ -1,0 +1,13 @@
+{
+  "_note": "Candidats Pexels (licence Pexels : usage commercial autorisé, sans attribution obligatoire). Trouvés par recherche web, NON vérifiés à l'œil : chaque image est contrôlée (logos, écrans, personnes) avant usage. Ordre = préférence.",
+  "cinema":       [{"id": 3980728, "by": "alexandre saraiva carniato", "what": "couple en silhouette au coucher du soleil, bord de mer"}, {"id": 6480227, "by": "Nancy Yu", "what": "arbre en silhouette, coucher de soleil, Tanzanie"}],
+  "football":     [{"id": 10512973, "by": "Yahye Abdi", "what": "match de football, Mogadiscio"}, {"id": 8740433, "by": "DIALO Photography", "what": "duel de joueurs, Kampala"}, {"id": 399187, "by": "Jonathan Petersson", "what": "terrain et but sous projecteurs"}],
+  "gaming":       [{"id": 7862364, "by": "Alena Darmel", "what": "deux jeunes jouent sur un canapé, lumière néon"}, {"id": 9069297, "by": "Yan Krukau", "what": "deux amis jouent sur un canapé"}],
+  "presentation": [{"id": 8730787, "by": "Mikhail Nilov", "what": "femme qui présente devant un public"}, {"id": 9034973, "by": "RDNE Stock project", "what": "présentation devant un écran"}, {"id": 21335291, "by": "Safi Erneste", "what": "intervenante au micro, conférence"}],
+  "streaming":    [{"id": 38483161, "by": "Sanjeed Quazi", "what": "lion, Masai Mara, crépuscule"}, {"id": 609749, "by": "Ghida Basma", "what": "éléphant dans la savane"}, {"id": 4577555, "by": "Rachel Claire", "what": "lion et lionnes"}],
+  "phone":        [{"id": 5728209, "by": "Any Lane", "what": "famille souriante devant la maison"}, {"id": 9287491, "by": "Sadock Kaisi", "what": "groupe d'amis qui rient"}],
+  "thumb0":       [{"id": 956999, "by": "Felix Mittermeier", "what": "ciel étoilé"}],
+  "thumb1":       [{"id": 28842230, "by": "Volker Kaes", "what": "montagnes au coucher du soleil"}],
+  "thumb2":       [{"id": 16705973, "by": "Jimmy Liao", "what": "ville de nuit"}],
+  "thumb3":       [{"id": 18489746, "by": "Marian Florinel Condruz", "what": "route dans les dunes"}]
+}

@@ -10,6 +10,7 @@ const MIX = require('./engine/audio/mix');
 const { m, mtof } = require('./engine/music');
 const sc = require('../score');
 const { T, BEAT, DURATION, ev, ENERGY, PROG } = sc;
+const S_ = sc.S;
 
 const N = Math.ceil(DURATION * SR);
 const bus = () => new Bus(N);
@@ -65,7 +66,7 @@ const HOOK = {
   C: [['E5', 0, 1], ['G5', 1, 1], ['C6', 2, 1], ['G5', 3, 1], ['E5', 4, 2], ['G5', 6, 2]],
   G: [['D5', 0, 1], ['G5', 1, 1], ['B5', 2, 1], ['D6', 3, 1], ['B5', 4, 2], ['G5', 6, 2]],
 };
-const HOOK_BARS = [5, 6, 7, 8, 15, 16, 19, 20];
+const HOOK_BARS = [4, 5, 6, 7, 10, 15, 16, 19, 20];
 
 // ================= le groove, mesure par mesure =================
 const K = I.kick({ punch: 1, tail: 0.2 }), KS = I.kick({ punch: 0.55, tail: 0.3, seed: 4 });
@@ -128,7 +129,7 @@ whoosh(h.open + 0.35, 0.5, true, 0.18);                  // les formes s'ouvrent
 h.words.forEach((t, i) => stamp(t, i === h.words.length - 1 ? 0.7 : 0.5, 100 + i * 8));
 keys.addMono(I.bell(mtof(m('E6')), 1.4), h.words[h.words.length - 1], 0.1);
 
-// ================= 5 – 11 s : le produit =================
+// ================= 5 – 9 s : le produit =================
 const p = ev.product;
 whoosh(p.cut, 0.45, true, 0.3); drums.addMono(I.crash(11), p.cut, 0.32); hits.addMono(I.subBoom(1.2), p.cut, 0.4);
 fx.addMono(sweepTone(p.trace[1] - p.trace[0], 600, 3200, { att: 0.2, rel: 0.4, harm: 0.4 }), p.trace[0], 0.07, 0.3);
@@ -138,26 +139,50 @@ keys.addMono(I.bell(mtof(m('E7')), 1.2, 1.5), p.flare, 0.07, 0.4); verb.addMono(
 for (const t of [p.line1, p.line2]) { stamp(t, 0.55); hits.addMono(I.pop(1500), t, 0.3); whoosh(t, 0.3, false, 0.14, 0.4); }
 fx.addMono(I.noiseSweep(0.9, 500, 3000, { q: 2, pink: true }), p.beam, 0.14);
 
-// ================= 11 – 21 s : les usages =================
+// ================= 9 – 17 s : les usages =================
 const u = ev.usages;
 u.cuts.forEach((t, i) => { whoosh(t, 0.4, i % 2 === 0, 0.3, i % 2 ? 0.5 : -0.5); hits.addMono(I.thwack(), t, 0.36); drums.addMono(I.crash(20 + i), t, 0.2); });
 u.labels.forEach((t) => stamp(t, 0.5));
 hits.addMono(I.tvClick(), u.cuts[0] + 0.02, 0.25);                                        // cinéma : déclic du projecteur
-fx.addMono(I.whistle(0.32), u.labels[1] + 0.25, 0.1, 0.3);                                 // foot : sifflet
-[0, 4, 7, 12].forEach((d, i) => fx.addMono(chipBlip(m('C6') + d), u.labels[2] + 0.25 + i * 0.07, 0.06, 0.2)); // jeux : blips 8 bits
-[0, 1, 2, 3, 4].forEach((k) => hits.addMono(I.clap({ decay: 0.1, seed: 40 + k }), u.labels[3] + 0.25 + k * 0.09 + (k % 2) * 0.03, 0.1, (k % 2 ? 0.5 : -0.5))); // présentations : applaudissements
-u.tiles.forEach((t, i) => { hits.addMono(I.pop(1300 + i * 250), t, 0.42, -0.45 + i * 0.3); keys.addMono(I.marimba(m('C5') + [0, 4, 7, 12][i]), t, 0.24, -0.45 + i * 0.3); });
-stamp(u.recapTitle, 0.55); drums.addMono(I.crash(29), u.recapTitle, 0.16);
+fx.addMono(I.whistle(0.32), u.labels[1] + 0.2, 0.1, 0.3);                                  // foot : sifflet
+fx.addMono(I.noiseSweep(1.1, 400, 2600, { q: 0.7, pink: true, shape: (x) => Math.sin(Math.PI * Math.min(1, x * 1.6)) * (1 - x * 0.6) }), u.goal - 0.1, 0.22); // clameur du stade
+[0, 4, 7, 12].forEach((d, i) => fx.addMono(chipBlip(m('C6') + d), u.labels[2] + 0.2 + i * 0.07, 0.06, 0.2)); // jeux : blips 8 bits
+[0, 1, 2, 3, 4].forEach((k) => hits.addMono(I.clap({ decay: 0.1, seed: 40 + k }), u.labels[3] + 0.2 + k * 0.09 + (k % 2) * 0.03, 0.1, (k % 2 ? 0.5 : -0.5))); // présentations : applaudissements
 
-// ================= 21 – 29 s : fonctionnalités =================
+// ================= 17 – 20 s : YouTube & Netflix =================
+const st = ev.streaming;
+whoosh(st.cut, 0.45, false, 0.28); drums.addMono(I.crash(25), st.cut, 0.18);
+st.tiles.forEach((t, i) => { hits.addMono(I.pop(1600 + i * 220), t, 0.32, -0.45 + i * 0.3); keys.addMono(I.marimba(m(['E5', 'G5', 'B5', 'D6'][i])), t, 0.18, -0.45 + i * 0.3); });
+stamp(st.title, 0.5);
+hits.addMono(I.woodTick(1.4), st.note, 0.12);
+fx.addMono(I.noiseSweep(0.28, 1800, 5200, { q: 2.5 }), st.focus - 0.05, 0.1, 0.5);       // la sélection glisse
+hits.addMono(I.woodTick(1.9), st.focus + 0.22, 0.22, 0.5);
+hits.addMono(I.pop(2200), st.click, 0.5); hits.addMono(I.thud(140, 0.06), st.click, 0.45); // « clic »
+fx.addMono(I.noiseSweep(0.45, 600, 7000, { q: 1.2, pink: true, shape: (x) => x }), st.click - 0.4, 0.16); // aspiration vers le plein écran
+hits.addMono(I.subBoom(1.6), st.click, 0.5);
+for (const n of ['A3', 'E4', 'A4']) { const s2 = I.strings(m(n), 1.6, { attack: 0.03, release: 0.8, bright: 0.6 }); pad.addStereo(s2.L, s2.R, st.click, 0.08); }
+
+// ================= 20 – 23 s : le téléphone sur grand écran =================
+const ph = ev.phone;
+whoosh(ph.cut + 0.15, 0.45, false, 0.3, -0.2);                                             // le téléphone monte
+hits.addMono(I.woodTick(2.1), ph.tap, 0.3); fx.addMono(I.glass(13, { size: 0.3 }), ph.tap, 0.05);   // « tap »
+[0, 1, 2].forEach((i) => fx.addMono(sweepTone(0.16, 900 + i * 300, 2400 + i * 500, { att: 0.01, rel: 0.08 }), ph.cast + i * 0.08, 0.07, 0.1)); // ondes
+fx.addMono(I.noiseSweep(ph.land - ph.cast - 0.1, 500, 8000, { q: 1, pink: true, shape: (x) => x * x }), ph.cast + 0.1, 0.24); // l'image s'envole
+hits.addMono(I.thwack(), ph.land, 0.45); hits.addMono(I.subBoom(1.4), ph.land, 0.5);       // arrivée
+keys.addMono(I.bell(mtof(m('E6')), 1.4), ph.land, 0.09); verb.addMono(I.bell(mtof(m('B6')), 1.4), ph.land + 0.02, 0.06);
+drums.addMono(I.crash(27), ph.land, 0.22);
+whoosh(ph.out + 0.1, 0.35, true, 0.2, 0.3);
+
+// ================= 23 – 29 s : caractéristiques =================
 const f = ev.features;
-f.pages.forEach((t, i) => { fx.addMono(I.noiseSweep(0.55, 900, 9500, { q: 3, pink: false }), t - 0.4, 0.13, i ? 0.4 : -0.4); hits.addMono(I.thwack(), t, 0.26); drums.addMono(I.crash(33 + i), t, 0.18); });
-const SC = [['C5', 'E5', 'G5', 'C6'], ['D5', 'G5', 'B5']];
-f.items.forEach((row, j) => row.forEach((t, i) => {
-  hits.addMono(I.pop(1400 + i * 200), t, 0.36, -0.3 + i * 0.2);
-  keys.addMono(I.marimba(m(SC[j][i])), t, 0.26, -0.3 + i * 0.2);
-  fx.addMono(I.noiseSweep(0.18, 2500, 8000, { q: 3 }), t, 0.05, 0.3);
-}));
+fx.addMono(I.noiseSweep(0.55, 900, 9500, { q: 3, pink: false }), f.cut - 0.4, 0.13); hits.addMono(I.thwack(), f.cut, 0.26); drums.addMono(I.crash(33), f.cut, 0.18);
+const SCALE = ['C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5', 'C6'];
+f.tiles.forEach((t, i) => {
+  hits.addMono(I.pop(1300 + i * 120), t, 0.3, i % 2 ? 0.35 : -0.35);
+  keys.addMono(I.marimba(m(SCALE[i])), t, 0.22, i % 2 ? 0.35 : -0.35);
+});
+for (let k = 0; k < 8; k++) { const t = f.tiles[7] + 0.25 + k * 0.4; if (t > S_.price[0] - 0.7) break; fx.addMono(I.noiseSweep(0.3, 3000, 9000, { q: 3 }), t, 0.035, k % 2 ? 0.4 : -0.4); }
+hits.addMono(I.woodTick(1.3), f.note - 1.4, 0.12);
 
 // ================= 29 – 35 s : le prix =================
 const pr = ev.price;
