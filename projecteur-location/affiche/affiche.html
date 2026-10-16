@@ -1,0 +1,201 @@
+<!doctype html>
+<!-- AFFICHE — Location projecteur Home Theater (4:5, 1080×1350 ; exportée en 2160×2700 par tools/render-affiche.cjs).
+     Style : lumineux et aéré (palmes floues au premier plan, halo de soleil, titre géant en dégradé, pastille).
+     Textes, prix et coordonnées : modifiables directement ci-dessous. -->
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Affiche — Location projecteur</title>
+<style>
+  @font-face { font-family: "Montserrat"; font-weight: 500; src: url("../assets/fonts/montserrat-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Montserrat"; font-weight: 600; src: url("../assets/fonts/montserrat-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Montserrat"; font-weight: 700; src: url("../assets/fonts/montserrat-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Montserrat"; font-weight: 800; src: url("../assets/fonts/montserrat-latin-800-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Montserrat"; font-weight: 900; src: url("../assets/fonts/montserrat-latin-900-normal.woff2") format("woff2"); }
+  :root { --navy: #0a1a3a; --navy2: #16356b; --gold: #ffbf1f; --gold-d: #e39a00; --ink: #1d2a44; --muted: #5b6b86; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1350px; background: #fff; }
+  body { font-family: "Montserrat", sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  #poster { position: relative; width: 1080px; height: 1350px; overflow: hidden;
+    background: linear-gradient(180deg, #fbf7ee 0%, #ffffff 30%, #f6f8fc 60%, #eaf0f8 100%); }
+  .abs { position: absolute; }
+  .center { left: 0; right: 0; text-align: center; }
+
+  /* lumière : halo de soleil, rayons doux */
+  #sun { left: 640px; top: -260px; width: 760px; height: 760px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,226,140,.95) 0%, rgba(255,206,90,.55) 22%, rgba(255,206,90,.12) 48%, rgba(255,206,90,0) 70%); }
+  .ray { position: absolute; width: 1400px; height: 70px; left: 260px; top: 120px; transform-origin: 100% 50%;
+    background: linear-gradient(90deg, rgba(255,240,200,0), rgba(255,236,190,.55) 70%, rgba(255,255,255,0)); filter: blur(14px); }
+  #stage { left: -100px; top: 700px; width: 1280px; height: 420px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(22,53,107,.14), rgba(22,53,107,0)); }
+  .leaves { position: absolute; overflow: visible; }
+
+  /* titre */
+  #kicker { top: 50px; font-weight: 800; font-size: 28px; letter-spacing: .62em; padding-left: .62em; color: var(--navy); }
+  #kicker i { display: inline-block; width: 70px; height: 3px; background: var(--gold); vertical-align: middle; margin: 0 22px; position: relative; top: -3px; }
+  .big { font-weight: 900; font-size: 158px; line-height: .9; letter-spacing: -.035em; -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #t1 { top: 92px; background-image: linear-gradient(180deg, rgba(10,26,58,.10) 0%, rgba(10,26,58,.45) 40%, #0a1a3a 82%); }
+  #t2 { top: 262px; padding-bottom: 12px; background-image: linear-gradient(90deg, #0a1a3a 0%, #16356b 42%, #c88a0a 74%, #ffbf1f 100%); }
+  #pill { top: 230px; }
+  #pill span { display: inline-flex; align-items: center; gap: 14px; padding: 13px 40px 13px 34px; border-radius: 40px;
+    background: linear-gradient(90deg, #ffd34d, #f0a000); color: var(--navy); font-weight: 800; font-size: 30px; letter-spacing: .2em;
+    box-shadow: 0 12px 30px rgba(240,160,0,.35); }
+  #pill svg { width: 40px; height: 40px; }
+  #tag { top: 424px; }
+  #tag span { display: inline-block; padding: 15px 38px; border-radius: 40px; background: rgba(10,26,58,.88); color: #fff;
+    font-weight: 600; font-size: 27px; box-shadow: 0 14px 34px rgba(10,26,58,.28); }
+
+  /* héros : écran projeté + projecteur + prix */
+  #screen { left: 478px; top: 506px; width: 560px; height: 315px; transform: rotate(2.2deg); border-radius: 18px; overflow: hidden;
+    border: 7px solid #fff; box-shadow: 0 34px 70px rgba(10,26,58,.38), 0 0 0 1px rgba(10,26,58,.08); }
+  #screen img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block; }
+  #screen .glare { position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255,255,255,.28) 0%, rgba(255,255,255,0) 38%); }
+  #shadow { left: 110px; top: 850px; width: 520px; height: 60px; border-radius: 50%; background: radial-gradient(closest-side, rgba(10,26,58,.42), rgba(10,26,58,0)); }
+  #proj { left: 70px; top: 552px; width: 520px; }
+  #flare { left: 0; top: 0; width: 0; height: 0; }
+  #flare i { position: absolute; display: block; border-radius: 50%; }
+  #flare .c { width: 150px; height: 150px; margin: -75px 0 0 -75px; background: radial-gradient(circle, #fff 0%, rgba(190,225,255,.9) 18%, rgba(90,160,255,.35) 45%, rgba(90,160,255,0) 72%); }
+  #flare .s { width: 520px; height: 16px; margin: -8px 0 0 -260px; background: radial-gradient(closest-side, rgba(230,245,255,.95), rgba(140,190,255,.35) 45%, rgba(140,190,255,0)); }
+  #price { left: 818px; top: 652px; width: 236px; height: 236px; border-radius: 50%; transform: rotate(-8deg);
+    background: radial-gradient(circle at 35% 30%, #1d4688, #0a1a3a 70%); border: 7px solid var(--gold);
+    box-shadow: 0 0 0 7px #fff, 0 26px 50px rgba(10,26,58,.45); color: #fff; text-align: center; padding-top: 30px; }
+  #price .k { font-weight: 800; font-size: 15px; letter-spacing: .2em; }
+  #price .v { font-weight: 900; font-size: 64px; line-height: 1; margin-top: 4px; letter-spacing: -.02em;
+    background: linear-gradient(180deg, #ffe58a, #ffbf1f 55%, #f0a000); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #price .u { font-weight: 800; font-size: 22px; letter-spacing: .14em; margin-top: 2px; }
+  #price .d { display: inline-block; margin-top: 8px; padding: 6px 14px; border-radius: 20px; background: var(--gold); color: var(--navy); font-weight: 800; font-size: 15px; letter-spacing: .08em; }
+
+  /* caractéristiques : grille d'icônes */
+  #feat-title { top: 902px; }
+  #feat-title span { display: inline-block; font-weight: 800; font-size: 19px; letter-spacing: .32em; padding: 8px 22px 8px 28px; border-radius: 30px; color: #fff; background: var(--navy); }
+  #grid { left: 30px; right: 30px; top: 948px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 12px; }
+  .it { width: 332px; height: 62px; display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 18px; background: rgba(255,255,255,.86);
+    box-shadow: 0 6px 18px rgba(10,26,58,.10), inset 0 0 0 1.5px rgba(10,26,58,.07); }
+  .ic { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 14px; background: var(--navy); color: var(--gold); display: grid; place-items: center; }
+  .ic svg { width: 32px; height: 32px; }
+  .tx b { display: block; font-weight: 800; font-size: 19px; line-height: 1.1; color: var(--navy); white-space: nowrap; }
+  .tx small { display: block; font-weight: 600; font-size: 15px; line-height: 1.2; color: var(--muted); margin-top: 2px; white-space: nowrap; }
+  #ideal { top: 1164px; font-weight: 600; font-size: 20px; color: var(--ink); }
+  #ideal b { font-weight: 800; color: var(--navy); }
+  /* nouveautés */
+  #new { left: 30px; right: 30px; top: 1196px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 12px; }
+  .nw { height: 58px; display: flex; align-items: center; gap: 12px; padding: 0 16px; border-radius: 18px;
+    background: linear-gradient(90deg, #ffd34d, #ffbf1f 60%, #f6aa00); box-shadow: 0 10px 24px rgba(240,160,0,.28); color: var(--navy); }
+  .nw .ic { width: 46px; height: 46px; background: var(--navy); color: #fff; border-radius: 12px; }
+  .nw .ic svg { width: 28px; height: 28px; }
+  .nw b { font-weight: 900; font-size: 20px; line-height: 1.1; display: block; }
+  .nw small { font-weight: 700; font-size: 14px; display: block; opacity: .85; }
+  /* contact */
+  #contact { left: 24px; right: 24px; top: 1282px; height: 62px; border-radius: 22px; background: var(--navy); color: #fff;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 22px; box-shadow: 0 14px 30px rgba(10,26,58,.3); }
+  #contact .c1 b { display: block; color: var(--gold); font-weight: 900; font-size: 19px; letter-spacing: .02em; }
+  #contact .c1 small { display: block; font-weight: 600; font-size: 13px; opacity: .85; }
+  #contact .c2 { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 30px; letter-spacing: .01em; }
+  #contact .c2 svg { width: 40px; height: 40px; }
+  #contact .c3 { font-weight: 700; font-size: 15px; line-height: 1.5; }
+  #contact .c3 svg { width: 17px; height: 17px; vertical-align: -3px; margin-right: 6px; color: var(--gold); }
+  .sep { width: 1.5px; height: 40px; background: rgba(255,255,255,.25); }
+  #note { top: 1260px; font-weight: 600; font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="poster">
+  <div id="sun" class="abs"></div>
+  <div class="ray" style="transform:rotate(-24deg)"></div>
+  <div class="ray" style="transform:rotate(-34deg);opacity:.7"></div>
+  <div class="ray" style="transform:rotate(-14deg);opacity:.6"></div>
+  <div id="stage" class="abs"></div>
+  <svg id="leafL" class="leaves" style="left:-150px;top:-120px;width:560px;height:520px;filter:blur(7px)" viewBox="0 0 560 520"></svg>
+  <svg id="leafR" class="leaves" style="left:760px;top:-150px;width:520px;height:520px;filter:blur(9px)" viewBox="0 0 520 520"></svg>
+
+  <!-- titre (style « Happy New Week ») -->
+  <div id="kicker" class="abs center"><i></i>PROJECTEUR<i></i></div>
+  <div id="t1" class="abs center big">Home</div>
+  <div id="t2" class="abs center big">Theater</div>
+  <div id="pill" class="abs center"><span><svg viewBox="0 0 24 24" fill="none" stroke="#0a1a3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="11" rx="2.5"/><circle cx="9" cy="12.5" r="3"/><path d="M15 11h3 M15 14h3 M6 18v2 M18 18v2"/></svg>LOCATION</span></div>
+  <div id="tag" class="abs center"><span>Vivez le grand écran partout, comme au cinéma !</span></div>
+
+  <!-- héros -->
+  <div id="screen" class="abs"><img src="../assets/photos/football.jpg" alt="" /><div class="glare"></div></div>
+  <div id="shadow" class="abs"></div>
+  <img id="proj" class="abs" src="../assets/projector.png" alt="Projecteur" />
+  <div id="flare" class="abs"><i class="s"></i><i class="c"></i></div>
+  <div id="price" class="abs"><div class="k">TARIF UNIQUE</div><div class="v">5 000</div><div class="u">FCFA</div><div class="d">LA JOURNÉE</div></div>
+
+  <!-- caractéristiques -->
+  <div id="feat-title" class="abs center"><span>CARACTÉRISTIQUES</span></div>
+  <div id="grid" class="abs"></div>
+  <div id="ideal" class="abs center"><b>Idéal pour :</b> soirées cinéma, événements, présentations, matchs, jeux vidéo…</div>
+  <div id="new" class="abs">
+    <div class="nw"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l5 3-5 3Z" fill="currentColor"/></svg></div><div><b>YouTube &amp; Netflix intégrés*</b><small>Vos films et séries en grand</small></div></div>
+    <div class="nw"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/><path d="M1.5 9a6 6 0 0 1 0 6 M21 7.5a9 9 0 0 1 0 9" /></svg></div><div><b>Écran du téléphone projeté</b><small>Recopie d'écran sans fil</small></div></div>
+  </div>
+  <div id="note" class="abs center">*Connexion Internet requise. Abonnement Netflix non inclus.</div>
+  <div id="contact" class="abs">
+    <div class="c1"><b>RÉSERVEZ MAINTENANT !</b><small>Disponibilité limitée.</small></div>
+    <div class="sep"></div>
+    <div class="c2"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#25D366"/><path d="M50 22a27 27 0 0 0-23.3 40.6L23 77l14.8-3.7A27 27 0 1 0 50 22Z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/><path d="M40.5 36.5c-1.2 0-2.6 1.5-2.6 4 0 6.5 8.4 15.8 15.6 18.4 3.2 1.2 5.6.3 6.4-1.6l.8-2.2c.3-.8-.1-1.5-.8-1.9l-4.9-2.4c-.7-.3-1.4-.1-1.8.5l-1.7 2.2c-3.4-1.3-6.6-4.4-8-7.8l2.2-1.7c.6-.5.8-1.2.5-1.9l-2.3-5c-.3-.7-1-1.1-1.8-.9Z" fill="#fff"/></svg>0167326082</div>
+    <div class="sep"></div>
+    <div class="c3"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Cotonou, Bénin</div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4 M16 2v4 M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg>Réservation 7j/7</div></div>
+  </div>
+</div>
+
+<script>
+// ---------- palmes (dessin vectoriel déterministe, floutées comme un premier plan hors mise au point) ----------
+function rng(seed) { let a = seed >>> 0; return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+function frond({ x0, y0, len, ang, bend, n, maxL, seed, shade }) {
+  const r = rng(seed); let out = '';
+  const P = (t) => { // point sur la nervure (courbe quadratique)
+    const a = ang * Math.PI / 180, cx = x0 + Math.cos(a) * len * 0.5 - Math.sin(a) * bend, cy = y0 + Math.sin(a) * len * 0.5 + Math.cos(a) * bend;
+    const ex = x0 + Math.cos(a) * len, ey = y0 + Math.sin(a) * len, u = 1 - t;
+    return [u * u * x0 + 2 * u * t * cx + t * t * ex, u * u * y0 + 2 * u * t * cy + t * t * ey];
+  };
+  const pal = shade ? ['#1d5a34', '#2c7a43', '#3f9150', '#256b3b'] : ['#2f7d44', '#4a9e55', '#3b8b4b', '#5cae5c'];
+  for (let i = 0; i < n; i++) {
+    const t = 0.06 + 0.92 * i / (n - 1), [px, py] = P(t), [qx, qy] = P(Math.min(1, t + 0.01));
+    const da = Math.atan2(qy - py, qx - px);
+    for (const side of [-1, 1]) {
+      const L = maxL * Math.pow(Math.sin(Math.PI * Math.min(1, t * 1.05)), 0.7) * (0.85 + r() * 0.3);
+      const a = da + side * (1.05 - 0.45 * t) + (r() - 0.5) * 0.12 + 0.18; // les folioles retombent un peu
+      const tx = px + Math.cos(a) * L, ty = py + Math.sin(a) * L, mx = (px + tx) / 2, my = (py + ty) / 2;
+      const w = 9 + 7 * Math.sin(Math.PI * t), nx = -Math.sin(a) * w, ny = Math.cos(a) * w;
+      out += `<path d="M${px.toFixed(1)} ${py.toFixed(1)} Q${(mx + nx).toFixed(1)} ${(my + ny).toFixed(1)} ${tx.toFixed(1)} ${ty.toFixed(1)} Q${(mx - nx * 0.4).toFixed(1)} ${(my - ny * 0.4).toFixed(1)} ${px.toFixed(1)} ${py.toFixed(1)}Z" fill="${pal[(i + (side > 0 ? 1 : 0)) % pal.length]}"/>`;
+    }
+  }
+  const pts = Array.from({ length: 21 }, (_, k) => P(k / 20).map((v) => v.toFixed(1)).join(' ')).join(' L');
+  return out + `<path d="M${pts}" fill="none" stroke="${shade ? '#174a2b' : '#2b6a3a'}" stroke-width="5" stroke-linecap="round"/>`;
+}
+document.getElementById('leafL').innerHTML =
+  frond({ x0: 40, y0: 40, len: 520, ang: 32, bend: -60, n: 30, maxL: 150, seed: 3, shade: true }) +
+  frond({ x0: 60, y0: 20, len: 430, ang: 8, bend: -40, n: 26, maxL: 120, seed: 5 });
+document.getElementById('leafR').innerHTML =
+  frond({ x0: 500, y0: 60, len: 500, ang: 150, bend: 60, n: 30, maxL: 150, seed: 7, shade: true }) +
+  frond({ x0: 520, y0: 30, len: 380, ang: 175, bend: 35, n: 24, maxL: 115, seed: 9 });
+
+// ---------- caractéristiques (toutes celles de l'affiche d'origine) ----------
+const IC = {
+  hd: '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9v6 M6 12h4 M10 9v6 M13 9v6h2a3 3 0 0 0 0-6Z"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2 M12 20v2 M4.93 4.93l1.41 1.41 M17.66 17.66l1.41 1.41 M2 12h2 M20 12h2 M6.34 17.66l-1.41 1.41 M19.07 4.93l-1.41 1.41"/>',
+  scr: '<rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8 M12 17v4 M7 13.5l10-6 M7 13.5h3.2 M7 13.5l1.6-2.8 M17 7.5h-3.2 M17 7.5l-1.6 2.8"/>',
+  spk: '<path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298Z"/><path d="M15 9a4.5 4.5 0 0 1 0 6 M18 6.5a8.5 8.5 0 0 1 0 11"/>',
+  wifi: '<path d="M12 20h.01 M8.5 16.429a5 5 0 0 1 7 0 M5 12.859a10 10 0 0 1 14 0 M2 8.82a15 15 0 0 1 20 0"/>',
+  bt: '<path d="M7 7l10 10-5 5V2l5 5L7 17"/>',
+  port: '<path d="M2 8h9v3l-1.5 1.5h-6L2 11Z"/><path d="M13 8h8v4.5h-8Z"/><circle cx="12" cy="18" r="2.5"/>',
+  trap: '<path d="M5 6h14l-3 12H8Z"/><path d="M9 12h6 M12 9v6"/>'
+};
+const FEATS = [
+  ['hd', '1080P', 'Résolution native'], ['sun', "Jusqu'à 400 ANSI", 'Luminosité LED'], ['scr', "Jusqu'à 150 pouces", 'Image grande taille'], ['spk', 'Haut-parleur intégré', 'Pour un son clair et immersif'],
+  ['wifi', 'Wi-Fi', 'Intégré'], ['bt', 'Bluetooth', 'Intégré'], ['port', 'HDMI / USB', 'Audio 3.5mm'], ['trap', 'Correction', 'Trapézoïdale']
+];
+document.getElementById('grid').innerHTML = FEATS.map(([k, a, b]) =>
+  `<div class="it"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${IC[k]}</svg></div><div class="tx"><b>${a}</b><small>${b}</small></div></div>`).join('');
+
+// éclat sur l'objectif (centre de l'objectif dans le détourage : 420,276 sur 1094×748)
+const pj = document.getElementById('proj'), fl = document.getElementById('flare');
+function placeFlare() { const s = pj.width / 1094; fl.style.left = (pj.offsetLeft + 420 * s) + 'px'; fl.style.top = (pj.offsetTop + 276 * s) + 'px'; }
+if (pj.complete) placeFlare(); else pj.onload = placeFlare;
+window.__ready = Promise.all([document.fonts.ready, ...Array.from(document.images).map((im) => im.decode().catch(() => null))]).then(placeFlare);
+</script>
+</body>
+</html>
