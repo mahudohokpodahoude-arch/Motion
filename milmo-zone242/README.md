@@ -27,6 +27,7 @@ python3 v2-nuit/sound.py sound.wav
 ## Version 3 · 3D (`v3-3d/`)
 Logo officiel ZONE 242 et logo MILMO vectorisés (`trace.mjs`, potrace) puis extrudés en 3D (three.js). Rendu image par image en WebGL, son synthétisé à 120 BPM (la naissance tombe sur le temps 8, à 4,0 s).
 - `v3-3d/MILMO_ZONE242_3D.mp4` : vidéo finale 1080×1920, 60 i/s, 10 s, avec son (-14 LUFS).
+- `v3-3d/MILMO_ZONE242_3D_16x9.mp4` : même film en 1920×1080 (`node render.mjs --size 1920x1080 ...`).
 ```
 cd v3-3d && npm install && node trace.mjs
 node render.mjs silent.mp4 60
