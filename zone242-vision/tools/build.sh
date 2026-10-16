@@ -1,5 +1,5 @@
 #!/bin/sh
-# Builds the ZONE 242 vision film in 9:16 and 16:9:
+# Builds the ZONE 242 vision film in 16:9 (1920x1080):
 #   1. the soundtrack (song.js)
 #   2. the 2D film (engine) for each format
 #   3. the two 3D segments (../milmo-zone242/v3-3d) for each format
@@ -15,7 +15,7 @@ mkdir -p "$OUT/3d"
 
 node song.js
 
-for FMT in 9:16 16:9; do
+for FMT in 16:9; do
   case $FMT in 9:16) SIZE=1080x1920; TAG=9x16;; 16:9) SIZE=1920x1080; TAG=16x9;; esac
   echo "== 2D $FMT"
   rm -f "$OUT"/video*.mp4

@@ -55,7 +55,7 @@
     Dadd9: { notes: ['F#3', 'A3', 'E4'], bass: 'D2' },
   }, (() => {
     const rows = [];
-    const prog = ['D', 'Bm', 'G', 'A'];
+    const prog = ['D', 'A', 'Bm', 'G'];
     for (let b = 0; b < 45; b++) rows.push([b, 0, 4, b >= 38 && b < 41 ? ['Gmaj7', 'A', 'Bm'][b - 38] : prog[b % 4]]);
     rows[44] = [44, 0, 4, 'Dadd9'];
     return rows;

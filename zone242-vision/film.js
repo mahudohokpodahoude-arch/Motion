@@ -163,7 +163,7 @@
     if (t >= e.text1) plate(cy - 330 * VS, 150 * VS);
     if (t >= e.text2) plate(cy + 400 * VS, 150 * VS);
     rise(ctx, 'UNE GRANDE ÉGLISE,', cx, cy - 330 * VS, fit(ctx, 'UNE GRANDE ÉGLISE,', 84 * VS), t, e.text1, { color: INK });
-    stamp(ctx, 'MAIS PERSONNE SEUL.', cx, cy + 400 * VS, fit(ctx, 'MAIS PERSONNE SEUL.', 84 * VS), t, e.text2, { color: ORANGE });
+    stamp(ctx, 'OÙ CHACUN EST CONNU.', cx, cy + 400 * VS, fit(ctx, 'OÙ CHACUN EST CONNU.', 84 * VS), t, e.text2, { color: ORANGE });
   }
 
   function acts(ctx, t) {
@@ -374,7 +374,7 @@
     g.addColorStop(1, 'rgba(255,232,150,0)');
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     const textAlpha = 1 - prog(t, e.cut - 0.5, 0.4);
-    const lines = [['« LÈVE-TOI,', e.l1, 120], ['SOIS ÉCLAIRÉE,', e.l2, 100], ['CAR TA LUMIÈRE', e.l3, 86], ['ARRIVE. »', e.l3 + 0.25, 86]];
+    const lines = [['« LÈVE-TOI,', e.l1, 120], ['SOIS ÉCLAIRÉ,', e.l2, 100], ['CAR TA LUMIÈRE', e.l3, 86], ['ARRIVE. »', e.l3 + 0.25, 86]];
     lines.forEach(([s, t0, size], i) => {
       const y = cy + (i - 1.5) * 150 * VS;
       // white text while the room is dark, ink once the light is bright
@@ -385,11 +385,10 @@
     if (flood > 0) { ctx.fillStyle = `rgba(255,253,240,${flood})`; ctx.fillRect(0, 0, W, H); }
   }
 
-  // ---------- assets: photos (from the V18 document) and icons (Lucide, ISC) ----------
+  // ---------- assets: icons (Lucide, ISC) ----------
   const IMG = {}, ICON = {};
-  const PHOTOS = ['men', 'women', 'couples', 'celibataires', 'camp_teens', 'camp_youth', 'puissance', 'aigles', 'generations'];
   const ICONS = ['sun', 'users', 'house', 'flame', 'smartphone', 'baby', 'star', 'rocket', 'party-popper', 'hand-heart',
-    'hand-helping', 'zap', 'trophy', 'briefcase', 'calendar-clock'];
+    'hand-helping', 'zap', 'trophy', 'briefcase', 'calendar-clock', 'heart-handshake', 'tent'];
   async function loadIcon(name, color) {
     const svg = (await (await fetch(`assets/icons/${name}.svg`)).text()).replace(/currentColor/g, color).replace(/<!--.*?-->/s, '');
     const img = new Image();
@@ -402,16 +401,18 @@
     if (!img || alpha <= 0) return;
     ctx.save(); ctx.globalAlpha = alpha; ctx.drawImage(img, x - size / 2, y - size / 2, size, size); ctx.restore();
   }
-  // a photo that covers its box, with a slow push (Ken Burns)
-  function photo(ctx, name, x, y, w, h, k, o = {}) {
-    const img = IMG[name];
-    if (!img) return;
-    const z = (o.zoom ?? 1) * (1 + 0.08 * k);
-    const sc = Math.max(w / img.width, h / img.height) * z;
-    const dw = img.width * sc, dh = img.height * sc;
+  // a brand panel: colour field, drifting ghost symbols, and one big mark (an icon or a letter)
+  function panel(ctx, x, y, w, h, k, o) {
     ctx.save();
     ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
-    ctx.drawImage(img, x + (w - dw) / 2 + (o.panX ?? 0) * k * 40, y + (h - dh) * (o.focusY ?? 0.5), dw, dh);
+    ctx.fillStyle = o.color; ctx.fillRect(x, y, w, h);
+    for (let j = 0; j < 4; j++) {
+      const sx = x + w * (0.1 + 0.3 * j) + Math.sin(k * 2 + j) * 20 - k * 60, sy = y + h * (j % 2 ? 0.7 : 0.3);
+      symbol(ctx, sx, sy, h * 0.55, { color: WHITE, alpha: 0.07, center: 0, rot: k * 0.3 * (j % 2 ? 1 : -1) });
+    }
+    const mx = x + w * (o.markX ?? 0.75), my = y + h * 0.42, ms = h * 0.5 * (1 + 0.05 * k);
+    if (o.letter) G.text(ctx, o.letter, mx, my, { size: ms * 1.3, fam: F, weight: 900, color: WHITE, align: 'center', baseline: 'middle', alpha: 0.9 });
+    else if (o.icon) icon(ctx, o.icon, WHITE, mx, my, ms);
     ctx.restore();
   }
   function tagLine(ctx, str, t, t0, color = WHITE, lineColor = ORANGE, y = cy + 470 * VS) {
@@ -455,7 +456,7 @@
     tagLine(ctx, 'UNE FOI QUI SE VIT CHAQUE JOUR.', t, e.tag, BLUE, ORANGE);
   }
 
-  // all the generations: a family photo and four age groups
+  // all the generations: the symbol and four age groups
   function gens(ctx, t) {
     bg(ctx, BLUE);
     drift(ctx, t, WHITE, 0.07, 12);
@@ -465,9 +466,7 @@
     const ps = (WIDE ? 380 : 440) * VS * Math.max(pk, 0);
     if (pk > 0) {
       const px = cx - ps / 2, py = cy - 150 * VS - ps / 2;
-      ctx.fillStyle = WHITE; ctx.fillRect(px - 10, py - 10, ps + 20, ps + 20);
-      photo(ctx, 'generations', px, py, ps, ps, prog(t, e.photo, 4), { focusY: 0.3 });
-      ctx.fillStyle = ORANGE; ctx.fillRect(px + ps - 50 * VS, py - 26 * VS, 66 * VS, 66 * VS);
+      symbol(ctx, px + ps / 2, py + ps / 2, ps * 0.9, { color: WHITE, spread: lerp(1.6, 1, pk), rot: (1 - Math.min(pk, 1)) * 0.6 });
     }
     const items = [['baby', 'ZONE KIDS', '0 – 10 ANS'], ['star', 'ZONE TEENS', '11 – 15 ANS'], ['rocket', 'ZONE YOUTH', '16 ANS ET +'], ['house', 'ADULTES', '& FAMILLES']];
     const cw = Math.min(maxW / 4, 230 * VS), yy = cy + 230 * VS;
@@ -485,7 +484,7 @@
     tagLine(ctx, 'CHAQUE GÉNÉRATION COMPTE.', t, e.tag, WHITE, ORANGE);
   }
 
-  // two photos, two communities: stacked in 9:16, side by side in 16:9
+  // two panels, two communities: stacked in 9:16, side by side in 16:9
   function pair(ctx, t, o) {
     bg(ctx, NAVY);
     drift(ctx, t, WHITE, 0.05, o.seed);
@@ -499,8 +498,8 @@
       if (WIDE) { w = (maxW - 40) / 2; h = 600 * VS; x = cx - maxW / 2 + i * (w + 40); y = cy - 470 * VS; }
       else { w = W; h = 400 * VS; x = 0; y = cy - 480 * VS + i * (h + 90 * VS); }
       const dx = (1 - k) * W * side;
-      photo(ctx, c.img, x + dx, y, w, h, prog(t, t0, 4), { panX: side * -1, focusY: 0.4 });
-      // label plate over the photo's lower edge
+      panel(ctx, x + dx, y, w, h, prog(t, t0, 4), { color: i ? ORANGE : BLUE, icon: c.icon, letter: c.letter, markX: WIDE ? 0.5 : 0.78 });
+      // label plate over the panel's lower edge
       const name = c.name, sub = c.sub;
       const ns = fit(ctx, name, 66 * VS, w - 150), ss = fit(ctx, sub, 28 * VS, w - 150, 700);
       const ph = ns * 1.1 + ss * 1.5 + 30;
@@ -508,26 +507,25 @@
       const pw = Math.max(G.measure(ctx, name, ns, F, 900), G.measure(ctx, sub, ss, F, 700)) + 60;
       const plx = (WIDE ? x + 24 : x + 40) + dx;
       const lk = ease.outExpo(prog(t, t0 + 0.2, 0.4));
-      ctx.fillStyle = i ? ORANGE : BLUE; ctx.fillRect(plx, py, pw * lk, ph);
+      ctx.fillStyle = WHITE; ctx.fillRect(plx, py, pw * lk, ph);
       if (lk > 0.6) {
-        G.text(ctx, name, plx + 30, py + ns * 0.72 + 8, { size: ns, fam: F, weight: 900, color: WHITE, baseline: 'middle' });
-        G.text(ctx, sub, plx + 30, py + ns * 1.1 + ss + 10, { size: ss, fam: F, weight: 700, color: WHITE, baseline: 'middle', alpha: 0.95 });
+        G.text(ctx, name, plx + 30, py + ns * 0.72 + 8, { size: ns, fam: F, weight: 900, color: i ? ORANGE : BLUE, baseline: 'middle' });
+        G.text(ctx, sub, plx + 30, py + ns * 1.1 + ss + 10, { size: ss, fam: F, weight: 700, color: INK, baseline: 'middle' });
       }
-      if (c.icon) { const ik = ease.outBack(prog(t, t0 + 0.3, 0.3), 2.5); if (ik > 0) { const ix = x + w - 70 + dx, iy = y + 60; ctx.fillStyle = WHITE; ctx.beginPath(); ctx.arc(ix, iy, 40 * ik, 0, Math.PI * 2); ctx.fill(); icon(ctx, c.icon, i ? ORANGE : BLUE, ix, iy, 46 * ik); } }
     });
     tagLine(ctx, o.tag, t, e.tag, WHITE, ORANGE, cy + (WIDE ? 330 : 590) * VS);
   }
   const menwomen = (ctx, t) => pair(ctx, t, { e: ev.menwomen, seed: 13, kicker: 'DEUX UNIVERS · TOUTE L’ANNÉE',
-    A: { img: 'men', name: 'ZONE MEN', sub: 'Des hommes de foi, de caractère et d’impact.' },
-    B: { img: 'women', name: 'ZONE WOMEN', sub: 'Des femmes de foi, d’influence et de destinée.' },
+    A: { letter: 'M', name: 'ZONE MEN', sub: 'Des hommes de foi, de caractère et d’impact.' },
+    B: { letter: 'W', name: 'ZONE WOMEN', sub: 'Des femmes de foi, d’influence et de destinée.' },
     tag: 'FOI · IDENTITÉ · INFLUENCE · DESTINÉE.' });
   const couples = (ctx, t) => pair(ctx, t, { e: ev.couples, seed: 14, kicker: 'CHAQUE SAISON COMPTE',
-    A: { img: 'couples', name: 'GALA DES COUPLES', sub: 'Honorer l’alliance. Célébrer l’amour.', icon: 'hand-heart' },
-    B: { img: 'celibataires', name: 'RENCONTRE DES CÉLIBATAIRES', sub: 'Bien vivre sa saison, préparer son avenir.', icon: 'users' },
+    A: { name: 'GALA DES COUPLES', sub: 'Honorer l’alliance. Célébrer l’amour.', icon: 'heart-handshake' },
+    B: { name: 'RENCONTRE DES CÉLIBATAIRES', sub: 'Bien vivre sa saison, préparer son avenir.', icon: 'users' },
     tag: 'BÂTIR LA FAMILLE, PRÉPARER L’AVENIR.' });
   const camps = (ctx, t) => pair(ctx, t, { e: ev.camps, seed: 15, kicker: '242 CAMPS · IMMERSION',
-    A: { img: 'camp_teens', name: 'CAMP TEENS · 11–15 ANS', sub: 'Une identité solide en Christ.', icon: 'star' },
-    B: { img: 'camp_youth', name: 'CAMP YOUTH · 16 ANS ET +', sub: 'Vocation, leadership, mission.', icon: 'rocket' },
+    A: { name: 'CAMP TEENS · 11–15 ANS', sub: 'Une identité solide en Christ.', icon: 'tent' },
+    B: { name: 'CAMP YOUTH · 16 ANS ET +', sub: 'Vocation, leadership, mission.', icon: 'rocket' },
     tag: 'UNE GÉNÉRATION QUI IMPACTE.' });
 
   // signature programmes: four tiles
@@ -563,8 +561,8 @@
     const e = ev.gather;
     title(ctx, 'LES GRANDS RASSEMBLEMENTS 242', 'UNE FOIS PAR AN', t, e.title, [ORANGE, WHITE]);
     const cards = [
-      { img: 'puissance', name: 'PUISSANCE & GUÉRISON', sub: 'Deux séminaires pour rencontrer Dieu', icon: 'zap', col: BLUE },
-      { img: 'aigles', name: 'AIGLES & OUVRIERS', sub: 'Célébrer ceux qui font vivre la Zone', icon: 'trophy', col: ORANGE },
+      { name: 'PUISSANCE & GUÉRISON', sub: 'Deux séminaires pour rencontrer Dieu', icon: 'zap', col: BLUE },
+      { name: 'AIGLES & OUVRIERS', sub: 'Célébrer ceux qui font vivre la Zone', icon: 'trophy', col: ORANGE },
       { name: '242 BUSINESS CONFERENCE', sub: 'Foi · business · leadership · impact', icon: 'briefcase', col: '#0B7FD8' },
       { name: '14 JOURS · 242 HOURS', sub: 'Jeûne et prière en chaîne, chaque janvier', icon: 'calendar-clock', col: BLUE },
     ];
@@ -582,8 +580,7 @@
       ctx.translate(-cx + (1 - k) * W * (i % 2 ? -1 : 1), -(y0 + ch / 2));
       ctx.globalAlpha = 1 - under * 0.5;
       const ph = ch * 0.66;
-      if (c.img) photo(ctx, c.img, x0, y0, cw, ph, prog(t, e.items[i], 3), { focusY: 0.35 });
-      else { ctx.fillStyle = c.col; ctx.fillRect(x0, y0, cw, ph); for (let j = 0; j < 3; j++) symbol(ctx, x0 + cw * (0.2 + j * 0.3), y0 + ph / 2, ph * 0.5, { color: WHITE, alpha: 0.07, center: 0 }); icon(ctx, c.icon, WHITE, cx, y0 + ph / 2, ph * 0.42); }
+      { ctx.fillStyle = c.col; ctx.fillRect(x0, y0, cw, ph); for (let j = 0; j < 3; j++) symbol(ctx, x0 + cw * (0.2 + j * 0.3), y0 + ph / 2, ph * 0.5, { color: WHITE, alpha: 0.07, center: 0 }); icon(ctx, c.icon, WHITE, cx, y0 + ph / 2, ph * 0.42); }
       ctx.fillStyle = WHITE; ctx.fillRect(x0, y0 + ph, cw, ch - ph);
       ctx.fillStyle = c.col; ctx.fillRect(x0, y0 + ph, 16, ch - ph);
       G.text(ctx, c.name, x0 + 50, y0 + ph + (ch - ph) * 0.38, { size: fit(ctx, c.name, 58 * VS, cw - 100), fam: F, weight: 900, color: INK, baseline: 'middle' });
@@ -611,7 +608,6 @@
       await Studio.loadFont(F, 'assets/fonts/montserrat-latin-800-normal.woff2', 800);
       await Studio.loadFont(F, 'assets/fonts/montserrat-latin-900-normal.woff2', 900);
       await Studio.loadFont(MONO, 'assets/fonts/ibm-plex-mono-latin-500-normal.woff2', 500);
-      for (const p of PHOTOS) IMG[p] = await Studio.loadImage(`assets/photos/${p}.jpg`);
       for (const n of ICONS) for (const c of [BLUE, WHITE, ORANGE]) await loadIcon(n, c);
     },
     draw(ctx, t) {

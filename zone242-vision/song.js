@@ -1,12 +1,11 @@
 // THE SONG — every sound of the ZONE 242 vision film, rendered from score.js into out/music.wav.
 //   node song.js      (STEMS=1 also writes out/stem-*.wav, LUFS=-14 masters to a target loudness)
-// An afrobeats groove at 120 BPM (a nod to Cotonou), a marimba hook, and one effect per event.
+// An uplifting corporate track at 120 BPM, a piano hook, and one effect per event.
 const path = require('path');
 const { Bus, reverb, pingpong } = require('./engine/audio/dsp');
 const { SR } = require('./engine/audio/dsp');
 const I = require('./engine/audio/instruments');
 const MIX = require('./engine/audio/mix');
-const Genre = require('./engine/audio/genres');
 const sc = require('./score');
 const { T, BEAT, DURATION, m, ev, clock, chordAt } = sc;
 
@@ -16,36 +15,63 @@ const drums = bus(), bass = bus(), pad = bus(), keys = bus(), brass = bus(), fx 
 const verb = bus(), dly = bus();
 const kicks = [];
 
-// ================= backing =================
-// the afrobeats groove runs where the story moves; it drops out for the held moments
-const groove = (from, to, opts = {}) => {
-  const r = Genre.play('afrobeats', { clock, from, to, chordAt, buses: { drums, bass, pad, keys }, ...opts });
-  if (r && r.kicks) kicks.push(...r.kicks);
+// ================= backing: uplifting corporate =================
+// four-on-the-floor kick, claps on 2 and 4, off-beat hats, an 8th-note pulsing bass,
+// a 16th-note pluck arpeggio and soft piano chords. The effects below are unchanged.
+const K = I.kick({ punch: 0.7, tail: 0.18 }), CL = I.clap({ spread: 0.9 }), HC = [I.hat(false, 31), I.hat(false, 32)], HO = I.hat(true, 33);
+const SH = [I.shaker(1, 34), I.shaker(0.6, 35)];
+const arp = bus();
+const corporate = (from, to, o = {}) => {
+  clock.eachStep(from, to, 16, (t, b, st) => {
+    const c = chordAt(t);
+    if (!c) return;
+    const full = o.full !== false;
+    if (o.drums !== false) {
+      if (st % 4 === 0 && (full || st % 8 === 0)) { drums.addMono(K, t, full ? 0.8 : 0.55); kicks.push(t); }
+      if (full && st % 8 === 4) { drums.addMono(CL, t, 0.42); verb.addMono(CL, t, 0.18); }
+      if (st % 4 === 2) drums.addMono(st % 8 === 6 && full ? HO : HC[st % 2], t, 0.13, 0.25);
+      if (full) drums.addMono(SH[st % 2], t, 0.05, -0.35);
+    }
+    // 8th-note bass on the root, octave jump on the last 8th of each bar
+    if (o.bass !== false && st % 2 === 0) bass.addMono(I.bass(c.bass + 12 + (st === 14 ? 12 : 0), BEAT / 2 * 0.75, { bright: 0.45, sub: 0.7 }), t, full ? 0.5 : 0.35);
+    // 16th-note pluck arpeggio through the chord, one octave up
+    if (o.arp !== false) {
+      const notes = [...c.notes, c.notes[0] + 12];
+      const n = notes[[0, 1, 2, 3, 2, 1, 2, 3][st % 8]] + 12;
+      const x = I.pluck(n, { decay: 0.18, cutoff: 3200 });
+      arp.addMono(x, t, 0.09 * (st % 4 === 0 ? 1.3 : 1), st % 2 ? 0.35 : -0.35);
+      dly.addMono(x, t, 0.025);
+    }
+    // soft piano chords on 1 and the "and" of 2
+    if (o.keys !== false && (st === 0 || st === 6)) for (const n of c.notes) keys.addMono(I.epiano(n + 12, BEAT * 1.4, { index: 0.7 }), t, 0.07);
+  });
 };
-groove(2, 4, { bassline: false, chords: false, gain: 0.7 });  // MILMO: just the pulse
-groove(4, 18, { fill: [5, 11, 17] });                          // vision → the three movements
-groove(18, 20, { drums: false });                              // sunday: breathe
-groove(20, 35, { fill: [23, 27, 31, 34] });                    // the life of the Zone
-groove(35, 38, { fill: [37] });                                // the goal, building
-groove(41, 44, {});                                            // the finale
+corporate(2, 4, { full: false, bass: false, keys: false });     // MILMO: a light pulse
+corporate(4, 18, {});                                           // vision -> the three movements
+corporate(18, 20, { drums: false });                            // sunday: breathe
+corporate(20, 35, {});                                          // the life of the Zone
+corporate(35, 38, {});                                          // the goal, building
+corporate(41, 44, {});                                          // the finale
+// risers into the big sections
+for (const b of [4, 20, 35]) fx.addMono(I.noiseSweep(1.9, 300, 8000, { q: 0.9, shape: (x) => x * x, pink: true }), T(b) - 1.95, 0.16);
 // the intro: a soft kick on 1 and 3 under the letters
 for (let b = 0; b < 2; b++) for (const beat of [0, 2]) { drums.addMono(I.kick({ tail: 0.25 }), T(b, beat), 0.5); kicks.push(T(b, beat)); }
 
 // pads: the chords all the way, darker under the held moments
 for (const c of sc.chords) {
   const held = c.t0 >= sc.S.isaiah[0] && c.t0 < sc.S.isaiah[1];
-  const opts = held ? { cutoff: 1800, attack: 0.6, release: 1.4 } : { cutoff: 1300, attack: 0.25, release: 0.8 };
-  for (const n of c.notes) { const { L, R } = I.padNote(n, c.t1 - c.t0, opts); pad.addStereo(L, R, c.t0, held ? 0.14 : 0.06); }
+  const opts = held ? { cutoff: 1800, attack: 0.6, release: 1.4 } : { cutoff: 1500, attack: 0.3, release: 0.8 };
+  for (const n of c.notes) { const { L, R } = I.padNote(n, c.t1 - c.t0, opts); pad.addStereo(L, R, c.t0, held ? 0.14 : 0.07); }
 }
 // strings swell under Isaiah, into the light
 for (const c of sc.chords.filter((c) => c.t0 >= sc.S.isaiah[0] && c.t0 < sc.S.isaiah[1])) {
   for (const n of c.notes) { const s = I.strings(n + 12, c.t1 - c.t0, { attack: 0.5, release: 0.6, bright: 0.7 }); pad.addStereo(s.L, s.R, c.t0, 0.1); verb.addStereo(s.L, s.R, c.t0, 0.08); }
 }
 
-// the hook on marimba, doubled by e-piano an octave down
+// the hook on bright piano
 for (const n of sc.hook) {
-  const x = I.marimba(n.midi, { thock: 0.2 });
-  keys.addMono(x, n.t, 0.32, 0.15); verb.addMono(x, n.t, 0.12); dly.addMono(x, n.t, 0.06);
+  const x = I.epiano(n.midi, n.dur * 1.6, { index: 1.4 });
+  keys.addMono(x, n.t, 0.2, 0.1); verb.addMono(x, n.t, 0.1); dly.addMono(x, n.t, 0.05);
 }
 
 // ================= 3D opening (0 – 8 s) =================
@@ -169,13 +195,13 @@ for (const n of ['D5', 'F#5', 'A5']) keys.addMono(I.bell(m(n), 3), f.tag + 0.03 
 keys.addMono(I.bell(m('D6'), 2), f.welcome, 0.12);
 
 // ================= mix =================
-MIX.sidechain([pad, bass], kicks.filter((t) => t >= T(4)), { depth: 0.35 });
+MIX.sidechain([pad, bass, arp], kicks.filter((t) => t >= T(4)), { depth: 0.35 });
 const stems = {
-  drums, bass, pad, keys, brass, fx, hits,
+  drums, bass, pad, keys, arp, brass, fx, hits,
   verb: reverb(verb, { room: 0.85, damp: 0.35 }),
   dly: pingpong(dly, BEAT * 0.75, 0.35, 3500),
 };
-const GAIN = { drums: 0.55, bass: 0.75, pad: 1.8, keys: 0.9, brass: 1.6, fx: 0.8, hits: 0.9, verb: 1, dly: 1 };
+const GAIN = { arp: 2.2, drums: 0.55, bass: 0.5, pad: 1.8, keys: 0.9, brass: 1.6, fx: 0.8, hits: 0.9, verb: 1, dly: 1 };
 const out = path.join(__dirname, 'out');
 const mix = MIX.mixdown(stems, GAIN, { stemDir: process.env.STEMS ? out : null });
 MIX.highpass(mix, 24);
