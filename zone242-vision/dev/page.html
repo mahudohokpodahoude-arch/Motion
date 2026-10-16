@@ -1,0 +1,22 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:#111}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../engine/util.js"></script>
+<script src="../engine/music.js"></script>
+<script src="../score.js"></script>
+<script src="../engine/video/gfx.js"></script>
+<script src="../kit.js"></script>
+<script src="../people.js"></script>
+<script>
+(async () => {
+  const load = (f, s, w) => { const ff = new FontFace(f, `url(${s})`, { weight: String(w) }); document.fonts.add(ff); return ff.load(); };
+  await Promise.all([
+    load('Mont', '../assets/fonts/montserrat-latin-700-normal.woff2', 700), load('Mont', '../assets/fonts/montserrat-latin-800-normal.woff2', 800),
+    load('Mont', '../assets/fonts/montserrat-latin-900-normal.woff2', 900), load('PlexMono', '../assets/fonts/ibm-plex-mono-latin-500-normal.woff2', 500),
+    load('Inter', '../engine/fonts/Inter-700.ttf', 700), load('Inter', '../engine/fonts/Inter-800.ttf', 800), load('Inter', '../engine/fonts/Inter-400.ttf', 400),
+  ]);
+  const q = new URLSearchParams(location.search);
+  const s = document.createElement('script'); s.src = q.get('js') || 'cast.js';
+  s.onload = () => { window.ready = true; }; document.body.appendChild(s);
+})();
+</script></body></html>
