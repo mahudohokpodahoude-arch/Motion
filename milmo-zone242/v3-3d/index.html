@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>MILMO → ZONE 242 · 3D</title>
+<style>
+  @font-face { font-family: Mono; font-weight: 500; src: url(../fonts/ibm-plex-mono-latin-500-normal.woff2); }
+  @font-face { font-family: M; font-weight: 700; src: url(../fonts/montserrat-latin-700-normal.woff2); }
+  html, body { margin: 0; background: #fff; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+  #stage canvas { position: absolute; inset: 0; }
+  #flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+  .txt { position: absolute; left: 0; right: 0; text-align: center; opacity: 0; }
+  #tag { top: 1530px; font: 700 30px M; letter-spacing: 5px; color: #1A1830; }
+  #tag b { color: #FF5A36; font-weight: 700; padding: 0 14px; }
+  #by { top: 1592px; font: 500 26px Mono; letter-spacing: 10px; color: #6E6C78; }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "./node_modules/three/build/three.module.js",
+  "three/addons/": "./node_modules/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="stage">
+  <div id="flash"></div>
+  <div id="tag" class="txt">CONNECTER<b>•</b>TRANSFORMER<b>•</b>ENVOYER</div>
+  <div id="by" class="txt">BY MILMO</div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const W = 1080, H = 1920, DUR = 10;
+const BLUE = 0x1900CF, ORANGE = 0xFF5A36, MILMO_BLUE = 0x2A10E0;
+const YELLOW = new THREE.Color(0xFEDF08), WHITE = new THREE.Color(0xFFFFFF);
+
+// ---------- easing ----------
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const eOutCubic = k => 1 - Math.pow(1 - k, 3);
+const eInCubic = k => k * k * k;
+const eInOut = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const eOutExpo = k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
+const eInExpo = k => k === 0 ? 0 : Math.pow(2, 10 * k - 10);
+const eOutBack = (k, s = 1.7) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2);
+const eInOutQuint = k => k < .5 ? 16 * k ** 5 : 1 - Math.pow(-2 * k + 2, 5) / 2;
+
+// ---------- renderer / scene ----------
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W, H);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.NeutralToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.getElementById('stage').prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = YELLOW.clone();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.3;
+
+const camera = new THREE.PerspectiveCamera(30, W / H, 0.1, 400);
+
+const hemi = new THREE.HemisphereLight(0xffffff, 0xd9d4f0, 0.45);
+scene.add(hemi);
+const key = new THREE.DirectionalLight(0xffffff, 1.9);
+key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048);
+Object.assign(key.shadow.camera, { left: -14, right: 14, top: 14, bottom: -14, near: 1, far: 80 });
+key.shadow.bias = -0.0004;
+key.shadow.radius = 6;
+scene.add(key, key.target);
+const rim = new THREE.DirectionalLight(0xbfd0ff, 0.6);
+scene.add(rim);
+
+// backdrop that only shows shadows: gives the logo a place to stand
+const backdrop = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.ShadowMaterial({ opacity: 0.16 }));
+backdrop.position.z = -0.55;
+backdrop.receiveShadow = true;
+scene.add(backdrop);
+
+const mat = (color, opts = {}) => new THREE.MeshPhysicalMaterial({
+  color, roughness: 0.4, metalness: 0.0, clearcoat: 0.45, clearcoatRoughness: 0.3, ...opts });
+const M_BLUE = mat(BLUE), M_ORANGE = mat(ORANGE), M_MILMO = mat(MILMO_BLUE);
+
+// ---------- logo geometry from the traced SVGs ----------
+async function shapesOf(url) {
+  const data = new SVGLoader().parse(await (await fetch(url)).text());
+  const out = [];
+  for (const p of data.paths) for (const s of SVGLoader.createShapes(p)) {
+    const pts = s.getPoints();
+    const box = new THREE.Box2().setFromPoints(pts);
+    const c = box.getCenter(new THREE.Vector2());
+    out.push({ shape: s, box, c, area: (box.max.x - box.min.x) * (box.max.y - box.min.y) });
+  }
+  return out;
+}
+
+// a "part" = shapes extruded together, pivoting around their own centre
+function makePart(list, material, depth, parent) {
+  const box = new THREE.Box2();
+  list.forEach(s => box.union(s.box));
+  const c = box.getCenter(new THREE.Vector2());
+  const geo = new THREE.ExtrudeGeometry(list.map(s => s.shape), {
+    depth, bevelEnabled: true, bevelThickness: depth * 0.12, bevelSize: depth * 0.1, bevelSegments: 3, curveSegments: 10 });
+  geo.translate(-c.x, -c.y, -depth / 2);
+  const mesh = new THREE.Mesh(geo, material);
+  mesh.castShadow = true;
+  const pivot = new THREE.Group();
+  pivot.add(mesh);
+  pivot.position.set(c.x, c.y, 0);
+  pivot.userData.home = pivot.position.clone();
+  pivot.userData.size = box.getSize(new THREE.Vector2());
+  parent.add(pivot);
+  return pivot;
+}
+
+// SVG space (y down) -> world: one group per logo, mirrored in y
+const S = 0.01;
+const zone = new THREE.Group();
+zone.scale.set(S, -S, S);
+zone.position.set(-1440 * S, 840 * S, 0);
+scene.add(zone);
+const SM = 0.0046;
+const milmo = new THREE.Group();
+milmo.scale.set(SM, -SM, SM);
+milmo.position.set(-1410 * SM, 620 * SM + 1.2, 0);
+scene.add(milmo);
+
+const P = {};
+async function build() {
+  const blue = await shapesOf('assets/zone_blue.svg');
+  const orange = await shapesOf('assets/zone_orange.svg');
+  const by = f => blue.filter(f);
+  const D = 46;  // extrusion depth in logo px
+  // symbol
+  P.corners = [
+    by(s => s.c.y < 800 && s.c.x < 1440 && s.c.y < 560),
+    by(s => s.c.y < 800 && s.c.x > 1440 && s.c.y < 560),
+    by(s => s.c.y < 800 && s.c.x > 1440 && s.c.y > 560),
+    by(s => s.c.y < 800 && s.c.x < 1440 && s.c.y > 560),
+  ].map(l => makePart(l, M_BLUE, D, zone));
+  P.center = makePart(orange.filter(s => s.c.y < 800), M_ORANGE, 64, zone);
+  // wordmark
+  P.Z = makePart(by(s => s.c.y > 800 && s.c.x < 1170 && s.c.y < 1100), M_BLUE, D, zone);
+  P.globe = makePart(by(s => s.c.y > 800 && s.c.x > 1170 && s.c.x < 1400 && s.c.y < 1100), M_BLUE, D, zone);
+  P.N = makePart(by(s => s.c.y > 1100 && s.c.x < 1180), M_BLUE, D, zone);
+  P.E = makePart(by(s => s.c.y > 1100 && s.c.x > 1180 && s.c.x < 1420), M_BLUE, D, zone);
+  P.d2a = makePart(by(s => s.c.x > 1440 && s.c.y < 1080), M_BLUE, D, zone);
+  P.d4 = makePart(by(s => s.c.x > 1440 && s.c.x < 1630 && s.c.y > 1080), M_BLUE, D, zone);
+  P.d2b = makePart(by(s => s.c.x > 1630 && s.c.y > 1080), M_BLUE, D, zone);
+  P.frame = makePart(orange.filter(s => s.c.y > 800), M_ORANGE, 30, zone);
+
+  // MILMO: four letters + globe (the tagline is left out on purpose)
+  const m = (await shapesOf('assets/milmo.svg')).filter(s => s.c.y < 900 && s.area > 400);
+  const gx = 1900;
+  const letters = m.filter(s => s.c.x < gx).sort((a, b) => a.c.x - b.c.x);
+  // letters may be split in several shapes: cluster by x gaps
+  const groups = [];
+  for (const s of letters) {
+    const g = groups.at(-1);
+    if (g && s.box.min.x < g.maxX + 4) { g.list.push(s); g.maxX = Math.max(g.maxX, s.box.max.x); }
+    else groups.push({ list: [s], maxX: s.box.max.x });
+  }
+  P.milmoLetters = groups.map(g => makePart(g.list, M_MILMO, 80, milmo));
+  P.milmoGlobe = makePart(m.filter(s => s.c.x >= gx), M_MILMO, 60, milmo);
+  window.debugParts = { letters: groups.length, zoneBlue: blue.length, milmo: m.length };
+}
+
+// birth particles
+const N_P = 160;
+const pMesh = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 12, 8), new THREE.MeshStandardMaterial({ roughness: 0.4 }), N_P);
+const pData = [];
+{
+  let seed = 242;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < N_P; i++) {
+    const th = rnd() * Math.PI * 2, ph = Math.acos(2 * rnd() - 1);
+    pData.push({ dir: new THREE.Vector3(Math.sin(ph) * Math.cos(th), Math.sin(ph) * Math.sin(th), Math.cos(ph)),
+      speed: 4 + rnd() * 10, size: 0.04 + rnd() * 0.1, delay: rnd() * 0.15 });
+    pMesh.setColorAt(i, new THREE.Color(i % 3 === 0 ? ORANGE : BLUE));
+  }
+}
+scene.add(pMesh);
+
+// ---------- helpers ----------
+const v = (x, y, z) => new THREE.Vector3(x, y, z);
+// world position of a zone part's home
+const zoneWorld = p => p.userData.home.clone().applyMatrix4(zone.matrixWorld);
+const toZoneLocal = w => zone.worldToLocal(w.clone());
+const toMilmoLocal = w => milmo.worldToLocal(w.clone());
+const dummy = new THREE.Object3D();
+
+function place(part, { pos, rx = 0, ry = 0, rz = 0, s = 1, sz = null, visible = true }) {
+  part.visible = visible && s > 0.001;
+  if (pos) part.position.copy(pos);
+  part.rotation.set(rx, ry, rz);
+  part.scale.set(s, s, sz === null ? s : sz);
+}
+
+// ---------- the timeline ----------
+function render(t) {
+  zone.updateMatrixWorld(true);
+  milmo.updateMatrixWorld(true);
+
+  // ----- background: MILMO yellow -> ZONE white at the birth -----
+  const bgK = eInOut(prog(t, 3.85, 4.25));
+  scene.background.copy(YELLOW).lerp(WHITE, bgK);
+  backdrop.material.opacity = lerp(0.08, 0.09, bgK);
+
+  // ----- camera -----
+  // MILMO: three-quarter view drifting; dive into the globe; swing to the front for the logo
+  const gHome = toWorldMilmo(P.milmoGlobe.userData.home);
+  const drift = eInOut(prog(t, 0, 2.6));
+  let camPos = v(lerp(-9, -4, drift), lerp(3.5, 1.8, drift), lerp(36, 33, drift));
+  let look = v(0, 1.0, 0);
+  const dive = eInOutQuint(prog(t, 2.5, 3.95));
+  camPos.lerp(v(4.5, 1.2, 18), dive);
+  look.lerp(v(0, 1.0, 0), dive);
+  const pull = eInOutQuint(prog(t, 4.0, 6.3));
+  camPos.lerp(v(7, -2.5, 37), pull);
+  look.lerp(v(0, -0.2, 0), pull);
+  const settle = eInOutQuint(prog(t, 6.6, 8.6));
+  camPos.lerp(v(0, -0.4, 40), settle);
+  look.lerp(v(0, -0.45, 0), settle);
+  camera.position.copy(camPos);
+  camera.lookAt(look);
+
+  // light sweeps across the faces at the end (a shine)
+  const sweep = eInOut(prog(t, 7.2, 9.4));
+  key.position.set(lerp(-12, 12, sweep), 14, 18);
+  key.target.position.set(0, 0, 0);
+  rim.position.set(lerp(10, -10, sweep), -6, 10);
+
+  // ===== 1. MILMO (0 – 2.6s): letters fly in from depth =====
+  P.milmoLetters.forEach((p, i) => {
+    const a = 0.15 + i * 0.12;
+    const k = eOutBack(prog(t, a, a + 0.75), 1.3);
+    const kin = prog(t, a, a + 0.75);
+    // exit: each letter tumbles backwards and away
+    const e = eInCubic(prog(t, 2.35 + i * 0.05, 3.1 + i * 0.05));
+    const home = p.userData.home;
+    const pos = home.clone().add(v(0, lerp(260, 0, k) + e * -380, lerp(-3800, 0, eOutExpo(kin)) + e * -2600));
+    place(p, { pos, rx: lerp(-1.6, 0, k) - e * 2.4, ry: e * (i % 2 ? 1 : -1) * 1.2, s: (kin > 0 ? 1 : 0) * (1 - e * 0.3), visible: e < 1 });
+  });
+
+  // ===== the globe: MILMO's globe becomes ZONE's "O" =====
+  const gIn = eOutBack(prog(t, 0.55, 1.35), 1.6);
+  const spinBase = t * 1.4;
+  const spinFast = eInOut(prog(t, 2.6, 4.0)) * 9;
+  // MILMO globe world target: centre of the screen for the climax
+  const climax = eInOutQuint(prog(t, 2.55, 3.7));
+  const gWorldHome = gHome;
+  const gWorld = gWorldHome.clone().lerp(v(0, 1.0, 0), climax);
+  const gScale = gIn * lerp(1, 1.6, climax);
+  // travel from climax to the O slot (4.55 – 5.6s), swapping globes edge-on
+  const oWorld = zoneWorld(P.globe);
+  const travel = eInOutQuint(prog(t, 4.45, 5.6));
+  const flipAt = 0.5;
+  const pos = gWorld.clone().lerp(oWorld, travel);
+  const yaw = spinBase + spinFast + travel * Math.PI * 3;
+  const milmoGlobeOn = travel < flipAt;
+  const zScale = lerp(gScale, 1, travel);
+  place(P.milmoGlobe, { pos: toMilmoLocal(pos), ry: yaw, s: gScale * (milmoGlobeOn ? lerp(1, 1 / 1.6 * (1.92 / 1.84), travel / flipAt) : 0) / 1, visible: milmoGlobeOn });
+  // the coin flip: past half the travel the ZONE globe takes over
+  const landK = prog(travel, flipAt, 1);
+  place(P.globe, { pos: toZoneLocal(pos), ry: lerp(Math.PI / 2, 0, eOutCubic(landK)) + (1 - landK) * Math.PI * 2, s: travel >= flipAt ? lerp(1.05, 1, landK) : 0 });
+
+  // ===== 2. Birth (3.95 – 4.2s): flash + particles =====
+  const flash = Math.exp(-Math.pow((t - 4.0) / 0.09, 2)) * 0.95;
+  document.getElementById('flash').style.opacity = flash;
+  const pk = prog(t, 3.98, 5.4);
+  for (let i = 0; i < N_P; i++) {
+    const d = pData[i];
+    const k = clamp((pk - d.delay) / (1 - d.delay));
+    const r = eOutExpo(k) * d.speed;
+    const sc = k > 0 && k < 1 ? d.size * (1 - k) * 1.4 : 0;
+    dummy.position.set(d.dir.x * r, 1.0 + d.dir.y * r, d.dir.z * r * 0.6);
+    dummy.scale.setScalar(sc);
+    dummy.updateMatrix();
+    pMesh.setMatrixAt(i, dummy.matrix);
+  }
+  pMesh.instanceMatrix.needsUpdate = true;
+
+  // ===== 3. ZONE 242 assembles =====
+  // the centre (Jesus) is born out of the globe and rises into the symbol
+  const cBirth = eOutBack(prog(t, 4.0, 4.4), 2.2);
+  const cRise = eInOutQuint(prog(t, 4.25, 5.15));
+  const cHome = zoneWorld(P.center);
+  const cPos = v(0, 1.0, 0.8).lerp(cHome, cRise);
+  place(P.center, { pos: toZoneLocal(cPos), rx: (1 - cRise) * Math.PI * 1.5, ry: (1 - cRise) * Math.PI * 2.5, s: cBirth * (1 + Math.sin(cRise * Math.PI) * 0.6) });
+
+  // four corners fly in from depth and lock around the centre
+  const cdir = [[-1, 1], [1, 1], [1, -1], [-1, -1]];
+  P.corners.forEach((p, i) => {
+    const a = 4.85 + i * 0.07;
+    const k = eOutBack(prog(t, a, a + 0.55), 1.2);
+    const home = zoneWorld(p);
+    const from = home.clone().add(v(cdir[i][0] * 9, cdir[i][1] * 9, 14));
+    place(p, { pos: toZoneLocal(from.lerp(home, k)), rz: (1 - k) * cdir[i][0] * 1.2, rx: (1 - k) * 1.0, s: prog(t, a, a + 0.05) > 0 ? 1 : 0 });
+  });
+
+  // letters rise out of the ground plane, digits drop in, the frame stretches open
+  const pop = (p, a, dur, fromPos) => {
+    const k = eOutBack(prog(t, a, a + dur), 1.4);
+    const home = zoneWorld(p);
+    const pos = home.clone().add(fromPos.clone().multiplyScalar(1 - eOutExpo(prog(t, a, a + dur))));
+    place(p, { pos: toZoneLocal(pos), rx: (1 - k) * -1.4, s: prog(t, a, a + 0.04) > 0 ? 1 : 0, sz: Math.max(k, 0.02) });
+  };
+  pop(P.Z, 5.35, 0.6, v(-6, 0, 4));
+  pop(P.N, 5.5, 0.6, v(-4, -6, 4));
+  pop(P.E, 5.62, 0.6, v(0, -6, 4));
+  const fK = eOutBack(prog(t, 5.7, 6.35), 1.3);
+  place(P.frame, { pos: toZoneLocal(zoneWorld(P.frame).add(v(4 * (1 - fK), 0, 3 * (1 - fK)))), ry: (1 - fK) * -1.2, s: Math.max(fK, 0) > 0.001 ? Math.max(fK, 0.001) : 0 });
+  pop(P.d2a, 6.0, 0.5, v(0, 6, 3));
+  pop(P.d4, 6.12, 0.5, v(0, 6, 3));
+  pop(P.d2b, 6.24, 0.5, v(0, 6, 3));
+
+  // overlay text
+  const tagK = eOutCubic(prog(t, 8.0, 8.7)), byK = eOutCubic(prog(t, 8.45, 9.15));
+  const tag = document.getElementById('tag'), byEl = document.getElementById('by');
+  tag.style.opacity = tagK; tag.style.transform = `translateY(${(1 - tagK) * 18}px)`;
+  byEl.style.opacity = byK; byEl.style.letterSpacing = `${lerp(22, 10, byK)}px`;
+
+  renderer.render(scene, camera);
+}
+function toWorldMilmo(local) { return local.clone().applyMatrix4(milmo.matrixWorld); }
+
+window.ready = (async () => { await document.fonts.ready; await build(); render(0); })();
+window.render = render;
+window.ready.then(() => {
+  const q = new URLSearchParams(location.search);
+  if (q.has('t')) { render(+q.get('t')); return; }
+  if (q.has('render')) return;
+  const t0 = performance.now();
+  const loop = now => { render(((now - t0) / 1000) % (DUR + 1)); requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+});
+</script>
+</body>
+</html>
