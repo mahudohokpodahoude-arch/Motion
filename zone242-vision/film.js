@@ -21,32 +21,7 @@
     const m = G.measure(ctx, str, size, F, weight);
     return m > w ? size * w / m : size;
   };
-  // the frame's clock: set by draw() so every helper can follow the music
-  let NOW = 0;
-  const pulseBeat = (t) => Math.exp(-clock.phase(t) * 7);           // 1 on each beat, decays
-  const energy = (t) => S.energyAt(t);
-  const dropHit = (t) => S.drops.reduce((k, d) => (t >= d ? Math.max(k, Math.exp(-(t - d) * 6)) : k), 0);
-  // the background lives on the beat: a light band sweeps each bar, corner brackets breathe on each beat
-  function bg(ctx, color) {
-    ctx.fillStyle = color; ctx.fillRect(0, 0, W, H);
-    const t = NOW, e = energy(t), ink = color === WHITE ? BLUE : WHITE;
-    if (e >= 1) {
-      const bar = clock.BAR, ph = ((t % bar) + bar) % bar / bar;
-      const k = clamp(ph / 0.35);
-      if (k < 1) {
-        const x = lerp(-W * 0.4, W * 1.4, ease.inOutCubic(k));
-        ctx.save(); ctx.globalAlpha = color === WHITE ? 0.05 : 0.07; ctx.fillStyle = ink;
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x + 260, 0); ctx.lineTo(x + 260 - H * 0.45, H); ctx.lineTo(x - H * 0.45, H); ctx.fill();
-        ctx.restore();
-      }
-    }
-    const p = e >= 0.6 ? pulseBeat(t) : 0, m = 46 + 10 * (1 - p), L = 54, th = 7;
-    ctx.save(); ctx.globalAlpha = 0.28 + 0.3 * p; ctx.fillStyle = ink;
-    [[m, m, 1, 1], [W - m, m, -1, 1], [W - m, H - m, -1, -1], [m, H - m, 1, -1]].forEach(([x, y, sx, sy]) => {
-      ctx.fillRect(x, y, sx * L, sy * th); ctx.fillRect(x, y, sx * th, sy * L);
-    });
-    ctx.restore();
-  }
+  function bg(ctx, color) { ctx.fillStyle = color; ctx.fillRect(0, 0, W, H); }
   // an impact: a square shockwave and a spray of brand squares
   function burst(ctx, x, y, t, t0, color = ORANGE, scale = 1) {
     const a = t - t0;
@@ -146,15 +121,14 @@
     ctx.fillStyle = color;
     for (let i = 0; i < 26; i++) {
       const r = U.hash(seed, i), r2 = U.hash(seed, i, 2), r3 = U.hash(seed, i, 3);
-      const s = (8 + r3 * 26) * (1 + 0.6 * (energy(t) >= 1 ? pulseBeat(t + r * 0.25) : 0));
-      const x = ((r * W + t * (20 + r2 * 40) * (energy(t) >= 1 ? 2.2 : 1)) % (W + 80)) - 40;
+      const s = 8 + r3 * 26;
+      const x = ((r * W + t * (20 + r2 * 40)) % (W + 80)) - 40;
       const y = (r2 * H + Math.sin(t * 0.8 + i) * 30);
       ctx.globalAlpha = alpha * (0.4 + r3 * 0.6);
       ctx.fillRect(x, y, s, s);
     }
     ctx.restore();
   }
-  const beatPunch = (t) => 1 + 0.018 * Math.exp(-clock.phase(t) * 7);
 
   // ---------- scenes ----------
   function vision(ctx, t) {
@@ -208,7 +182,7 @@
       const me = x === tx && y === ty;
       ctx.globalAlpha = me ? 1 : lerp(0.9, 0.22, prog(t, e.lock, 0.4));
       ctx.fillStyle = me && t >= e.lock ? ORANGE : BLUE;
-      const s = sq * k * (me ? lerp(1, 2.6, lock) : 1) * (1 + 0.15 * Math.exp(-clock.phase(t) * 6) * (t < e.lock ? 1 : 0));
+      const s = sq * k * (me ? lerp(1, 2.6, lock) : 1);
       ctx.fillRect(x - s / 2, y - s / 2, s, s);
     }
     ctx.globalAlpha = 1;
@@ -253,14 +227,12 @@
     bg(ctx, o.bg);
     drift(ctx, t, WHITE, 0.07, o.seed);
     const e = o.e;
-    // the big word whips in from the side, then breathes on the beat
+    // the big word whips in from the side, leaning into its motion
     const k = ease.outExpo(prog(t, e.word, 0.45));
     const ws = fit(ctx, o.word, 170 * VS, maxW);
     ctx.save();
     ctx.translate(cx + (1 - k) * W * o.dir, cy - 390 * VS);
-    const p = beatPunch(t);
-    ctx.scale(p, p);
-    ctx.transform(1, 0, (1 - k) * -0.6 * o.dir, 1, 0, 0);   // leans into its motion, straightens on arrival
+    ctx.transform(1, 0, (1 - k) * -0.6 * o.dir, 1, 0, 0);   // straightens on arrival
     G.text(ctx, o.word, 0, 0, { size: ws, fam: F, weight: 900, color: WHITE, align: 'center', baseline: 'middle', alpha: clamp(k * 3) });
     ctx.restore();
     kicker(ctx, o.kicker, cx, cy - 510 * VS, t, e.word + 0.1, o.kickerColor, 32);
@@ -424,29 +396,101 @@
     }
   }
 
-  function isaiah(ctx, t) {
-    const e = ev.isaiah;
-    bg(ctx, NAVY);
-    // the light rises from the centre, then floods the frame into the 3D finale
-    const grow = ease.inCubic(prog(t, S.S.isaiah[0], S.S.isaiah[1] - S.S.isaiah[0]));
-    const flood = ease.inExpo(prog(t, e.swell, e.cut - e.swell));
-    const r = lerp(120, Math.max(W, H) * 0.8, grow);
-    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-    g.addColorStop(0, 'rgba(255,250,220,0.95)');
-    g.addColorStop(0.35, 'rgba(255,232,150,0.35)');
-    g.addColorStop(1, 'rgba(255,232,150,0)');
-    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    const textAlpha = 1 - prog(t, e.cut - 0.5, 0.4);
-    const lines = [['« LÈVE-TOI,', e.l1, 120], ['SOIS ÉCLAIRÉ,', e.l2, 100], ['CAR TA LUMIÈRE', e.l3, 86], ['ARRIVE. »', e.l3 + 0.25, 86]];
-    lines.forEach(([s, t0, size], i) => {
-      const y = cy + (i - 1.5) * 150 * VS;
-      // white text while the room is dark, ink once the light is bright
-      const c = WHITE;
-      rise(ctx, s, cx, y, fit(ctx, s, size * VS), t, t0, { color: c, alpha: textAlpha });
-    });
-    kicker(ctx, 'ÉSAÏE 60:1', cx, cy + 380 * VS, t, e.ref, ORANGE, 40);
-    if (flood > 0) { ctx.fillStyle = `rgba(255,253,240,${flood})`; ctx.fillRect(0, 0, W, H); }
+  // ---------- Isaiah 60:1: a sunrise over the water ----------
+  // The orange square of the logo rises like the sun while the verse lights up line by line;
+  // then its light takes the whole frame and hands over to the 3D finale, which opens on white.
+  const rgbOf = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const mixHex = (a, b, k) => { const A = rgbOf(a), B = rgbOf(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * clamp(k))).join(',')})`; };
+  const NIGHT = '#05031A';
+
+  // one line of the verse: a warm gleam crosses it, and every letter it touches lights up
+  function lightLine(ctx, str, x, y, size, weight, t, t0) {
+    if (t < t0) return;
+    const total = G.measure(ctx, str, size, F, weight), x0 = x - total / 2;
+    const gx = lerp(x0 - 30, x0 + total + 160, ease.outCubic(prog(t, t0, 0.45 + str.length * 0.012)));
+    for (let i = 0; i < str.length; i++) {
+      const ch = str[i];
+      if (ch === ' ') continue;
+      const px = x0 + G.measure(ctx, str.slice(0, i), size, F, weight), c = px + G.measure(ctx, ch, size, F, weight) / 2;
+      const k = clamp((gx - c) / 120);
+      if (k <= 0) continue;
+      const hot = Math.max(0, 1 - Math.abs(gx - c) / 180);
+      ctx.save();
+      ctx.shadowColor = 'rgba(255,170,110,0.85)'; ctx.shadowBlur = 8 + 34 * hot;
+      G.text(ctx, ch, c, y + (1 - ease.outCubic(k)) * size * 0.3, { size, fam: F, weight, color: hot > 0.35 ? '#FFE9C9' : WHITE,
+        align: 'center', baseline: 'middle', alpha: k });
+      ctx.restore();
+    }
   }
+
+  function isaiah(ctx, t) {
+    const e = ev.isaiah, s0 = S.S.isaiah[0];
+    const hy = H * 0.72;                                                          // the horizon
+    const dawn = ease.inOutQuad(prog(t, s0 + 0.2, e.ref - s0));                    // night -> day
+    const rise = ease.inOutCubic(prog(t, s0 + 0.15, e.l3 - s0));                   // the sun comes up
+    const flood = ease.inExpo(prog(t, e.swell + 0.5, e.cut - e.swell - 0.5));      // its light fills the frame
+    const sx = cx, sy = lerp(hy + 120, H * 0.6, rise), ss = 116;
+    // sky: night, then the brand blue with an orange dawn on the horizon
+    const sky = ctx.createLinearGradient(0, 0, 0, hy);
+    sky.addColorStop(0, mixHex(NIGHT, NAVY, dawn));
+    sky.addColorStop(0.6, mixHex(NIGHT, BLUE, dawn));
+    sky.addColorStop(1, mixHex('#140A45', ORANGE, dawn));
+    ctx.fillStyle = sky; ctx.fillRect(0, 0, W, hy);
+    // the last stars fade out as the day comes
+    for (let i = 0; i < 70; i++) {
+      const a = (1 - dawn) * (0.45 + 0.35 * Math.sin(t * 2.2 + i * 1.7)) * clamp((t - s0) / 0.3);
+      if (a <= 0.01) continue;
+      const r = 1 + U.hash(33, i) * 1.8;
+      ctx.fillStyle = `rgba(255,255,255,${a})`; ctx.fillRect(U.hash(31, i) * W, U.hash(32, i) * hy * 0.8, r, r);
+    }
+    // a halo and slow rays around the sun, kept above the horizon
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, 0, W, hy); ctx.clip();
+    const halo = ctx.createRadialGradient(sx, sy, 0, sx, sy, lerp(200, 640, dawn));
+    halo.addColorStop(0, `rgba(255,214,170,${0.75 * rise})`);
+    halo.addColorStop(0.4, `rgba(255,140,90,${0.28 * rise})`);
+    halo.addColorStop(1, 'rgba(255,120,80,0)');
+    ctx.fillStyle = halo; ctx.fillRect(0, 0, W, hy);
+    ctx.translate(sx, sy); ctx.rotate(t * 0.05);
+    ctx.fillStyle = `rgba(255,236,210,${0.08 * dawn})`;
+    for (let i = 0; i < 18; i++) {
+      ctx.rotate(Math.PI * 2 / 18);
+      ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-70, -W); ctx.lineTo(70, -W); ctx.closePath(); ctx.fill();
+    }
+    ctx.restore();
+    // the sun: the orange centre of the logo, coming up from behind the horizon
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, 0, W, hy); ctx.clip();
+    ctx.shadowColor = 'rgba(255,120,70,0.95)'; ctx.shadowBlur = 70;
+    ctx.fillStyle = ORANGE; ctx.fillRect(sx - ss / 2, sy - ss / 2, ss, ss);
+    ctx.restore();
+    // the water, with the sun's reflection shimmering on it
+    ctx.fillStyle = mixHex(NIGHT, NAVY, dawn); ctx.fillRect(0, hy, W, H - hy);
+    for (let j = 0; j < 9; j++) {
+      const f = 1 - j / 9;
+      const w = ss * (0.6 + 1.6 * f) * (0.75 + 0.25 * Math.sin(t * 3.1 + j * 1.9));
+      ctx.fillStyle = `rgba(255,${Math.round(120 + 60 * f)},80,${0.55 * f * rise})`;
+      ctx.fillRect(sx - w / 2 + Math.sin(t * 1.7 + j * 0.8) * 14, hy + 10 + j * 13, w, 5);
+    }
+    // the horizon, drawn from the centre out
+    const hk = ease.outCubic(prog(t, s0, 0.8));
+    ctx.fillStyle = `rgba(255,255,255,${0.35 + 0.25 * dawn})`; ctx.fillRect(cx - W / 2 * hk, hy - 1, W * hk, 2);
+    // the verse
+    // the lines land on the existing sound cues (e.l1, e.l2, e.l3); the last line follows half a second later
+    [['« LÈVE-TOI,', e.l1, 150, 900, 0.165], ['SOIS ÉCLAIRÉ,', e.l2, 124, 900, 0.285],
+      ['CAR TA LUMIÈRE ARRIVE,', e.l3, 78, 800, 0.385], ['ET LA GLOIRE DE L’ÉTERNEL SE LÈVE SUR TOI. »', e.l3 + 0.5, 54, 700, 0.455]]
+      .forEach(([str, t0, size, weight, yy]) => lightLine(ctx, str, cx, H * yy, fit(ctx, str, size * VS, maxW, weight), weight, t, t0));
+    kicker(ctx, 'ÉSAÏE 60:1', cx, H * 0.9, t, e.ref, ORANGE, 40);
+    // the light takes the whole frame
+    if (flood > 0) {
+      const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, lerp(ss, Math.hypot(W, H), flood));
+      g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.75, `rgba(255,252,244,${flood})`); g.addColorStop(1, 'rgba(255,250,240,0)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      const all = clamp((flood - 0.65) / 0.35);
+      if (all > 0) { ctx.fillStyle = `rgba(255,255,255,${all})`; ctx.fillRect(0, 0, W, H); }
+    }
+  }
+
 
   // ---------- assets: icons (Lucide, ISC) ----------
   const IMG = {}, ICON = {};
@@ -666,44 +710,41 @@
   const TW = 0.28;   // half-length of a transition, centred on the scene cut
   const TYPES = ['bars', 'slide', 'iris'];
   const is2D = (j) => j >= 1 && j < SCENES.length - 1;
+  const ISAIAH = SCENES.findIndex(([, f]) => f === isaiah);
+  // the cut into scene j: Isaiah fades in from the night, the others take turns
+  const cutKind = (j) => (j === ISAIAH ? 'fade' : TYPES[j % 3]);
+  const cutHalf = (kind) => (kind === 'fade' ? 0.45 : TW);
+  let off = null;   // offscreen canvas for the fade
 
-  // the camera: a punch on every beat in the full sections, a zoom settle at each cut,
-  // a hit with shake on every drop
-  function camera(ctx, t, a, f) {
-    const e = energy(t), hit = dropHit(t);
-    const push = 1 + 0.03 * clamp((t - a) / 4) + (e >= 1 ? 0.012 * pulseBeat(t) : 0) + 0.07 * Math.exp(-(t - a) * 7) + 0.05 * hit;
-    const rot = 0.004 * Math.sin(t * 0.9) + 0.02 * hit * U.noise1(t * 25, 3);
-    const sh = 16 * hit;
-    ctx.save();
-    ctx.translate(W / 2 + U.noise1(t * 30, 1) * sh, H / 2 + U.noise1(t * 30, 2) * sh);
-    ctx.rotate(rot); ctx.scale(push, push);
-    ctx.translate(-W / 2, -H / 2);
-    f(ctx, t);
-    ctx.restore();
-  }
-
-  function transition(ctx, t, a, kind, prevFn, nextFn, prevA) {
-    const k = clamp((t - (a - TW)) / (2 * TW));        // 0 .. 1 across the cut
-    if (kind === 'bars') {
+  function transition(ctx, t, a, kind, prevFn, nextFn) {
+    const tw = cutHalf(kind), k = clamp((t - (a - tw)) / (2 * tw));   // 0 .. 1 across the cut
+    if (kind === 'fade') {
+      // the new scene is drawn apart, then laid over the old one
+      prevFn(ctx, t);
+      if (!off) { off = document.createElement('canvas'); off.width = ctx.canvas.width; off.height = ctx.canvas.height; }
+      const o2 = off.getContext('2d');
+      o2.setTransform(1, 0, 0, 1, 0, 0); o2.clearRect(0, 0, off.width, off.height);
+      o2.setTransform(ctx.getTransform());
+      nextFn(o2, t);
+      ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = ease.inOutCubic(k); ctx.drawImage(off, 0, 0); ctx.restore();
+    } else if (kind === 'bars') {
       // five brand bars rise to cover the old scene, then leave upward over the new one
-      const cols = [ORANGE, BLUE, NAVY, ORANGE, BLUE];
-      if (t < a) camera(ctx, t, prevA, prevFn); else camera(ctx, t, a, nextFn);
+      (t < a ? prevFn : nextFn)(ctx, t);
+      const cols = [ORANGE, BLUE, NAVY, ORANGE, BLUE], span = 0.5 - 0.06 * 4;
       cols.forEach((c, i) => {
         const bw = W / cols.length, d = i * 0.06;
-        const kin = ease.inOutCubic(clamp((k - d) / (0.5 - 0.06 * 4) / 1)), kout = ease.inOutCubic(clamp((k - 0.5 - d) / (0.5 - 0.06 * 4)));
-        const top = kout > 0 ? -H * kout : H * (1 - kin);
-        ctx.fillStyle = c; ctx.fillRect(i * bw - 1, top, bw + 2, H);
+        const kin = ease.inOutCubic(clamp((k - d) / span)), kout = ease.inOutCubic(clamp((k - 0.5 - d) / span));
+        ctx.fillStyle = c; ctx.fillRect(i * bw - 1, kout > 0 ? -H * kout : H * (1 - kin), bw + 2, H);
       });
     } else if (kind === 'iris') {
-      // the new scene opens inside the ZONE symbol's frame
-      camera(ctx, t, prevA, (c2, tt) => { c2.save(); c2.translate(W / 2, H / 2); c2.scale(1 + 0.25 * k, 1 + 0.25 * k); c2.translate(-W / 2, -H / 2); prevFn(c2, tt); c2.restore(); });
-      if (t >= a - TW * 0.4) {
-        const q = ease.inOutCubic(clamp((t - (a - TW * 0.4)) / (TW * 1.4)));
+      // the new scene opens inside the frame of the ZONE symbol
+      prevFn(ctx, t);
+      if (t >= a - tw * 0.4) {
+        const q = ease.inOutCubic(clamp((t - (a - tw * 0.4)) / (tw * 1.4)));
         const rw = W * 1.05 * q, rh = H * 1.05 * q;
-        ctx.save(); ctx.beginPath(); ctx.rect(W / 2 - rw / 2, H / 2 - rh / 2, rw, rh); ctx.clip();
-        camera(ctx, t, a, nextFn); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 1 - q * 0.6;
-        ctx.fillStyle = ORANGE; const th = 18, L = 120;
+        ctx.save(); ctx.beginPath(); ctx.rect(W / 2 - rw / 2, H / 2 - rh / 2, rw, rh); ctx.clip(); nextFn(ctx, t); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 1 - q * 0.6; ctx.fillStyle = ORANGE;
+        const th = 18, L = 120;
         [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(([sx, sy]) => {
           const x = W / 2 + sx * rw / 2, y = H / 2 + sy * rh / 2;
           ctx.fillRect(x, y, -sx * L, -sy * th); ctx.fillRect(x, y, -sx * th, -sy * L);
@@ -712,9 +753,9 @@
       }
     } else {
       // slide: the new scene pushes the old one out, led by an orange edge and speed lines
-      const q = ease.inOutCubic(k), dir = 1;  // always pushes to the left
-      ctx.save(); ctx.translate(-W * q * 0.35 * dir, 0); camera(ctx, t, prevA, prevFn); ctx.restore();
-      ctx.save(); ctx.translate(W * (1 - q) * dir, 0); camera(ctx, t, a, nextFn);
+      const q = ease.inOutCubic(k);
+      ctx.save(); ctx.translate(-W * q * 0.35, 0); prevFn(ctx, t); ctx.restore();
+      ctx.save(); ctx.translate(W * (1 - q), 0); nextFn(ctx, t);
       ctx.fillStyle = ORANGE; ctx.fillRect(-26, 0, 26, H); ctx.restore();
       ctx.save(); ctx.globalAlpha = Math.sin(Math.PI * k) * 0.8; ctx.fillStyle = WHITE;
       for (let i = 0; i < 9; i++) {
@@ -733,17 +774,17 @@
       await Studio.loadFont(MONO, 'assets/fonts/ibm-plex-mono-latin-500-normal.woff2', 500);
       for (const n of ICONS) for (const c of [BLUE, WHITE, ORANGE]) await loadIcon(n, c);
     },
+    // no camera: the frame never zooms, shakes or pulses; only the elements inside it move
     draw(ctx, t) {
-      NOW = t;
       const i = SCENES.findIndex(([[a, b]]) => t >= a && t < b);
       const idx = i < 0 ? SCENES.length - 1 : i;
       const [[a], fn] = SCENES[idx];
-      // is a cut near? (the one that starts this scene, or the next one)
       const next = SCENES[idx + 1];
-      if (is2D(idx) && is2D(idx - 1) && t < a + TW) transition(ctx, t, a, TYPES[idx % 3], SCENES[idx - 1][1], fn, SCENES[idx - 1][0][0]);
-      else if (next && is2D(idx) && is2D(idx + 1) && t >= next[0][0] - TW) transition(ctx, t, next[0][0], TYPES[(idx + 1) % 3], fn, next[1], a);
-      else camera(ctx, t, a, fn);
-      // the drop: a white flash on the downbeat
+      const kIn = cutKind(idx), kNext = next ? cutKind(idx + 1) : null;
+      if (is2D(idx) && is2D(idx - 1) && t < a + cutHalf(kIn)) transition(ctx, t, a, kIn, SCENES[idx - 1][1], fn);
+      else if (next && is2D(idx) && is2D(idx + 1) && t >= next[0][0] - cutHalf(kNext)) transition(ctx, t, next[0][0], kNext, fn, next[1]);
+      else fn(ctx, t);
+      // the strong moments: a white flash on the downbeat of each drop (the frame itself never moves)
       const fl = S.drops.reduce((m, d) => (t >= d && t < d + 0.4 ? Math.max(m, 0.6 * Math.exp(-(t - d) * 12)) : m), 0);
       if (fl > 0.01 && is2D(idx)) { ctx.fillStyle = `rgba(255,255,255,${fl})`; ctx.fillRect(0, 0, W, H); }
     },

@@ -224,7 +224,8 @@ function render(t) {
   milmo.updateMatrixWorld(true);
 
   // ----- background: MILMO yellow -> ZONE white at the birth -----
-  const bgK = eInOut(prog(t, 3.85, 4.25));
+  // in the vision film's finale the frame comes out of a white flood: stay white, no yellow flicker
+  const bgK = Q.has('finale') ? 1 : eInOut(prog(t, 3.85, 4.25));
   scene.background.copy(YELLOW).lerp(WHITE, bgK);
   backdrop.material.opacity = lerp(0.08, 0.09, bgK);
 
