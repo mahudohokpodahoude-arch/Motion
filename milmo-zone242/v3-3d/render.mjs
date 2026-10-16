@@ -1,5 +1,5 @@
 // Renders the 3D page frame by frame (WebGL) and pipes the frames into ffmpeg.
-// Usage: node render.mjs [out.mp4] [fps]   |   node render.mjs --stills t1,t2,... outDir
+// Usage: node render.mjs [--size 1920x1080] [out.mp4] [fps]   |   node render.mjs [--size WxH] --stills t1,t2,... outDir
 // The page is served over a local HTTP server: ES modules and fetch() do not work from file://.
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
@@ -19,11 +19,13 @@ const server = http.createServer((req, res) => {
   fs.createReadStream(p).pipe(res);
 });
 await new Promise(r => server.listen(0, '127.0.0.1', r));
-const url = `http://127.0.0.1:${server.address().port}/v3-3d/index.html?render=1`;
 
-const args = process.argv.slice(2);
+let args = process.argv.slice(2);
+let [VW, VH] = [1080, 1920];
+if (args[0] === '--size') { [VW, VH] = args[1].split('x').map(Number); args = args.slice(2); }
+const url = `http://127.0.0.1:${server.address().port}/v3-3d/index.html?render=1&w=${VW}&h=${VH}`;
 const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
-const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
+const page = await browser.newPage({ viewport: { width: VW, height: VH }, deviceScaleFactor: 1 });
 page.on('pageerror', e => console.error('page error:', e.message));
 page.on('console', m => { if (m.type() === 'error') console.error('console:', m.text()); });
 await page.goto(url);

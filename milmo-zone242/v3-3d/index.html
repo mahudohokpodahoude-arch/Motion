@@ -33,7 +33,16 @@ import * as THREE from 'three';
 import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-const W = 1080, H = 1920, DUR = 10;
+// ?w=1920&h=1080 renders the landscape cut of the same film
+const Q = new URLSearchParams(location.search);
+const W = +(Q.get('w') ?? 1080), H = +(Q.get('h') ?? 1920), DUR = 10;
+const LAND = W > H;
+document.getElementById('stage').style.width = W + 'px';
+document.getElementById('stage').style.height = H + 'px';
+if (LAND) {
+  document.getElementById('tag').style.top = '918px';
+  document.getElementById('by').style.top = '972px';
+}
 const BLUE = 0x1900CF, ORANGE = 0xFF5A36, MILMO_BLUE = 0x2A10E0;
 const YELLOW = new THREE.Color(0xFEDF08), WHITE = new THREE.Color(0xFFFFFF);
 
@@ -219,7 +228,7 @@ function render(t) {
   // MILMO: three-quarter view drifting; dive into the globe; swing to the front for the logo
   const gHome = toWorldMilmo(P.milmoGlobe.userData.home);
   const drift = eInOut(prog(t, 0, 2.6));
-  let camPos = v(lerp(-9, -4, drift), lerp(3.5, 1.8, drift), lerp(36, 33, drift));
+  var camPos = v(lerp(-9, -4, drift), lerp(3.5, 1.8, drift), lerp(36, 33, drift));
   let look = v(0, 1.0, 0);
   const dive = eInOutQuint(prog(t, 2.5, 3.95));
   camPos.lerp(v(4.5, 1.2, 18), dive);
@@ -230,6 +239,14 @@ function render(t) {
   const settle = eInOutQuint(prog(t, 6.6, 8.6));
   camPos.lerp(v(0, -0.4, 40), settle);
   look.lerp(v(0, -0.45, 0), settle);
+  if (LAND) {
+    // same moves, framed for 16:9: the camera comes closer (the frame is wider than tall)
+    // and the final logo sits higher to leave room for the signature under it
+    const k = lerp(lerp(0.5, 0.85, pull), 0.76, settle);
+    camPos = look.clone().add(camPos.clone().sub(look).multiplyScalar(k));
+    const lift = v(0, -1.2 * settle, 0);
+    camPos.add(lift); look.add(lift);
+  }
   camera.position.copy(camPos);
   camera.lookAt(look);
 
