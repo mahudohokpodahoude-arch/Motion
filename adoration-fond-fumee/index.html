@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Fond animé — fumée violette (boucle 10 s)</title>
+    <script src="vendor/gsap/gsap.min.js"></script>
+    <script type="importmap">
+      { "imports": { "three": "./vendor/three/build/three.module.js" } }
+    </script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #3f0095; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #3f0095; }
+      #gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    </style>
+  </head>
+  <body>
+    <!-- Fond pour paroles d'adoration : la fumée de l'image ondule comme de l'encre dans l'eau.
+         Boucle parfaite de 10 s : tout le mouvement est périodique, l'image 300 raccorde avec l'image 0. -->
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10" data-width="1920" data-height="1080">
+      <canvas id="gl" class="clip" data-start="0" data-duration="10" data-track-index="0" width="1920" height="1080"></canvas>
+    </div>
+
+    <script>
+      // Aucune animation GSAP : le mouvement vient du shader, piloté par le temps HyperFrames.
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+
+    <script type="module">
+      import * as THREE from "three";
+
+      const LOOP = 10; // secondes — durée de la boucle
+      const IMG_ASPECT = 2560 / 1707;
+
+      // Bruit simplex 4D (Ian McEwan, Stefan Gustavson — Ashima Arts, licence MIT)
+      const NOISE = /* glsl */ `
+        vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+        float mod289(float x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+        vec4 permute(vec4 x) { return mod289(((x * 34.0) + 10.0) * x); }
+        float permute(float x) { return mod289(((x * 34.0) + 10.0) * x); }
+        vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+        float taylorInvSqrt(float r) { return 1.79284291400159 - 0.85373472095314 * r; }
+        vec4 grad4(float j, vec4 ip) {
+          const vec4 ones = vec4(1.0, 1.0, 1.0, -1.0);
+          vec4 p, s;
+          p.xyz = floor(fract(vec3(j) * ip.xyz) * 7.0) * ip.z - 1.0;
+          p.w = 1.5 - dot(abs(p.xyz), ones.xyz);
+          s = vec4(lessThan(p, vec4(0.0)));
+          p.xyz = p.xyz + (s.xyz * 2.0 - 1.0) * s.www;
+          return p;
+        }
+        float snoise(vec4 v) {
+          const vec4 C = vec4(0.138196601125011, 0.276393202250021, 0.414589803375032, -0.447213595499958);
+          vec4 i = floor(v + dot(v, vec4(0.309016994374947451)));
+          vec4 x0 = v - i + dot(i, C.xxxx);
+          vec4 i0;
+          vec3 isX = step(x0.yzw, x0.xxx);
+          vec3 isYZ = step(x0.zww, x0.yyz);
+          i0.x = isX.x + isX.y + isX.z;
+          i0.yzw = 1.0 - isX;
+          i0.y += isYZ.x + isYZ.y;
+          i0.zw += 1.0 - isYZ.xy;
+          i0.z += isYZ.z;
+          i0.w += 1.0 - isYZ.z;
+          vec4 i3 = clamp(i0, 0.0, 1.0);
+          vec4 i2 = clamp(i0 - 1.0, 0.0, 1.0);
+          vec4 i1 = clamp(i0 - 2.0, 0.0, 1.0);
+          vec4 x1 = x0 - i1 + C.xxxx;
+          vec4 x2 = x0 - i2 + C.yyyy;
+          vec4 x3 = x0 - i3 + C.zzzz;
+          vec4 x4 = x0 + C.wwww;
+          i = mod289(i);
+          float j0 = permute(permute(permute(permute(i.w) + i.z) + i.y) + i.x);
+          vec4 j1 = permute(permute(permute(permute(
+                    i.w + vec4(i1.w, i2.w, i3.w, 1.0))
+                  + i.z + vec4(i1.z, i2.z, i3.z, 1.0))
+                  + i.y + vec4(i1.y, i2.y, i3.y, 1.0))
+                  + i.x + vec4(i1.x, i2.x, i3.x, 1.0));
+          vec4 ip = vec4(1.0 / 294.0, 1.0 / 49.0, 1.0 / 7.0, 0.0);
+          vec4 p0 = grad4(j0, ip);
+          vec4 p1 = grad4(j1.x, ip);
+          vec4 p2 = grad4(j1.y, ip);
+          vec4 p3 = grad4(j1.z, ip);
+          vec4 p4 = grad4(j1.w, ip);
+          vec4 norm = taylorInvSqrt(vec4(dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)));
+          p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+          p4 *= taylorInvSqrt(dot(p4, p4));
+          vec3 m0 = max(0.6 - vec3(dot(x0, x0), dot(x1, x1), dot(x2, x2)), 0.0);
+          vec2 m1 = max(0.6 - vec2(dot(x3, x3), dot(x4, x4)), 0.0);
+          m0 = m0 * m0;
+          m1 = m1 * m1;
+          return 49.0 * (dot(m0 * m0, vec3(dot(p0, x0), dot(p1, x1), dot(p2, x2)))
+                       + dot(m1 * m1, vec2(dot(p3, x3), dot(p4, x4))));
+        }
+      `;
+
+      const frag = /* glsl */ `
+        uniform sampler2D uTex;
+        uniform float uTime, uLoop, uFrame, uImgAspect, uScreenAspect, uKnee, uSoft, uSat;
+        varying vec2 vUv;
+        ${NOISE}
+        // Courant à divergence nulle (rotationnel du bruit) : la fumée tourne sans gonfler ni se tasser.
+        vec2 curl(vec2 p, vec2 lc, float sc) {
+          float e = 0.015;
+          float a = snoise(vec4((p + vec2(0.0, e)) * sc, lc));
+          float b = snoise(vec4((p - vec2(0.0, e)) * sc, lc));
+          float c = snoise(vec4((p + vec2(e, 0.0)) * sc, lc));
+          float d = snoise(vec4((p - vec2(e, 0.0)) * sc, lc));
+          return vec2(a - b, -(c - d)) / (2.0 * e * sc);
+        }
+        vec3 toLin(vec3 c) { return mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(0.04045, c)); }
+        vec3 toSrgb(vec3 l) { return mix(l * 12.92, 1.055 * pow(l, vec3(1.0 / 2.4)) - 0.055, step(0.0031308, l)); }
+        float hash(vec2 p) {
+          p = fract(p * vec2(443.897, 441.423));
+          p += dot(p, p.yx + 19.19);
+          return fract((p.x + p.y) * p.x);
+        }
+        void main() {
+          // Le temps parcourt un cercle dans le bruit 4D : à t = 10 s on revient exactement au point de départ.
+          float tau = 6.28318530718 * uTime / uLoop;
+          vec2 lc = 0.62 * vec2(cos(tau), sin(tau));
+          vec2 lc2 = 0.95 * vec2(cos(tau + 1.7), sin(tau + 1.7)) + vec2(7.3, -3.1);
+
+          // Cadrage : l'image remplit la largeur, recadrage vertical centré, légère marge pour le mouvement.
+          vec2 uv = vec2(vUv.x, 0.5 + (vUv.y - 0.5) * (uImgAspect / uScreenAspect));
+          float zoom = 1.10 + 0.015 * sin(tau);
+          vec2 pan = vec2(0.008 * cos(tau), 0.005 * sin(tau));
+          uv = 0.5 + (uv - 0.5) / zoom + pan;
+
+          vec2 p = uv * vec2(uImgAspect, 1.0);
+          vec2 big = curl(p, lc, 1.15);
+          vec2 fine = curl(p + 0.03 * big, lc2, 3.0);
+          vec2 disp = 0.0105 * big + 0.0022 * fine;
+          disp.x /= uImgAspect;
+          vec3 col = texture2D(uTex, clamp(uv + disp, 0.002, 0.998)).rgb;
+
+          // Une lumière douce traverse la fumée une fois par boucle (hors champ au début et à la fin).
+          float band = (vUv.x * 0.8 + (1.0 - vUv.y) * 0.45) - mix(-0.75, 1.95, uTime / uLoop);
+          float sweep = exp(-band * band / 0.07);
+          float lum = dot(col, vec3(0.299, 0.587, 0.114));
+          col *= 1.0 + 0.08 * sweep * smoothstep(0.22, 0.62, lum);
+
+          // Lisibilité du texte blanc : on adoucit seulement les hautes lumières de la fumée (teinte conservée).
+          // Luminance relative plafonnée vers 0,10 → contraste avec le blanc ≥ 6,5:1 même sur la volute la plus claire.
+          vec3 lin = toLin(col);
+          float L = dot(lin, vec3(0.2126, 0.7152, 0.0722));
+          float over = max(L - uKnee, 0.0);
+          float Lc = min(L, uKnee) + over / (1.0 + over / uSoft);
+          vec3 lc3 = lin * (Lc / max(L, 1e-5));
+          // la compression ternit les volutes : on leur rend leur éclat violet par la saturation (luminance inchangée)
+          float k = 1.0 - Lc / max(L, 1e-5);
+          lc3 = max(vec3(Lc) + (lc3 - vec3(Lc)) * (1.0 + uSat * k), 0.0);
+          col = toSrgb(lc3);
+
+          // Grain imperceptible : empêche les aplats violets de « baver » en paliers à l'encodage.
+          float g = hash(floor(vUv * vec2(1920.0, 1080.0)) + uFrame * vec2(17.0, 31.0)) - 0.5;
+          col += g * (2.0 / 255.0);
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `;
+
+      window.__hf = window.__hf || {};
+      window.__hf.buildReady = window.__hf.buildReady || {};
+      const ready = (async () => {
+        const canvas = document.getElementById("gl");
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, preserveDrawingBuffer: true });
+        renderer.setPixelRatio(1);
+        renderer.setSize(1920, 1080, false);
+        const tex = await new THREE.TextureLoader().loadAsync("assets/fumee-violette-2560.jpg");
+        tex.colorSpace = THREE.NoColorSpace; // couleurs de l'image restituées telles quelles
+        tex.minFilter = THREE.LinearMipmapLinearFilter;
+        tex.magFilter = THREE.LinearFilter;
+        tex.anisotropy = 8;
+        tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
+        const material = new THREE.ShaderMaterial({
+          uniforms: {
+            uTex: { value: tex },
+            uTime: { value: 0 },
+            uLoop: { value: LOOP },
+            uFrame: { value: 0 },
+            uImgAspect: { value: IMG_ASPECT },
+            uScreenAspect: { value: 1920 / 1080 },
+            uKnee: { value: 0.055 }, // seuil de luminance à partir duquel on adoucit
+            uSoft: { value: 0.06 }, // marge de luminance au-dessus du seuil (plafond ≈ 0,115)
+            uSat: { value: 2.2 }, // éclat rendu aux volutes adoucies
+          },
+          vertexShader: /* glsl */ `varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`,
+          fragmentShader: frag,
+          depthTest: false,
+          depthWrite: false,
+        });
+        const scene = new THREE.Scene();
+        const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+        quad.frustumCulled = false;
+        scene.add(quad);
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        const renderAt = (t) => {
+          material.uniforms.uTime.value = t;
+          material.uniforms.uFrame.value = Math.round(t * 30);
+          renderer.render(scene, camera);
+        };
+        window.addEventListener("hf-seek", (e) => renderAt(e.detail.time));
+        renderAt(window.__hfThreeTime || 0);
+      })();
+      window.__hf.buildReady["fond-fumee"] = ready;
+    </script>
+  </body>
+</html>
