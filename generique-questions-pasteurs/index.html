@@ -46,7 +46,7 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="6" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="main" data-start="0" data-duration="4" data-width="1080" data-height="1920">
       <div id="glow" class="abs"></div>
       <div id="qmarks" class="abs" style="inset:0">
         <span style="left:70px;top:1500px">?</span><span style="left:880px;top:1380px;font-size:90px">?</span>
@@ -65,7 +65,7 @@
 
       <div id="card" class="abs"><span class="tag">UNE QUESTION ?</span><p id="qtext">Posez votre question, notre Pasteur répond.</p></div>
       <div id="flash" class="abs"></div>
-      <audio id="snd" src="assets/sound.mp3" data-start="0" data-duration="6" data-track-index="1" data-volume="1"></audio>
+      <audio id="snd" src="assets/sound.mp3" data-start="0" data-duration="4" data-track-index="1" data-volume="1"></audio>
     </div>
     <script>
       const vars = (window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables()) || {};
@@ -80,7 +80,7 @@
         SPARKS.push({ el, x: 540 + Math.cos(a) * r * 1.15, y: 860 + Math.sin(a) * r * 0.62, s: 0.5 + (i % 4) * 0.28 });
       }
 
-      const tl = gsap.timeline({ paused: true });
+      const tl = gsap.timeline();                       // écrite pour 6 s, jouée x1,5 → 4 s
       // états de départ (immédiats, donc corrects à toute position de lecture)
       gsap.set("#bubble", { scale: 0, transformOrigin: "50% 50%" });
       gsap.set("#t1 i", { yPercent: 110 });
@@ -134,8 +134,11 @@
       tl.to("#logo", { scale: 1.06, duration: 0.6, yoyo: true, repeat: 1, ease: "sine.inOut" }, 4.95);
       tl.to("#root", { opacity: 1, duration: 0.01 }, 6);
 
+      tl.timeScale(1.5);
+      const master = gsap.timeline({ paused: true });
+      master.add(tl, 0);
       window.__timelines = window.__timelines || {};
-      window.__timelines["main"] = tl;
+      window.__timelines["main"] = master;
     </script>
   </body>
 </html>

@@ -6,7 +6,7 @@ message: "Le générique de la série « Question au Pasteur » de la Zone 242."
 destination: réseaux sociaux (Reels, Stories, TikTok), ouverture de chaque épisode
 aspect: 1080x1920
 language: fr
-length: 6s
+length: 4s
 angle: générique réutilisable, texte de la question modifiable, sound design original
 ---
 

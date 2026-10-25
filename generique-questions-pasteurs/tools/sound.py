@@ -1,6 +1,7 @@
 # Sound design du générique (6 s, stéréo 44,1 kHz) — 100 % synthétisé, aucune voix, aucun échantillon externe.
 import numpy as np, wave, sys
-SR, DUR = 44100, 6.0
+SR, DUR = 44100, 4.0
+K = 4.0 / 6.0                        # compression du rythme par rapport à la version de 6 s
 N = int(SR * DUR); rng = np.random.default_rng(242)
 t = np.arange(N) / SR
 L = np.zeros(N); R = np.zeros(N)
@@ -9,7 +10,7 @@ def env(n, a, d):                       # attaque linéaire courte, décroissanc
     x = np.arange(n) / SR
     return np.minimum(x / max(a, 1e-4), 1) * np.exp(-x / d)
 def put(sig, at, pan=0.0, gain=1.0):
-    i = int(at * SR); s = sig[: max(0, N - i)]
+    i = int(at * K * SR); s = sig[: max(0, N - i)]
     g = gain
     L[i:i + len(s)] += s * g * np.sqrt(0.5 * (1 - pan)) * 1.414 * 0.707
     R[i:i + len(s)] += s * g * np.sqrt(0.5 * (1 + pan)) * 1.414 * 0.707
@@ -30,7 +31,7 @@ for f, g in [(110, .55), (164.8, .4), (220, .35), (261.6, .22), (329.6, .16)]:
     for det in (-0.7, 0.7):
         pad += g * np.sin(2 * np.pi * (f + det) * t + rng.uniform(0, 6.28))
 pad = lowpass_sweep(pad, 300, 1600)
-swell = np.minimum(t / 2.6, 1) ** 2 * np.clip((DUR - t) / 1.2, 0, 1)
+swell = np.minimum(t / (2.6 * K), 1) ** 2 * np.clip((DUR - t) / 0.9, 0, 1)
 put(pad * swell * 0.07, 0, 0, 1)
 
 # 2) « pop » de la bulle (0,55 s) : glissando montant + clic
@@ -42,7 +43,7 @@ put(rng.standard_normal(int(SR * 0.02)) * env(int(SR * 0.02), 0.0005, 0.004) * 0
 # 3) whoosh d'entrée du titre (0,85 s) : bruit filtré qui monte, stéréo qui traverse
 n = int(SR * 0.55); wh = rng.standard_normal(n); wh = bandpass_sweep(wh, 300, 5200)
 shape = np.sin(np.linspace(0, np.pi, n)) ** 1.6; wh *= shape
-iL = int(0.85 * SR); k = np.linspace(0, 1, n)
+iL = int(0.85 * K * SR); k = np.linspace(0, 1, n)
 L[iL:iL + n] += wh * (1 - k) * 0.55; R[iL:iL + n] += wh * k * 0.55
 
 # 4) impact du badge « PASTEURS » (1,25 s) : coup grave + souffle
