@@ -80,7 +80,7 @@ L2 = L + 0.22 * pk * wL * 0.9; R2 = R + 0.22 * pk * wR * 0.9
 # fondu d'entrée/sortie de 40 ms, normalisation à −2 dBFS
 fade = np.minimum(np.minimum(t / 0.04, 1), np.clip((DUR - t) / 0.25, 0, 1))
 L2 *= fade; R2 *= fade
-m = max(np.abs(L2).max(), np.abs(R2).max()); g = 10 ** (-2 / 20) / m
+m = max(np.abs(L2).max(), np.abs(R2).max()); g = 10 ** (-9 / 20) / m
 out = (np.stack([L2, R2], 1) * g * 32767).astype("<i2")
 with wave.open(sys.argv[1] if len(sys.argv) > 1 else "sound.wav", "wb") as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes(out.tobytes())

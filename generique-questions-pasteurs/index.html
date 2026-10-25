@@ -2,13 +2,13 @@
 <html
   lang="fr"
   data-composition-variables='[
-    {"id":"question","type":"string","label":"Texte de la carte finale","default":"Posez votre question, notre Pasteur répond."}
+    {"id":"question","type":"string","label":"Texte de la carte finale","default":"Posez votre question, l’Apôtre Amos répond."}
   ]'
 >
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
-    <title>Générique — Question au Pasteur</title>
+    <title>Générique — Question à l’Apôtre Amos</title>
     <script src="gsap/gsap.min.js"></script>
     <style>
       @font-face { font-family: "Montserrat"; font-weight: 700; src: url("assets/montserrat-latin-700-normal.woff2") format("woff2"); }
@@ -24,7 +24,7 @@
       #qmarks span { position: absolute; font: 900 120px/1 "Montserrat"; color: #fff; opacity: .07; }
       #logo { left: 380px; top: 150px; width: 320px; }
       #logo svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 6px 18px rgba(3,10,60,.5)); }
-      #stage { left: 38px; top: 700px; width: 1080px; height: 330px; }
+      #stage { left: -30px; top: 700px; width: 1080px; height: 330px; }
       #bubble { left: 98px; top: 40px; width: 236px; height: 236px; }
       #bubble .disc { position: absolute; inset: 0; border-radius: 50%; background: #151a3a; box-shadow: 0 18px 40px rgba(2,6,40,.55); }
       #bubble .tail { position: absolute; left: -2px; bottom: 6px; width: 74px; height: 74px; background: #151a3a; border-radius: 0 0 0 100%; transform: rotate(8deg); }
@@ -33,9 +33,9 @@
       #t1 { left: 360px; top: 28px; font: 800 62px/1 "Montserrat"; color: #fff; letter-spacing: .01em; white-space: nowrap; text-shadow: 0 6px 22px rgba(2,6,40,.45); }
       #t1 .m { display: inline-block; overflow: hidden; vertical-align: top; padding: 4px 0 8px; margin: -4px 0 -8px; }
       #t1 .m i { display: inline-block; font-style: normal; }
-      #badge { left: 346px; top: 112px; height: 150px; width: 560px; overflow: hidden; border-radius: 22px 36px 22px 22px;
+      #badge { left: 346px; top: 112px; height: 150px; width: 700px; overflow: hidden; border-radius: 22px 36px 22px 22px;
         background: linear-gradient(180deg, #2db0f2, #1190dd); box-shadow: 0 18px 40px rgba(2,6,40,.5); }
-      #badge b { position: absolute; left: 36px; top: 0; height: 150px; display: flex; align-items: center; font: 900 96px/1 "Montserrat"; color: #fff; letter-spacing: .005em; }
+      #badge b { position: absolute; left: 36px; top: 0; height: 150px; display: flex; align-items: center; font: 900 66px/1 "Montserrat"; color: #fff; letter-spacing: .005em; white-space: nowrap; }
       #shine { top: -10px; width: 90px; height: 180px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.55), rgba(255,255,255,0)); transform: skewX(-18deg); }
       #sparks i { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 0 22px 8px rgba(120,210,255,.8); opacity: 0; }
       #card { left: 110px; top: 1180px; width: 860px; padding: 56px 60px 60px; border-radius: 36px; background: rgba(255,255,255,.97);
@@ -58,12 +58,12 @@
       <div id="stage" class="abs">
         <div class="ring abs"></div><div class="ring abs"></div>
         <div id="bubble" class="abs"><div class="tail"></div><div class="disc"></div><div class="q">?</div></div>
-        <div id="t1" class="abs"><span class="m"><i>QUESTION</i></span> <span class="m"><i>AU</i></span></div>
-        <div id="badge" class="abs"><div id="shine" class="abs"></div><b>PASTEUR</b></div>
+        <div id="t1" class="abs"><span class="m"><i>QUESTION</i></span> <span class="m"><i>À</i></span></div>
+        <div id="badge" class="abs"><div id="shine" class="abs"></div><b>L’APÔTRE AMOS</b></div>
       </div>
       <div id="sparks" class="abs" style="inset:0"></div>
 
-      <div id="card" class="abs"><span class="tag">UNE QUESTION ?</span><p id="qtext">Posez votre question, notre Pasteur répond.</p></div>
+      <div id="card" class="abs"><span class="tag">UNE QUESTION ?</span><p id="qtext">Posez votre question, l’Apôtre Amos répond.</p></div>
       <div id="flash" class="abs"></div>
       <audio id="snd" src="assets/sound.mp3" data-start="0" data-duration="4" data-track-index="1" data-volume="1"></audio>
     </div>
@@ -105,14 +105,14 @@
       tl.set(".ring:nth-of-type(2)", { opacity: 0.6 }, 0.78);
       tl.to(".ring:nth-of-type(2)", { scale: 2.8, opacity: 0, duration: 1.1, ease: "power2.out" }, 0.78);
 
-      // 0,85 s — whoosh : « QUESTION AU » monte de son masque
+      // 0,85 s — whoosh : « QUESTION À » monte de son masque
       tl.to("#t1 i", { yPercent: 0, duration: 0.5, stagger: 0.09, ease: "power4.out" }, 0.88);
 
       // 1,25 s — impact : le badge entre, secousse, reflet
       tl.to("#badge", { xPercent: 0, opacity: 1, duration: 0.34, ease: "power4.out" }, 0.98);
       tl.fromTo("#root", { x: 0, y: 0 }, { keyframes: [{ x: -9, y: 7, duration: 0.04 }, { x: 8, y: -6, duration: 0.05 }, { x: -5, y: 3, duration: 0.06 }, { x: 0, y: 0, duration: 0.12 }], ease: "power1.out" }, 1.25);
       tl.fromTo("#badge", { scale: 1.06 }, { scale: 1, duration: 0.4, ease: "power3.out", transformOrigin: "20% 50%" }, 1.25);
-      tl.to("#shine", { x: 860, duration: 0.7, ease: "power2.inOut" }, 1.4);
+      tl.to("#shine", { x: 940, duration: 0.7, ease: "power2.inOut" }, 1.4);
 
       // 2,0 → 2,7 s — scintillement : éclats qui jaillissent puis s'éteignent, cadencés comme les cloches
       SPARKS.forEach((s, i) => {
