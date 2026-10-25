@@ -1,0 +1,141 @@
+<!doctype html>
+<html
+  lang="fr"
+  data-composition-variables='[
+    {"id":"question","type":"string","label":"Texte de la carte finale","default":"Posez votre question, nos pasteurs répondent."}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Générique — Question au Pasteur</title>
+    <script src="gsap/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Montserrat"; font-weight: 700; src: url("assets/montserrat-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 800; src: url("assets/montserrat-latin-800-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 900; src: url("assets/montserrat-latin-900-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0b1140; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Montserrat", sans-serif;
+        background: radial-gradient(ellipse 120% 70% at 50% 42%, #1f6fe0 0%, #1740b8 34%, #0f1f78 64%, #080c34 100%); }
+      .abs { position: absolute; }
+      #glow { left: 140px; top: 520px; width: 800px; height: 800px; border-radius: 50%;
+        background: radial-gradient(closest-side, rgba(70,190,255,.55), rgba(70,190,255,0)); }
+      #qmarks span { position: absolute; font: 900 120px/1 "Montserrat"; color: #fff; opacity: .07; }
+      #logo { left: 380px; top: 150px; width: 320px; }
+      #logo svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 6px 18px rgba(3,10,60,.5)); }
+      #stage { left: 38px; top: 700px; width: 1080px; height: 330px; }
+      #bubble { left: 98px; top: 40px; width: 236px; height: 236px; }
+      #bubble .disc { position: absolute; inset: 0; border-radius: 50%; background: #151a3a; box-shadow: 0 18px 40px rgba(2,6,40,.55); }
+      #bubble .tail { position: absolute; left: -2px; bottom: 6px; width: 74px; height: 74px; background: #151a3a; border-radius: 0 0 0 100%; transform: rotate(8deg); }
+      #bubble .q { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font: 900 168px/1 "Montserrat"; color: #fff; }
+      .ring { left: 98px; top: 40px; width: 236px; height: 236px; border-radius: 50%; border: 5px solid rgba(255,255,255,.8); opacity: 0; }
+      #t1 { left: 360px; top: 28px; font: 800 62px/1 "Montserrat"; color: #fff; letter-spacing: .01em; white-space: nowrap; text-shadow: 0 6px 22px rgba(2,6,40,.45); }
+      #t1 .m { display: inline-block; overflow: hidden; vertical-align: top; padding: 4px 0 8px; margin: -4px 0 -8px; }
+      #t1 .m i { display: inline-block; font-style: normal; }
+      #badge { left: 346px; top: 112px; height: 150px; width: 560px; overflow: hidden; border-radius: 22px 36px 22px 22px;
+        background: linear-gradient(180deg, #2db0f2, #1190dd); box-shadow: 0 18px 40px rgba(2,6,40,.5); }
+      #badge b { position: absolute; left: 36px; top: 0; height: 150px; display: flex; align-items: center; font: 900 96px/1 "Montserrat"; color: #fff; letter-spacing: .005em; }
+      #shine { top: -10px; width: 90px; height: 180px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.55), rgba(255,255,255,0)); transform: skewX(-18deg); }
+      #sparks i { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 0 22px 8px rgba(120,210,255,.8); opacity: 0; }
+      #card { left: 110px; top: 1180px; width: 860px; padding: 56px 60px 60px; border-radius: 36px; background: rgba(255,255,255,.97);
+        box-shadow: 0 30px 70px rgba(2,6,40,.5); }
+      #card .tag { display: inline-block; font: 800 30px/1 "Montserrat"; letter-spacing: .12em; color: #fff; background: #1190dd; padding: 14px 24px; border-radius: 14px; margin-bottom: 28px; }
+      #card p { font: 800 54px/1.22 "Montserrat"; color: #151a3a; }
+      #flash { inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.9), rgba(255,255,255,0) 60%); opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="6" data-width="1080" data-height="1920">
+      <div id="glow" class="abs"></div>
+      <div id="qmarks" class="abs" style="inset:0">
+        <span style="left:70px;top:1500px">?</span><span style="left:880px;top:1380px;font-size:90px">?</span>
+        <span style="left:760px;top:420px;font-size:150px">?</span><span style="left:130px;top:560px;font-size:80px">?</span>
+        <span style="left:470px;top:1700px;font-size:100px">?</span>
+      </div>
+      <div id="logo" class="abs"><img src="assets/logo_zone242.svg" alt="Zone 242" style="display:block;width:100%;height:auto" /></div>
+
+      <div id="stage" class="abs">
+        <div class="ring abs"></div><div class="ring abs"></div>
+        <div id="bubble" class="abs"><div class="tail"></div><div class="disc"></div><div class="q">?</div></div>
+        <div id="t1" class="abs"><span class="m"><i>QUESTION</i></span> <span class="m"><i>AU</i></span></div>
+        <div id="badge" class="abs"><div id="shine" class="abs"></div><b>PASTEUR</b></div>
+      </div>
+      <div id="sparks" class="abs" style="inset:0"></div>
+
+      <div id="card" class="abs"><span class="tag">UNE QUESTION ?</span><p id="qtext">Posez votre question, nos pasteurs répondent.</p></div>
+      <div id="flash" class="abs"></div>
+      <audio id="snd" src="assets/sound.mp3" data-start="0" data-duration="6" data-track-index="1" data-volume="1"></audio>
+    </div>
+    <script>
+      const vars = (window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables()) || {};
+      if (vars.question) document.getElementById("qtext").textContent = vars.question;
+
+      // éclats (positions fixes, aucun hasard à l'exécution)
+      const sp = document.getElementById("sparks");
+      const SPARKS = [];
+      for (let i = 0; i < 18; i++) {
+        const a = (i / 18) * Math.PI * 2 + 0.3, r = 300 + (i % 3) * 90;
+        const el = document.createElement("i"); sp.appendChild(el);
+        SPARKS.push({ el, x: 540 + Math.cos(a) * r * 1.15, y: 860 + Math.sin(a) * r * 0.62, s: 0.5 + (i % 4) * 0.28 });
+      }
+
+      const tl = gsap.timeline({ paused: true });
+      // états de départ (immédiats, donc corrects à toute position de lecture)
+      gsap.set("#bubble", { scale: 0, transformOrigin: "50% 50%" });
+      gsap.set("#t1 i", { yPercent: 110 });
+      gsap.set("#badge", { xPercent: -112, opacity: 0 });
+      gsap.set("#shine", { x: -140 });
+      gsap.set(".ring", { opacity: 0, scale: 1, transformOrigin: "50% 50%" });
+      gsap.set("#logo", { y: -40, opacity: 0, scale: 0.8, transformOrigin: "50% 50%" });
+      gsap.set("#card", { y: 180, opacity: 0, scale: 0.92, transformOrigin: "50% 100%" });
+      gsap.set("#qmarks span", { opacity: 0 });
+      gsap.set("#glow", { scale: 0.4, opacity: 0, transformOrigin: "50% 50%" });
+      SPARKS.forEach((s) => gsap.set(s.el, { x: 540 - 7, y: 860 - 7, scale: 0 }));
+
+      tl.to("#glow", { scale: 1, opacity: 1, duration: 1.6, ease: "power2.out" }, 0.1);
+      tl.to("#qmarks span", { opacity: 0.07, duration: 1.4, stagger: 0.12, ease: "sine.out" }, 0.3);
+      tl.to("#qmarks span", { y: -90, duration: 6, ease: "none" }, 0);
+      tl.to("#logo", { y: 0, opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" }, 0.18);
+
+      // 0,55 s — pop de la bulle
+      tl.to("#bubble", { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.5)" }, 0.55);
+      tl.set(".ring:nth-of-type(1)", { opacity: 0.8 }, 0.6);
+      tl.to(".ring:nth-of-type(1)", { scale: 2.1, opacity: 0, duration: 0.9, ease: "power2.out" }, 0.6);
+      tl.set(".ring:nth-of-type(2)", { opacity: 0.6 }, 0.78);
+      tl.to(".ring:nth-of-type(2)", { scale: 2.8, opacity: 0, duration: 1.1, ease: "power2.out" }, 0.78);
+
+      // 0,85 s — whoosh : « QUESTION AU » monte de son masque
+      tl.to("#t1 i", { yPercent: 0, duration: 0.5, stagger: 0.09, ease: "power4.out" }, 0.88);
+
+      // 1,25 s — impact : le badge entre, secousse, reflet
+      tl.to("#badge", { xPercent: 0, opacity: 1, duration: 0.34, ease: "power4.out" }, 0.98);
+      tl.fromTo("#root", { x: 0, y: 0 }, { keyframes: [{ x: -9, y: 7, duration: 0.04 }, { x: 8, y: -6, duration: 0.05 }, { x: -5, y: 3, duration: 0.06 }, { x: 0, y: 0, duration: 0.12 }], ease: "power1.out" }, 1.25);
+      tl.fromTo("#badge", { scale: 1.06 }, { scale: 1, duration: 0.4, ease: "power3.out", transformOrigin: "20% 50%" }, 1.25);
+      tl.to("#shine", { x: 860, duration: 0.7, ease: "power2.inOut" }, 1.4);
+
+      // 2,0 → 2,7 s — scintillement : éclats qui jaillissent puis s'éteignent, cadencés comme les cloches
+      SPARKS.forEach((s, i) => {
+        const at = 2.0 + (i % 6) * 0.12 + Math.floor(i / 6) * 0.03;
+        tl.to(s.el, { x: s.x - 7, y: s.y - 7, scale: s.s, opacity: 1, duration: 0.5, ease: "expo.out" }, at);
+        tl.to(s.el, { opacity: 0, scale: 0, duration: 0.6, ease: "power2.in" }, at + 0.85);
+      });
+      tl.to("#bubble", { scale: 1.07, duration: 0.25, yoyo: true, repeat: 1, ease: "sine.inOut" }, 2.05);
+
+      // 2,75 s — la carte « question »
+      tl.to("#card", { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.4)" }, 2.75);
+      tl.from("#card .tag", { x: -40, opacity: 0, duration: 0.4, ease: "power3.out" }, 3.0);
+      tl.from("#qtext", { y: 26, opacity: 0, duration: 0.5, ease: "power3.out" }, 3.1);
+
+      // 4,95 s — final : flash doux, léger gonflement, logo qui respire
+      tl.to("#flash", { opacity: 1, duration: 0.12, ease: "power2.out" }, 4.95);
+      tl.to("#flash", { opacity: 0, duration: 0.8, ease: "power2.in" }, 5.07);
+      tl.to("#stage", { scale: 1.03, duration: 0.9, ease: "sine.inOut", transformOrigin: "50% 50%" }, 4.95);
+      tl.to("#logo", { scale: 1.06, duration: 0.6, yoyo: true, repeat: 1, ease: "sine.inOut" }, 4.95);
+      tl.to("#root", { opacity: 1, duration: 0.01 }, 6);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
