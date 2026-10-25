@@ -20,15 +20,17 @@
   --body: "Montserrat", "Segoe UI", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
 }
-@media (prefers-color-scheme: dark) {
+@media screen and (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0E0B2A; --surface: #191545; --fg: #EEECFF; --muted: #A9A2FF; --line: #2C2766;
     --accent: #A9A2FF; --warm: #FF8A6B; color-scheme: dark;
   }
 }
-:root[data-theme="dark"] {
-  --bg: #0E0B2A; --surface: #191545; --fg: #EEECFF; --muted: #A9A2FF; --line: #2C2766;
-  --accent: #A9A2FF; --warm: #FF8A6B; color-scheme: dark;
+@media screen {
+  :root[data-theme="dark"] {
+    --bg: #0E0B2A; --surface: #191545; --fg: #EEECFF; --muted: #A9A2FF; --line: #2C2766;
+    --accent: #A9A2FF; --warm: #FF8A6B; color-scheme: dark;
+  }
 }
 * { box-sizing: border-box; }
 body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.65; }
@@ -39,7 +41,6 @@ h2 { font-size: clamp(1.6rem, 3.2vw, 2.2rem); font-weight: 800; letter-spacing: 
 h3 { font-size: 1.1rem; font-weight: 700; }
 p { margin: 0; }
 .eyebrow { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm); }
-.verse { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
 
 /* Couverture */
 .cover { background: var(--night); color: #F4F2FF; overflow: hidden; }
@@ -48,7 +49,7 @@ p { margin: 0; }
 .cover h1 { font-size: clamp(2.6rem, 7vw, 4.6rem); font-weight: 900; letter-spacing: -0.02em; margin-top: 14px; }
 .cover h1 span { color: var(--orange); }
 .cover .lead { margin-top: 18px; font-size: 1.1rem; color: #CFCBFF; max-width: 40ch; }
-.facts { margin-top: 28px; display: grid; grid-template-columns: repeat(3, auto); gap: 8px 28px; justify-content: start; }
+.facts { margin: 28px 0 0; display: grid; grid-template-columns: repeat(2, auto); gap: 12px 32px; justify-content: start; }
 .facts dt { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: #8F88E8; }
 .facts dd { margin: 2px 0 0; font-weight: 700; }
 .cover svg { width: 100%; height: auto; max-width: 420px; justify-self: center; }
@@ -62,12 +63,17 @@ section:last-of-type { border-bottom: 0; }
 .cols > * { min-width: 0; }
 .card { background: var(--surface); border-radius: 10px; padding: 20px; display: grid; gap: 8px; align-content: start; }
 .card .k { font-family: var(--mono); font-size: 0.75rem; color: var(--warm); letter-spacing: 0.08em; text-transform: uppercase; }
+.card.hi { background: var(--blue); color: #F4F2FF; }
+.card.hi .k { color: #FFB547; }
 blockquote { margin: 0; padding: 22px 24px; border-left: 4px solid var(--orange); background: var(--surface); border-radius: 0 10px 10px 0; font-size: 1.15rem; font-weight: 600; }
 blockquote cite { display: block; margin-top: 8px; font-style: normal; font-family: var(--mono); font-size: 0.8rem; font-weight: 500; color: var(--muted); }
 .fig { margin: 8px 0 0; display: grid; gap: 10px; }
 .fig .scroll { overflow-x: auto; }
 .fig svg { display: block; width: 100%; height: auto; min-width: 560px; }
 .fig figcaption { font-size: 0.85rem; color: var(--muted); }
+.sub { margin-top: 40px; display: grid; gap: 14px; }
+.sub h3 { font-size: 1.3rem; font-weight: 800; }
+.plan-tag { display: inline-block; font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--orange); color: #fff; padding: 4px 10px; border-radius: 99px; justify-self: start; }
 ul.clean { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
 
 /* Tables */
@@ -79,7 +85,7 @@ tr:last-child td { border-bottom: 0; }
 td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .tier { display: inline-block; font-family: var(--mono); font-size: 0.7rem; padding: 2px 8px; border-radius: 99px; border: 1px solid currentColor; white-space: nowrap; }
 .t1 { color: var(--warm); } .t2 { color: var(--accent); } .t3 { color: var(--muted); }
-.cat td { background: transparent; font-weight: 800; font-family: var(--display); padding-top: 18px; color: var(--accent); }
+.cat td { font-weight: 800; font-family: var(--display); padding-top: 18px; color: var(--accent); }
 .note { font-size: 0.85rem; color: var(--muted); }
 
 .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
@@ -88,20 +94,43 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .sw p { padding: 10px 12px; font-size: 0.85rem; }
 .sw b { display: block; }
 
-.steps { display: grid; gap: 12px; counter-reset: s; }
+.steps { display: grid; gap: 12px; counter-reset: s; padding: 0; margin: 0; }
 .steps li { list-style: none; display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; }
 .steps li::before { counter-increment: s; content: counter(s); width: 30px; height: 30px; border-radius: 50%; background: var(--orange); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 0.9rem; }
-.steps { padding: 0; margin: 0; }
 
 footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
 @media (max-width: 760px) {
   .cover .wrap { grid-template-columns: 1fr; padding-block: 40px; }
   .cover svg { max-width: 300px; }
-  .facts { grid-template-columns: repeat(2, auto); }
 }
-@media (prefers-reduced-motion: no-preference) {
-  .glow { animation: pulse 4s ease-in-out infinite; transform-origin: 210px 200px; }
+@media screen and (prefers-reduced-motion: no-preference) {
+  .glow { animation: pulse 4s ease-in-out infinite; }
   @keyframes pulse { 0%,100% { opacity: .55 } 50% { opacity: .9 } }
+}
+
+/* Impression / PDF A4 */
+@page { size: A4; margin: 14mm 12mm; }
+@page :first { margin: 0; }
+@media print {
+  :root { padding: 0 !important; }
+  body { font-size: 10.5pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .wrap { max-width: none; padding-left: 0; padding-right: 0; }
+  .cover { margin: 0; padding: 0 18mm; break-after: page; height: 287mm; overflow: hidden; display: grid; align-content: center; }
+  .cover .wrap { grid-template-columns: 1fr; justify-items: start; gap: 24px; }
+  .cover svg { max-width: 300px; justify-self: start; }
+  section { padding-block: 9mm 0; border-bottom: 0; }
+  #vision, #deroule, #equipe, #ambiance, #commun, #plan-smartphone, #plan-camera, #comparaison, #cycle { break-before: page; padding-top: 0; }
+  #ambiance .fig svg { max-height: 62mm; }
+  #ambiance .sw div { height: 34px; }
+  #ambiance .swatches, #ambiance .cols { margin-top: 14px !important; gap: 10px; }
+  #ambiance .card { padding: 12px 14px; }
+  .fig svg, table { min-width: 0; }
+  .fig .scroll, .table { overflow: visible; }
+  .card, .fig, tr, .sw, blockquote, .steps li, .sub > .fig { break-inside: avoid; }
+  .head, .sub h3, .plan-tag { break-after: avoid; }
+  .cols { grid-template-columns: repeat(2, 1fr); }
+  .swatches { grid-template-columns: repeat(4, 1fr); }
+  footer { padding-block: 16px 0; }
 }
 </style>
 
@@ -113,7 +142,8 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
       <p class="lead">Une émission mensuelle pour parler de la véritable adoration au peuple de Dieu, là où il se trouve : sur les réseaux sociaux.</p>
       <dl class="facts">
         <div><dt>Animateur</dt><dd>Chantre Kephale Will</dd></div>
-        <div><dt>Fréquence</dt><dd>1 émission / mois</dd></div>
+        <div><dt>Format</dt><dd>Podcast filmé, préenregistré</dd></div>
+        <div><dt>Fréquence</dt><dd>1 épisode publié par mois</dd></div>
         <div><dt>Diffusion</dt><dd>Page ZONE 242</dd></div>
       </dl>
     </div>
@@ -126,13 +156,9 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
         </radialGradient>
       </defs>
       <circle class="glow" cx="210" cy="200" r="190" fill="url(#halo)"/>
-      <g stroke="#3B2BE6" stroke-width="2" fill="none" opacity=".7">
-        <path d="M210 330 C 90 250, 40 170, 80 110 C 120 50, 190 70, 210 120 C 230 70, 300 50, 340 110 C 380 170, 330 250, 210 330 Z"/>
-      </g>
+      <path d="M210 330 C 90 250, 40 170, 80 110 C 120 50, 190 70, 210 120 C 230 70, 300 50, 340 110 C 380 170, 330 250, 210 330 Z" fill="none" stroke="#3B2BE6" stroke-width="2" opacity=".7"/>
       <path d="M210 352 C 70 262, 14 168, 62 96 C 108 28, 190 46, 210 100 C 230 46, 312 28, 358 96 C 406 168, 350 262, 210 352 Z" fill="none" stroke="#FF5A36" stroke-width="5" stroke-linejoin="round"/>
-      <g fill="#F4F2FF">
-        <rect x="186" y="118" width="48" height="96" rx="24"/>
-      </g>
+      <rect x="186" y="118" width="48" height="96" rx="24" fill="#F4F2FF"/>
       <g stroke="#0B0733" stroke-width="2" opacity=".35">
         <line x1="190" y1="140" x2="230" y2="140"/><line x1="188" y1="154" x2="232" y2="154"/><line x1="188" y1="168" x2="232" y2="168"/>
       </g>
@@ -157,12 +183,12 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
     <div class="stack prose">
       <blockquote>« L'heure vient, et elle est déjà venue, où les vrais adorateurs adoreront le Père en esprit et en vérité ; car ce sont là les adorateurs que le Père demande. »<cite>Jean 4.23</cite></blockquote>
       <p>Sur les réseaux sociaux, l'adoration est souvent réduite à un moment musical, à une performance ou à une émotion. <strong>Cœur d'Adorateur</strong> veut revenir à l'essentiel : l'adoration comme une attitude du cœur et une manière de vivre devant Dieu, dans la vérité.</p>
-      <p>Chaque mois, le Chantre Kephale Will ouvre la conversation avec des adorateurs, des serviteurs et des témoins. Ensemble, ils enseignent, partagent leur vécu et invitent le public à adorer, pas seulement à regarder.</p>
+      <p>Chaque mois, le Chantre Kephale Will reçoit des adorateurs, des serviteurs et des témoins. Ensemble, ils enseignent, partagent leur vécu et invitent le public à adorer, pas seulement à regarder.</p>
     </div>
     <div class="cols" style="margin-top:28px">
       <div class="card"><p class="k">Mission</p><h3>Enseigner la véritable adoration</h3><p>Expliquer, Bible en main, ce que Dieu attend d'un adorateur : esprit, vérité et vie consacrée.</p></div>
       <div class="card"><p class="k">Public</p><h3>Le peuple de Dieu en ligne</h3><p>Chrétiens de toutes églises, chantres et équipes de louange, jeunes qui suivent la page ZONE 242.</p></div>
-      <div class="card"><p class="k">Promesse</p><h3>Repartir transformé</h3><p>Chaque émission laisse une vérité claire, un témoignage et un moment pour adorer ensemble.</p></div>
+      <div class="card"><p class="k">Promesse</p><h3>Repartir transformé</h3><p>Chaque épisode laisse une vérité claire, un témoignage et un moment pour adorer.</p></div>
     </div>
   </section>
 
@@ -172,43 +198,43 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
       <h2>Le concept de l'émission</h2>
     </div>
     <div class="cols">
-      <div class="card"><p class="k">Type</p><h3>Podcast filmé</h3><p>Une émission filmée en direct sur la page Facebook ZONE 242, puis disponible en replay et en audio.</p></div>
-      <div class="card"><p class="k">Durée</p><h3>45 à 60 minutes</h3><p>Assez long pour aller au fond du sujet, assez court pour garder l'attention en direct.</p></div>
-      <div class="card"><p class="k">Distribution</p><h3>1 animateur, 1 à 2 invités</h3><p>Kephale Will anime et choisit ses invités : chantres, pasteurs, musiciens, témoins.</p></div>
-      <div class="card"><p class="k">Rythme</p><h3>Un rendez-vous fixe par mois</h3><p>Même jour, même heure (par exemple le dernier samedi du mois, 19 h), pour créer l'habitude.</p></div>
+      <div class="card"><p class="k">Type</p><h3>Podcast filmé et préenregistré</h3><p>L'épisode est tourné à l'avance, monté, puis publié sur la page Facebook ZONE 242. Le montage permet de corriger, couper et soigner le son.</p></div>
+      <div class="card"><p class="k">Durée</p><h3>45 à 60 minutes à l'écran</h3><p>Prévoir environ 1 h 30 de tournage pour un épisode final de 55 minutes.</p></div>
+      <div class="card"><p class="k">Distribution</p><h3>1 animateur, 1 à 2 invités</h3><p>Kephale Will anime, choisit les sujets et ses invités : chantres, pasteurs, musiciens, témoins.</p></div>
+      <div class="card"><p class="k">Rythme</p><h3>Une publication fixe par mois</h3><p>Même jour, même heure chaque mois (par exemple le dernier samedi à 19 h), pour créer l'habitude.</p></div>
     </div>
   </section>
 
   <section id="deroule">
     <div class="head">
       <p class="eyebrow">Conducteur type · 55 minutes</p>
-      <h2>Le déroulé d'une émission</h2>
-      <p class="prose">L'émission s'ouvre et se ferme dans l'adoration. Entre les deux, l'entretien porte le thème du mois. La frise ci-dessous est à l'échelle des minutes.</p>
+      <h2>Le déroulé d'un épisode</h2>
+      <p class="prose">L'épisode s'ouvre et se ferme dans l'adoration. Entre les deux, l'entretien porte le sujet du mois. La frise ci-dessous est à l'échelle des minutes de l'épisode monté.</p>
     </div>
     <figure class="fig">
       <div class="scroll">
-        <svg viewBox="0 0 900 190" role="img" aria-label="Frise du déroulé de 55 minutes">
+        <svg viewBox="0 0 900 180" role="img" aria-label="Frise du déroulé de 55 minutes">
           <!-- échelle : 900 px = 55 min, 1 min ≈ 16,36 px -->
           <g font-family="Montserrat, sans-serif" font-size="12" font-weight="700">
-            <rect x="0" y="40" width="16" height="56" fill="var(--muted)"/>
-            <rect x="16" y="40" width="82" height="56" fill="var(--orange)"/>
-            <rect x="98" y="40" width="82" height="56" fill="var(--blue-soft)"/>
-            <rect x="180" y="40" width="409" height="56" fill="var(--blue)"/>
-            <rect x="589" y="40" width="164" height="56" fill="var(--blue-soft)"/>
-            <rect x="753" y="40" width="82" height="56" fill="var(--warm)"/>
-            <rect x="835" y="40" width="65" height="56" fill="var(--orange)"/>
+            <rect x="0" y="40" width="16" height="56" fill="#5D5B76"/>
+            <rect x="16" y="40" width="82" height="56" fill="#FF5A36"/>
+            <rect x="98" y="40" width="82" height="56" fill="#3B2BE6"/>
+            <rect x="180" y="40" width="409" height="56" fill="#1900CF"/>
+            <rect x="589" y="40" width="164" height="56" fill="#3B2BE6"/>
+            <rect x="753" y="40" width="82" height="56" fill="#E0431F"/>
+            <rect x="835" y="40" width="65" height="56" fill="#FF5A36"/>
             <g fill="#FFFFFF">
               <text x="57" y="73" text-anchor="middle">Adoration</text>
               <text x="139" y="73" text-anchor="middle">Accueil</text>
               <text x="384" y="73" text-anchor="middle">Entretien avec l'invité</text>
-              <text x="671" y="73" text-anchor="middle">Témoignage / questions</text>
+              <text x="671" y="73" text-anchor="middle">Témoignage · questions</text>
               <text x="794" y="73" text-anchor="middle">Exhortation</text>
               <text x="867" y="73" text-anchor="middle">Prière</text>
             </g>
           </g>
           <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">
             <text x="0" y="28">Générique</text>
-            <g stroke="var(--line)"><line x1="0" y1="110" x2="900" y2="110"/></g>
+            <line x1="0" y1="110" x2="900" y2="110" stroke="var(--line)"/>
             <g text-anchor="middle">
               <text x="4" y="128" text-anchor="start">0</text>
               <text x="98" y="128">5</text>
@@ -221,9 +247,9 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
               <text x="896" y="128" text-anchor="end">55 min</text>
             </g>
             <g stroke="var(--muted)"><line x1="98" y1="110" x2="98" y2="116"/><line x1="180" y1="110" x2="180" y2="116"/><line x1="344" y1="110" x2="344" y2="116"/><line x1="507" y1="110" x2="507" y2="116"/><line x1="589" y1="110" x2="589" y2="116"/><line x1="753" y1="110" x2="753" y2="116"/><line x1="835" y1="110" x2="835" y2="116"/></g>
-            <text x="16" y="160">Ouverture chantée en direct</text>
-            <text x="384" y="160" text-anchor="middle">Cœur de l'émission : le thème du mois</text>
-            <text x="900" y="160" text-anchor="end">Envoi et appel à l'action</text>
+            <text x="16" y="158">Ouverture chantée</text>
+            <text x="384" y="158" text-anchor="middle">Cœur de l'épisode</text>
+            <text x="900" y="158" text-anchor="end">Envoi et appel à l'action</text>
           </g>
         </svg>
       </div>
@@ -232,13 +258,13 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
       <table>
         <thead><tr><th>Minute</th><th>Séquence</th><th>Contenu</th><th>Qui</th></tr></thead>
         <tbody>
-          <tr><td class="num">0 – 1</td><td><b>Générique</b></td><td>Jingle et visuel Cœur d'Adorateur aux couleurs de ZONE 242.</td><td>Réalisation</td></tr>
-          <tr><td class="num">1 – 6</td><td><b>Adoration d'ouverture</b></td><td>Un chant en direct, voix et clavier ou guitare. Le public est invité à adorer, pas à regarder.</td><td>Kephale Will</td></tr>
-          <tr><td class="num">6 – 11</td><td><b>Accueil</b></td><td>Salutations, présentation du thème et de l'invité, rappel pour partager le direct.</td><td>Kephale Will</td></tr>
-          <tr><td class="num">11 – 36</td><td><b>Entretien</b></td><td>Échange autour du thème, appuyé sur la Bible et le vécu de l'invité.</td><td>Animateur + invité(s)</td></tr>
-          <tr><td class="num">36 – 46</td><td><b>Témoignage et questions</b></td><td>Lecture de questions en commentaires ou témoignage de l'invité.</td><td>Invité + réseaux</td></tr>
-          <tr><td class="num">46 – 51</td><td><b>Exhortation</b></td><td>La vérité à retenir du mois, en une phrase claire.</td><td>Kephale Will</td></tr>
-          <tr><td class="num">51 – 55</td><td><b>Prière et envoi</b></td><td>Prière, annonce du prochain thème, appel à s'abonner à la page.</td><td>Kephale Will</td></tr>
+          <tr><td class="num">0 – 1</td><td><b>Générique</b></td><td>Jingle et logo Cœur d'Adorateur aux couleurs de ZONE 242, ajoutés au montage.</td><td>Monteur</td></tr>
+          <tr><td class="num">1 – 6</td><td><b>Adoration d'ouverture</b></td><td>Un chant, voix et clavier ou guitare, enregistré sur le plateau.</td><td>Kephale Will</td></tr>
+          <tr><td class="num">6 – 11</td><td><b>Accueil</b></td><td>Salutations, présentation du sujet et de l'invité.</td><td>Kephale Will</td></tr>
+          <tr><td class="num">11 – 36</td><td><b>Entretien</b></td><td>Échange appuyé sur la Bible et le vécu de l'invité.</td><td>Animateur + invité(s)</td></tr>
+          <tr><td class="num">36 – 46</td><td><b>Témoignage et questions</b></td><td>Témoignage de l'invité et réponses aux questions du public, recueillies en commentaire sur la page avant le tournage.</td><td>Invité + réseaux</td></tr>
+          <tr><td class="num">46 – 51</td><td><b>Exhortation</b></td><td>La vérité à retenir, en une phrase claire.</td><td>Kephale Will</td></tr>
+          <tr><td class="num">51 – 55</td><td><b>Prière et envoi</b></td><td>Prière, rendez-vous du mois suivant, invitation à s'abonner et à partager.</td><td>Kephale Will</td></tr>
         </tbody>
       </table>
     </div>
@@ -251,10 +277,10 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
       <p class="prose">Une émission régulière tient grâce à une petite équipe stable, pas grâce à une seule personne. Quatre rôles suffisent ; une même personne peut en tenir deux au début.</p>
     </div>
     <div class="cols">
-      <div class="card"><p class="k">Voix</p><h3>Animateur</h3><p>Chantre Kephale Will. Choisit le thème et l'invité, conduit l'adoration et l'entretien.</p></div>
+      <div class="card"><p class="k">Voix</p><h3>Animateur</h3><p>Chantre Kephale Will. Choisit les sujets et les invités, conduit l'adoration et l'entretien.</p></div>
       <div class="card"><p class="k">Contenu</p><h3>Invité(s)</h3><p>Adorateurs, pasteurs, musiciens ou témoins, choisis pour leur vie autant que pour leur parole.</p></div>
-      <div class="card"><p class="k">Technique</p><h3>Réalisateur</h3><p>Son, caméras, lumières et diffusion en direct. Fait les tests avant chaque émission.</p></div>
-      <div class="card"><p class="k">Communauté</p><h3>Responsable réseaux</h3><p>Visuels d'annonce, lecture des commentaires en direct, extraits courts après l'émission.</p></div>
+      <div class="card"><p class="k">Tournage</p><h3>Réalisateur</h3><p>Installe et surveille le son, les caméras et les lumières pendant l'enregistrement.</p></div>
+      <div class="card"><p class="k">Après le tournage</p><h3>Monteur et réseaux</h3><p>Monte l'épisode, prépare le visuel et les extraits courts, publie et répond aux commentaires.</p></div>
     </div>
   </section>
 
@@ -262,43 +288,38 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
     <div class="head">
       <p class="eyebrow">Direction artistique</p>
       <h2>L'ambiance : une lumière dans la nuit</h2>
-      <p class="prose">Le plateau doit ressembler à un lieu de rencontre avec Dieu, pas à un studio de télévision. On cherche l'intimité, le calme et la chaleur : un décor sombre et profond, une lumière douce et chaude sur les visages, quelques points de lumière orangée en arrière-plan.</p>
+      <p class="prose">Le plateau doit ressembler à un lieu de rencontre avec Dieu, pas à un studio de télévision. On cherche l'intimité, le calme et la chaleur : un décor sombre et profond, une lumière douce et chaude sur les visages, quelques points de lumière orangée en arrière-plan et le logo de l'émission, lumineux, au centre du décor.</p>
     </div>
     <figure class="fig">
       <div class="scroll">
         <svg viewBox="0 0 900 420" role="img" aria-label="Illustration du plateau vu de face : fond bleu nuit, deux fauteuils, une table basse, un clavier et des points lumineux">
           <rect width="900" height="420" rx="12" fill="#0B0733"/>
-          <!-- fond : panneaux verticaux -->
           <g fill="#14104A">
             <rect x="40" y="30" width="110" height="270" rx="4"/><rect x="170" y="30" width="110" height="270" rx="4"/>
             <rect x="620" y="30" width="110" height="270" rx="4"/><rect x="750" y="30" width="110" height="270" rx="4"/>
           </g>
-          <!-- logo lumineux central -->
-          <g transform="translate(450 120)">
-            <circle r="95" fill="#FF5A36" opacity=".12"/>
-            <path d="M0 58 C -60 20, -82 -20, -62 -46 C -42 -70, -10 -62, 0 -38 C 10 -62, 42 -70, 62 -46 C 82 -20, 60 20, 0 58 Z" fill="none" stroke="#FF8A6B" stroke-width="4"/>
-            <text y="92" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="800" font-size="15" fill="#F4F2FF" letter-spacing="3">CŒUR D'ADORATEUR</text>
+          <g transform="translate(450 105)">
+            <circle r="100" fill="#FF5A36" opacity=".10"/>
+            <rect x="-85" y="-70" width="170" height="130" rx="10" fill="none" stroke="#FF8A6B" stroke-width="3" stroke-dasharray="10 8"/>
+            <text y="-6" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="800" font-size="16" fill="#F4F2FF" letter-spacing="2">LOGO</text>
+            <text y="18" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#FFB547">lumineux · à créer</text>
+            <text y="82" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="800" font-size="15" fill="#F4F2FF" letter-spacing="3">CŒUR D'ADORATEUR</text>
           </g>
-          <!-- guirlande de points chauds -->
           <g fill="#FFB547">
             <circle cx="60" cy="56" r="3"/><circle cx="95" cy="62" r="3"/><circle cx="130" cy="58" r="3"/><circle cx="190" cy="64" r="3"/><circle cx="225" cy="58" r="3"/><circle cx="262" cy="63" r="3"/>
             <circle cx="640" cy="60" r="3"/><circle cx="676" cy="56" r="3"/><circle cx="712" cy="62" r="3"/><circle cx="770" cy="58" r="3"/><circle cx="806" cy="64" r="3"/><circle cx="842" cy="58" r="3"/>
           </g>
-          <!-- plantes -->
           <g fill="#1F6B4A">
             <ellipse cx="80" cy="270" rx="18" ry="46" transform="rotate(-18 80 270)"/><ellipse cx="104" cy="262" rx="18" ry="52"/><ellipse cx="128" cy="270" rx="18" ry="46" transform="rotate(18 128 270)"/>
           </g>
           <rect x="84" y="300" width="40" height="40" rx="4" fill="#6B3E26"/>
-          <!-- sol -->
           <rect x="0" y="340" width="900" height="80" fill="#14104A"/>
           <ellipse cx="450" cy="372" rx="320" ry="26" fill="#3B2BE6" opacity=".35"/>
-          <!-- fauteuils -->
           <g fill="#3B2BE6">
             <rect x="250" y="250" width="120" height="70" rx="16"/><rect x="250" y="210" width="26" height="100" rx="12"/>
             <rect x="530" y="250" width="120" height="70" rx="16"/><rect x="624" y="210" width="26" height="100" rx="12"/>
           </g>
           <g fill="#2A1FB8"><rect x="262" y="320" width="8" height="30"/><rect x="352" y="320" width="8" height="30"/><rect x="542" y="320" width="8" height="30"/><rect x="632" y="320" width="8" height="30"/></g>
-          <!-- table basse + micros -->
           <rect x="400" y="300" width="100" height="14" rx="4" fill="#6B3E26"/>
           <rect x="420" y="314" width="8" height="36" fill="#6B3E26"/><rect x="472" y="314" width="8" height="36" fill="#6B3E26"/>
           <circle cx="450" cy="290" r="9" fill="#FFB547"/>
@@ -306,11 +327,9 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
             <path d="M372 270 L 395 238 L 382 220"/><path d="M528 270 L 505 238 L 518 220"/>
           </g>
           <g fill="#C9C6E8"><rect x="372" y="200" width="16" height="26" rx="8"/><rect x="512" y="200" width="16" height="26" rx="8"/></g>
-          <!-- clavier sur support -->
           <rect x="690" y="270" width="150" height="16" rx="3" fill="#F4F2FF"/>
           <g fill="#14122B"><rect x="700" y="270" width="4" height="10"/><rect x="712" y="270" width="4" height="10"/><rect x="728" y="270" width="4" height="10"/><rect x="740" y="270" width="4" height="10"/><rect x="752" y="270" width="4" height="10"/><rect x="768" y="270" width="4" height="10"/><rect x="780" y="270" width="4" height="10"/><rect x="796" y="270" width="4" height="10"/><rect x="808" y="270" width="4" height="10"/><rect x="820" y="270" width="4" height="10"/></g>
           <g stroke="#6F64F2" stroke-width="5"><line x1="720" y1="288" x2="805" y2="345"/><line x1="805" y1="288" x2="720" y2="345"/></g>
-          <!-- faisceau de lumière chaude -->
           <polygon points="250,0 330,0 470,300 360,300" fill="#FFB547" opacity=".06"/>
           <polygon points="570,0 650,0 540,300 430,300" fill="#FFB547" opacity=".06"/>
           <g font-family="IBM Plex Mono, monospace" font-size="12" fill="#A9A2FF">
@@ -318,7 +337,7 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
           </g>
         </svg>
       </div>
-      <figcaption>Illustration d'intention : le plateau vu par la caméra principale. Le décor réel s'adapte au lieu choisi.</figcaption>
+      <figcaption>Illustration d'intention : le plateau vu par la caméra principale. L'emplacement du logo est indiqué en pointillés : le logo de l'émission n'est pas encore créé. Le décor réel s'adapte au lieu choisi.</figcaption>
     </figure>
 
     <div class="swatches" style="margin-top:26px">
@@ -330,183 +349,286 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
 
     <div class="cols" style="margin-top:26px">
       <div class="card"><p class="k">Lumière</p><h3>Douce et chaude</h3><p>Visages éclairés en lumière chaude (environ 3 200 K), diffusée par des boîtes à lumière. Pas de néon blanc au plafond.</p></div>
-      <div class="card"><p class="k">Son</p><h3>Le silence compte</h3><p>Pièce calme, sans écho : rideaux, tapis, coussins. Climatisation et ventilateurs coupés pendant l'enregistrement.</p></div>
-      <div class="card"><p class="k">Décor</p><h3>Sobre et vivant</h3><p>Plantes, bois, un instrument visible et le logo lumineux de l'émission. Rien qui détourne le regard des personnes.</p></div>
+      <div class="card"><p class="k">Son</p><h3>Le silence compte</h3><p>Pièce calme, sans écho : rideaux, tapis, coussins. Climatisation et ventilateurs coupés pendant les prises.</p></div>
+      <div class="card"><p class="k">Décor</p><h3>Sobre et vivant</h3><p>Plantes, bois, un instrument visible et le logo lumineux de l'émission (le logo reste à créer). Rien qui détourne le regard des personnes.</p></div>
       <div class="card"><p class="k">Tenue</p><h3>Couleurs unies</h3><p>Éviter le blanc pur, le noir pur et les petits motifs, qui passent mal à l'image. Préférer des tons unis.</p></div>
     </div>
   </section>
 
-  <section id="plateau">
+  <section id="commun">
     <div class="head">
-      <p class="eyebrow">Installation technique</p>
-      <h2>Le plan du plateau</h2>
-      <p class="prose">Vu de dessus. Trois caméras : une large qui montre tout le plateau, et un plan serré sur chaque personne. Les lumières principales viennent de face, en biais ; une lumière arrière détache les personnes du fond sombre.</p>
-    </div>
-    <figure class="fig">
-      <div class="scroll">
-        <svg viewBox="0 0 900 470" role="img" aria-label="Plan vu de dessus : fauteuils, table, trois caméras, trois lumières et clavier">
-          <rect x="1" y="1" width="898" height="468" rx="12" fill="var(--surface)" stroke="var(--line)"/>
-          <!-- mur du fond -->
-          <rect x="60" y="30" width="780" height="20" fill="var(--night)"/>
-          <text x="450" y="44" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#F4F2FF">MUR DU FOND · DÉCOR + LOGO LUMINEUX</text>
-          <!-- personnes -->
-          <g>
-            <rect x="290" y="120" width="80" height="70" rx="14" fill="var(--blue)"/>
-            <rect x="530" y="120" width="80" height="70" rx="14" fill="var(--blue)"/>
-            <rect x="410" y="150" width="80" height="44" rx="6" fill="#6B3E26"/>
-            <circle cx="330" cy="155" r="16" fill="#FF8A6B"/><circle cx="570" cy="155" r="16" fill="#FF8A6B"/>
-          </g>
-          <g font-family="Montserrat, sans-serif" font-size="12" font-weight="700" fill="var(--fg)" text-anchor="middle">
-            <text x="330" y="108">Animateur</text><text x="570" y="108">Invité</text><text x="450" y="214">Table basse</text>
-          </g>
-          <!-- micros -->
-          <g fill="var(--fg)"><circle cx="365" cy="160" r="6"/><circle cx="535" cy="160" r="6"/></g>
-          <!-- clavier -->
-          <rect x="700" y="120" width="110" height="26" rx="4" fill="var(--muted)"/>
-          <text x="755" y="164" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="12" font-weight="700" fill="var(--fg)">Clavier</text>
-          <!-- lumière arrière -->
-          <g>
-            <circle cx="450" cy="78" r="14" fill="#FFB547"/>
-            <text x="472" y="82" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">L3 · contre-jour</text>
-          </g>
-          <!-- lumières face -->
-          <g fill="#FFB547">
-            <rect x="140" y="300" width="40" height="28" rx="4" transform="rotate(-35 160 314)"/>
-            <rect x="720" y="300" width="40" height="28" rx="4" transform="rotate(35 740 314)"/>
-          </g>
-          <g fill="#FFB547" opacity=".18">
-            <polygon points="175,300 300,150 360,190 190,330"/>
-            <polygon points="725,300 600,150 540,190 710,330"/>
-          </g>
-          <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">
-            <text x="96" y="360">L1 · lumière principale</text>
-            <text x="690" y="360">L2 · lumière principale</text>
-          </g>
-          <!-- caméras -->
-          <g fill="var(--orange)">
-            <rect x="430" y="390" width="40" height="26" rx="4"/><polygon points="438,390 462,390 470,372 430,372"/>
-            <rect x="590" y="330" width="40" height="26" rx="4" transform="rotate(-30 610 343)"/>
-            <rect x="270" y="330" width="40" height="26" rx="4" transform="rotate(30 290 343)"/>
-          </g>
-          <g stroke="var(--orange)" stroke-dasharray="5 5" stroke-width="1.5" fill="none" opacity=".8">
-            <line x1="450" y1="372" x2="290" y2="125"/><line x1="450" y1="372" x2="610" y2="125"/>
-            <line x1="610" y1="335" x2="345" y2="165"/>
-            <line x1="290" y1="335" x2="555" y2="165"/>
-          </g>
-          <g font-family="Montserrat, sans-serif" font-size="12" font-weight="700" fill="var(--fg)">
-            <text x="450" y="440" text-anchor="middle">Cam A · plan large</text>
-            <text x="636" y="390">Cam B · serré animateur</text>
-            <text x="140" y="390">Cam C · serré invité</text>
-          </g>
-        </svg>
-      </div>
-      <figcaption>Chaque caméra serrée filme la personne d'en face, légèrement de biais : les regards se croisent naturellement. Avec un seul invité de plus, ajouter un fauteuil à côté de l'invité et élargir le plan A.</figcaption>
-    </figure>
-  </section>
-
-  <section id="materiel">
-    <div class="head">
-      <p class="eyebrow">Ce qu'il faut acheter ou réunir</p>
-      <h2>La liste du matériel</h2>
-      <p class="prose">Le matériel est classé par priorité. On peut lancer l'émission avec le niveau <span class="tier t1">Essentiel</span>, puis monter en gamme avec le temps. Le son passe avant l'image : le public pardonne une image moyenne, pas un son qui grésille.</p>
+      <p class="eyebrow">Deux plans de tournage au choix</p>
+      <h2>Le matériel commun</h2>
+      <p class="prose">Deux plans sont proposés pour filmer : <b>Plan 1, uniquement avec des smartphones</b>, ou <b>Plan 2, uniquement avec des caméras</b>. Le son, la lumière, le décor et le montage sont les mêmes dans les deux cas. Le son passe avant l'image : le public pardonne une image moyenne, pas un son qui grésille.</p>
     </div>
     <div class="table">
       <table>
         <thead><tr><th>Matériel</th><th>Quantité</th><th>Exemple de modèle</th><th>Priorité</th><th>Prix indicatif / unité</th></tr></thead>
         <tbody>
           <tr class="cat"><td colspan="5">Son</td></tr>
-          <tr><td>Micro dynamique (capte la voix, peu le bruit de la pièce)</td><td class="num">3</td><td>Rode PodMic, Shure SM58</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 100 € · 65 000 F</td></tr>
-          <tr><td>Enregistreur / table de mixage podcast</td><td class="num">1</td><td>Zoom PodTrak P4, Rodecaster Duo</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 200 à 500 €</td></tr>
+          <tr><td>Micro dynamique (capte la voix, peu le bruit de la pièce)</td><td class="num">3</td><td>Rode PodMic, Shure SM58</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 100 €</td></tr>
+          <tr><td>Enregistreur multipiste podcast (une piste par micro)</td><td class="num">1</td><td>Zoom PodTrak P4, Rodecaster Duo</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 200 à 500 €</td></tr>
           <tr><td>Bras ou pieds de micro</td><td class="num">3</td><td>Bras articulé de table</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 30 €</td></tr>
           <tr><td>Câbles XLR (3 à 5 m)</td><td class="num">5</td><td>Toute marque solide</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 15 €</td></tr>
-          <tr><td>Casque fermé pour le réalisateur</td><td class="num">1 à 2</td><td>Audio-Technica ATH-M40x</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 100 €</td></tr>
-          <tr><td>Micro ou boîte de direct pour l'instrument</td><td class="num">1</td><td>DI box / sortie ligne du clavier</td><td><span class="tier t2">Confort</span></td><td class="num">≈ 40 €</td></tr>
-          <tr class="cat"><td colspan="5">Image</td></tr>
-          <tr><td>Caméras (ou smartphones récents en 1080p)</td><td class="num">2 à 3</td><td>Smartphones récents, puis caméras hybrides</td><td><span class="tier t1">Essentiel</span></td><td class="num">existant ou ≈ 600 €+</td></tr>
-          <tr><td>Trépieds avec support smartphone</td><td class="num">3</td><td>Trépied photo standard</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 30 €</td></tr>
-          <tr><td>Mélangeur vidéo pour passer d'une caméra à l'autre en direct</td><td class="num">1</td><td>Blackmagic ATEM Mini</td><td><span class="tier t2">Confort</span></td><td class="num">≈ 300 €</td></tr>
+          <tr><td>Casque fermé pour le réalisateur</td><td class="num">1</td><td>Audio-Technica ATH-M40x</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 100 €</td></tr>
+          <tr><td>Boîte de direct pour l'instrument</td><td class="num">1</td><td>DI box, ou sortie ligne du clavier</td><td><span class="tier t2">Confort</span></td><td class="num">≈ 40 €</td></tr>
+          <tr><td>Clap ou application de clap (synchroniser son et image)</td><td class="num">1</td><td>Clap de cinéma ou simple claquement de mains</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 15 €</td></tr>
           <tr class="cat"><td colspan="5">Lumière</td></tr>
           <tr><td>Panneaux LED bicolores avec boîte à lumière (L1, L2)</td><td class="num">2</td><td>Panneau LED + softbox</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 80 €</td></tr>
           <tr><td>Lumière de contre-jour (L3)</td><td class="num">1</td><td>Petit projecteur LED</td><td><span class="tier t2">Confort</span></td><td class="num">≈ 50 €</td></tr>
           <tr><td>Lumières d'ambiance : guirlandes, bougies LED, lampe de table</td><td class="num">lot</td><td>LED chaudes, pas de vraies flammes</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 40 €</td></tr>
-          <tr><td>Logo lumineux Cœur d'Adorateur (néon LED sur mesure)</td><td class="num">1</td><td>Fabrication locale</td><td><span class="tier t3">Pro</span></td><td class="num">à faire chiffrer</td></tr>
+          <tr><td>Logo lumineux Cœur d'Adorateur (néon LED sur mesure)</td><td class="num">1</td><td>Fabrication locale, une fois le logo créé</td><td><span class="tier t3">Pro</span></td><td class="num">à faire chiffrer</td></tr>
           <tr class="cat"><td colspan="5">Décor et acoustique</td></tr>
           <tr><td>Deux fauteuils confortables + une table basse</td><td class="num">1 lot</td><td>Mobilier existant ou loué</td><td><span class="tier t1">Essentiel</span></td><td class="num">variable</td></tr>
           <tr><td>Rideaux épais, tapis, coussins (contre l'écho)</td><td class="num">1 lot</td><td>Textile bleu nuit de préférence</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 80 €</td></tr>
           <tr><td>Plantes et éléments en bois</td><td class="num">2 à 4</td><td>Plantes vertes</td><td><span class="tier t2">Confort</span></td><td class="num">≈ 40 €</td></tr>
           <tr><td>Panneaux acoustiques muraux</td><td class="num">6 à 12</td><td>Mousse ou laine de roche habillée</td><td><span class="tier t3">Pro</span></td><td class="num">≈ 15 €</td></tr>
-          <tr class="cat"><td colspan="5">Diffusion</td></tr>
-          <tr><td>Ordinateur portable pour le direct</td><td class="num">1</td><td>Avec logiciel OBS Studio (gratuit)</td><td><span class="tier t1">Essentiel</span></td><td class="num">existant</td></tr>
-          <tr><td>Connexion internet stable, testée en envoi (upload)</td><td class="num">1</td><td>Câble ou box dédiée, plus un forfait de secours</td><td><span class="tier t1">Essentiel</span></td><td class="num">abonnement</td></tr>
-          <tr><td>Disque dur externe pour archiver les émissions</td><td class="num">1</td><td>1 à 2 To</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 70 €</td></tr>
-          <tr><td>Multiprise et onduleur (contre les coupures)</td><td class="num">1</td><td>Onduleur 600 à 1 000 VA</td><td><span class="tier t2">Confort</span></td><td class="num">≈ 100 €</td></tr>
+          <tr class="cat"><td colspan="5">Montage et archivage</td></tr>
+          <tr><td>Ordinateur capable de monter de la vidéo</td><td class="num">1</td><td>16 Go de mémoire vive conseillés</td><td><span class="tier t1">Essentiel</span></td><td class="num">existant</td></tr>
+          <tr><td>Logiciel de montage</td><td class="num">1</td><td>DaVinci Resolve (version gratuite)</td><td><span class="tier t1">Essentiel</span></td><td class="num">gratuit</td></tr>
+          <tr><td>Disques durs externes (un de travail, un de sauvegarde)</td><td class="num">2</td><td>1 à 2 To</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 70 €</td></tr>
+          <tr><td>Multiprise et onduleur (contre les coupures de courant)</td><td class="num">1</td><td>Onduleur 600 à 1 000 VA</td><td><span class="tier t2">Confort</span></td><td class="num">≈ 100 €</td></tr>
         </tbody>
       </table>
     </div>
     <div class="cols" style="margin-top:22px">
-      <div class="card"><p class="k">Niveau Essentiel</p><h3>≈ 1 000 à 1 500 €</h3><p>Avec des smartphones déjà disponibles. Soit environ 650 000 à 1 000 000 FCFA.</p></div>
-      <div class="card"><p class="k">Avec Confort</p><h3>≈ 2 000 à 3 000 €</h3><p>Ajoute le mélangeur vidéo, le contre-jour et l'onduleur : une vraie réalisation multi-caméras.</p></div>
+      <div class="card"><p class="k">Sous-total commun · Essentiel</p><h3>≈ 1 100 à 1 400 €</h3><p>Soit environ 720 000 à 920 000 FCFA, sans le mobilier ni l'ordinateur.</p></div>
+      <div class="card"><p class="k">Avec Confort</p><h3>≈ 1 350 à 1 650 €</h3><p>Ajoute le contre-jour, la boîte de direct, les plantes et l'onduleur.</p></div>
     </div>
-    <p class="note" style="margin-top:16px">Les prix sont des ordres de grandeur constatés en Europe, convertis au taux fixe 1 € = 655,957 FCFA. Ils sont à vérifier chez les revendeurs locaux avant tout achat. Les modèles cités sont des exemples, pas des obligations.</p>
+  </section>
+
+  <section id="plan-smartphone">
+    <div class="head">
+      <span class="plan-tag">Plan 1</span>
+      <h2>Tourner uniquement avec des smartphones</h2>
+      <p class="prose">Le plan le plus accessible : on utilise des téléphones récents, souvent déjà disponibles dans l'équipe. Les smartphones n'ont pas de vrai zoom optique sur tous les modèles, donc on les place <b>près</b> des personnes.</p>
+    </div>
+    <figure class="fig">
+      <div class="scroll">
+        <svg viewBox="0 0 900 450" role="img" aria-label="Plan 1 vu de dessus : trois smartphones proches des fauteuils">
+          <rect x="1" y="1" width="898" height="448" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+          <rect x="60" y="30" width="780" height="20" fill="#0B0733"/>
+          <text x="450" y="44" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#F4F2FF">MUR DU FOND · DÉCOR + LOGO LUMINEUX</text>
+          <rect x="290" y="120" width="80" height="70" rx="14" fill="#1900CF"/>
+          <rect x="530" y="120" width="80" height="70" rx="14" fill="#1900CF"/>
+          <rect x="410" y="150" width="80" height="44" rx="6" fill="#6B3E26"/>
+          <circle cx="330" cy="155" r="16" fill="#FF8A6B"/><circle cx="570" cy="155" r="16" fill="#FF8A6B"/>
+          <g fill="var(--fg)"><circle cx="365" cy="160" r="6"/><circle cx="535" cy="160" r="6"/></g>
+          <rect x="700" y="120" width="110" height="26" rx="4" fill="#5D5B76"/>
+          <rect x="428" y="200" width="44" height="22" rx="4" fill="#5D5B76"/>
+          <g font-family="Montserrat, sans-serif" font-size="12" font-weight="700" fill="var(--fg)" text-anchor="middle">
+            <text x="330" y="108">Animateur</text><text x="570" y="108">Invité</text><text x="755" y="164">Clavier</text><text x="450" y="238">Enregistreur</text>
+          </g>
+          <circle cx="450" cy="78" r="14" fill="#FFB547"/>
+          <text x="472" y="82" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">L3 · contre-jour</text>
+          <g fill="#FFB547">
+            <rect x="140" y="290" width="40" height="28" rx="4" transform="rotate(-35 160 304)"/>
+            <rect x="720" y="290" width="40" height="28" rx="4" transform="rotate(35 740 304)"/>
+          </g>
+          <g fill="#FFB547" opacity=".18">
+            <polygon points="175,290 300,150 360,190 190,320"/>
+            <polygon points="725,290 600,150 540,190 710,320"/>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">
+            <text x="96" y="350">L1 · lumière principale</text>
+            <text x="690" y="350">L2 · lumière principale</text>
+          </g>
+          <!-- smartphones -->
+          <g fill="#FF5A36">
+            <rect x="438" y="300" width="24" height="40" rx="5"/>
+            <rect x="602" y="250" width="24" height="40" rx="5" transform="rotate(-30 614 270)"/>
+            <rect x="274" y="250" width="24" height="40" rx="5" transform="rotate(30 286 270)"/>
+          </g>
+          <g stroke="#FF5A36" stroke-dasharray="5 5" stroke-width="1.5" fill="none" opacity=".8">
+            <line x1="450" y1="300" x2="290" y2="125"/><line x1="450" y1="300" x2="610" y2="125"/>
+            <line x1="610" y1="258" x2="345" y2="165"/>
+            <line x1="290" y1="258" x2="555" y2="165"/>
+          </g>
+          <g font-family="Montserrat, sans-serif" font-size="12" font-weight="700" fill="var(--fg)">
+            <text x="450" y="362" text-anchor="middle">Tél. A · plan large (grand-angle)</text>
+            <text x="636" y="300">Tél. B · serré animateur</text>
+            <text x="120" y="300">Tél. C · serré invité</text>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">
+            <line x1="40" y1="410" x2="860" y2="410" stroke="var(--line)"/>
+            <text x="450" y="432" text-anchor="middle">Distance téléphones – personnes : environ 1,2 à 2 m</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>Les téléphones filment l'image ; le son est enregistré à part par l'enregistrement multipiste, puis recalé au montage grâce au clap.</figcaption>
+    </figure>
+
+    <div class="sub">
+      <h3>Matériel spécifique au Plan 1</h3>
+      <div class="table">
+        <table>
+          <thead><tr><th>Matériel</th><th>Quantité</th><th>Détail</th><th>Priorité</th><th>Prix indicatif / unité</th></tr></thead>
+          <tbody>
+            <tr><td>Smartphones récents filmant en 1080p ou 4K</td><td class="num">3</td><td>Idéalement de la même marque, pour des couleurs homogènes</td><td><span class="tier t1">Essentiel</span></td><td class="num">existants</td></tr>
+            <tr><td>Trépieds avec support smartphone</td><td class="num">3</td><td>Hauteur réglable jusqu'au niveau des yeux</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 30 €</td></tr>
+            <tr><td>Câbles de charge longs ou batteries externes</td><td class="num">3</td><td>Un téléphone filme 1 h 30 sans s'éteindre</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 25 €</td></tr>
+            <tr><td>Application de tournage manuelle</td><td class="num">3</td><td>Blackmagic Camera (gratuite) : bloque mise au point, exposition et couleur</td><td><span class="tier t1">Essentiel</span></td><td class="num">gratuit</td></tr>
+            <tr><td>Petits micros-cravates sans fil</td><td class="num">2</td><td>Son de secours enregistré dans le téléphone</td><td><span class="tier t2">Confort</span></td><td class="num">≈ 80 € la paire</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="clean">
+        <li>Mettre chaque téléphone en <b>mode avion</b> et « Ne pas déranger » : un appel coupe l'enregistrement.</li>
+        <li>Libérer au moins <b>30 Go</b> d'espace par téléphone avant chaque tournage.</li>
+        <li>Filmer à l'horizontale, avec l'objectif principal (pas la caméra selfie), et nettoyer les objectifs.</li>
+        <li>Régler les trois téléphones sur la même résolution et le même nombre d'images par seconde (par exemple 1080p, 25 ou 30 i/s).</li>
+      </ul>
+      <div class="cols">
+        <div class="card hi"><p class="k">Budget Plan 1</p><h3>≈ 1 300 à 1 700 €</h3><p>Matériel commun + équipement smartphone, avec des téléphones déjà disponibles. Soit environ 850 000 à 1 100 000 FCFA.</p></div>
+        <div class="card"><p class="k">À retenir</p><h3>Points forts et limites</h3><p>Rapide à lancer et peu coûteux. Image moins douce en faible lumière et pas de flou d'arrière-plan naturel : la lumière doit être soignée.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="plan-camera">
+    <div class="head">
+      <span class="plan-tag">Plan 2</span>
+      <h2>Tourner uniquement avec des caméras</h2>
+      <p class="prose">Le plan pour une image de qualité professionnelle : des appareils hybrides avec objectifs interchangeables. Les objectifs permettent de se placer <b>plus loin</b>, ce qui laisse de la place sur le plateau et donne un arrière-plan flou et doux.</p>
+    </div>
+    <figure class="fig">
+      <div class="scroll">
+        <svg viewBox="0 0 900 470" role="img" aria-label="Plan 2 vu de dessus : trois caméras placées plus loin des fauteuils">
+          <rect x="1" y="1" width="898" height="468" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+          <rect x="60" y="30" width="780" height="20" fill="#0B0733"/>
+          <text x="450" y="44" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#F4F2FF">MUR DU FOND · DÉCOR + LOGO LUMINEUX</text>
+          <rect x="290" y="100" width="80" height="70" rx="14" fill="#1900CF"/>
+          <rect x="530" y="100" width="80" height="70" rx="14" fill="#1900CF"/>
+          <rect x="410" y="130" width="80" height="44" rx="6" fill="#6B3E26"/>
+          <circle cx="330" cy="135" r="16" fill="#FF8A6B"/><circle cx="570" cy="135" r="16" fill="#FF8A6B"/>
+          <g fill="var(--fg)"><circle cx="365" cy="140" r="6"/><circle cx="535" cy="140" r="6"/></g>
+          <rect x="700" y="100" width="110" height="26" rx="4" fill="#5D5B76"/>
+          <rect x="428" y="182" width="44" height="22" rx="4" fill="#5D5B76"/>
+          <g font-family="Montserrat, sans-serif" font-size="12" font-weight="700" fill="var(--fg)" text-anchor="middle">
+            <text x="330" y="90">Animateur</text><text x="570" y="90">Invité</text><text x="755" y="144">Clavier</text><text x="450" y="220">Enregistreur</text>
+          </g>
+          <circle cx="450" cy="70" r="12" fill="#FFB547"/>
+          <text x="470" y="74" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">L3 · contre-jour</text>
+          <g fill="#FFB547">
+            <rect x="140" y="250" width="40" height="28" rx="4" transform="rotate(-35 160 264)"/>
+            <rect x="720" y="250" width="40" height="28" rx="4" transform="rotate(35 740 264)"/>
+          </g>
+          <g fill="#FFB547" opacity=".18">
+            <polygon points="175,250 300,130 360,170 190,280"/>
+            <polygon points="725,250 600,130 540,170 710,280"/>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">
+            <text x="96" y="310">L1 · lumière principale</text>
+            <text x="690" y="310">L2 · lumière principale</text>
+          </g>
+          <!-- caméras -->
+          <g fill="#FF5A36">
+            <rect x="430" y="380" width="40" height="26" rx="4"/><polygon points="438,380 462,380 470,362 430,362"/>
+            <g transform="rotate(-30 680 360)"><rect x="660" y="350" width="40" height="26" rx="4"/><polygon points="668,350 692,350 700,332 660,332"/></g>
+            <g transform="rotate(30 220 360)"><rect x="200" y="350" width="40" height="26" rx="4"/><polygon points="208,350 232,350 240,332 200,332"/></g>
+          </g>
+          <g stroke="#FF5A36" stroke-dasharray="5 5" stroke-width="1.5" fill="none" opacity=".8">
+            <line x1="450" y1="362" x2="290" y2="105"/><line x1="450" y1="362" x2="610" y2="105"/>
+            <line x1="672" y1="340" x2="345" y2="145"/>
+            <line x1="228" y1="340" x2="555" y2="145"/>
+          </g>
+          <g font-family="Montserrat, sans-serif" font-size="12" font-weight="700" fill="var(--fg)">
+            <text x="450" y="426" text-anchor="middle">Cam A · plan large (objectif 24 mm)</text>
+            <text x="700" y="410">Cam B · serré animateur (50–85 mm)</text>
+            <text x="30" y="410">Cam C · serré invité (50–85 mm)</text>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">
+            <line x1="40" y1="440" x2="860" y2="440" stroke="var(--line)"/>
+            <text x="450" y="460" text-anchor="middle">Distance caméras – personnes : environ 2,5 à 3,5 m</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>Les distances d'objectif (24 mm, 50–85 mm) sont données en équivalent plein format. Le son est enregistré à part, comme dans le Plan 1.</figcaption>
+    </figure>
+
+    <div class="sub">
+      <h3>Matériel spécifique au Plan 2</h3>
+      <div class="table">
+        <table>
+          <thead><tr><th>Matériel</th><th>Quantité</th><th>Détail</th><th>Priorité</th><th>Prix indicatif / unité</th></tr></thead>
+          <tbody>
+            <tr><td>Appareils hybrides filmant en 4K, avec objectif</td><td class="num">3</td><td>Exemples : Sony ZV-E10 II, Canon EOS R50, Panasonic Lumix G9 II. Même marque conseillée.</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 700 à 1 200 €</td></tr>
+            <tr><td>Objectifs adaptés : un grand-angle, deux standards ou courts téléobjectifs</td><td class="num">3</td><td>Lumineux (f/1.8 à f/2.8) pour la faible lumière</td><td><span class="tier t2">Confort</span></td><td class="num">≈ 250 à 500 €</td></tr>
+            <tr><td>Trépieds vidéo à rotule fluide</td><td class="num">3</td><td>Stables, pour éviter les vibrations</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 80 €</td></tr>
+            <tr><td>Alimentations secteur (batteries factices)</td><td class="num">3</td><td>Une batterie ne tient pas 1 h 30 de tournage</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 40 €</td></tr>
+            <tr><td>Cartes mémoire rapides (V30 ou plus, 128 Go)</td><td class="num">6</td><td>Deux par caméra, une en réserve</td><td><span class="tier t1">Essentiel</span></td><td class="num">≈ 25 €</td></tr>
+            <tr><td>Petit écran de contrôle</td><td class="num">1</td><td>Pour vérifier le cadre et la netteté du plan large</td><td><span class="tier t3">Pro</span></td><td class="num">≈ 200 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="clean">
+        <li>Avant l'achat, vérifier que l'appareil <b>n'a pas de limite de durée d'enregistrement</b> et ne surchauffe pas sur une longue prise.</li>
+        <li>Régler les trois caméras de la même façon : résolution, images par seconde, balance des blancs fixe (environ 3 200 K).</li>
+        <li>Faire un clap au début de chaque prise, visible par les trois caméras.</li>
+      </ul>
+      <div class="cols">
+        <div class="card hi"><p class="k">Budget Plan 2</p><h3>≈ 3 900 à 6 000 €</h3><p>Matériel commun + trois appareils et leurs accessoires. Soit environ 2,6 à 3,9 millions de FCFA.</p></div>
+        <div class="card"><p class="k">À retenir</p><h3>Points forts et limites</h3><p>Image nettement plus belle, arrière-plan flou, meilleure tenue en faible lumière. Coût plus élevé et réglages plus techniques : il faut un réalisateur formé.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="comparaison">
+    <div class="head">
+      <p class="eyebrow">Aide à la décision</p>
+      <h2>Comparer les deux plans</h2>
+    </div>
+    <div class="table">
+      <table>
+        <thead><tr><th>Critère</th><th>Plan 1 · Smartphones</th><th>Plan 2 · Caméras</th></tr></thead>
+        <tbody>
+          <tr><td><b>Budget total indicatif</b></td><td class="num">≈ 1 300 à 1 700 €</td><td class="num">≈ 3 900 à 6 000 €</td></tr>
+          <tr><td><b>Qualité d'image</b></td><td>Bonne si la lumière est soignée</td><td>Très bonne, rendu cinéma</td></tr>
+          <tr><td><b>Faible lumière (ambiance de nuit)</b></td><td>Image plus bruitée</td><td>Image propre</td></tr>
+          <tr><td><b>Place nécessaire</b></td><td>Pièce plus petite possible</td><td>Pièce plus profonde (3 à 4 m devant les fauteuils)</td></tr>
+          <tr><td><b>Compétences</b></td><td>Accessible à un débutant motivé</td><td>Demande un réalisateur formé</td></tr>
+          <tr><td><b>Délai de lancement</b></td><td>Immédiat</td><td>Après achat et prise en main</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:16px">Le son, la lumière et le décor étant communs, on peut commencer avec le Plan 1 et passer au Plan 2 plus tard sans rien racheter d'autre que les caméras.</p>
+    <p class="note" style="margin-top:8px">Les prix sont des ordres de grandeur, convertis au taux fixe 1 € = 655,957 FCFA. Ils sont à vérifier chez les revendeurs locaux avant tout achat. Les modèles cités sont des exemples, pas des obligations.</p>
   </section>
 
   <section id="cycle">
     <div class="head">
       <p class="eyebrow">Organisation</p>
       <h2>Le cycle d'un mois</h2>
-      <p class="prose">Une émission par mois, c'est peu pour les réseaux sociaux : entre deux directs, le public oublie. Chaque mois suit donc un cycle de quatre semaines, et l'émission continue de vivre en extraits courts après sa diffusion.</p>
+      <p class="prose">Une émission préenregistrée se prépare en quatre temps. Chaque mois suit le même cycle, pour que l'épisode soit prêt bien avant sa date de publication.</p>
     </div>
     <figure class="fig">
       <div class="scroll">
-        <svg viewBox="0 0 900 230" role="img" aria-label="Cycle de quatre semaines : préparer, annoncer, diffuser, prolonger">
+        <svg viewBox="0 0 900 200" role="img" aria-label="Cycle de quatre semaines : préparer, tourner, monter, publier">
           <g font-family="Montserrat, sans-serif">
-            <g>
-              <rect x="10" y="40" width="200" height="140" rx="12" fill="var(--surface)" stroke="var(--line)"/>
-              <rect x="235" y="40" width="200" height="140" rx="12" fill="var(--surface)" stroke="var(--line)"/>
-              <rect x="460" y="40" width="200" height="140" rx="12" fill="var(--blue)"/>
-              <rect x="685" y="40" width="200" height="140" rx="12" fill="var(--surface)" stroke="var(--line)"/>
-            </g>
-            <g fill="var(--orange)" font-family="IBM Plex Mono, monospace" font-size="12">
-              <text x="30" y="70">SEMAINE 1</text><text x="255" y="70">SEMAINE 2</text><text x="480" y="70" fill="#FFB547">SEMAINE 3</text><text x="705" y="70">SEMAINE 4</text>
+            <rect x="10" y="30" width="200" height="140" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+            <rect x="235" y="30" width="200" height="140" rx="12" fill="#1900CF"/>
+            <rect x="460" y="30" width="200" height="140" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+            <rect x="685" y="30" width="200" height="140" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+            <g fill="#FF5A36" font-family="IBM Plex Mono, monospace" font-size="12">
+              <text x="30" y="60">SEMAINE 1</text><text x="255" y="60" fill="#FFB547">SEMAINE 2</text><text x="480" y="60">SEMAINE 3</text><text x="705" y="60">SEMAINE 4</text>
             </g>
             <g font-size="20" font-weight="800" fill="var(--fg)">
-              <text x="30" y="100">Préparer</text><text x="255" y="100">Annoncer</text><text x="480" y="100" fill="#FFFFFF">Diffuser</text><text x="705" y="100">Prolonger</text>
+              <text x="30" y="90">Préparer</text><text x="255" y="90" fill="#FFFFFF">Tourner</text><text x="480" y="90">Monter</text><text x="705" y="90">Publier</text>
             </g>
             <g font-size="12.5" fill="var(--muted)">
-              <text x="30" y="128">Thème, invité, versets,</text><text x="30" y="146">conducteur écrit.</text>
-              <text x="255" y="128">Visuel, teaser vidéo,</text><text x="255" y="146">date et heure partout.</text>
-              <text x="480" y="128" fill="#DCD8FF">Test technique la veille,</text><text x="480" y="146" fill="#DCD8FF">direct sur ZONE 242.</text>
-              <text x="705" y="128">3 à 4 extraits courts,</text><text x="705" y="146">bilan des chiffres.</text>
+              <text x="30" y="118">Invité confirmé,</text><text x="30" y="136">conducteur écrit, questions</text><text x="30" y="154">du public recueillies.</text>
+              <text x="255" y="118" fill="#DCD8FF">Installation et test,</text><text x="255" y="136" fill="#DCD8FF">enregistrement</text><text x="255" y="154" fill="#DCD8FF">de l'épisode.</text>
+              <text x="480" y="118">Montage, générique,</text><text x="480" y="136">visuel d'annonce</text><text x="480" y="154">et teaser.</text>
+              <text x="705" y="118">Publication à date fixe,</text><text x="705" y="136">puis 3 à 4 extraits</text><text x="705" y="154">courts.</text>
             </g>
-            <g stroke="var(--orange)" stroke-width="2.5" fill="none">
-              <path d="M212 110 L 231 110"/><path d="M437 110 L 456 110"/><path d="M662 110 L 681 110"/>
-            </g>
-            <path d="M785 182 C 785 222, 110 222, 110 182" fill="none" stroke="var(--orange)" stroke-width="2" stroke-dasharray="6 6"/>
-            <text x="450" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">les questions du public nourrissent le thème suivant</text>
+            <g stroke="#FF5A36" stroke-width="2.5"><line x1="212" y1="100" x2="231" y2="100"/><line x1="437" y1="100" x2="456" y2="100"/><line x1="662" y1="100" x2="681" y2="100"/></g>
           </g>
         </svg>
       </div>
     </figure>
-  </section>
-
-  <section id="themes">
-    <div class="head">
-      <p class="eyebrow">Proposition de programme</p>
-      <h2>Les six premiers thèmes</h2>
-      <p class="prose">Une première saison de six mois, pour poser les fondements avant d'aller vers des sujets plus pointus. À valider et ajuster avec Kephale Will.</p>
-    </div>
-    <div class="table">
-      <table>
-        <thead><tr><th>Mois</th><th>Thème</th><th>Question centrale</th><th>Texte d'appui</th></tr></thead>
-        <tbody>
-          <tr><td class="num">1</td><td><b>Qu'est-ce que la véritable adoration ?</b></td><td>Que veut dire adorer « en esprit et en vérité » ?</td><td class="verse">Jean 4.23-24</td></tr>
-          <tr><td class="num">2</td><td><b>Louange et adoration</b></td><td>Quelle différence, et pourquoi les deux comptent ?</td><td class="verse">Psaume 95.1-7</td></tr>
-          <tr><td class="num">3</td><td><b>Adorer dans la vie de tous les jours</b></td><td>L'adoration s'arrête-t-elle à la fin du culte ?</td><td class="verse">Romains 12.1</td></tr>
-          <tr><td class="num">4</td><td><b>Le cœur du chantre</b></td><td>Servir Dieu sans chercher la scène.</td><td class="verse">1 Samuel 16.7</td></tr>
-          <tr><td class="num">5</td><td><b>Adorer dans l'épreuve</b></td><td>Comment adorer quand tout va mal ?</td><td class="verse">Job 1.20-21 · Habacuc 3.17-18</td></tr>
-          <tr><td class="num">6</td><td><b>Transmettre l'adoration</b></td><td>Former la génération qui vient.</td><td class="verse">Psaume 145.4</td></tr>
-        </tbody>
-      </table>
+    <div class="cols" style="margin-top:22px">
+      <div class="card"><p class="k">Conseil</p><h3>Garder un épisode d'avance</h3><p>Le préenregistrement le permet : tourner deux épisodes la première fois. Une maladie, une coupure ou un invité absent ne fera alors jamais sauter un mois.</p></div>
+      <div class="card"><p class="k">Entre deux épisodes</p><h3>Faire vivre l'émission</h3><p>Un épisode par mois, c'est peu pour les réseaux sociaux. Les extraits courts publiés chaque semaine gardent le public attentif jusqu'au suivant.</p></div>
     </div>
   </section>
 
@@ -514,10 +636,11 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
     <div class="head">
       <p class="eyebrow">Mesurer pour progresser</p>
       <h2>Les indicateurs de réussite</h2>
-      <p class="prose">L'objectif spirituel ne se mesure pas en chiffres, mais les chiffres disent si le message atteint les gens. On les relève à chaque émission, en semaine 4.</p>
+      <p class="prose">L'objectif spirituel ne se mesure pas en chiffres, mais les chiffres disent si le message atteint les gens. On les relève une semaine après chaque publication.</p>
     </div>
     <div class="cols">
-      <div class="card"><p class="k">Portée</p><h3>Personnes en direct et vues du replay</h3><p>Combien de personnes l'émission touche-t-elle, et cela progresse-t-il d'un mois à l'autre ?</p></div>
+      <div class="card"><p class="k">Portée</p><h3>Vues de l'épisode et des extraits</h3><p>Combien de personnes l'émission touche-t-elle, et cela progresse-t-il d'un mois à l'autre ?</p></div>
+      <div class="card"><p class="k">Attention</p><h3>Durée moyenne de visionnage</h3><p>Les gens regardent-ils jusqu'au bout ? Indique où l'épisode perd son public.</p></div>
       <div class="card"><p class="k">Engagement</p><h3>Commentaires, partages, questions</h3><p>Le signe que le public participe au lieu de seulement regarder.</p></div>
       <div class="card"><p class="k">Fidélité</p><h3>Nouveaux abonnés de la page</h3><p>Le public revient-il chaque mois ? C'est le vrai test d'une émission régulière.</p></div>
     </div>
@@ -530,15 +653,17 @@ footer { padding-block: 36px 56px; color: var(--muted); font-size: 0.85rem; }
     </div>
     <ol class="steps prose">
       <li><div><b>Valider le concept et le nom</b> avec le Chantre Kephale Will et la direction de ZONE 242.</div></li>
-      <li><div><b>Choisir le lieu</b> : une pièce calme, fermée, où l'on peut installer le décor durablement ou rapidement.</div></li>
+      <li><div><b>Créer le logo de l'émission</b>, utilisé pour le générique, les visuels et le décor lumineux.</div></li>
+      <li><div><b>Choisir le plan de tournage</b> : Plan 1 (smartphones) ou Plan 2 (caméras).</div></li>
+      <li><div><b>Choisir le lieu</b> : une pièce calme et fermée, assez profonde pour le plan retenu.</div></li>
       <li><div><b>Fixer le budget</b> et acheter le matériel du niveau Essentiel.</div></li>
-      <li><div><b>Constituer l'équipe</b> : réalisateur et responsable réseaux.</div></li>
-      <li><div><b>Faire un enregistrement test</b>, non diffusé, pour régler le son, la lumière et le direct.</div></li>
-      <li><div><b>Annoncer la date du premier épisode</b> deux semaines à l'avance sur la page ZONE 242.</div></li>
+      <li><div><b>Constituer l'équipe</b> : réalisateur, monteur et responsable réseaux.</div></li>
+      <li><div><b>Faire un tournage test</b>, non publié, pour régler le son, la lumière et le cadre.</div></li>
+      <li><div><b>Tourner les deux premiers épisodes</b>, puis annoncer la date du premier sur la page ZONE 242.</div></li>
     </ol>
   </section>
 
 </main>
 <footer>
-  <div class="wrap">Cœur d'Adorateur · une émission de ZONE 242 · dossier de présentation, version 1</div>
+  <div class="wrap">Cœur d'Adorateur · une émission de ZONE 242 · dossier de présentation, version 2</div>
 </footer>
