@@ -11,5 +11,5 @@ angle: même famille que les génériques « Question à l'Apôtre Amos », mais
 ---
 
 ## Customizations
-- Variable `subtitle` : « EXTRAIT D'UNE DÉCLARATION » (modifiable).
+- Pas de sous-titre : « JE DÉCLARE » seul, encadré de guillemets.
 - Sound design (`tools/sound.py`) : montée, impact grave, balayage, cloches. Aucune voix. Pic −9 dBFS.

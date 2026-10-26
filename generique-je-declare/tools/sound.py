@@ -40,9 +40,6 @@ k = np.linspace(0, 1, n); i0 = int(0.85 * SR)
 L[i0:i0 + n] += w * (1 - k) * 0.6; R[i0:i0 + n] += w * k * 0.6
 # 1,2 → 1,45 s — les guillemets : deux cloches, une à chaque côté
 put(bell(987.8, 1.2, 0.5) * 0.35, 1.2, -0.6, 0.5); put(bell(1318.5, 1.2, 0.5) * 0.35, 1.32, 0.6, 0.5)
-# 1,5 s — sous-titre : petit souffle + note
-n = int(SR * 0.3); put(bandpass_sweep(rng.standard_normal(n), 900, 3600) * np.sin(np.linspace(0, np.pi, n)) ** 1.5, 1.4, 0, 0.35)
-put(bell(1760, 1.0, 0.4) * 0.3, 1.58, 0, 0.5)
 # 2,2 s — résolution : accord ouvert qui s'éteint
 for fq, a in [(523.3, .45), (783.9, .35), (1046.5, .28)]: put(bell(fq, 0.8, 0.7) * a, 2.2, 0, 0.5)
 
