@@ -1,8 +1,9 @@
 # GODTALK — Vision, ambition et projet de développement
 
-Document fondateur (PDF A4, 40 pages) du projet d'entreprise audiovisuelle GODTALK.
+Document fondateur du projet d'entreprise audiovisuelle GODTALK, en deux versions.
 
-- **PDF final** : `dist/GODTALK_Vision_Ambition_Developpement.pdf`
+- **Version complète** (40 pages) : `dist/GODTALK_Vision_Ambition_Developpement.pdf` — source `src/index.html`
+- **Version courte** (10 pages) : `dist/GODTALK_Synthese.pdf` — source `src/court.html`
 - **Contenu source** : `content/` (cahier des charges Word d'origine)
 
 ## Modifier le document
@@ -29,7 +30,8 @@ Document fondateur (PDF A4, 40 pages) du projet d'entreprise audiovisuelle GODTA
 ## Régénérer le PDF
 
 ```bash
-node tools/build.js                                   # HTML -> PDF via Chromium (Playwright)
+node tools/build.js                                   # les deux PDF via Chromium (Playwright)
+node tools/build.js court                             # une seule version : complet | court
 python3 tools/grade_images.py assets/images/originaux assets/images   # ré-étalonner les photos
 python3 tools/vectorize_logo.py assets/logo/logo-source.jpg assets/logo  # re-vectoriser le logo (pip install potracer)
 ```

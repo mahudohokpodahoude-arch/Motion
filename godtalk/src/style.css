@@ -115,20 +115,28 @@ ul.check li::after { content: ""; position: absolute; left: 1.55mm; top: calc(.2
   color: #fff; background: rgba(29,39,66,.55); padding: 1.6mm 2.6mm; border-radius: 1mm; }
 .tag.light { color: var(--mute); background: rgba(255,255,255,.75); }
 
-/* ---------- couverture ---------- */
-.cover .photo { top: 0; left: 0; right: 0; height: 178mm; }
-.cover .photo::after { content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(20,26,45,.45) 0%, rgba(20,26,45,0) 30%); }
-.cover .status { position: absolute; top: 14mm; right: var(--m); z-index: 3; font: 600 7pt/1 "Outfit"; letter-spacing: .22em;
-  text-transform: uppercase; color: var(--ink); background: rgba(255,255,255,.9); padding: 2.4mm 3.6mm; border-radius: 10mm; }
-.cover .panel { position: absolute; top: 178mm; left: 0; right: 0; bottom: 0; padding: 13mm var(--m) 14mm; display: flex; flex-direction: column; }
-.cover .panel::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1.6mm; background: var(--gold); }
-.cover .logo { width: 50mm; margin-bottom: 8mm; }
-.cover h1 { font-size: 33pt; }
-.cover .sub { font: 500 8pt/1 "Outfit"; letter-spacing: .3em; text-transform: uppercase; color: var(--mute); margin-top: 5mm; }
-.cover .sign { font: italic 400 15.5pt/1.3 "Cormorant"; color: var(--gold-text); margin-top: auto; }
-.cover .meta { display: flex; justify-content: space-between; margin-top: 4mm; padding-top: 3mm; border-top: .3mm solid var(--line);
-  font: 500 7pt/1 "Outfit"; letter-spacing: .22em; text-transform: uppercase; color: var(--mute); }
+/* ---------- couverture (photo pleine page, version cinéma) ---------- */
+.page.cover { background: #0B0B0C; color: #F3F0E8; }
+.cover .photo { inset: 0; }
+.cover .photo::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(11,11,12,.7) 0%, rgba(11,11,12,.05) 24%, rgba(11,11,12,.1) 46%, rgba(11,11,12,.92) 74%, #0B0B0C 100%);
+}
+.cover .top { position: absolute; top: 16mm; left: var(--m); right: var(--m); z-index: 4;
+  display: flex; justify-content: space-between; align-items: flex-start; }
+.cover .top img { width: 56mm; }
+.cover .top .status { font: 500 6.2pt/1.7 "Outfit"; letter-spacing: .26em; text-transform: uppercase; text-align: right; color: rgba(243,240,232,.8); }
+.cover .bottom { position: absolute; left: var(--m); right: var(--m); bottom: 18mm; z-index: 4; }
+.cover .kicker { font: 500 6.8pt/1.3 "Outfit"; letter-spacing: .3em; color: #C8A96A; gap: 3mm; }
+.cover .kicker::before { width: 9mm; height: .3mm; background: #C8A96A; border-radius: 0; }
+.cover h1 { font-size: 39pt; font-weight: 300; line-height: 1.02; letter-spacing: -.012em; margin: 5mm 0 6mm; color: #F3F0E8; }
+.cover h1 em { color: #C8A96A; }
+.cover .sub { font: 400 7pt/1 "Outfit"; letter-spacing: .34em; text-transform: uppercase; color: rgba(243,240,232,.75); }
+.cover .sign { font: italic 300 16pt/1.3 "Cormorant"; color: #C8A96A; margin: 9mm 0 0; }
+.cover .meta { display: flex; justify-content: space-between; margin-top: 12mm; padding-top: 3mm;
+  border-top: .25mm solid rgba(243,240,232,.22);
+  font: 400 6.2pt/1 "Outfit"; letter-spacing: .24em; text-transform: uppercase; color: rgba(243,240,232,.6); }
 
 /* ---------- sommaire ---------- */
 .toc a { display: grid; grid-template-columns: 13mm 1fr auto; align-items: baseline; color: inherit; text-decoration: none;
@@ -345,3 +353,37 @@ ul.check li::after { content: ""; position: absolute; left: 1.55mm; top: calc(.2
 .pole-b .horizon { padding-top: 6mm; }
 .pole-b .faire.many + .need { padding: 7mm 8mm 3.4mm; }
 .pole-b .note-ia + .horizon { padding-top: 3mm; }
+
+/* ---------- version courte ---------- */
+.polecards { display: grid; grid-template-columns: 1fr 1fr; gap: 4.4mm; }
+.polecards .card { display: grid; grid-template-columns: 15mm 1fr; column-gap: 5mm; padding: 5.4mm 5.4mm; align-items: start; }
+.polecards h3 { font-size: 13pt; margin: .4mm 0 1.4mm; }
+.polecards h3 b { font-weight: 300; color: var(--gold-text); margin-right: 1mm; }
+.polecards p { margin: 0 0 2.4mm; font-size: 10.2pt; line-height: 1.45; color: var(--mute); }
+.step-tag { display: inline-block; font: 600 7.4pt/1 "Outfit"; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-text);
+  background: var(--sand); border-radius: 10mm; padding: 1.6mm 3mm; }
+.convs .card h3 { font-size: 13.5pt; margin: 5mm 0 2mm; }
+.convs .card p { margin: 0; font-size: 10.3pt; color: var(--mute); }
+.mini3 .card { padding: 5mm; }
+.mini3 .card h3 { font-size: 12.5pt; margin: 3.6mm 0 1.4mm; }
+.mini3 .card p { margin: 0; font-size: 10pt; line-height: 1.45; color: var(--mute); }
+.res3 .card h3 { font-size: 14pt; margin: 4mm 0 3.4mm; }
+.res3 .card ul.dash li { font-size: 10.4pt; line-height: 1.45; }
+.steps4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3.6mm; margin-top: 6mm; }
+.steps4 .card { padding: 5mm 4.6mm; }
+.steps4 .card i { display: block; font-style: normal; font: 600 7.4pt/1 "Outfit"; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); }
+.steps4 .card h3 { font-size: 12.5pt; margin: 2mm 0 2.4mm; }
+.steps4 .card p { margin: 0; font-size: 9.8pt; line-height: 1.45; color: var(--mute); }
+.impact5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3.4mm; }
+.impact5 .card { padding: 4.6mm 4mm; text-align: center; }
+.impact5 .card .badge { margin: 0 auto 3mm; }
+.impact5 .card p { margin: 0; font: 400 10pt/1.4 "Outfit"; color: var(--ink); }
+.back .more { position: absolute; left: 40mm; right: 40mm; top: 252mm; z-index: 2; text-align: center; font-size: 9.6pt; color: var(--mute); }
+.polecards { gap: 4mm; }
+.polecards .card { grid-template-columns: 11mm 1fr; column-gap: 4.4mm; padding: 4.6mm 5mm; }
+.polecards .badge { width: 11mm; height: 11mm; } .polecards .badge .ico { width: 6.4mm; height: 6.4mm; }
+.polecards h3 { font-size: 12pt; margin: .2mm 0 1.2mm; }
+.polecards p { font-size: 9.9pt; margin: 0 0 1.8mm; }
+.polecards .step-tag { padding: 1.2mm 2.6mm; }
+.page.cream .chip { background: var(--white); }
+.impact5 .card { padding: 4.4mm 3.4mm; }

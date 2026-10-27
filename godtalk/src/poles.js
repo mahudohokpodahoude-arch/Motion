@@ -1,10 +1,11 @@
 /* Contenu des huit pôles d'activité.
    Modifier les textes ici : les deux pages de chaque pôle sont générées automatiquement.
-   visual : photo (img + pos) ou illustration (svg) · ico : pictogramme · horizon : étapes 1 à 4. */
+   visual : photo (img + pos) ou illustration (svg) · ico : pictogramme · horizon : étapes 1 à 4
+   · bref : résumé d'une ligne (version courte). */
 
 window.GT_POLES = [
   {
-    id: "photo", visual: { svg: "aperture" }, tag: "Illustration", ico: "camera", bg: "cream",
+    id: "photo", bref: "Événements, portraits, corporate, produits et reportages.", visual: { svg: "aperture" }, tag: "Illustration", ico: "camera", bg: "cream",
     titre: "Photographie <em>professionnelle</em>", court: "Photographie",
     accroche: "Fixer l'instant juste : celui qui raconte, en une seule image, ce qu'un événement, une personne ou une marque a d'essentiel.",
     faire: ["Mariages, cérémonies et événements familiaux", "Événements d'entreprise, conférences et cérémonies officielles", "Portraits, photographie corporate, produits et campagnes", "Reportages, couverture documentaire et banques d'images"],
@@ -13,7 +14,7 @@ window.GT_POLES = [
     horizon: [1, 2], horizonTxt: "L'un des premiers pôles accessibles, avec un investissement maîtrisé."
   },
   {
-    id: "video", visual: { img: "studio-talk.jpg", pos: "50% 64%" }, tag: "Visuel d'illustration", ico: "video", bg: "mist",
+    id: "video", bref: "Captation, films institutionnels, clips, interviews et formats pour les réseaux.", visual: { img: "studio-talk.jpg", pos: "50% 64%" }, tag: "Visuel d'illustration", ico: "video", bg: "mist",
     titre: "Vidéographie et <em>production de contenus</em>", court: "Vidéographie et contenus",
     accroche: "Transformer un message, un lieu ou un moment en récit filmé, pensé pour le public qui le regardera.",
     faire: ["Captation d'événements et aftermovies", "Vidéos institutionnelles, publicitaires et de présentation", "Clips musicaux, contenus pour artistes et créateurs", "Interviews, reportages et mini-documentaires", "Formats courts pour les réseaux sociaux", "Contenus réguliers pour les entreprises"],
@@ -22,7 +23,7 @@ window.GT_POLES = [
     horizon: [2], horizonTxt: "Premières prestations vidéo, en louant le matériel manquant."
   },
   {
-    id: "live", visual: { img: "melangeur-live.jpg", pos: "50% 45%" }, tag: "Visuel d'illustration", ico: "live", bg: "cream",
+    id: "live", bref: "Retransmission en direct multicaméra de conférences, cultes et événements.", visual: { img: "melangeur-live.jpg", pos: "50% 45%" }, tag: "Visuel d'illustration", ico: "live", bg: "cream",
     titre: "Live streaming et <em>réalisation multicaméra</em>", court: "Live streaming et multicaméra",
     accroche: "Faire vivre un événement au-delà de la salle : plusieurs caméras, une régie, une diffusion stable, en direct.",
     faire: ["Retransmission d'événements, conférences, cultes et cérémonies", "Production multicaméra et réalisation en direct", "Diffusion sur les plateformes numériques", "Habillage graphique, enregistrement et livraison d'archives"],
@@ -31,7 +32,7 @@ window.GT_POLES = [
     horizon: [3], horizonTxt: "Lancé une fois la captation maîtrisée et les premiers revenus réinvestis."
   },
   {
-    id: "integration", visual: { svg: "roomPlan" }, tag: "Schéma de principe", ico: "integration", bg: "mist",
+    id: "integration", bref: "Étude, installation et configuration de l'image et du son dans les salles.", visual: { svg: "roomPlan" }, tag: "Schéma de principe", ico: "integration", bg: "mist",
     titre: "Intégration et <em>installation audiovisuelle</em>", court: "Intégration audiovisuelle",
     accroche: "Concevoir des espaces où l'image et le son servent la parole : salles de conférence, églises, auditoriums, centres événementiels.",
     faire: ["Étude des besoins techniques d'une salle ou d'un espace", "Fourniture et coordination du matériel", "Installation et configuration : caméras, son, lumière, affichage", "Équipement de salles de conférence, lieux de culte et écoles", "Équipement d'auditoriums et de centres événementiels", "Formation des utilisateurs, maintenance et assistance"],
@@ -40,7 +41,7 @@ window.GT_POLES = [
     horizon: [3], horizonTxt: "D'abord en coordination avec des partenaires spécialisés."
   },
   {
-    id: "evenements", visual: { img: "regie-multicam.jpg", pos: "50% 40%" }, tag: "Visuel d'illustration", ico: "stage", bg: "cream",
+    id: "evenements", bref: "Concerts, festivals, conventions et sommets : captation et diffusion.", visual: { img: "regie-multicam.jpg", pos: "50% 40%" }, tag: "Visuel d'illustration", ico: "stage", bg: "cream",
     titre: "Couverture des <em>grands événements</em>", court: "Grands événements",
     accroche: "Concerts, festivals, conventions, conférences internationales : être à la hauteur des moments qui rassemblent des milliers de personnes.",
     faire: ["Captation multicaméra de concerts et de festivals", "Couverture de conventions, sommets et grandes conférences", "Diffusion sur écrans géants et en ligne", "Contenus dérivés : aftermovies, temps forts, archives"],
@@ -49,7 +50,7 @@ window.GT_POLES = [
     horizon: [3, 4], horizonTxt: "Préparé dès l'étape 3 aux côtés de partenaires expérimentés, pleinement visé à l'étape 4."
   },
   {
-    id: "cinema", visual: { img: "tournage-cinema.jpg", pos: "40% 45%" }, tag: "Visuel d'illustration", ico: "clap", bg: "mist",
+    id: "cinema", bref: "Courts métrages, documentaires, publicités et formats originaux.", visual: { img: "tournage-cinema.jpg", pos: "40% 45%" }, tag: "Visuel d'illustration", ico: "clap", bg: "mist",
     titre: "Cinéma et <em>productions originales</em>", court: "Cinéma et productions originales",
     accroche: "Écrire, réaliser et produire des histoires capables de toucher des publics au-delà des frontières.",
     faire: ["Développement d'idées, écriture et préparation de tournage", "Courts métrages et documentaires", "Films d'entreprise et publicités", "Clips musicaux à forte ambition artistique", "Direction artistique et réalisation", "À terme, des formats originaux GODTALK : talk-shows, séries, documentaires"],
@@ -58,7 +59,7 @@ window.GT_POLES = [
     horizon: [4], horizonTxt: "Productions d'envergure à l'étape 4 ; des courts formats sont possibles plus tôt."
   },
   {
-    id: "postprod", visual: { svg: "timeline" }, tag: "Illustration", ico: "timeline", bg: "cream",
+    id: "postprod", bref: "Montage, étalonnage, motion design, son et sous-titrage.", visual: { svg: "timeline" }, tag: "Illustration", ico: "timeline", bg: "cream",
     titre: "Postproduction et <em>motion design</em>", court: "Postproduction et motion design",
     accroche: "Là où le récit prend sa forme définitive : rythme, couleur, son et graphisme.",
     faire: ["Montage vidéo et étalonnage", "Motion design, titrage et habillage graphique", "Nettoyage et mixage audio, sous-titrage", "Exports multiformats : web, réseaux sociaux, écrans"],
@@ -67,7 +68,7 @@ window.GT_POLES = [
     horizon: [1, 2], horizonTxt: "Une compétence accessible dès le départ, qui exige surtout de la pratique."
   },
   {
-    id: "ia", visual: { svg: "iaField" }, tag: "Illustration", ico: "ai", bg: "mist",
+    id: "ia", bref: "Films, clips et motion design réalisés ou enrichis par l'IA générative.", visual: { svg: "iaField" }, tag: "Illustration", ico: "ai", bg: "mist",
     titre: "Création vidéo <em>assistée par IA</em>", court: "Création vidéo assistée par IA",
     accroche: "Films, clips et motion design : l'intelligence artificielle générative comme nouvel outil de création, au service d'une vision humaine.",
     faire: ["Films et courts métrages réalisés ou enrichis par IA", "Clips musicaux et visualiseurs générés par IA", "Motion design et animations assistés par IA", "Storyboards, moodboards et animatiques pour préparer les tournages", "Hybridation : prises de vue réelles et éléments générés", "Vidéos explicatives et contenus de marque"],

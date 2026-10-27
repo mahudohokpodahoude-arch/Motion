@@ -15,7 +15,7 @@
 
   // ---- pages des pôles : A (visuel + titre) et B (détail)
   const anchor = document.getElementById("poles-anchor");
-  POLES.forEach((p, i) => {
+  if (anchor) POLES.forEach((p, i) => {
     const n = pad(i + 1);
     const a = document.createElement("section");
     a.className = "page pole-a";
@@ -49,7 +49,7 @@
       </div>`;
     anchor.before(b);
   });
-  anchor.remove();
+  anchor?.remove();
 
   // ---- mosaïque d'ouverture, sommaire des pôles, matrice
   const mosaic = document.getElementById("mosaic");
@@ -57,13 +57,22 @@
   const tb = document.querySelector("#pole-matrix tbody");
   POLES.forEach((p, i) => {
     const n = pad(i + 1);
-    mosaic.insertAdjacentHTML("beforeend",
+    mosaic?.insertAdjacentHTML("beforeend",
       `<a href="#pole-${p.id}"><div class="tile">${visualOf(p)}<b>${n}</b></div><div class="name">${p.court}</div></a>`);
-    tocPoles.insertAdjacentHTML("beforeend",
+    tocPoles?.insertAdjacentHTML("beforeend",
       `<a href="#pole-${p.id}"><span class="t">${n} · ${p.court}</span><span class="p" data-ref="pole-${p.id}"></span></a>`);
     const cells = MATRIX[p.id].map(v => `<td>${v === 2 ? '<span class="dot"></span>' : v === 1 ? '<span class="dot o"></span>' : ""}</td>`).join("");
-    tb.insertAdjacentHTML("beforeend",
+    tb?.insertAdjacentHTML("beforeend",
       `<tr><td><a href="#pole-${p.id}"><span class="k">${n}</span><span class="t">${p.court}</span></a></td>${cells}</tr>`);
+  });
+
+  // ---- cartes compactes des pôles (version courte)
+  const cards = document.getElementById("pole-cards");
+  if (cards) POLES.forEach((p, i) => {
+    const h = p.horizon.length > 1 ? `Étapes ${p.horizon[0]}–${p.horizon[p.horizon.length - 1]}` : `Étape ${p.horizon[0]}`;
+    cards.insertAdjacentHTML("beforeend",
+      `<div class="card"><div class="badge ${["", "mist", "clay"][i % 3]}" data-icon="${p.ico}"></div>
+        <div><h3><b>${pad(i + 1)}</b> ${p.court}</h3><p>${p.bref}</p><span class="step-tag">${h}</span></div></div>`);
   });
 
   // ---- pictogrammes et illustrations
@@ -82,7 +91,7 @@
     const onDark = pg.classList.contains("navy") || pg.dataset.hd === "photo";
     pg.insertAdjacentHTML("beforeend",
       `<div class="hd ${pg.dataset.hd === "photo" ? "on-photo" : ""}"><img src="${onDark ? LOGO.white : LOGO.black}" alt="GODTALK"><span>${pg.dataset.chapter || ""}</span></div>
-       <div class="ft"><span>GODTALK — Vision, ambition et projet de développement</span><span class="n">${pad(idx + 1)} / ${total}</span></div>`);
+       <div class="ft"><span>${document.body.dataset.footer || "GODTALK — Vision, ambition et projet de développement"}</span><span class="n">${pad(idx + 1)} / ${total}</span></div>`);
   });
   document.querySelectorAll("[data-ref]").forEach(el => {
     el.textContent = pad(document.getElementById(el.dataset.ref).dataset.no);
