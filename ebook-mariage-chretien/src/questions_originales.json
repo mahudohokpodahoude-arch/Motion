@@ -1,0 +1,482 @@
+[
+ {
+  "num": 1,
+  "titre": "Vie personnelle et connaissance de soi",
+  "questions": [
+   "Quelles sont les trois valeurs qui guident le plus tes décisions, et pourquoi ?",
+   "Quelles sont tes principales forces et comment contribuent-elles à une relation ?",
+   "Quels défauts reconnais-tu chez toi et quels efforts concrets fais-tu pour les travailler ?",
+   "Qu'est-ce qui te donne de la joie, de l'énergie et un sentiment d'accomplissement ?",
+   "Dans quelles situations as-tu tendance à te fermer, à te défendre ou à réagir vivement ?",
+   "Comment réagis-tu lorsque tu es stressé, contrarié ou déçu ?",
+   "De quel temps seul as-tu besoin pour te ressourcer, et comment souhaites-tu que ce besoin soit respecté ?",
+   "Quelles habitudes personnelles aimerais-tu conserver après le mariage ?",
+   "Qu'est-ce que tu aimerais que ton futur conjoint comprenne mieux à ton sujet ?",
+   "Dans quels domaines souhaites-tu encore mûrir avant et après le mariage ?"
+  ]
+ },
+ {
+  "num": 2,
+  "titre": "Foi, conversion et convictions chrétiennes",
+  "questions": [
+   "Comment décrirais-tu ton cheminement avec Dieu et les étapes qui ont marqué ta foi ?",
+   "Quelle place Jésus-Christ occupe-t-il concrètement dans tes décisions quotidiennes ?",
+   "Quelles doctrines ou convictions chrétiennes sont essentielles pour toi ?",
+   "Comment comprends-tu le mariage à la lumière de la Bible ?",
+   "Comment réagirais-tu si nous avions un désaccord sérieux sur une interprétation biblique ?",
+   "Quelle place accordes-tu à l'Église locale, à la communion fraternelle et au service ?",
+   "Quelles pratiques ou convictions spirituelles souhaites-tu absolument transmettre à ton foyer ?",
+   "Y a-t-il des convictions religieuses sur lesquelles tu ne pourrais pas faire de compromis ?",
+   "Comment souhaites-tu que nous nous encouragions mutuellement sans nous contrôler spirituellement ?",
+   "Quelles questions de foi aimerais-tu encore approfondir avant de nous engager ?"
+  ]
+ },
+ {
+  "num": 3,
+  "titre": "Prière, méditation et vie spirituelle du couple",
+  "questions": [
+   "À quoi ressemblerait pour toi un temps de prière régulier en couple ?",
+   "Souhaites-tu prier ensemble chaque jour, chaque semaine ou selon un autre rythme ?",
+   "Comment aimerais-tu lire et méditer la Bible ensemble ?",
+   "Que ferions-nous si l'un de nous traverse une période de sécheresse spirituelle ?",
+   "Comment partager nos sujets de prière tout en respectant la confidentialité de l'autre ?",
+   "Comment distinguer une conviction personnelle, un conseil spirituel et une décision commune ?",
+   "Comment réagirions-nous si nous ne ressentons pas la même direction dans la prière ?",
+   "Quelles pratiques spirituelles souhaitons-nous vivre en famille avec nos enfants, le cas échéant ?",
+   "Comment éviter que les temps spirituels deviennent une obligation culpabilisante ou un moyen de domination ?",
+   "Quels objectifs spirituels réalistes aimerions-nous poursuivre durant notre première année de mariage ?"
+  ]
+ },
+ {
+  "num": 4,
+  "titre": "Vision, valeurs et projet de vie",
+  "questions": [
+   "Comment imagines-tu notre vie dans cinq ans, puis dans dix ans ?",
+   "Quelles sont les valeurs que notre foyer devra défendre en toutes circonstances ?",
+   "Quelle définition donnes-tu à une vie de couple réussie ?",
+   "Quel style de vie souhaites-tu : simple, confortable, ambitieux, tourné vers le service, ou autre ?",
+   "Quels rêves personnels souhaites-tu réaliser même après le mariage ?",
+   "Quels projets aimerais-tu que nous portions ensemble ?",
+   "Comment arbitrerons-nous entre un rêve individuel et un projet commun ?",
+   "Quelles limites souhaitons-nous poser face aux attentes sociales ou aux comparaisons avec d'autres couples ?",
+   "Qu'aimerions-nous que notre foyer apporte à notre communauté et aux autres ?",
+   "Quels signes concrets nous permettront de vérifier que nous avançons dans la même direction ?"
+  ]
+ },
+ {
+  "num": 5,
+  "titre": "Appel, dons et ministère",
+  "questions": [
+   "Comment décris-tu ton appel ou la mission que tu crois avoir reçue de Dieu ?",
+   "Quels dons, talents ou compétences penses-tu devoir développer au service des autres ?",
+   "Comment ton appel influence-t-il tes choix de travail, de lieu de vie et de disponibilité ?",
+   "Qu'attends-tu de ton conjoint concernant ton ministère ou ton engagement chrétien ?",
+   "Jusqu'où serais-tu prêt à déménager ou à changer de rythme de vie pour répondre à un appel ?",
+   "Comment déciderons-nous si nos appels semblent entrer en concurrence ?",
+   "Quelles limites devons-nous poser pour que le ministère ne dévore pas notre vie conjugale ?",
+   "Comment gérerons-nous les sollicitations, déplacements, responsabilités et imprévus liés au service ?",
+   "Comment discernerons-nous ensemble une décision importante sans qu'un conjoint impose à l'autre une prétendue parole de Dieu ?",
+   "À quoi ressemblerait un soutien mutuel équilibré entre notre couple, notre famille et nos engagements ?"
+  ]
+ },
+ {
+  "num": 6,
+  "titre": "Communication et écoute",
+  "questions": [
+   "Comment préfères-tu aborder un sujet sensible : immédiatement, après un temps de réflexion, ou autrement ?",
+   "Qu'est-ce qui te fait te sentir réellement écouté et compris ?",
+   "Comment puis-je te signaler une difficulté sans que tu te sentes attaqué ?",
+   "Quels mots, tons ou attitudes te blessent particulièrement ?",
+   "Comment vérifierons-nous que nous avons bien compris ce que l'autre voulait dire ?",
+   "Est-il facile pour toi de demander pardon ou de reconnaître que tu as tort ?",
+   "Comment souhaites-tu recevoir une critique constructive ?",
+   "Comment aborderons-nous les sujets que l'un de nous préfère éviter ?",
+   "Quelles règles nous aideraient à parler sans crier, humilier, menacer ou interrompre ?",
+   "Comment protégerons-nous nos conversations privées des interventions extérieures ou des réseaux sociaux ?"
+  ]
+ },
+ {
+  "num": 7,
+  "titre": "Gestion des conflits et pardon",
+  "questions": [
+   "Comment se déroulaient les conflits dans ta famille lorsque tu étais enfant ?",
+   "Quand tu es blessé, as-tu tendance à te taire, à fuir, à argumenter ou à exploser ?",
+   "De quoi as-tu besoin pour retrouver ton calme pendant un désaccord ?",
+   "Quelle différence fais-tu entre pardonner, refaire confiance et accepter une réconciliation ?",
+   "Comment réparerons-nous concrètement une blessure causée par l'un de nous ?",
+   "Quelle conduite serait pour toi inacceptable pendant une dispute ?",
+   "Comment reprendrons-nous une discussion après une pause sans laisser le problème s'envenimer ?",
+   "Accepterais-tu de demander de l'aide à un conseiller conjugal ou à un couple formé si nécessaire ?",
+   "Comment gérerons-nous les désaccords qui ne trouvent pas de solution immédiate ?",
+   "Quelles limites de sécurité devons-nous reconnaître, notamment face aux menaces, à la violence ou à l'intimidation ?"
+  ]
+ },
+ {
+  "num": 8,
+  "titre": "Blessures du passé et histoire personnelle",
+  "questions": [
+   "Y a-t-il des expériences passées qui influencent encore ta manière de faire confiance ou de t'attacher ?",
+   "Quelles blessures relationnelles aimerais-tu que je comprenne, sans te demander de raconter ce que tu n'es pas prêt à partager ?",
+   "Comment ton enfance a-t-elle influencé ta vision de l'amour et du mariage ?",
+   "Y a-t-il eu des pertes, deuils, rejets ou trahisons qui pourraient affecter notre relation ?",
+   "Quelles situations peuvent réactiver chez toi une peur ou une douleur ancienne ?",
+   "Comment puis-je te soutenir lorsque tu es bouleversé, sans prétendre te guérir ni te forcer à parler ?",
+   "Y a-t-il des relations passées dont les conséquences pratiques ou émotionnelles doivent être clarifiées avant le mariage ?",
+   "Quelles limites souhaites-tu poser concernant les personnes ou situations liées à ton passé ?",
+   "Serais-tu disposé à consulter un professionnel qualifié si certaines blessures pèsent sur notre relation ?",
+   "Comment préserverons-nous la dignité et la confidentialité de nos confidences, même en cas de conflit ?"
+  ]
+ },
+ {
+  "num": 9,
+  "titre": "Santé émotionnelle et bien-être",
+  "questions": [
+   "Comment reconnais-tu les signes que tu es émotionnellement épuisé ?",
+   "Qu'est-ce qui t'aide à retrouver ton équilibre après une période difficile ?",
+   "Comment souhaites-tu que nous parlions de notre santé émotionnelle sans honte ni jugement ?",
+   "Quelles responsabilités ou pressions te pèsent actuellement ?",
+   "Comment réagirions-nous si l'un de nous traversait une période de grande détresse ?",
+   "Quelles personnes de confiance ou quels professionnels pourrions-nous solliciter en cas de besoin ?",
+   "Comment respecter le besoin de repos de chacun tout en restant présents l'un pour l'autre ?",
+   "Quelles limites devons-nous établir face au surmenage, à la culpabilité ou aux attentes irréalistes ?",
+   "Comment ferons-nous la différence entre soutenir l'autre et porter seuls une difficulté qui nécessite une aide extérieure ?",
+   "Quels signes nous indiqueraient que notre relation a besoin d'un accompagnement ?"
+  ]
+ },
+ {
+  "num": 10,
+  "titre": "Vie professionnelle, études et carrière",
+  "questions": [
+   "Quelles sont tes ambitions professionnelles à court et à long terme ?",
+   "Quelle place le travail occupe-t-il dans ton identité et ton estime personnelle ?",
+   "Comment répartirons-nous le temps entre travail, repos, couple, famille et Église ?",
+   "Serais-tu prêt à déménager pour une opportunité professionnelle de ton conjoint ? À quelles conditions ?",
+   "Comment déciderons-nous si l'un doit reprendre des études, se reconvertir ou lancer une entreprise ?",
+   "Que ferions-nous si l'un de nous perdait son emploi ou connaissait une baisse importante de revenus ?",
+   "Quelles limites poserons-nous aux heures supplémentaires, appels professionnels et déplacements ?",
+   "Comment réagirais-tu si la carrière de ton conjoint progressait plus vite que la tienne ?",
+   "Quels compromis professionnels seraient acceptables et lesquels ne le seraient pas ?",
+   "Comment soutiendrons-nous les ambitions de chacun sans sacrifier durablement la relation ?"
+  ]
+ },
+ {
+  "num": 11,
+  "titre": "Finances, budget et patrimoine",
+  "questions": [
+   "Quels sont tes revenus, charges, dettes, engagements financiers et obligations actuels qu'il faut clarifier avant le mariage ?",
+   "Quelle est ta vision de la gestion financière : compte commun, comptes séparés ou organisation mixte ?",
+   "Comment établirons-nous un budget et qui participera à son suivi ?",
+   "À partir de quel montant souhaitons-nous nous consulter avant une dépense importante ?",
+   "Comment gérerons-nous l'épargne, les urgences et les projets à long terme ?",
+   "Quelle place souhaites-tu donner à la générosité, aux dons et aux engagements envers l'Église ?",
+   "Comment aiderons-nous financièrement nos proches sans fragiliser notre foyer ?",
+   "Comment aborderons-nous les dettes, crédits, investissements et risques financiers ?",
+   "Quelles habitudes de consommation ou croyances sur l'argent as-tu héritées de ta famille ?",
+   "Comment prendrons-nous les décisions financières si nos revenus sont très différents ?"
+  ]
+ },
+ {
+  "num": 12,
+  "titre": "Vie maritale, rôles et décisions",
+  "questions": [
+   "Que signifie pour toi être mari et femme dans une perspective chrétienne ?",
+   "Comment comprends-tu le service mutuel, l'autorité, la responsabilité et la soumission dans le mariage ?",
+   "Comment veillerons-nous à ce qu'aucun texte biblique ne soit utilisé pour justifier la domination ou la violence ?",
+   "Comment prendrons-nous les décisions qui engagent fortement le couple ?",
+   "Quels rôles imagines-tu pour chacun dans la vie quotidienne, et lesquels peuvent évoluer ?",
+   "Comment gérerons-nous une situation où l'un gagne plus d'argent ou possède davantage d'expérience ?",
+   "Quelles décisions nécessitent un accord commun plutôt qu'une décision unilatérale ?",
+   "Comment préserverons-nous l'individualité de chacun tout en construisant une unité conjugale ?",
+   "Qu'attends-tu de ton conjoint en matière de fidélité, de loyauté et de protection du couple ?",
+   "Comment évaluerons-nous régulièrement si notre fonctionnement est juste et satisfaisant pour tous les deux ?"
+  ]
+ },
+ {
+  "num": 13,
+  "titre": "Sexualité, intimité et attentes avant le mariage",
+  "questions": [
+   "Que signifie pour toi une intimité sexuelle respectueuse, fidèle et cohérente avec tes convictions chrétiennes ?",
+   "Quelles attentes, questions ou inquiétudes as-tu au sujet de la sexualité dans le mariage ?",
+   "Comment souhaites-tu que nous parlions de désir, de pudeur, de plaisir et de vulnérabilité sans honte ni pression ?",
+   "Quelles convictions avons-nous concernant l'abstinence avant le mariage, et comment allons-nous poser des limites concrètes ?",
+   "Comment comprendrons-nous et respecterons-nous le consentement mutuel dans le mariage, y compris le droit de dire non ou de demander une pause ?",
+   "Comment aborderons-nous les différences de désir, de rythme ou de préférences sans culpabilisation ni contrainte ?",
+   "Quelles idées, peurs ou attentes irréalistes avons-nous pu acquérir sur la sexualité, et comment les vérifier auprès de sources fiables ?",
+   "Comment parlerons-nous de l'histoire sexuelle passée, des limites de confidentialité et des informations importantes pour la santé, sans exiger des détails humiliants ?",
+   "Serions-nous prêts à consulter un professionnel de santé si nous avons des questions sur la douleur, la fonction sexuelle, la fertilité ou la santé sexuelle ?",
+   "Comment réagirions-nous si l'intimité traversait une période difficile à cause du stress, de la maladie, d'une grossesse ou d'un événement de vie ?"
+  ]
+ },
+ {
+  "num": 14,
+  "titre": "Santé sexuelle, limites et sécurité intime",
+  "questions": [
+   "Comment aborderons-nous avec honnêteté les dépistages, infections sexuellement transmissibles et informations médicales pertinentes avant le mariage ?",
+   "Quelles convictions avons-nous concernant la fidélité sexuelle et les limites avec d'autres personnes ?",
+   "Comment parlerons-nous de pornographie, de contenus sexuels en ligne ou d'habitudes qui pourraient affecter la confiance, sans minimiser leurs conséquences ?",
+   "Quelles limites poserons-nous concernant les messages intimes, les photos privées et la confidentialité numérique ?",
+   "Comment gérerons-nous les situations où l'un se sent sous pression, honteux ou incapable d'exprimer ses limites ?",
+   "Comment réagirions-nous si l'un de nous révélait une difficulté sexuelle ou un problème de santé après le mariage ?",
+   "Quelles informations médicales devraient être partagées pour permettre un consentement éclairé et protéger la santé de chacun ?",
+   "Comment nous informerons-nous sur la contraception, la conception et les options médicales compatibles avec nos convictions ?",
+   "Comment protégerons-nous notre intimité contre les intrusions, les confidences inappropriées ou les plaisanteries de l'entourage ?",
+   "À qui pourrions-nous demander conseil de façon confidentielle, compétente et non culpabilisante si un problème survient ?"
+  ]
+ },
+ {
+  "num": 15,
+  "titre": "Enfants, fertilité et parentalité",
+  "questions": [
+   "Souhaites-tu avoir des enfants ? Si oui, combien en imagines-tu, tout en sachant que la réalité peut être différente ?",
+   "Comment réagirions-nous si la conception prenait du temps ou si nous rencontrions une infertilité ?",
+   "Quelles sont nos convictions concernant les examens médicaux et les traitements de fertilité ?",
+   "Comment répartirons-nous les soins, les nuits, les tâches et les responsabilités parentales ?",
+   "Quelles valeurs chrétiennes et humaines souhaitons-nous transmettre à nos enfants ?",
+   "Comment réagirons-nous si notre enfant a des convictions, des besoins ou un parcours différent de ce que nous avions imaginé ?",
+   "Quelles méthodes disciplinaires jugeons-nous acceptables ou inacceptables ?",
+   "Comment prendrons-nous les décisions concernant l'école, la santé, les activités et l'éducation religieuse ?",
+   "Comment protégerons-nous notre relation de couple après l'arrivée d'un enfant ?",
+   "Comment parlerons-nous à nos enfants de leur corps, de leurs émotions, de la sécurité et du respect des limites ?"
+  ]
+ },
+ {
+  "num": 16,
+  "titre": "Éducation, discipline et transmission",
+  "questions": [
+   "Quelles pratiques éducatives de ta famille souhaites-tu reproduire ou éviter ?",
+   "Comment réagirons-nous si nous ne sommes pas d'accord sur une règle concernant les enfants ?",
+   "Quelle place donnerons-nous à la discipline, à l'encouragement et aux conséquences adaptées ?",
+   "Comment expliquerons-nous la foi chrétienne aux enfants sans utiliser la peur ou l'humiliation ?",
+   "Quelle place donnerons-nous aux écrans, aux réseaux sociaux et aux jeux vidéo ?",
+   "Comment encouragerons-nous l'autonomie, la responsabilité et le respect chez nos enfants ?",
+   "Comment aborderons-nous leurs questions sur le corps, la sexualité, les relations et la foi selon leur âge ?",
+   "Quelles limites poserons-nous aux interventions des grands-parents dans l'éducation ?",
+   "Comment soutiendrons-nous un enfant ayant des besoins particuliers ou rencontrant des difficultés scolaires ?",
+   "Comment présenterons-nous un front parental uni tout en reconnaissant nos erreurs devant nos enfants ?"
+  ]
+ },
+ {
+  "num": 17,
+  "titre": "Famille élargie et belle-famille",
+  "questions": [
+   "Quelle place ta famille élargie occupe-t-elle dans tes décisions et ton quotidien ?",
+   "Quelles attentes tes parents ou proches ont-ils exprimées au sujet de notre mariage ?",
+   "Comment poserons-nous des limites respectueuses avec les parents, frères, sœurs et autres proches ?",
+   "Comment répartirons-nous les visites, les fêtes et les vacances entre nos deux familles ?",
+   "Quelles informations concernant notre couple resteront privées, même vis-à-vis de nos parents ?",
+   "Comment réagirons-nous si un proche critique ou dénigre notre conjoint ?",
+   "Quelle aide financière ou pratique souhaitons-nous apporter à nos familles, et dans quelles limites ?",
+   "Comment gérerons-nous les différences culturelles, familiales ou religieuses entre nos familles ?",
+   "Comment protégerons-nous notre couple si un membre de la famille tente d'imposer ses décisions ?",
+   "Comment agirons-nous si un parent devient dépendant ou nécessite des soins à long terme ?"
+  ]
+ },
+ {
+  "num": 18,
+  "titre": "Langages de l'amour, affection et reconnaissance",
+  "questions": [
+   "Quelles actions te font te sentir aimé et apprécié au quotidien ?",
+   "Comment préfères-tu recevoir des paroles d'encouragement ou de reconnaissance ?",
+   "Quelle importance accordes-tu au temps de qualité sans téléphone ni distraction ?",
+   "Quels gestes d'affection te mettent à l'aise, et lesquels préfères-tu éviter dans certains contextes ?",
+   "Comment exprimes-tu spontanément ton amour lorsque tu es fatigué ou préoccupé ?",
+   "Comment souhaites-tu être réconforté lorsque tu as eu une mauvaise journée ?",
+   "Quelles petites attentions ont pour toi une grande valeur ?",
+   "Comment éviterons-nous de supposer que l'autre sait ce dont nous avons besoin sans le lui dire ?",
+   "Comment continuerons-nous à exprimer notre reconnaissance lorsque la routine s'installera ?",
+   "Comment vérifierons-nous régulièrement si nos façons de donner et de recevoir de l'amour évoluent ?"
+  ]
+ },
+ {
+  "num": 19,
+  "titre": "Préférences, habitudes et vie quotidienne",
+  "questions": [
+   "Quelles habitudes du quotidien sont particulièrement importantes pour ton bien-être ?",
+   "Es-tu plutôt organisé, spontané, matinal ou nocturne, et comment cela pourrait-il affecter notre rythme ?",
+   "Quel niveau de propreté et d'ordre souhaites-tu à la maison ?",
+   "Comment préfères-tu passer tes soirées et tes week-ends ?",
+   "Quels loisirs aimerais-tu partager et lesquels souhaites-tu garder individuellement ?",
+   "Quelle place accordes-tu aux amis, aux sorties et à l'hospitalité à la maison ?",
+   "Comment réagis-tu lorsque les plans changent au dernier moment ?",
+   "Quelles habitudes de téléphone, d'écran ou de réseaux sociaux souhaites-tu encadrer ?",
+   "Comment respecterons-nous nos différences de goûts, de rythme et de besoin de silence ?",
+   "Quelles petites routines pourraient nous aider à rester connectés chaque jour ?"
+  ]
+ },
+ {
+  "num": 20,
+  "titre": "Ménage, tâches domestiques et organisation",
+  "questions": [
+   "Quelles tâches ménagères sais-tu faire et lesquelles es-tu prêt à apprendre ?",
+   "Comment répartirons-nous cuisine, vaisselle, lessive, nettoyage et courses ?",
+   "Comment adapterons-nous la répartition des tâches si l'un travaille plus longtemps ou tombe malade ?",
+   "Quel budget et quel niveau de confort souhaitons-nous pour le logement ?",
+   "Comment déciderons-nous de faire nous-mêmes certaines tâches ou de payer une aide si c'est possible ?",
+   "Comment gérerons-nous les repas, les préférences alimentaires et l'organisation des provisions ?",
+   "Qui suivra les réparations, factures, démarches administratives et rendez-vous du foyer ?",
+   "Comment éviterons-nous que l'un devienne le responsable permanent de toute l'organisation mentale du ménage ?",
+   "Quelles règles établirons-nous concernant les invités, l'hospitalité et l'accès à notre domicile ?",
+   "Comment réviserons-nous la répartition du travail domestique si elle devient injuste ou épuisante ?"
+  ]
+ },
+ {
+  "num": 21,
+  "titre": "Santé, hygiène et mode de vie",
+  "questions": [
+   "Quelles habitudes de santé et d'hygiène sont importantes pour toi au quotidien ?",
+   "Comment souhaites-tu que nous prenions soin de notre santé physique et de notre sommeil ?",
+   "Y a-t-il des informations de santé importantes que nous devons aborder avant le mariage pour prendre des décisions éclairées ?",
+   "Comment réagirions-nous si l'un de nous vivait avec une maladie chronique ou un handicap ?",
+   "Quelles sont nos attentes concernant l'alimentation, l'activité physique et le repos ?",
+   "Comment prendrons-nous les décisions médicales importantes et respecterons-nous l'autonomie de chacun ?",
+   "Quelle attitude avons-nous envers l'alcool, le tabac, les substances et les comportements à risque ?",
+   "Comment gérerons-nous les périodes de maladie, de convalescence ou de baisse d'autonomie ?",
+   "Quelles informations souhaitons-nous connaître sur nos antécédents médicaux familiaux pertinents ?",
+   "Comment éviterons-nous les reproches ou la honte lorsque l'un de nous a besoin d'aide médicale ou psychologique ?"
+  ]
+ },
+ {
+  "num": 22,
+  "titre": "Temps, priorités et équilibre",
+  "questions": [
+   "Quelles sont tes trois priorités actuelles et comment pourraient-elles évoluer après le mariage ?",
+   "Comment classerais-tu le couple, la foi, le travail, la famille, les amis, le service et le repos ?",
+   "Comment protégerons-nous des moments réguliers pour notre relation ?",
+   "Que ferons-nous si notre agenda devient trop chargé ?",
+   "Comment déciderons-nous quels engagements accepter ou refuser ?",
+   "Quelle place souhaites-tu réserver au repos, aux loisirs et aux vacances ?",
+   "Comment éviterons-nous que les urgences des autres prennent toujours le dessus sur notre foyer ?",
+   "Comment organiserons-nous nos semaines pour que les tâches invisibles soient aussi prises en compte ?",
+   "Quels signes nous montreront que nous négligeons notre relation ou notre santé ?",
+   "À quelle fréquence voulons-nous faire un point sur nos priorités et notre équilibre ?"
+  ]
+ },
+ {
+  "num": 23,
+  "titre": "Routines, rituels et rendez-vous de couple",
+  "questions": [
+   "Quel rituel simple aimerais-tu partager le matin ou le soir ?",
+   "Souhaites-tu instaurer un rendez-vous régulier en couple, même avec un budget limité ?",
+   "Comment marquerons-nous les anniversaires, réussites et étapes importantes ?",
+   "Quelles traditions aimerais-tu créer pour notre foyer ?",
+   "Comment préserverons-nous des conversations profondes au milieu des tâches quotidiennes ?",
+   "Quel rituel adopterons-nous après un conflit pour nous reconnecter de manière saine ?",
+   "Comment garderons-nous une place pour la spontanéité et la nouveauté ?",
+   "Quels moments souhaitons-nous réserver sans écran ni interruption ?",
+   "Comment adapterons-nous nos routines aux périodes de travail intense, de parentalité ou de maladie ?",
+   "Quel bilan de couple aimerions-nous faire chaque semaine ou chaque mois ?"
+  ]
+ },
+ {
+  "num": 24,
+  "titre": "Voyages, mobilité et changements de lieu",
+  "questions": [
+   "Quelle importance les voyages ont-ils dans ta vision de la vie ?",
+   "Quels types de voyages préfères-tu : repos, découverte, famille, mission, travail ou aventure ?",
+   "Quel budget et quelle fréquence de voyage seraient réalistes pour notre foyer ?",
+   "Comment déciderons-nous d'un voyage si l'un le souhaite et l'autre non ?",
+   "Serais-tu prêt à vivre dans une autre ville ou un autre pays, et à quelles conditions ?",
+   "Comment évaluerons-nous les conséquences d'un déménagement sur le travail, la famille, l'Église et les enfants ?",
+   "Comment gérerons-nous les déplacements professionnels ou ministériels qui nous séparent ?",
+   "Quelles précautions prendrons-nous pour la sécurité, les documents, l'assurance et la santé en voyage ?",
+   "Comment garderons-nous un lien de couple pendant une absence prolongée ?",
+   "Comment déciderons-nous si une opportunité à l'étranger sert réellement notre projet commun ?"
+  ]
+ },
+ {
+  "num": 25,
+  "titre": "Amis, réseaux sociaux et limites relationnelles",
+  "questions": [
+   "Quelle place tes amitiés occupent-elles dans ta vie et comment souhaites-tu les préserver après le mariage ?",
+   "Quelles limites te semblent importantes dans les relations individuelles avec des personnes susceptibles de créer une ambiguïté affective ?",
+   "Quelles règles souhaitons-nous adopter pour les messages privés, les confidences et les échanges en ligne ?",
+   "Qu'est-ce qui constitue pour toi une infidélité émotionnelle ou numérique ?",
+   "Comment gérerons-nous les désaccords concernant une amitié particulière ?",
+   "Quelles informations sur notre couple pouvons-nous publier ou partager sur les réseaux sociaux ?",
+   "Comment réagirions-nous si un ami encourageait des comportements qui fragilisent notre engagement ?",
+   "Comment garderons-nous des amitiés saines sans exclure le couple de toute vie sociale ?",
+   "Quelles limites poserons-nous aux confidences conjugales faites aux amis ?",
+   "Comment aborderons-nous la jalousie de manière honnête sans contrôle abusif ni surveillance ?"
+  ]
+ },
+ {
+  "num": 26,
+  "titre": "Culture, traditions et identité du foyer",
+  "questions": [
+   "Quelles traditions culturelles ou familiales sont essentielles pour toi ?",
+   "Quelles langues souhaites-tu parler à la maison ou transmettre à nos enfants ?",
+   "Comment célébrerons-nous les fêtes religieuses, culturelles et familiales ?",
+   "Quelles traditions souhaites-tu conserver, adapter ou ne pas reproduire ?",
+   "Comment gérerons-nous les différences de région, d'ethnie, de langue ou de coutumes entre nos familles ?",
+   "Comment déciderons-nous des dépenses liées aux cérémonies, cadeaux, funérailles ou événements familiaux ?",
+   "Quelles attentes entourent la dot, les cérémonies coutumières ou civiles et le mariage religieux dans nos familles ?",
+   "Comment éviterons-nous que la pression sociale impose des dépenses au-delà de nos moyens ?",
+   "Quelles valeurs communes voulons-nous mettre au cœur de notre foyer malgré nos différences culturelles ?",
+   "Comment réagirons-nous si une tradition entre en conflit avec nos convictions, notre sécurité ou notre budget ?"
+  ]
+ },
+ {
+  "num": 27,
+  "titre": "Église, communauté et service",
+  "questions": [
+   "Dans quelle communauté chrétienne souhaites-tu être engagé après le mariage ?",
+   "Comment choisirons-nous une Église si nous appartenons à des communautés différentes ?",
+   "Quelle fréquence de participation aux cultes, réunions et activités souhaitons-nous ?",
+   "Comment équilibrerons-nous les responsabilités ecclésiales et le temps nécessaire au couple ?",
+   "Quelles limites poserons-nous si un responsable religieux intervient excessivement dans nos décisions privées ?",
+   "Comment vérifierons-nous qu'un conseil spirituel est sage, responsable et respectueux de notre liberté ?",
+   "Souhaitons-nous pratiquer l'hospitalité, le mentorat ou le service communautaire, et avec quelles limites ?",
+   "Comment réagirions-nous si nous étions déçus par une Église ou un responsable ?",
+   "Comment protégerons-nous les enfants d'une pression religieuse malsaine tout en leur transmettant notre foi ?",
+   "Comment servir ensemble sans supposer que nous devons nécessairement avoir le même rôle ou la même disponibilité ?"
+  ]
+ },
+ {
+  "num": 28,
+  "titre": "Éthique, intégrité et décisions difficiles",
+  "questions": [
+   "Quelles conduites constitueraient pour toi une rupture majeure de confiance ?",
+   "Comment définis-tu l'honnêteté dans les finances, les relations, le travail et la vie numérique ?",
+   "Quelles limites posons-nous concernant le mensonge, les secrets et les omissions importantes ?",
+   "Comment réagirions-nous si l'un de nous commettait une faute grave ou faisait un choix contraire à nos valeurs ?",
+   "Quels sujets doivent être discutés avant le mariage pour éviter une découverte tardive qui changerait notre décision ?",
+   "Comment traiterons-nous les désaccords sur des sujets moraux ou sociaux importants ?",
+   "Comment reconnaîtrons-nous qu'une décision prise au nom de la foi est en réalité motivée par la peur, la pression ou l'intérêt personnel ?",
+   "Quelles règles établirons-nous concernant les cadeaux, faveurs, conflits d'intérêts ou engagements secrets ?",
+   "Comment préserverons-nous la transparence sans confondre honnêteté et droit de tout contrôler chez l'autre ?",
+   "Quels principes nous aideront à prendre une décision difficile en restant justes, prudents et respectueux ?"
+  ]
+ },
+ {
+  "num": 29,
+  "titre": "Préparation concrète du mariage et aspects légaux",
+  "questions": [
+   "Avons-nous clarifié nos motivations et choisi librement de nous engager, sans pression familiale, financière ou religieuse ?",
+   "Quelles démarches civiles, religieuses et coutumières sont nécessaires dans notre situation ?",
+   "Quels documents, délais, frais et témoins devons-nous prévoir pour les différentes formalités ?",
+   "Avons-nous discuté du logement, du budget de la cérémonie et des dépenses après le mariage ?",
+   "Quels engagements financiers, dettes, obligations familiales ou responsabilités légales doivent être clarifiés ?",
+   "Avons-nous besoin de conseils juridiques locaux sur le régime matrimonial, les biens ou les droits de chacun ?",
+   "Avons-nous parlé de nos attentes concernant le nom, les documents, les biens et les décisions administratives après le mariage ?",
+   "Quelles personnes accompagneront notre préparation et comment choisir des personnes fiables et discrètes ?",
+   "Quels sujets restent non résolus et doivent être discutés avant de fixer ou de maintenir la date du mariage ?",
+   "Avons-nous pris le temps de vérifier que nous pouvons dire oui librement, en connaissance de cause et sans menace ?"
+  ]
+ },
+ {
+  "num": 30,
+  "titre": "Croissance, projets communs et bilan du couple",
+  "questions": [
+   "Quelles sont les trois forces principales de notre relation aujourd'hui ?",
+   "Quels sont les sujets sur lesquels nous avons encore des désaccords importants ?",
+   "Comment allons-nous continuer à apprendre à nous connaître après le mariage ?",
+   "À quelle fréquence souhaitons-nous faire un bilan de notre relation ?",
+   "Quels objectifs voulons-nous fixer pour la première année de mariage, puis les années suivantes ?",
+   "Comment réagirons-nous si nos rêves ou nos convictions évoluent avec le temps ?",
+   "Quels signes nous montreront que nous avons besoin d'un accompagnement extérieur ?",
+   "Comment continuerons-nous à exprimer gratitude, tendresse, respect et admiration ?",
+   "Quelles habitudes voulons-nous instaurer pour prévenir l'éloignement et les non-dits ?",
+   "Qu'est-ce qui te permettrait de te sentir en sécurité, respecté et libre de grandir dans ce mariage ?"
+  ]
+ }
+]
