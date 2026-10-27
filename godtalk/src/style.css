@@ -359,3 +359,15 @@ ul.dash li::before {
 .p-bref .verbs b { display: block; font: 300 15pt/1.1 "Outfit"; margin-bottom: 1.6mm; }
 .p-bref .verbs span { font-size: 7.6pt; line-height: 1.45; color: var(--mute-l); display: block; padding-right: 3mm; }
 .pole.B .ft .t { letter-spacing: .12em; }
+
+/* coordonnées du fondateur */
+.p-eng .sig .who { text-align: right; }
+.p-eng .contact { display: flex; justify-content: flex-end; gap: 6mm; margin-top: 4mm; padding-top: 3mm; border-top: .25mm solid var(--line-l); }
+.p-eng .contact a { font: 400 8.4pt/1.4 "Inter"; color: var(--ink); text-decoration: none; }
+.back .contact-back { position: absolute; left: 0; right: 0; bottom: 42mm; z-index: 2; text-align: center; }
+.back .contact-back .label { color: var(--gold); opacity: 1; margin-bottom: 3mm; }
+.back .contact-back strong { display: block; font: 300 12pt/1.3 "Outfit"; color: var(--paper); }
+.back .contact-back span { display: block; font: 400 6.4pt/1.6 "Outfit"; letter-spacing: .24em; text-transform: uppercase; color: rgba(243,240,232,.55); margin-bottom: 2.6mm; }
+.back .contact-back a { display: block; font: 400 8.6pt/1.6 "Inter"; color: rgba(243,240,232,.85); text-decoration: none; }
+.p-eng .sig { display: block; }
+.p-eng .sig .who { margin-top: 6mm; }

@@ -28,5 +28,5 @@ Le script de génération signale tout débordement de texte détecté.
 
 ## Points à compléter
 
-- Nom du fondateur et coordonnées (page 22, `src/index.html`, bloc `.sig`).
+- Coordonnées du fondateur : page 22 (bloc `.sig` / `.contact`) et 4e de couverture (bloc `.contact-back`) dans `src/index.html`.
 - Les photographies sont des visuels d'illustration : vérifier leurs droits d'usage avant diffusion publique, et les remplacer progressivement par des réalisations GODTALK.
