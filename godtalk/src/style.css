@@ -1,0 +1,361 @@
+/* GODTALK — Vision, ambition et projet de développement
+   Feuille de style d'impression (A4 vertical, rendu Chromium) */
+
+@font-face { font-family: "Outfit"; font-weight: 200; src: url("../assets/fonts/Outfit-200.ttf"); }
+@font-face { font-family: "Outfit"; font-weight: 300; src: url("../assets/fonts/Outfit-300.ttf"); }
+@font-face { font-family: "Outfit"; font-weight: 400; src: url("../assets/fonts/Outfit-400.ttf"); }
+@font-face { font-family: "Outfit"; font-weight: 500; src: url("../assets/fonts/Outfit-500.ttf"); }
+@font-face { font-family: "Outfit"; font-weight: 600; src: url("../assets/fonts/Outfit-600.ttf"); }
+@font-face { font-family: "Inter"; font-weight: 300; src: url("../assets/fonts/Inter-300.ttf"); }
+@font-face { font-family: "Inter"; font-weight: 400; src: url("../assets/fonts/Inter-400.ttf"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url("../assets/fonts/Inter-500.ttf"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: url("../assets/fonts/Inter-600.ttf"); }
+@font-face { font-family: "Cormorant"; font-style: italic; font-weight: 300; src: url("../assets/fonts/Cormorant-300i.ttf"); }
+@font-face { font-family: "Cormorant"; font-style: italic; font-weight: 400; src: url("../assets/fonts/Cormorant-400i.ttf"); }
+@font-face { font-family: "Cormorant"; font-style: italic; font-weight: 500; src: url("../assets/fonts/Cormorant-500i.ttf"); }
+
+:root {
+  --ink: #0B0B0C;
+  --char: #151619;
+  --char-2: #1E1F23;
+  --line-d: rgba(243, 240, 232, .16);
+  --paper: #F3F0E8;
+  --paper-2: #E8E4DA;
+  --line-l: rgba(11, 11, 12, .14);
+  --mute-d: #9A978F;
+  --mute-l: #66645F;
+  --gold: #C8A96A;
+  --gold-deep: #A88B4E;
+  --m: 20mm;           /* marge latérale */
+}
+
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #555; }
+body {
+  font-family: "Inter", sans-serif; font-weight: 400; font-size: 8.6pt; line-height: 1.6;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  font-feature-settings: "kern", "liga";
+  hyphens: manual;
+}
+
+.page {
+  width: 210mm; height: 297mm; position: relative; overflow: hidden;
+  break-after: page; page-break-after: always;
+}
+.page:last-child { break-after: auto; page-break-after: auto; }
+.dark  { background: var(--ink);  color: var(--paper); }
+.char  { background: var(--char); color: var(--paper); }
+.light { background: var(--paper); color: var(--ink); }
+
+/* ---------- en-tête / pied de page ---------- */
+.hd {
+  position: absolute; top: 11mm; left: var(--m); right: var(--m); z-index: 5;
+  display: flex; justify-content: space-between; align-items: center;
+  font: 500 6.2pt/1 "Outfit"; letter-spacing: .24em; text-transform: uppercase;
+}
+.hd img { height: 4.2mm; display: block; }
+.hd span { opacity: .55; }
+.ft {
+  position: absolute; bottom: 10mm; left: var(--m); right: var(--m); z-index: 5;
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 2.4mm; border-top: .25mm solid var(--line-l);
+  font: 400 6.2pt/1 "Outfit"; letter-spacing: .2em; text-transform: uppercase;
+}
+.dark .ft, .char .ft { border-top-color: var(--line-d); }
+.ft .t { opacity: .5; }
+.ft .n { font-weight: 500; letter-spacing: .12em; }
+.ft .n b { color: var(--gold); font-weight: 500; }
+
+/* ---------- typographie ---------- */
+.kicker {
+  font: 500 6.8pt/1.3 "Outfit"; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--gold); display: flex; align-items: center; gap: 3mm;
+}
+.kicker::before { content: ""; width: 9mm; height: .3mm; background: var(--gold); display: block; }
+.kicker.plain::before { display: none; }
+h1, h2, h3 { font-family: "Outfit"; font-weight: 300; margin: 0; letter-spacing: -.012em; }
+h1 { font-size: 40pt; line-height: 1.02; }
+h2 { font-size: 27pt; line-height: 1.08; }
+h3 { font-size: 12.5pt; line-height: 1.25; font-weight: 400; letter-spacing: 0; }
+h1 em, h2 em, h3 em { font-style: normal; color: var(--gold); }
+.lead { font: 300 11pt/1.58 "Inter"; margin: 0; }
+.dark .lead, .char .lead { color: rgba(243,240,232,.86); }
+p { margin: 0 0 2.6mm; }
+.mute { color: var(--mute-l); }
+.dark .mute, .char .mute { color: var(--mute-d); }
+.quote { font: italic 300 19pt/1.25 "Cormorant"; color: var(--gold); margin: 0; }
+.label {
+  font: 500 6.4pt/1.3 "Outfit"; letter-spacing: .26em; text-transform: uppercase;
+  margin: 0 0 2.4mm; opacity: .6;
+}
+.gold { color: var(--gold); }
+.rule { height: .3mm; background: var(--gold); width: 14mm; margin: 6mm 0; }
+
+ul.dash { list-style: none; margin: 0; padding: 0; }
+ul.dash li { position: relative; padding-left: 4.6mm; margin-bottom: 1.7mm; }
+ul.dash li::before {
+  content: ""; position: absolute; left: 0; top: .72em; width: 2.4mm; height: .3mm; background: var(--gold);
+}
+
+/* ---------- photo ---------- */
+.photo { position: absolute; overflow: hidden; background: var(--char); }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo .tag {
+  position: absolute; right: 4mm; bottom: 3.4mm; z-index: 3;
+  font: 400 5.4pt/1 "Outfit"; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(243,240,232,.7);
+}
+.shade-b::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(11,11,12,.55) 0%, rgba(11,11,12,0) 22%, rgba(11,11,12,0) 55%, rgba(11,11,12,.95) 100%);
+}
+
+/* ---------- 1. couverture ---------- */
+.cover .photo { inset: 0; }
+.cover .photo::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(11,11,12,.7) 0%, rgba(11,11,12,.05) 24%, rgba(11,11,12,.1) 46%, rgba(11,11,12,.92) 74%, #0B0B0C 100%);
+}
+.cover .top { position: absolute; top: 16mm; left: var(--m); right: var(--m); z-index: 4;
+  display: flex; justify-content: space-between; align-items: flex-start; }
+.cover .top img { width: 56mm; }
+.cover .top .status { font: 500 6.2pt/1.7 "Outfit"; letter-spacing: .26em; text-transform: uppercase; text-align: right; color: rgba(243,240,232,.8); }
+.cover .bottom { position: absolute; left: var(--m); right: var(--m); bottom: 18mm; z-index: 4; }
+.cover h1 { font-size: 39pt; font-weight: 300; margin: 5mm 0 6mm; }
+.cover .sub { font: 400 7pt/1 "Outfit"; letter-spacing: .34em; text-transform: uppercase; color: rgba(243,240,232,.75); }
+.cover .sign { font: italic 300 16pt/1.3 "Cormorant"; color: var(--gold); margin: 9mm 0 0; }
+.cover .meta { display: flex; justify-content: space-between; margin-top: 12mm; padding-top: 3mm;
+  border-top: .25mm solid rgba(243,240,232,.22);
+  font: 400 6.2pt/1 "Outfit"; letter-spacing: .24em; text-transform: uppercase; color: rgba(243,240,232,.6); }
+
+/* ---------- 2. cadrage + sommaire ---------- */
+.p-toc .inner { position: absolute; top: 30mm; left: var(--m); right: var(--m); bottom: 24mm;
+  display: grid; grid-template-columns: 62mm 1fr; column-gap: 16mm; }
+.p-toc .cadrage { padding-top: 2mm; }
+.p-toc .cadrage h3 { font-size: 15pt; font-weight: 300; margin: 5mm 0 6mm; }
+.p-toc .cadrage p { color: var(--mute-l); }
+.p-toc .badge { display: inline-block; margin-top: 4mm; padding: 2mm 3mm; border: .25mm solid var(--gold);
+  font: 500 6.2pt/1 "Outfit"; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-deep); }
+.toc h2 { font-size: 40pt; margin: 3mm 0 9mm; }
+.toc a { display: grid; grid-template-columns: 11mm 1fr auto; align-items: baseline;
+  padding: 2.55mm 0; border-bottom: .25mm solid var(--line-l); color: inherit; text-decoration: none; }
+.toc a .k { font: 500 7pt/1 "Outfit"; color: var(--gold-deep); letter-spacing: .1em; }
+.toc a .t { font: 300 11.5pt/1.2 "Outfit"; }
+.toc a .t small { display: block; font: 400 7pt/1.4 "Inter"; color: var(--mute-l); margin-top: .8mm; }
+.toc a .p { font: 400 7.4pt/1 "Outfit"; letter-spacing: .1em; color: var(--mute-l); }
+
+/* ---------- 3. manifeste ---------- */
+.p-manifeste .rays { position: absolute; inset: 0; z-index: 0; }
+.p-manifeste .inner { position: absolute; top: 34mm; left: var(--m); right: 30mm; bottom: 26mm; z-index: 2; }
+.p-manifeste h2 { font-size: 30pt; line-height: 1.1; margin: 8mm 0 11mm; }
+.p-manifeste .body { margin-left: 42mm; max-width: 108mm; }
+.p-manifeste .body p { font: 300 10.4pt/1.62 "Inter"; color: rgba(243,240,232,.85); margin-bottom: 4.4mm; }
+.p-manifeste .verbs { font: 300 15pt/1.4 "Outfit"; letter-spacing: .02em; margin: 7mm 0; color: var(--paper); }
+.p-manifeste .verbs i { font-style: normal; color: var(--gold); padding: 0 1.6mm; }
+.p-manifeste .body p.quote { margin-top: 9mm; font: italic 300 18pt/1.3 "Cormorant"; color: var(--gold); }
+
+/* ---------- pages de chapitre génériques ---------- */
+.inner { position: absolute; top: 28mm; left: var(--m); right: var(--m); bottom: 24mm; }
+.chapter-no { font: 200 64pt/0.9 "Outfit"; color: var(--gold); letter-spacing: -.02em; }
+
+/* projet en bref */
+.p-bref .grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12mm; margin-top: 9mm; }
+.p-bref .col { border-top: .3mm solid var(--ink); padding-top: 4mm; }
+.p-bref .col.now { border-top-color: var(--gold); }
+.p-bref .objectif { position: absolute; left: 0; right: 0; bottom: 0; background: var(--ink); color: var(--paper);
+  padding: 8mm 9mm 8.5mm; display: grid; grid-template-columns: 36mm 1fr; column-gap: 8mm; align-items: start; }
+.p-bref .objectif p { font: 300 12.4pt/1.42 "Outfit"; margin: 0; }
+
+/* raison d'être */
+.p-raison .conv { display: grid; grid-template-columns: 14mm 1fr; column-gap: 5mm; padding: 5mm 0; border-top: .25mm solid var(--line-d); }
+.p-raison .conv .n { font: 200 20pt/1 "Outfit"; color: var(--gold); }
+.p-raison .conv h3 { margin-bottom: 1.8mm; }
+.p-raison .conv p { color: rgba(243,240,232,.76); margin: 0; }
+.p-raison .pos { margin-top: 7mm; background: var(--char-2); padding: 7mm 8mm 6mm; }
+.p-raison .pos ul.dash { columns: 2; column-gap: 9mm; }
+.p-raison .pos ul.dash li { break-inside: avoid; color: rgba(243,240,232,.84); }
+
+/* vision */
+.p-vision .rings { position: absolute; right: -112mm; top: 70mm; width: 200mm; height: 200mm; z-index: 0; opacity: .8; }
+.p-vision .inner { z-index: 2; }
+.p-vision .vm { margin-top: 12mm; max-width: 118mm; }
+.p-vision .vm .item { padding: 6.4mm 0; border-top: .25mm solid var(--line-d); display: grid; grid-template-columns: 30mm 1fr; column-gap: 6mm; }
+.p-vision .vm .item .label { opacity: 1; color: var(--gold); margin-top: 1.6mm; }
+.p-vision .vm .item p { font: 300 12pt/1.48 "Outfit"; margin: 0; color: var(--paper); }
+.p-vision .vm .item.small p { font: 300 9.4pt/1.6 "Inter"; color: rgba(243,240,232,.82); }
+
+/* valeurs */
+.p-valeurs .vgrid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12mm; row-gap: 0; margin-top: 11mm; }
+.p-valeurs .v { border-top: .25mm solid var(--line-l); padding: 5.5mm 0 6mm; display: grid; grid-template-columns: 11mm 1fr; }
+.p-valeurs .v .n { font: 500 7pt/1.9 "Outfit"; color: var(--gold-deep); letter-spacing: .1em; }
+.p-valeurs .v h3 { font-size: 17pt; font-weight: 300; margin-bottom: 2mm; }
+.p-valeurs .v p { color: var(--mute-l); margin: 0; }
+.p-valeurs .band { position: absolute; left: 0; right: 0; bottom: 0; border-top: .3mm solid var(--gold); padding-top: 7mm;
+  display: grid; grid-template-columns: 1fr 64mm; column-gap: 12mm; align-items: end; }
+
+/* vue d'ensemble des pôles */
+.p-poles .matrix { margin-top: 10mm; width: 100%; border-collapse: collapse; }
+.p-poles .matrix th { font: 500 6.2pt/1.2 "Outfit"; letter-spacing: .22em; text-transform: uppercase; color: var(--gold);
+  text-align: center; padding: 0 0 3.4mm; border-bottom: .3mm solid var(--gold); }
+.p-poles .matrix th:first-child { text-align: left; }
+.p-poles .matrix td { border-bottom: .25mm solid var(--line-d); padding: 3.1mm 0; text-align: center; vertical-align: middle; }
+.p-poles .matrix td:first-child { text-align: left; }
+.p-poles .matrix a { color: inherit; text-decoration: none; display: grid; grid-template-columns: 10mm 1fr; align-items: baseline; }
+.p-poles .matrix .k { font: 500 7pt/1 "Outfit"; color: var(--gold); letter-spacing: .1em; }
+.p-poles .matrix .t { font: 300 11.5pt/1.2 "Outfit"; }
+.p-poles .matrix .t small { display: block; font: 400 6.8pt/1.4 "Inter"; color: var(--mute-d); margin-top: .5mm; }
+.dot { display: inline-block; width: 2.6mm; height: 2.6mm; border-radius: 50%; background: var(--gold); }
+.dot.o { background: transparent; border: .3mm solid rgba(200,169,106,.75); width: 2.4mm; height: 2.4mm; }
+
+/* ---------- pages pôles ---------- */
+.pole .vis { position: absolute; overflow: hidden; background: var(--char); }
+.pole.A .vis { top: 0; left: 0; right: 0; height: 118mm; }
+.pole.B .vis { top: 0; left: 0; bottom: 0; width: 80mm; }
+.pole .vis > img, .pole .vis > svg { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pole.A .vis::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(11,11,12,.6) 0%, rgba(11,11,12,0) 26%, rgba(11,11,12,0) 70%, rgba(11,11,12,.35) 100%);
+}
+.pole.A.light .vis::after { background: linear-gradient(180deg, rgba(11,11,12,.6) 0%, rgba(11,11,12,0) 26%); }
+.pole.B .vis::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(11,11,12,.55) 0%, rgba(11,11,12,0) 18%);
+}
+.pole.A .hd, .pole.B .hd { color: var(--paper); }
+.pole .tag { position: absolute; z-index: 3; font: 400 5.4pt/1 "Outfit"; letter-spacing: .2em; text-transform: uppercase; color: rgba(243,240,232,.72); }
+.pole.A .tag { right: var(--m); top: 110mm; }
+.pole.B .tag { left: 6mm; bottom: 12mm; }
+.pole.B .hd, .pole.B .ft { left: 94mm; right: 18mm; }
+.pole.B.light .hd { color: var(--ink); }
+
+.pole .txt { position: absolute; }
+.pole.A .txt { top: 128mm; left: var(--m); right: var(--m); bottom: 22mm; }
+.pole.B .txt { top: 28mm; left: 94mm; right: 18mm; bottom: 22mm; }
+.pole .head { display: grid; grid-template-columns: 38mm 1fr; column-gap: 4mm; align-items: start; }
+.pole.B .head { grid-template-columns: 1fr; }
+.pole .num { font: 200 58pt/.86 "Outfit"; color: var(--gold); letter-spacing: -.02em; }
+.pole .num small { display: block; font: 500 6.2pt/1 "Outfit"; letter-spacing: .24em; text-transform: uppercase; color: inherit; opacity: .55; margin-top: 3mm; }
+.pole.B .num { font-size: 50pt; margin-bottom: 5mm; display: flex; align-items: flex-end; gap: 5mm; }
+.pole.B .num small { margin: 0 0 1.4mm; }
+.pole h2 { font-size: 25pt; }
+.pole .accroche { font: 300 10.4pt/1.55 "Inter"; margin-top: 4mm; }
+.pole.dark .accroche { color: rgba(243,240,232,.84); }
+.pole.light .accroche { color: #2b2a28; }
+.pole .cols { display: grid; grid-template-columns: 1.15fr 1fr 1.15fr; column-gap: 7mm; margin-top: 8mm; }
+.pole.B .cols { grid-template-columns: 1fr 1fr; row-gap: 6mm; margin-top: 7mm; }
+.pole.B .cols .c1 { grid-column: 1 / -1; }
+.pole .cols > div { border-top: .3mm solid currentColor; padding-top: 3.4mm; }
+.pole.dark .cols > div { border-top-color: var(--line-d); }
+.pole.light .cols > div { border-top-color: var(--line-l); }
+.pole .cols > div.need { border-top-color: var(--gold); }
+.pole .cols .label { opacity: 1; color: var(--gold); }
+.pole.light .cols .label { color: var(--gold-deep); }
+.pole .cols ul.dash li { font-size: 8.3pt; }
+.pole.B .cols .c1 ul.dash { columns: 2; column-gap: 7mm; }
+.pole.B .cols .c1 ul.dash li { break-inside: avoid; }
+.pole .horizon { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 4mm;
+  padding: 3.4mm 4mm; font: 400 7.4pt/1.35 "Inter"; }
+.pole.dark .horizon { background: var(--char-2); }
+.pole.light .horizon { background: var(--paper-2); }
+.pole .horizon b { font: 500 6.2pt/1 "Outfit"; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
+.pole.light .horizon b { color: var(--gold-deep); }
+.pole .horizon .steps { display: flex; gap: 1.2mm; }
+.pole .horizon .steps i { width: 5mm; height: 1.4mm; background: rgba(200,169,106,.25); display: block; }
+.pole .horizon .steps i.on { background: var(--gold); }
+.pole .note { margin-top: 6mm; padding: 4.4mm 5mm; border-left: .5mm solid var(--gold); font: 300 9.2pt/1.5 "Inter"; }
+.pole.dark .note { background: rgba(200,169,106,.07); }
+
+/* ---------- clients ---------- */
+.p-clients .seg { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10mm; margin-top: 10mm; }
+.p-clients .s { border-top: .25mm solid var(--line-l); padding: 4.2mm 0 4.6mm; display: grid; grid-template-columns: 10mm 1fr; }
+.p-clients .s .n { font: 500 7pt/1.9 "Outfit"; color: var(--gold-deep); letter-spacing: .1em; }
+.p-clients .s h3 { font-size: 11.5pt; margin-bottom: 1.4mm; }
+.p-clients .s p { margin: 0; color: var(--mute-l); }
+.p-clients .etude { position: absolute; left: 0; right: 0; bottom: 0; background: var(--ink); color: var(--paper); padding: 7mm 8mm;
+  display: grid; grid-template-columns: 58mm 1fr; column-gap: 8mm; }
+.p-clients .etude ul.dash { columns: 2; column-gap: 7mm; }
+.p-clients .etude ul.dash li { break-inside: avoid; color: rgba(243,240,232,.85); }
+
+/* ---------- modèle économique ---------- */
+.p-modele .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3.4mm; margin-top: 9mm; }
+.p-modele .card { background: var(--char-2); padding: 5mm 4.6mm 5.4mm; min-height: 45mm; }
+.p-modele .card .n { font: 200 18pt/1 "Outfit"; color: var(--gold); margin-bottom: 3.4mm; }
+.p-modele .card h3 { font-size: 11pt; margin-bottom: 1.8mm; }
+.p-modele .card p { margin: 0; color: rgba(243,240,232,.72); font-size: 8.1pt; line-height: 1.55; }
+.p-modele .prud { margin-top: 8mm; display: grid; grid-template-columns: 52mm 1fr; column-gap: 8mm; border-top: .3mm solid var(--gold); padding-top: 6mm; }
+.p-modele .prud ul.dash li { color: rgba(243,240,232,.84); }
+
+/* ---------- ressources ---------- */
+.p-res .rgrid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10mm; row-gap: 7mm; margin-top: 9mm; }
+.p-res .r { border-top: .3mm solid var(--ink); padding-top: 3.6mm; }
+.p-res .r.g { border-top-color: var(--gold); }
+.p-res .r h3 { font-size: 13pt; font-weight: 300; margin-bottom: 3mm; }
+.p-res .r ul.dash li { margin-bottom: 1.3mm; font-size: 8.2pt; line-height: 1.5; }
+.p-res .principe { position: absolute; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: .25mm solid var(--line-l); }
+.p-res .principe div { padding: 4.4mm 4.4mm 4.8mm; border-right: .25mm solid var(--line-l); }
+.p-res .principe div:last-child { border-right: 0; }
+.p-res .principe b { display: block; font: 500 6.4pt/1 "Outfit"; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 2mm; }
+.p-res .principe span { font-size: 7.8pt; line-height: 1.45; color: var(--mute-l); display: block; }
+
+/* ---------- feuille de route ---------- */
+.p-route .track { position: relative; margin-top: 18mm; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 5mm; }
+.p-route .track::before { content: ""; position: absolute; left: 0; right: 0; top: 4mm; height: .3mm; background: linear-gradient(90deg, var(--gold), rgba(200,169,106,.25)); }
+.p-route .st .node { width: 8mm; height: 8mm; border-radius: 50%; border: .35mm solid var(--gold); background: var(--ink); position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: center; font: 500 7.4pt/1 "Outfit"; color: var(--gold); }
+.p-route .st:first-child .node { background: var(--gold); color: var(--ink); }
+.p-route .st .lbl { font: 500 6.2pt/1 "Outfit"; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); margin: 6mm 0 2mm; }
+.p-route .st h3 { font-size: 15pt; font-weight: 300; min-height: 11mm; margin-bottom: 4mm; }
+.p-route .st ul.dash li { font-size: 8.6pt; line-height: 1.52; color: rgba(243,240,232,.84); margin-bottom: 1.6mm; }
+.p-route .st .poles { margin-top: 5mm; padding-top: 3mm; border-top: .25mm solid var(--line-d); font-size: 7.9pt; color: var(--mute-d); line-height: 1.5; }
+.p-route .st .poles b { display: block; font: 500 6pt/1 "Outfit"; letter-spacing: .22em; text-transform: uppercase; color: var(--paper); opacity: .6; margin-bottom: 1.4mm; }
+.p-route .st .pass { margin-top: 4mm; padding: 3.2mm 3.2mm; background: var(--char-2); font-size: 7.9pt; line-height: 1.45; color: rgba(243,240,232,.8); }
+.p-route .st .pass b { display: block; font: 500 6pt/1 "Outfit"; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.4mm; }
+.p-route .disclaimer { position: absolute; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: 8mm 1fr; column-gap: 4mm;
+  border-top: .25mm solid var(--line-d); padding-top: 5mm; font: 300 8.8pt/1.55 "Inter"; color: rgba(243,240,232,.78); }
+.p-route .disclaimer .i { font: 300 22pt/1 "Cormorant"; font-style: italic; color: var(--gold); }
+
+/* ---------- ambition ---------- */
+.p-amb .wrap { display: grid; grid-template-columns: 92mm 1fr; column-gap: 10mm; margin-top: 14mm; }
+.p-amb .circles svg { width: 92mm; height: 92mm; display: block; }
+.p-amb .zone { border-top: .25mm solid var(--line-d); padding: 3.8mm 0 4.2mm; }
+.p-amb .zone h3 { font-size: 12pt; margin-bottom: 1.2mm; }
+.p-amb .zone h3 span { font: 500 6.2pt/1 "Outfit"; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-right: 2.4mm; vertical-align: 1.2pt; }
+.p-amb .zone p { margin: 0; color: rgba(243,240,232,.74); }
+.p-amb .impact { position: absolute; left: 0; right: 0; bottom: 0; }
+.p-amb .impact .list { display: grid; grid-template-columns: repeat(5, 1fr); column-gap: 4mm; border-top: .3mm solid var(--gold); padding-top: 4.4mm; }
+.p-amb .impact .list div { font-size: 7.8pt; line-height: 1.5; color: rgba(243,240,232,.84); }
+.p-amb .impact .list div b { display: block; font: 200 16pt/1 "Outfit"; color: var(--gold); margin-bottom: 2mm; }
+
+/* ---------- engagement ---------- */
+.p-eng .letter { margin-top: 16mm; max-width: 128mm; margin-left: 32mm; }
+.p-eng .letter p { font: 300 10.2pt/1.66 "Inter"; color: #23221f; margin-bottom: 4.2mm; }
+.p-eng .letter p.first::first-letter { font: 300 34pt/0.9 "Outfit"; float: left; margin: 1.2mm 2.4mm 0 0; color: var(--gold-deep); }
+.p-eng .eng { margin: 6mm 0 7mm; border-top: .25mm solid var(--line-l); }
+.p-eng .eng div { display: grid; grid-template-columns: 9mm 1fr; padding: 2.4mm 0; border-bottom: .25mm solid var(--line-l); font: 400 9pt/1.45 "Inter"; }
+.p-eng .eng div b { font: 500 7pt/1.8 "Outfit"; color: var(--gold-deep); }
+.p-eng .letter .sig p.quote { font: italic 300 19pt/1.3 "Cormorant"; color: var(--gold-deep); margin: 0; }
+.p-eng .sig { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 8mm; }
+.p-eng .sig .who { font: 500 6.4pt/1.6 "Outfit"; letter-spacing: .24em; text-transform: uppercase; color: var(--mute-l); }
+.p-eng .sig .who strong { display: block; font: 300 13pt/1.2 "Outfit"; letter-spacing: 0; text-transform: none; color: var(--ink); }
+
+/* ---------- 4e de couverture ---------- */
+.back .glow { position: absolute; inset: 0; }
+.back .center { position: absolute; left: 0; right: 0; top: 104mm; text-align: center; z-index: 2; }
+.back .center img { width: 82mm; }
+.back .center .sub { margin-top: 9mm; font: 400 6.8pt/1 "Outfit"; letter-spacing: .36em; text-transform: uppercase; color: rgba(243,240,232,.7); }
+.back .center .quote { margin-top: 14mm; font-size: 17pt; line-height: 1.4; }
+.back .foot { position: absolute; left: var(--m); right: var(--m); bottom: 16mm; z-index: 2;
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: 12mm; align-items: end;
+  border-top: .25mm solid var(--line-d); padding-top: 4mm; }
+.back .foot .geo { font: 400 6.4pt/1.8 "Outfit"; letter-spacing: .26em; text-transform: uppercase; color: rgba(243,240,232,.7); }
+.back .foot .credits { font: 400 6.4pt/1.5 "Inter"; color: rgba(243,240,232,.5); text-align: right; }
+
+/* bandeau des verbes — projet en bref */
+.p-bref .verbs { margin-top: 13mm; display: grid; grid-template-columns: repeat(4, 1fr); border-top: .25mm solid var(--line-l); border-bottom: .25mm solid var(--line-l); }
+.p-bref .verbs div { padding: 5mm 0 5mm 4mm; border-left: .25mm solid var(--line-l); }
+.p-bref .verbs div:first-child { border-left: 0; padding-left: 0; }
+.p-bref .verbs b { display: block; font: 300 15pt/1.1 "Outfit"; margin-bottom: 1.6mm; }
+.p-bref .verbs span { font-size: 7.6pt; line-height: 1.45; color: var(--mute-l); display: block; padding-right: 3mm; }
+.pole.B .ft .t { letter-spacing: .12em; }
