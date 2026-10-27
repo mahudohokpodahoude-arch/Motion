@@ -1,59 +1,76 @@
-/* Assemblage du document : pages des pôles, visuels, en-têtes, pagination,
-   typographie française et contrôle des débordements. */
+/* Assemblage du document : pages des pôles, mosaïque, matrice, pictogrammes,
+   illustrations, en-têtes, pagination, typographie française et contrôle des débordements. */
 (function () {
   const V = window.GT_VISUALS, POLES = window.GT_POLES;
-  const LOGO = { dark: "../assets/logo/godtalk-logo-blanc.svg", light: "../assets/logo/godtalk-logo-noir.svg" };
+  const LOGO = { white: "../assets/logo/godtalk-logo-blanc.svg", black: "../assets/logo/godtalk-logo-noir.svg" };
   const MATRIX = {          // Concevoir, Produire, Installer, Diffuser (2 = cœur, 1 = contribution)
     photo: [0, 2, 0, 1], video: [1, 2, 0, 1], live: [0, 2, 1, 2], integration: [2, 0, 2, 1],
     evenements: [1, 2, 1, 2], cinema: [2, 2, 0, 1], postprod: [0, 2, 0, 1], ia: [2, 2, 0, 0]
   };
-  const li = a => a.map(x => `<li>${x}</li>`).join("");
+  const STEPS = ["Fondation", "Premières prestations", "Structuration", "Envergure"];
+  const pad = n => String(n).padStart(2, "0");
+  const visualOf = p => p.visual.img
+    ? `<img src="../assets/images/${p.visual.img}" alt="" style="object-position:${p.visual.pos || "50% 50%"}">`
+    : V[p.visual.svg]();
 
-  // ---- pages des pôles
+  // ---- pages des pôles : A (visuel + titre) et B (détail)
   const anchor = document.getElementById("poles-anchor");
   POLES.forEach((p, i) => {
-    const n = String(i + 1).padStart(2, "0");
-    const vis = p.visual.img
-      ? `<img src="../assets/images/${p.visual.img}" alt="" style="object-position:${p.visual.pos || "50% 50%"}">`
-      : V[p.visual.svg]();
-    const steps = [1, 2, 3, 4].map(s => `<i class="${p.horizon.includes(s) ? "on" : ""}"></i>`).join("");
-    const sec = document.createElement("section");
-    sec.className = `page pole ${p.layout} ${p.theme}`;
-    sec.id = "pole-" + p.id;
-    sec.dataset.chapter = "05 — Pôle " + n;
-    sec.dataset.hdTheme = p.layout === "A" ? "dark" : p.theme;
-    sec.innerHTML = `
-      <div class="vis">${vis}</div>${p.tag ? `<span class="tag">${p.tag}</span>` : ""}
-      <div class="txt">
-        <div class="head">
+    const n = pad(i + 1);
+    const a = document.createElement("section");
+    a.className = "page pole-a";
+    a.id = "pole-" + p.id;
+    a.dataset.chapter = `05 — Pôle ${n}`;
+    a.dataset.hd = p.visual.img ? "photo" : "light";
+    a.innerHTML = `
+      <div class="photo ${p.visual.img ? "shade" : ""}">${visualOf(p)}<span class="tag ${p.visual.img ? "" : "light"}">${p.tag}</span></div>
+      <div class="inner">
+        <div class="top">
           <div class="num">${n}<small>Pôle ${n} / 08</small></div>
-          <div><h2>${p.titre}</h2><p class="accroche">${p.accroche}</p></div>
+          <div><h1>${p.titre}</h1><p class="acc">${p.accroche}</p></div>
         </div>
-        <div class="cols">
-          <div class="c1"><div class="label">Ce que nous ferons</div><ul class="dash">${li(p.faire)}</ul></div>
-          <div><div class="label">Pour qui</div><ul class="dash">${li(p.qui)}</ul></div>
-          <div class="need"><div class="label">Ce qu'il faut pour y arriver</div><ul class="dash">${li(p.besoin)}</ul></div>
-        </div>
-        ${p.note ? `<div class="note">${p.note}</div>` : ""}
-        <div class="horizon"><b>Horizon</b><span class="steps">${steps}</span><span>${p.horizonTxt}</span></div>
+        <div class="who"><h4>Pour qui</h4>${p.qui.map(q => `<span class="chip">${q}</span>`).join("")}</div>
       </div>`;
-    anchor.before(sec);
+    anchor.before(a);
+
+    const b = document.createElement("section");
+    b.className = `page pole-b ${p.bg}`;
+    b.id = `pole-${p.id}-b`;
+    b.dataset.chapter = `05 — Pôle ${n} · ${p.court}`;
+    const gauge = STEPS.map((s, k) => `<div class="${p.horizon.includes(k + 1) ? "on" : ""}"><i>Étape ${k + 1}</i>${s}</div>`).join("");
+    b.innerHTML = `
+      <div class="inner">
+        <div class="kicker">Pôle ${n} — ${p.court}</div>
+        <h2>Ce que nous <em>ferons</em></h2>
+        <div class="faire ${p.faire.length > 4 ? "many" : ""}">${p.faire.map((x, k) => `<div class="card"><b>${pad(k + 1)}</b><span>${x}</span></div>`).join("")}</div>
+        <div class="need ${p.bg === "cream" ? "mist" : ""}"><h4>Ce qu'il faut pour y arriver</h4><ul class="check">${p.besoin.map(x => `<li>${x}</li>`).join("")}</ul></div>
+        ${p.note ? `<div class="note-ia"><div class="badge" data-icon="shieldok"></div><p>${p.note}</p></div>` : ""}
+        <div class="horizon push"><h4>Horizon envisagé</h4><div class="gauge">${gauge}</div><p>${p.horizonTxt}</p></div>
+      </div>`;
+    anchor.before(b);
   });
   anchor.remove();
 
-  // ---- matrice des pôles
+  // ---- mosaïque d'ouverture, sommaire des pôles, matrice
+  const mosaic = document.getElementById("mosaic");
+  const tocPoles = document.getElementById("toc-poles");
   const tb = document.querySelector("#pole-matrix tbody");
   POLES.forEach((p, i) => {
-    const n = String(i + 1).padStart(2, "0");
+    const n = pad(i + 1);
+    mosaic.insertAdjacentHTML("beforeend",
+      `<a href="#pole-${p.id}"><div class="tile">${visualOf(p)}<b>${n}</b></div><div class="name">${p.court}</div></a>`);
+    tocPoles.insertAdjacentHTML("beforeend",
+      `<a href="#pole-${p.id}"><span class="t">${n} · ${p.court}</span><span class="p" data-ref="pole-${p.id}"></span></a>`);
     const cells = MATRIX[p.id].map(v => `<td>${v === 2 ? '<span class="dot"></span>' : v === 1 ? '<span class="dot o"></span>' : ""}</td>`).join("");
     tb.insertAdjacentHTML("beforeend",
-      `<tr><td><a href="#pole-${p.id}"><span class="k">${n}</span><span class="t">${p.court}<small>${p.resume}</small></span></a></td>${cells}</tr>`);
+      `<tr><td><a href="#pole-${p.id}"><span class="k">${n}</span><span class="t">${p.court}</span></a></td>${cells}</tr>`);
   });
 
-  // ---- visuels génériques
+  // ---- pictogrammes et illustrations
+  document.querySelectorAll("[data-icon]").forEach(el => { el.innerHTML = V.icon(el.dataset.icon); });
   document.querySelectorAll("[data-visual]").forEach(el => {
-    const name = el.dataset.visual;
-    el.innerHTML = name === "beams" ? V.beams(840, 1188, +(el.dataset.seed || 3)) : V[name]();
+    const d = el.dataset;
+    el.innerHTML = d.visual === "rays" ? V.rays(840, 1188, +(d.seed || 3), d.color, +(d.op || .25)) : V[d.visual]();
   });
 
   // ---- en-têtes, pieds de page, pagination
@@ -62,49 +79,42 @@
   pages.forEach((pg, idx) => {
     pg.dataset.no = idx + 1;
     if (pg.hasAttribute("data-noheader")) return;
-    const theme = pg.dataset.hdTheme || (pg.classList.contains("light") ? "light" : "dark");
+    const onDark = pg.classList.contains("navy") || pg.dataset.hd === "photo";
     pg.insertAdjacentHTML("beforeend",
-      `<div class="hd"><img src="${LOGO[theme]}" alt="GODTALK"><span class="hr">${pg.dataset.chapter || ""}</span></div>
-       <div class="ft"><span class="t">GODTALK — Vision, ambition et projet de développement</span><span class="n"><b>${String(idx + 1).padStart(2, "0")}</b> / ${total}</span></div>`);
+      `<div class="hd ${pg.dataset.hd === "photo" ? "on-photo" : ""}"><img src="${onDark ? LOGO.white : LOGO.black}" alt="GODTALK"><span>${pg.dataset.chapter || ""}</span></div>
+       <div class="ft"><span>GODTALK — Vision, ambition et projet de développement</span><span class="n">${pad(idx + 1)} / ${total}</span></div>`);
   });
   document.querySelectorAll("[data-ref]").forEach(el => {
-    const t = document.getElementById(el.dataset.ref);
-    el.textContent = String(t.dataset.no).padStart(2, "0");
+    el.textContent = pad(document.getElementById(el.dataset.ref).dataset.no);
   });
 
-  // ---- typographie française : espaces insécables fines
+  // ---- typographie française : espaces insécables fines, apostrophes typographiques
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   const NNBSP = " ";
   let node;
   while ((node = walker.nextNode())) {
-    if (node.parentElement.closest("script,svg,style")) continue;
-    let t = node.nodeValue;
-    t = t.replace(/ ([:;!?»])/g, NNBSP + "$1").replace(/« /g, "«" + NNBSP).replace(/'/g, "’");
-    node.nodeValue = t;
+    if (node.parentElement.closest("script,style")) continue;
+    node.nodeValue = node.nodeValue
+      .replace(/ ([:;!?»])/g, NNBSP + "$1").replace(/« /g, "«" + NNBSP).replace(/'/g, "’");
   }
 
   // ---- contrôle qualité : débordements
   window.__qa = [];
   const check = () => {
     pages.forEach(pg => {
+      const inner = pg.querySelector(".inner");
+      if (inner && inner.scrollHeight > inner.clientHeight + 1)
+        window.__qa.push(`page ${pg.dataset.no} (${pg.id}) : contenu trop haut de ${((inner.scrollHeight - inner.clientHeight) / 3.78).toFixed(1)} mm`);
       const pr = pg.getBoundingClientRect();
-      pg.querySelectorAll(".inner > *, .txt > *, .txt .cols > div, .letter > *, .horizon, .ft, .hd, .cover .bottom").forEach(el => {
+      pg.querySelectorAll(".inner *:not(svg *)").forEach(el => {
         const r = el.getBoundingClientRect();
-        if (r.bottom > pr.bottom - 9 * 3.78 && !el.matches(".ft") || r.right > pr.right + .5)
-          window.__qa.push(`page ${pg.dataset.no} (${pg.id}) : ${el.className || el.tagName} dépasse (bas ${Math.round((r.bottom - pr.top) / 3.78)} mm)`);
+        if (r.width && r.right > pr.right - 15 * 3.78 + 2)
+          window.__qa.push(`page ${pg.dataset.no} (${pg.id}) : ${el.className || el.tagName} dépasse à droite`);
       });
-      // chevauchement texte / bloc ancré en bas
-      const bottomBlock = pg.querySelector(".objectif, .band, .etude, .principe, .disclaimer, .impact, .horizon, .p-raison .inner > p.mute");
-      if (bottomBlock) {
-        const bb = bottomBlock.getBoundingClientRect();
-        const container = bottomBlock.parentElement;
-        [...container.children].filter(c => c !== bottomBlock && getComputedStyle(c).position !== "absolute").forEach(c => {
-          const r = c.getBoundingClientRect();
-          if (r.bottom > bb.top - 2) window.__qa.push(`page ${pg.dataset.no} (${pg.id}) : ${c.className || c.tagName} chevauche le bloc bas (${Math.round(r.bottom - bb.top)} px)`);
-        });
-      }
     });
     window.__ready = true;
   };
-  document.fonts.ready.then(() => Promise.all([...document.images].map(im => im.complete ? 1 : new Promise(r => { im.onload = im.onerror = r; })))).then(check);
+  document.fonts.ready
+    .then(() => Promise.all([...document.images].map(im => im.complete ? 1 : new Promise(r => { im.onload = im.onerror = r; }))))
+    .then(check);
 })();

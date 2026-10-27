@@ -1,5 +1,6 @@
-"""Étalonnage commun des visuels d'illustration : désaturation légère,
-noirs denses, dominante chaude discrète, grain fin. Sortie JPEG haute qualité."""
+"""Étalonnage commun des visuels d'illustration : version lumineuse.
+Ombres légèrement relevées, couleurs préservées, dominante chaude discrète,
+grain très fin. Sortie JPEG haute qualité."""
 import sys, os
 import numpy as np
 from PIL import Image, ImageEnhance, ImageFilter
@@ -11,19 +12,16 @@ for f in sorted(os.listdir(src)):
     im = Image.open(os.path.join(src, f)).convert("RGB")
     # suréchantillonnage x2 pour un rendu plus doux à l'impression
     im = im.resize((im.width * 2, im.height * 2), Image.LANCZOS)
-    im = ImageEnhance.Color(im).enhance(0.62)
-    im = ImageEnhance.Contrast(im).enhance(1.08)
+    im = ImageEnhance.Color(im).enhance(0.9)
     a = np.asarray(im).astype(np.float32) / 255
-    # courbe : noirs plus denses
-    a = np.clip((a - 0.03) / 0.97, 0, 1) ** 1.08
-    # dominante chaude dans les hautes lumières, neutre dans les ombres
-    lum = a.mean(axis=2, keepdims=True)
-    warm = np.array([1.04, 1.0, 0.92])
-    a = a * (1 + (warm - 1) * lum)
-    # grain argentique fin
-    a += rng.normal(0, 0.018, a.shape[:2])[..., None]
+    # relever les ombres et éclaircir les tons moyens
+    a = 0.05 + 0.95 * a
+    a = a ** 0.86
+    # dominante chaude légère
+    a = a * np.array([1.03, 1.0, 0.95])
+    a += rng.normal(0, 0.01, a.shape[:2])[..., None]
     out = Image.fromarray((np.clip(a, 0, 1) * 255).astype(np.uint8))
-    out = out.filter(ImageFilter.UnsharpMask(radius=2, percent=40, threshold=2))
+    out = out.filter(ImageFilter.UnsharpMask(radius=2, percent=45, threshold=2))
     name = os.path.splitext(f)[0] + ".jpg"
-    out.save(os.path.join(dst, name), quality=90, optimize=True)
+    out.save(os.path.join(dst, name), quality=88, optimize=True)
     print(name, out.size)

@@ -1,6 +1,6 @@
 # GODTALK — Vision, ambition et projet de développement
 
-Document fondateur (PDF A4, 22 pages) du projet d'entreprise audiovisuelle GODTALK.
+Document fondateur (PDF A4, 40 pages) du projet d'entreprise audiovisuelle GODTALK.
 
 - **PDF final** : `dist/GODTALK_Vision_Ambition_Developpement.pdf`
 - **Contenu source** : `content/` (cahier des charges Word d'origine)
@@ -10,11 +10,21 @@ Document fondateur (PDF A4, 22 pages) du projet d'entreprise audiovisuelle GODTA
 | Quoi | Où |
 |---|---|
 | Textes des pages (manifeste, vision, clients, feuille de route…) | `src/index.html` |
-| Textes des 8 pôles d'activité | `src/poles.js` |
+| Textes des 8 pôles d'activité (2 pages chacun) | `src/poles.js` |
 | Couleurs, typographies, mise en page | `src/style.css` |
-| Schémas et compositions graphiques (SVG générés) | `src/visuals.js` |
+| Illustrations, schémas et pictogrammes (SVG générés) | `src/visuals.js` |
 | Logo (noir / blanc, vectorisé depuis le logo fourni) | `assets/logo/` |
 | Photos étalonnées / originaux | `assets/images/` · `assets/images/originaux/` |
+
+## Palette
+
+| Rôle | Couleur |
+|---|---|
+| Fond crème | `#FBF8F2` · `#F5EFE4` · `#EFE5D3` |
+| Or ocre (accent principal) | `#C9973F` · texte `#A3742A` |
+| Bleu nuit (complémentaire) | `#1D2742` |
+| Bleu brume (fonds secondaires) | `#E9EDF4` |
+| Terre cuite (touches) | `#C0643F` |
 
 ## Régénérer le PDF
 
