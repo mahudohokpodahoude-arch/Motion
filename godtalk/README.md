@@ -1,6 +1,6 @@
 # GODTALK — Vision, ambition et projet de développement
 
-Document fondateur (PDF A4, 23 pages) du projet d'entreprise audiovisuelle GODTALK.
+Document fondateur (PDF A4, 22 pages) du projet d'entreprise audiovisuelle GODTALK.
 
 - **PDF final** : `dist/GODTALK_Vision_Ambition_Developpement.pdf`
 - **Contenu source** : `content/` (cahier des charges Word d'origine)
@@ -28,5 +28,5 @@ Le script de génération signale tout débordement de texte détecté.
 
 ## Points à compléter
 
-- Coordonnées du fondateur : page 22 (bloc `.sig` / `.contact`) et 4e de couverture (bloc `.contact-back`) dans `src/index.html`.
+- Coordonnées du fondateur : 4e de couverture (bloc `.contact-back`) dans `src/index.html`.
 - Les photographies sont des visuels d'illustration : vérifier leurs droits d'usage avant diffusion publique, et les remplacer progressivement par des réalisations GODTALK.
