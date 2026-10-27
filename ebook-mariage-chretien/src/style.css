@@ -1,6 +1,8 @@
 /* ============================================================
-   Avant de dire oui — feuille de style d'impression (WeasyPrint)
-   Palette : vert forêt, or doux, crème, terracotta (alertes)
+   Avant de dire oui — maquette A5 (WeasyPrint)
+   Lisibilité : corps 11 pt, interligne 1,55, texte aligné à gauche,
+   aucun texte courant en gris clair, étiquettes ≥ 7,5 pt en gras.
+   Chaque partie a sa couleur (voir css_parties() dans build.py).
    ============================================================ */
 @font-face { font-family: "Garamond"; src: url(fonts/EBGaramond-Regular.ttf); font-weight: 400; }
 @font-face { font-family: "Garamond"; src: url(fonts/EBGaramond-SemiBold.ttf); font-weight: 600; }
@@ -10,243 +12,290 @@
 @font-face { font-family: "Serif"; src: url(fonts/SourceSerif4-Italic.ttf); font-style: italic; }
 
 :root {
-  --vert: #24463c; --vert-f: #1a352d; --sauge: #8da597; --sauge-c: #e7eee9;
-  --or: #b48a4c; --or-c: #d9b779; --creme: #fbf7ef; --creme-f: #f4ecdd;
-  --encre: #22292b; --gris: #6d7471; --terre: #a84f37; --terre-c: #f8e9e3;
+  --c: #23463c; --cd: #19322b; --t1: #f1f5f3; --t2: #dde7e3; --t3: #b2c6bf;
+  --or: #b8863d; --or-c: #d9b779; --encre: #1d2427; --sec: #474f52; --papier: #fffdf9;
+  --terre: #a8402a; --terre-c: #fbebe5;
 }
 
 @page {
-  size: A4; margin: 24mm 22mm 24mm 22mm; background: #fffdf8;
-  @top-center { content: string(run); font-family: Inter; font-size: 7.5pt; letter-spacing: 1.6pt;
-                text-transform: uppercase; color: #8da597; padding-top: 6mm; }
-  @bottom-center { content: counter(page); font-family: Garamond; font-size: 11pt; color: #b48a4c; }
+  size: A5; margin: 16mm 15mm 17mm 15mm; background: #fffdf9;
+  @bottom-left { content: string(run); font-family: Inter; font-size: 7.4pt; font-weight: 600; color: #23463c; }
+  @bottom-right { content: counter(page); font-family: Inter; font-size: 8pt; font-weight: 700; color: #23463c; }
 }
-@page cover { margin: 0; background: var(--vert-f); @top-center { content: none } @bottom-center { content: none } }
-@page nude { @top-center { content: none } @bottom-center { content: none } }
-@page part { margin: 0; background: var(--vert); @top-center { content: none } @bottom-center { content: none } }
-@page front { @top-center { content: none } }
+@page cover { margin: 0; background: #17302a; @bottom-left { content: none } @bottom-right { content: none } }
+@page nude { @bottom-left { content: none } @bottom-right { content: none } }
+@page ofin { margin: 0; background: #19322b; }
 
-html { font-family: Serif; font-size: 10.4pt; line-height: 1.55; color: var(--encre);
-       hyphens: auto; -weasy-hyphens: auto; }
+html { font-family: Serif; font-size: 11pt; line-height: 1.55; color: var(--encre); }
 body { margin: 0; }
-p { margin: 0 0 0.7em; text-align: justify; orphans: 3; widows: 3; }
+p { margin: 0 0 0.75em; text-align: left; orphans: 3; widows: 3; }
 a { color: inherit; text-decoration: none; }
 strong { font-weight: 600; }
-.small { font-size: 8.8pt; color: var(--gris); }
-.orn { width: 46mm; height: 3mm; color: var(--or); }
-.orn-wrap { margin: 2mm 0 8mm; }
+.small, .hint { font-size: 9.6pt; color: var(--sec); }
+.hint { margin-bottom: 4mm; }
+.orn { width: 40mm; height: 2.6mm; }
+.orn-wrap { margin: 3mm 0 6mm; }
+.run { string-set: run content(text); height: 0; overflow: hidden; font-size: 0; line-height: 0; }
+.ic { vertical-align: -1mm; }
 
-/* ---------------------------------------------------------- couverture */
-.cover { page: cover; height: 297mm; position: relative; color: var(--creme);
-  background: radial-gradient(circle at 50% 38%, #2f5a4d 0%, #1f3d34 45%, #142b24 100%); }
-.cover-frame { position: absolute; top: 12mm; left: 12mm; right: 12mm; bottom: 12mm;
-  border: 0.7pt solid var(--or-c); outline: 0.4pt solid rgba(217,183,121,.45); outline-offset: 2.5mm;
-  text-align: center; }
-.cover-top { margin-top: 26mm; font-family: Inter; font-size: 8pt; letter-spacing: 5pt; text-transform: uppercase; color: var(--or-c); }
-.rings { width: 78mm; height: 54mm; margin: 22mm auto 10mm; display: block; }
-.cover-title { font-family: Garamond; font-weight: 400; font-size: 52pt; line-height: 1; margin: 0; color: #fbf3e2; letter-spacing: .5pt; }
-.cover-title em { color: var(--or-c); font-size: 60pt; }
-.cover-sub { font-family: Garamond; font-size: 19pt; font-style: italic; margin: 6mm 22mm 0; color: #efe6d3; line-height: 1.25; }
-.cover-orn { margin: 9mm 0 5mm; } .cover-orn .orn { color: var(--or-c); }
-.cover-meta { font-family: Inter; font-size: 8.5pt; letter-spacing: 2.4pt; text-transform: uppercase; color: var(--or-c); }
-.cover-bottom { position: absolute; bottom: 20mm; left: 0; right: 0; }
-.cover-tag { font-family: Garamond; font-style: italic; font-size: 13pt; color: #efe6d3; margin: 0 25mm 3mm; }
-.cover-aud { font-family: Inter; font-size: 7.5pt; letter-spacing: 1.5pt; text-transform: uppercase; color: var(--sauge); }
-.cover-author { font-family: Garamond; font-size: 14pt; margin-top: 9mm; color: var(--or-c); letter-spacing: 2pt; }
+/* ---------------------------------------------------------- bandeau d'ouverture */
+.band { margin: -16mm -15mm 6mm; padding: 11mm 15mm 7mm; color: #fff;
+        background: linear-gradient(135deg, #2b5649 0%, #19322b 100%); }
+.band-top { display: flex; align-items: center; gap: 2.5mm; }
+.band-icon { display: inline-block; width: 10mm; height: 10mm; border-radius: 50%; border: 0.8pt solid rgba(255,255,255,.65);
+             text-align: center; line-height: 10mm; }
+.band-icon .ic { vertical-align: -1.6mm; }
+.band-kicker { font-family: Inter; font-size: 7.8pt; font-weight: 700; letter-spacing: 1.2pt; text-transform: uppercase; color: rgba(255,255,255,.92); }
+.band-num { font-family: Garamond; font-size: 46pt; line-height: 0.95; color: #f3dfb4; margin-top: 4mm; }
+.band-title { font-family: Garamond; font-weight: 600; font-size: 23pt; line-height: 1.12; margin: 2mm 0 0; color: #fff; }
+.band-sub { font-family: Garamond; font-style: italic; font-size: 13pt; color: rgba(255,255,255,.9); margin-top: 1.5mm; }
+.band-meta { margin-top: 3mm; }
+.band-meta .origin { font-family: Inter; font-size: 7.4pt; font-weight: 600; letter-spacing: .6pt; color: rgba(255,255,255,.85); }
+.chap .band-title { font-size: 25pt; margin-top: 4mm; }
 
-/* ---------------------------------------------------------- page de titre */
-.titlepage { page: nude; break-before: page; text-align: center; padding-top: 40mm; }
-.tp-title { font-family: Garamond; font-size: 36pt; color: var(--vert); }
-.tp-title em { color: var(--or); }
-.tp-sub { font-family: Garamond; font-style: italic; font-size: 16pt; color: var(--gris); margin-top: 3mm; }
-.titlepage .orn-wrap { margin: 8mm 0; }
-.tp-meta { font-family: Inter; font-size: 8pt; letter-spacing: 2pt; text-transform: uppercase; color: var(--or); }
-.mentions { margin-top: 60mm; text-align: left; font-size: 8.2pt; color: var(--gris); border-top: 0.5pt solid var(--creme-f); padding-top: 5mm; }
-.mentions p { text-align: left; }
-
-/* ---------------------------------------------------------- chapitres */
+/* ---------------------------------------------------------- éléments de texte */
 .chap { break-before: page; }
-.chap-kicker { font-family: Inter; font-size: 8pt; letter-spacing: 3pt; text-transform: uppercase; color: var(--or); margin-top: 6mm; }
-.chap-title { font-family: Garamond; font-weight: 400; font-size: 30pt; line-height: 1.1; color: var(--vert); margin: 2mm 0 0;
-              string-set: run content(text); }
-.prose h3 { font-family: Garamond; font-weight: 600; font-size: 15pt; color: var(--vert); margin: 7mm 0 2mm; break-after: avoid; }
-.prose h4 { font-family: Garamond; font-weight: 600; font-size: 12.5pt; color: var(--vert); margin: 0 0 2mm; line-height: 1.25; }
-.prose ul, .prose ol { padding-left: 5mm; margin: 0 0 4mm; }
-.prose li { margin-bottom: 1.6mm; text-align: left; }
+.prose h3 { font-family: Garamond; font-weight: 600; font-size: 15.5pt; line-height: 1.2; color: var(--c); margin: 6mm 0 2mm; break-after: avoid; }
+.prose h4 { font-family: Garamond; font-weight: 600; font-size: 13pt; color: var(--c); margin: 0 0 1.5mm; line-height: 1.25; }
+.prose ul, .prose ol { padding-left: 5.5mm; margin: 0 0 4mm; }
+.prose li { margin-bottom: 1.8mm; }
 .prose ul { list-style: none; }
-.prose ul > li::before { content: "◆"; float: left; margin-left: -5mm; color: var(--or); font-size: 6.5pt; margin-top: 1.2mm; }
-.lead { font-family: Garamond; font-size: 14.5pt; line-height: 1.4; color: var(--vert); text-align: left; margin-bottom: 5mm; }
+.prose ul > li::before { content: "●"; float: left; margin-left: -5mm; color: var(--or); font-size: 7pt; margin-top: 1.3mm; }
+.lead { font-family: Garamond; font-size: 15pt; line-height: 1.4; color: var(--c); margin-bottom: 5mm; }
 ol.steps { list-style: none; counter-reset: st; padding-left: 0; }
-ol.steps > li { counter-increment: st; position: relative; padding-left: 10mm; margin-bottom: 2.6mm; }
-ol.steps > li::before { content: counter(st); float: left; margin-left: -10mm; margin-top: 0.2mm; width: 6.2mm; height: 6.2mm; border-radius: 50%;
-  background: var(--vert); color: var(--creme); font-family: Garamond; font-size: 10pt; text-align: center; line-height: 6.2mm; }
-.callout { background: var(--creme); border-left: 2.2pt solid var(--or); padding: 4mm 5mm; margin: 4mm 0; border-radius: 0 2mm 2mm 0; }
+ol.steps > li { counter-increment: st; padding-left: 10mm; margin-bottom: 3mm; }
+ol.steps > li::before { content: counter(st); float: left; margin-left: -10mm; width: 6.6mm; height: 6.6mm; border-radius: 50%;
+  background: var(--or); color: #fff; font-family: Inter; font-weight: 700; font-size: 8.5pt; text-align: center; line-height: 6.6mm; }
+.callout { background: #f7efe0; border-left: 2.5pt solid var(--or); padding: 4mm 5mm; margin: 4mm 0; border-radius: 0 2.5mm 2.5mm 0; }
 .callout p:last-child, .callout ul:last-child { margin-bottom: 0; }
 .callout.danger { background: var(--terre-c); border-left-color: var(--terre); }
-.two-col { display: flex; gap: 5mm; margin-bottom: 4mm; }
-.two-col .callout { flex: 1; margin: 0; }
-blockquote { font-family: Garamond; font-style: italic; font-size: 15pt; color: var(--vert); text-align: center; margin: 9mm 10mm;
-             line-height: 1.35; }
-blockquote cite { display: block; font-family: Inter; font-style: normal; font-size: 7.5pt; letter-spacing: 2pt; text-transform: uppercase;
-                  color: var(--or); margin-top: 3mm; }
-.tag { font-family: Inter; font-size: 6.5pt; letter-spacing: 1.2pt; text-transform: uppercase; color: #fff; background: var(--or);
-       padding: 0.6mm 2mm; border-radius: 3mm; font-weight: 600; white-space: nowrap; }
-.tag.sm { font-size: 5.6pt; padding: 0.3mm 1.6mm; vertical-align: 1pt; }
-.alert-inline { font-family: Inter; font-size: 6.5pt; letter-spacing: 1.2pt; text-transform: uppercase; color: #fff; background: var(--terre);
-       padding: 0.6mm 2mm; border-radius: 3mm; font-weight: 600; }
+.two-col .callout { margin: 0 0 4mm; }
+blockquote { font-family: Garamond; font-style: italic; font-size: 15pt; color: var(--c); text-align: center; margin: 8mm 4mm; line-height: 1.35; }
+blockquote cite { display: block; font-family: Inter; font-style: normal; font-size: 7.6pt; font-weight: 700; letter-spacing: 1.4pt;
+                  text-transform: uppercase; color: var(--or); margin-top: 3mm; }
+.tag { font-family: Inter; font-size: 7pt; letter-spacing: .8pt; text-transform: uppercase; color: #fff; background: var(--or);
+       padding: 0.7mm 2.4mm; border-radius: 3mm; font-weight: 700; white-space: nowrap; }
+.tag.sm { font-size: 5.8pt; padding: 0.3mm 1.6mm; vertical-align: 1pt; }
+.tag.light { background: #f3dfb4; color: #3a2a10; }
+.alert-inline { font-family: Inter; font-size: 7pt; letter-spacing: .8pt; text-transform: uppercase; color: #fff; background: var(--terre);
+       padding: 0.7mm 2.4mm; border-radius: 3mm; font-weight: 700; }
 
 /* tableaux */
-table.grid { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 9pt; }
-table.grid th { font-family: Inter; font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase; color: var(--creme); background: var(--vert);
-                text-align: left; padding: 2mm 2.5mm; font-weight: 600; }
-table.grid td { border-bottom: 0.5pt solid #e3dccd; padding: 2mm 2.5mm; vertical-align: top; text-align: left; }
-table.grid tbody tr:nth-child(even) td { background: #fbf8f1; }
+table.grid { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 9.6pt; line-height: 1.4; }
+table.grid th { font-family: Inter; font-size: 7.2pt; letter-spacing: .6pt; text-transform: uppercase; color: #fff; background: var(--c);
+                text-align: left; padding: 2mm 2.2mm; font-weight: 700; }
+table.grid td { border-bottom: 0.5pt solid #e2dacb; padding: 2mm 2.2mm; vertical-align: top; text-align: left; }
+table.grid tbody tr:nth-child(even) td { background: #faf6ee; }
 table.grid td.c { text-align: center; }
-table.fill td:first-child { width: 45%; font-weight: 600; color: var(--vert); }
+table.fill td:first-child { width: 48%; font-weight: 600; color: var(--c); }
 table.fill td { height: 9mm; }
+.prose table.grid { break-inside: avoid; }
+.mini { display: inline-block; min-width: 5.2mm; padding: 0 1mm; border-radius: 2.6mm; color: #fff; font-family: Inter; font-weight: 700;
+        font-size: 7.2pt; line-height: 4.4mm; text-align: center; }
+ul.plain { list-style: none; padding: 0; }
+ul.plain li::before { content: none; }
+ul.plain li { margin-bottom: 2mm; }
 
-/* engagement */
-.engage .prose p { font-family: Garamond; font-size: 13.5pt; line-height: 1.5; text-align: left; }
-.sign { display: flex; gap: 12mm; margin-top: 14mm; }
-.sign > div { flex: 1; }
-.sign .k, .k { font-family: Inter; font-size: 7pt; letter-spacing: 1.2pt; text-transform: uppercase; color: var(--gris); margin-top: 5mm; }
-.wl { border-bottom: 0.6pt solid #cfc6b3; height: 7.5mm; }
-
-/* ---------------------------------------------------------- sommaire */
-.toc { page: front; break-before: page; }
-.toc ul { list-style: none; padding: 0; margin: 0; }
-.toc li a::after { content: leader('.') target-counter(attr(href), page); color: var(--gris); }
-.toc li { font-size: 9.6pt; line-height: 1.45; }
-.toc li.t-front { font-family: Garamond; font-size: 11.5pt; color: var(--vert); }
-.toc li.t-part { font-family: Garamond; font-size: 13pt; font-weight: 600; color: var(--vert); margin-top: 3.2mm; break-after: avoid; }
-.toc li.t-part a::after { color: var(--or); }
-.toc li.t-part .tn { font-family: Inter; font-size: 7pt; letter-spacing: 1.5pt; text-transform: uppercase; color: var(--or); display: inline-block; width: 18mm; font-weight: 400; }
-.toc li.t-theme { padding-left: 18mm; }
-.toc li.t-theme .tn { display: inline-block; width: 7mm; color: var(--or); font-family: Garamond; font-size: 10.5pt; }
-
-/* ---------------------------------------------------------- ouvertures de partie */
-.part-open { page: part; break-before: page; height: 297mm; color: var(--creme); padding: 48mm 26mm 0; box-sizing: border-box;
-  background: linear-gradient(160deg, #2c5548 0%, #24463c 55%, #1a352d 100%); }
-.po-label { font-family: Inter; font-size: 8.5pt; letter-spacing: 6pt; text-transform: uppercase; color: var(--or-c); }
-.po-num { font-family: Garamond; font-size: 110pt; line-height: 1; color: var(--or-c); margin: 2mm 0 4mm; }
-.po-title { font-family: Garamond; font-weight: 400; font-size: 32pt; line-height: 1.12; margin: 0; color: #fbf3e2; }
-.po-orn { margin: 7mm 0; } .po-orn .orn { color: var(--or-c); }
-.po-intro { font-family: Garamond; font-style: italic; font-size: 14pt; line-height: 1.45; color: #e9e1cf; text-align: left; max-width: 140mm; }
-.po-list { list-style: none; padding: 0; margin-top: 12mm; border-top: 0.5pt solid rgba(217,183,121,.5); }
-.po-list li { font-family: Garamond; font-size: 13.5pt; padding: 2.6mm 0; border-bottom: 0.5pt solid rgba(217,183,121,.25); color: #fbf3e2; }
-.po-list .pn { display: inline-block; width: 12mm; color: var(--or-c); }
-.tag.light { background: var(--or-c); color: var(--vert-f); }
-.part-open.fin .po-num { font-size: 90pt; }
-
-/* ---------------------------------------------------------- thème */
-.theme { break-before: page; }
-.th-run { string-set: run content(text); height: 0; overflow: hidden; font-size: 0; }
-.th-head { position: relative; padding: 2mm 0 6mm 0; margin-bottom: 6mm; border-bottom: 0.6pt solid var(--or-c); }
-.th-kicker { font-family: Inter; font-size: 7.5pt; letter-spacing: 2pt; text-transform: uppercase; color: var(--sauge); }
-.th-num { font-family: Garamond; font-size: 64pt; line-height: 0.9; color: var(--or); margin-top: 3mm; }
-.th-title { font-family: Garamond; font-weight: 400; font-size: 27pt; line-height: 1.12; color: var(--vert); margin: 1.5mm 0 3mm; }
-.th-meta .origin { font-family: Inter; font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase; color: var(--gris); }
-.lab { font-family: Inter; font-size: 7pt; letter-spacing: 2pt; text-transform: uppercase; font-weight: 600; color: var(--or); margin-bottom: 1.5mm; }
-.objectif { background: var(--creme); padding: 4.5mm 6mm; border-radius: 2mm; margin-bottom: 5mm; }
-.objectif p { font-family: Garamond; font-size: 13.2pt; line-height: 1.42; color: var(--vert); margin: 0; text-align: left; }
-.alerte { background: var(--terre-c); border-left: 2.2pt solid var(--terre); padding: 3.5mm 5mm; margin-bottom: 5mm; border-radius: 0 2mm 2mm 0; }
-.alerte-k { font-family: Inter; font-size: 7pt; letter-spacing: 2pt; text-transform: uppercase; font-weight: 600; color: var(--terre); margin-bottom: 1mm; }
-.alerte p { margin: 0; font-size: 9.6pt; text-align: left; }
-h3.sec { font-family: Inter; font-size: 7.5pt; letter-spacing: 2pt; text-transform: uppercase; font-weight: 600; color: var(--vert);
-         margin: 4mm 0 2.5mm; break-after: avoid; }
-ol.conseils { list-style: none; counter-reset: c; padding: 0; margin: 0 0 3mm; }
-ol.conseils li { counter-increment: c; position: relative; padding-left: 9mm; margin-bottom: 2mm; text-align: left; }
-ol.conseils li::before { content: counter(c); float: left; margin-left: -9mm; margin-top: -0.6mm; width: 7mm; font-family: Garamond; font-size: 15pt; color: var(--or); }
-.refs { margin-bottom: 4mm; }
-.ref { display: flex; gap: 4mm; padding: 2mm 0; border-bottom: 0.4pt solid #ece4d4; break-inside: avoid; }
-.ref:last-child { border-bottom: none; }
-.ref-k { hyphens: manual; -weasy-hyphens: manual; flex: 0 0 38mm; font-family: Garamond; font-weight: 600; font-size: 10.6pt; color: var(--vert); line-height: 1.3; }
-.ref-n { flex: 1; font-size: 9.3pt; line-height: 1.45; color: #3b4345; }
-.accomp { background: var(--sauge-c); padding: 3.5mm 5mm; border-radius: 2mm; margin: 2mm 0 3mm; break-inside: avoid; }
-.accomp .lab { color: var(--vert); }
-.accomp p { margin: 0; font-size: 9.2pt; text-align: left; }
-.voir { font-size: 8.6pt; color: var(--gris); hyphens: manual; -weasy-hyphens: manual; }
-.voir span { font-family: Inter; font-size: 6.8pt; letter-spacing: 1.5pt; text-transform: uppercase; color: var(--or); margin-right: 1.5mm; }
-.voir a { color: var(--vert); border-bottom: 0.4pt solid var(--or-c); }
-
-/* page des questions */
-.qpage, .rpage { break-before: page; }
-.qp-head { display: flex; align-items: baseline; gap: 4mm; border-bottom: 0.6pt solid var(--or-c); padding-bottom: 2mm; margin-bottom: 5mm; }
-.qp-num { font-family: Garamond; font-size: 26pt; color: var(--or); line-height: 1; }
-.qp-t { font-family: Garamond; font-size: 17pt; color: var(--vert); }
-ol.questions { list-style: none; padding: 0; margin: 0; }
-ol.questions li { break-inside: avoid; margin-bottom: 4.2mm; }
-.q { display: flex; gap: 3mm; }
-.qn { flex: 0 0 11mm; font-family: Garamond; font-weight: 600; font-size: 11pt; color: var(--or); line-height: 1.45; }
-.qt { flex: 1; font-size: 10.6pt; line-height: 1.45; text-align: left; hyphens: manual; -weasy-hyphens: manual; }
-.ql { margin-left: 14mm; border-bottom: 0.4pt solid #ddd3bf; height: 8.5mm; }
-
-/* page de réflexion */
-.reflexion { display: flex; gap: 7mm; }
-.rcol { flex: 1; }
-.who { font-family: Garamond; font-size: 12pt; color: var(--vert); margin-bottom: 2mm; }
-.blank { display: inline-block; width: 40mm; border-bottom: 0.6pt solid #cfc6b3; height: 4mm; }
-.blank.s { width: 24mm; } .blank.l { width: 70mm; }
-.rp { margin-bottom: 2.4mm; }
-.rp-k { font-size: 8.4pt; font-style: italic; color: var(--gris); }
-.rp .wl { height: 7.4mm; }
-.bilan { margin-top: 5mm; background: var(--creme); padding: 4mm 5mm; border-radius: 2mm; break-inside: avoid; }
-.bilan-h { font-family: Garamond; font-size: 14pt; color: var(--vert); display: flex; justify-content: space-between; }
-.bilan-h .date { font-family: Inter; font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase; color: var(--gris); }
-.br { margin-top: 1.5mm; }
-.br-k { font-family: Inter; font-size: 6.8pt; letter-spacing: 1.2pt; text-transform: uppercase; color: var(--or); font-weight: 600; }
-.br .wl { height: 6.8mm; }
-.statut { margin-top: 3.5mm; font-size: 9pt; }
-.st-k { font-family: Inter; font-size: 6.8pt; letter-spacing: 1.2pt; text-transform: uppercase; color: var(--or); font-weight: 600; margin-right: 3mm; }
-.box { display: inline-block; width: 3.2mm; height: 3.2mm; border: 0.8pt solid var(--vert); border-radius: 0.6mm; vertical-align: -0.4mm; margin: 0 1.5mm 0 3mm; }
+/* lignes d'écriture */
+.wl { border-bottom: 0.6pt solid #d6ccb8; height: 7.6mm; }
+.k { font-family: Inter; font-size: 7.6pt; font-weight: 700; letter-spacing: .5pt; text-transform: uppercase; color: var(--c); margin-top: 4mm; }
+.blank { display: inline-block; width: 45mm; border-bottom: 0.6pt solid #c8bda7; height: 4.5mm; }
+.blank.s { width: 26mm; }
+.box { display: inline-block; width: 3.6mm; height: 3.6mm; border: 1pt solid var(--c); border-radius: 0.8mm; vertical-align: -0.6mm; margin-right: 2.5mm; background: #fff; }
 td .box { margin: 0; }
 
+/* engagement */
+.engage .prose p { font-family: Garamond; font-size: 14pt; line-height: 1.5; }
+.sign { display: flex; gap: 8mm; margin-top: 8mm; }
+.sign > div { flex: 1; }
+
+/* ---------------------------------------------------------- couverture */
+.cover { page: cover; height: 210mm; position: relative; color: #fbf3e2; text-align: center;
+  background: radial-gradient(circle at 50% 34%, #336555 0%, #1f4037 42%, #142a24 100%); }
+.cover-frame { position: absolute; top: 7mm; left: 7mm; right: 7mm; bottom: 7mm; border: 0.8pt solid #d9b779; }
+.cover-top { padding-top: 14mm; font-family: Inter; font-size: 7pt; font-weight: 700; letter-spacing: 4pt; text-transform: uppercase; color: #d9b779; }
+.wreath { width: 66mm; height: 64.5mm; display: block; margin: 5mm auto 0; }
+.seal { position: absolute; top: 18mm; right: 13mm; width: 19mm; height: 19mm; border-radius: 50%; background: #d9b779; color: #17302a;
+        text-align: center; }
+.seal-n { font-family: Garamond; font-weight: 600; font-size: 17pt; line-height: 1; padding-top: 4mm; }
+.seal-t { font-family: Inter; font-size: 5.4pt; font-weight: 700; letter-spacing: .8pt; text-transform: uppercase; }
+.cover-title { font-family: Garamond; font-weight: 400; font-size: 34pt; line-height: 0.95; margin: 4mm 0 0; color: #fbf3e2; }
+.cover-title em { font-size: 62pt; color: #e3c48a; }
+.cover-sub { font-family: Garamond; font-style: italic; font-size: 14.5pt; margin: 3mm 16mm 0; color: #f3ead6; line-height: 1.25; }
+.cover-orn { margin: 5mm 0 4mm; }
+.cover-tag { font-family: Garamond; font-size: 11.5pt; color: #efe4cc; margin: 0 18mm 3mm; line-height: 1.3; }
+.cover-aud { font-family: Inter; font-size: 6.4pt; font-weight: 700; letter-spacing: 1.4pt; text-transform: uppercase; color: #d9b779; }
+.cover-author { position: absolute; bottom: 13mm; left: 0; right: 0; font-family: Garamond; font-size: 12pt; letter-spacing: 2pt; color: #e3c48a; }
+
+/* ---------------------------------------------------------- page de titre */
+.titlepage { page: nude; break-before: page; text-align: center; padding-top: 22mm; }
+.tp-title { font-family: Garamond; font-size: 30pt; color: var(--c); }
+.tp-title em { color: var(--or); }
+.tp-sub { font-family: Garamond; font-style: italic; font-size: 14pt; color: var(--sec); margin-top: 2mm; }
+.titlepage .orn-wrap { margin: 6mm 0; }
+.tp-meta { font-family: Inter; font-size: 7.4pt; font-weight: 700; letter-spacing: 1.2pt; text-transform: uppercase; color: var(--or); }
+.mentions { margin-top: 18mm; text-align: left; font-size: 8.6pt; line-height: 1.45; color: var(--sec); border-top: 0.6pt solid #e6dcc8; padding-top: 4mm; }
+
+/* ---------------------------------------------------------- sommaire */
+.toc { break-before: page; }
+.toc ul { list-style: none; padding: 0; margin: 0; }
+.toc li a::after { content: leader('.') target-counter(attr(href), page); color: var(--sec); font-family: Inter; font-size: 8pt; }
+.toc li { font-size: 9.8pt; line-height: 1.5; }
+.toc li.t-front { font-family: Garamond; font-size: 12pt; color: var(--c); }
+.toc li.t-part { font-family: Garamond; font-size: 13pt; font-weight: 600; margin-top: 3.5mm; break-after: avoid; }
+.toc .pill { display: inline-block; min-width: 7mm; margin-right: 2.5mm; border-radius: 3mm; color: #fff; font-family: Inter; font-size: 7pt;
+             font-weight: 700; text-align: center; line-height: 4.6mm; vertical-align: 1pt; }
+.toc li.t-theme { padding-left: 9.5mm; }
+.toc li.t-theme .tn { display: inline-block; width: 6.5mm; font-family: Inter; font-weight: 700; font-size: 8.4pt; }
+
+/* ---------------------------------------------------------- parcours */
+.steps-map { margin: 2mm 0 6mm; }
+.step { display: flex; align-items: center; gap: 4mm; padding: 1.6mm 0; }
+.step-dot { flex: 0 0 11mm; width: 11mm; height: 11mm; border-radius: 50%; text-align: center; line-height: 11mm; }
+.step-dot .ic { vertical-align: -1.4mm; }
+.step-k { font-family: Inter; font-size: 7.2pt; font-weight: 700; letter-spacing: .6pt; text-transform: uppercase; }
+.step-t { font-family: Garamond; font-size: 13.5pt; font-weight: 600; line-height: 1.2; color: var(--encre); }
+.chiffres { display: flex; gap: 2.5mm; }
+.chiffres > div { flex: 1; background: var(--t1); border-radius: 2.5mm; padding: 2.5mm 1mm; text-align: center; }
+.chiffres b { display: block; font-family: Garamond; font-weight: 600; font-size: 21pt; line-height: 1; color: var(--c); }
+.chiffres span { font-family: Inter; font-size: 6.8pt; font-weight: 700; letter-spacing: .5pt; text-transform: uppercase; color: var(--sec); }
+.chiffres.light > div { background: rgba(255,255,255,.1); }
+.chiffres.light b { color: #e3c48a; } .chiffres.light span { color: #efe4cc; }
+
+/* ---------------------------------------------------------- ouvertures de partie */
+.opener { break-before: page; height: 210mm; box-sizing: border-box; padding: 24mm 16mm 0; color: #fff; position: relative; }
+.ofin { page: ofin; background: linear-gradient(135deg, #2b5649 0%, #19322b 100%); }
+.op-icon { width: 24mm; height: 24mm; border-radius: 50%; border: 1pt solid rgba(255,255,255,.7); text-align: center; line-height: 24mm; }
+.op-icon .ic { vertical-align: -3mm; }
+.op-label { margin-top: 7mm; font-family: Inter; font-size: 8.4pt; font-weight: 700; letter-spacing: 4pt; text-transform: uppercase; color: #f3dfb4; }
+.op-title { font-family: Garamond; font-weight: 600; font-size: 28pt; line-height: 1.1; margin: 2mm 0 0; color: #fff; }
+.op-orn { margin: 5mm 0 4mm; }
+.op-intro { font-family: Garamond; font-size: 13.5pt; line-height: 1.42; color: rgba(255,255,255,.95); }
+.op-list { list-style: none; padding: 0; margin: 6mm 0 0; }
+.op-list li { display: flex; align-items: center; gap: 3mm; background: rgba(255,255,255,.12); border-radius: 2.5mm; padding: 2.2mm 3mm; margin-bottom: 2mm; }
+.op-n { flex: 0 0 7mm; width: 7mm; height: 7mm; border-radius: 50%; background: #fff; color: var(--encre); font-family: Inter; font-weight: 700;
+        font-size: 8pt; text-align: center; line-height: 7mm; }
+.op-tt { flex: 1; font-family: Garamond; font-size: 12.5pt; line-height: 1.2; }
+.op-dots { position: absolute; bottom: 14mm; left: 16mm; right: 16mm; }
+.dot { display: inline-block; width: 2.4mm; height: 2.4mm; border-radius: 50%; background: rgba(255,255,255,.35); margin-right: 1.8mm; }
+.dot.on { background: #f3dfb4; width: 6mm; border-radius: 1.2mm; }
+.op-step { float: right; font-family: Inter; font-size: 7.2pt; font-weight: 700; letter-spacing: 1pt; text-transform: uppercase; color: #f3dfb4; }
+
+/* ---------------------------------------------------------- thème : ouverture */
+.theme { break-before: page; }
+.cle { margin: 0 2mm 5mm; padding-left: 9mm; position: relative; }
+.cle .qm { float: left; margin-left: -10mm; margin-top: -4mm; font-family: Garamond; font-size: 44pt; line-height: 1; color: var(--c); }
+.cle p { font-family: Garamond; font-style: italic; font-size: 15.5pt; line-height: 1.32; color: var(--c); margin: 0; }
+.card { border-radius: 2.5mm; padding: 3.6mm 4.5mm; margin-bottom: 4.5mm; break-inside: avoid; }
+.card p { margin: 0; }
+.card-h { font-family: Inter; font-size: 7.8pt; font-weight: 700; letter-spacing: .8pt; text-transform: uppercase; color: var(--c); margin-bottom: 1.6mm; }
+.obj { background: var(--t1); border: 0.6pt solid var(--t2); }
+.obj p { font-size: 11pt; }
+.acc { background: #f7efe0; }
+.acc .card-h { color: #7a5520; }
+.acc p { font-size: 10.2pt; }
+.alerte { background: var(--terre-c); border-left: 2.5pt solid var(--terre); padding: 3.4mm 4.5mm; margin-bottom: 4.5mm; border-radius: 0 2.5mm 2.5mm 0; break-inside: avoid; }
+.alerte .card-h { color: var(--terre); }
+.alerte p { margin: 0; font-size: 10.2pt; }
+h3.sec { font-family: Inter; font-size: 8pt; font-weight: 700; letter-spacing: .8pt; text-transform: uppercase; color: var(--c);
+         margin: 5mm 0 2.6mm; padding-bottom: 1.6mm; border-bottom: 0.8pt solid var(--t2); break-after: avoid; }
+ol.conseils { list-style: none; counter-reset: c; padding: 0; margin: 0 0 2mm; }
+ol.conseils li { counter-increment: c; padding-left: 9mm; margin-bottom: 2.6mm; break-inside: avoid; }
+ol.conseils li::before { content: counter(c); float: left; margin-left: -9mm; width: 6mm; height: 6mm; border-radius: 50%;
+  background: var(--t2); color: var(--cd); font-family: Inter; font-weight: 700; font-size: 8pt; text-align: center; line-height: 6mm; }
+.refs { margin-bottom: 4mm; }
+.ref { padding: 2.4mm 0 2.4mm 3.5mm; border-left: 1.6pt solid var(--t3); margin-bottom: 2.4mm; break-inside: avoid; }
+.ref-k { font-family: Inter; font-weight: 700; font-size: 8.6pt; color: var(--c); line-height: 1.3; margin-bottom: 0.8mm; }
+.ref-n { font-size: 10.2pt; line-height: 1.48; }
+.voir { font-size: 9.4pt; line-height: 1.45; color: var(--sec); }
+.voir span { font-family: Inter; font-size: 7.4pt; font-weight: 700; letter-spacing: .6pt; text-transform: uppercase; color: var(--c); margin-right: 1mm; }
+.voir a { color: var(--encre); }
+
+/* ---------------------------------------------------------- en-tête des pages de travail */
+.qpage, .rpage, .bpage, .fiche { break-before: page; }
+.pghead { display: flex; align-items: center; gap: 3.5mm; padding-bottom: 3mm; margin-bottom: 4.5mm; border-bottom: 1pt solid var(--t2); }
+.pg-num, .pg-ic { flex: 0 0 11mm; width: 11mm; height: 11mm; border-radius: 50%; background: var(--c); color: #fff; text-align: center;
+                  line-height: 11mm; font-family: Garamond; font-weight: 600; font-size: 15pt; }
+.pg-ic .ic { vertical-align: -1.2mm; }
+.pg-k { font-family: Inter; font-size: 7.4pt; font-weight: 700; letter-spacing: .8pt; text-transform: uppercase; color: var(--c); }
+.pg-t { font-family: Garamond; font-weight: 600; font-size: 15pt; line-height: 1.15; color: var(--encre); }
+
+/* questions */
+ol.questions { list-style: none; padding: 0; margin: 0; }
+ol.questions li { break-inside: avoid; margin-bottom: 4.6mm; }
+.q { display: flex; gap: 3mm; }
+.qn { flex: 0 0 6.6mm; width: 6.6mm; height: 6.6mm; border-radius: 50%; background: var(--c); color: #fff; font-family: Inter; font-weight: 700;
+      font-size: 8.4pt; text-align: center; line-height: 6.6mm; margin-top: 0.3mm; }
+.qt { flex: 1; font-size: 11.4pt; line-height: 1.45; font-weight: 400; color: var(--encre); }
+ol.questions .wl { margin-left: 9.6mm; height: 7.4mm; border-bottom-color: #dcd2bf; }
+.dense-q ol.questions li { margin-bottom: 3.4mm; }
+.dense-q ol.questions .wl { height: 6.4mm; }
+
+/* réflexion et bilan */
+.person { background: var(--t1); border-radius: 2.5mm; padding: 3.4mm 4.5mm 2.4mm; margin-bottom: 4mm; break-inside: avoid; }
+.who { font-family: Garamond; font-weight: 600; font-size: 12.5pt; color: var(--c); }
+.who .blank { width: 55mm; }
+.rp { margin-top: 2.4mm; }
+.rp-k { font-family: Inter; font-size: 7.4pt; font-weight: 700; letter-spacing: .3pt; color: var(--cd); }
+.rp .wl, .person .wl { height: 7mm; border-bottom-color: var(--t3); }
+.bilan { background: #f7efe0; border-radius: 2.5mm; padding: 4mm 4.5mm; }
+.br-date { font-family: Inter; font-size: 7.6pt; font-weight: 700; letter-spacing: .5pt; text-transform: uppercase; color: #7a5520; }
+.br { margin-top: 3.2mm; }
+.br-k { font-family: Inter; font-size: 7.6pt; font-weight: 700; letter-spacing: .5pt; text-transform: uppercase; color: #7a5520; }
+.bilan .wl { height: 7.4mm; border-bottom-color: #dcc9a6; }
+.statut { margin-top: 4.5mm; font-size: 10.6pt; }
+.statut > div { margin-top: 2mm; }
+
 /* ---------------------------------------------------------- fiches */
-.fiche { break-before: page; }
-#fiches { break-before: auto; }
-.fiche-k { font-family: Inter; font-size: 7.5pt; letter-spacing: 3pt; text-transform: uppercase; color: var(--or); }
-.fiche-t { font-family: Garamond; font-weight: 400; font-size: 22pt; color: var(--vert); margin: 1mm 0 3mm; }
-table.dash td { padding: 1.1mm 2mm; font-size: 8.4pt; }
-table.dash td:nth-child(3) { width: 22mm; }
-table.reg td { height: 8.5mm; }
-table.reg td:nth-child(2) { width: 55%; }
-table.aff td:first-child { font-size: 9pt; }
-.dis { border: 0.6pt solid #e3dccd; border-radius: 2mm; padding: 4mm 5mm; margin-bottom: 5mm; break-inside: avoid; }
-.dis-row { display: flex; align-items: flex-end; gap: 3mm; margin: 2mm 0; }
-.dis-row .k { margin: 0; }
-.dis-2 { display: flex; gap: 6mm; }
-.dis-2 > div { flex: 1; }
+.fiches-wrap #fiches { break-before: page; }
+table.dash td { padding: 1.2mm 1.6mm; font-size: 8.8pt; line-height: 1.3; }
+table.dash td:nth-child(3) { width: 15mm; }
+table.reg td { height: 7mm; }
+table.reg td:nth-child(2) { width: 52%; }
+table.aff td:first-child { font-size: 9.4pt; }
+.dis { background: var(--t1); border-radius: 2.5mm; padding: 3mm 4.5mm 3.5mm; break-inside: avoid; }
+.dis .k:first-child { margin-top: 0; }
 .fq { margin-bottom: 4mm; break-inside: avoid; }
-.fq-q { font-family: Garamond; font-size: 12pt; color: var(--vert); }
+.fq-q { font-family: Garamond; font-weight: 600; font-size: 12.5pt; line-height: 1.3; color: var(--c); }
 
 /* ---------------------------------------------------------- annexe */
-table.conc td { padding: 1.2mm 2.5mm; font-size: 8.6pt; }
-ul.cols2 { columns: 2; }
-.jr { border-left: 1.4pt solid var(--or-c); padding: 1mm 0 1mm 4mm; margin-bottom: 3.5mm; break-inside: avoid; font-size: 9pt; }
-.jr-h { font-family: Inter; font-size: 7pt; letter-spacing: 1.2pt; text-transform: uppercase; color: var(--or); font-weight: 600; }
-.jr-o, .jr-n { text-align: left; margin-top: 0.8mm; }
-.jr-o { color: var(--gris); }
-.jr-o span, .jr-n span { font-family: Inter; font-size: 6.5pt; letter-spacing: 1pt; text-transform: uppercase; color: var(--sauge); margin-right: 1.5mm; }
-.jr-r { font-style: italic; color: var(--gris); font-size: 8.4pt; margin-top: 0.8mm; }
-ul.biblio li { text-align: left; }
+table.conc td { padding: 1.3mm 2.2mm; font-size: 9.2pt; }
+.jr { border-left: 1.6pt solid var(--or-c); padding: 1mm 0 1mm 4mm; margin-bottom: 4mm; break-inside: avoid; font-size: 9.8pt; line-height: 1.45; }
+.jr-h { font-family: Inter; font-size: 7.4pt; font-weight: 700; letter-spacing: .6pt; text-transform: uppercase; color: #7a5520; }
+.jr-o, .jr-n { margin-top: 1mm; }
+.jr-o { color: var(--sec); }
+.jr-o span, .jr-n span { font-family: Inter; font-size: 6.8pt; font-weight: 700; letter-spacing: .5pt; text-transform: uppercase; color: var(--c); margin-right: 1.5mm; }
+.jr-r { font-style: italic; color: var(--sec); font-size: 9.4pt; margin-top: 1mm; }
 
 /* ---------------------------------------------------------- 4e de couverture */
-.back { page: cover; break-before: page; height: 297mm; position: relative; color: var(--creme);
-  background: radial-gradient(circle at 50% 40%, #2f5a4d 0%, #1f3d34 50%, #142b24 100%); }
-.back-in { position: absolute; top: 70mm; left: 30mm; right: 30mm; text-align: center; }
-.back-title { font-family: Garamond; font-size: 32pt; color: #fbf3e2; }
-.back-title em { color: var(--or-c); }
-.back .orn { color: var(--or-c); }
-.back p { font-family: Garamond; font-size: 13.5pt; line-height: 1.5; color: #e9e1cf; text-align: center; }
+.back { page: cover; break-before: page; height: 210mm; position: relative; color: #fbf3e2;
+  background: radial-gradient(circle at 50% 40%, #336555 0%, #1f4037 50%, #142a24 100%); }
+.back-in { position: absolute; top: 30mm; left: 18mm; right: 18mm; text-align: center; }
+.back-title { font-family: Garamond; font-size: 28pt; color: #fbf3e2; }
+.back-title em { color: #e3c48a; }
+.back p { font-family: Garamond; font-size: 12.5pt; line-height: 1.5; color: #efe4cc; text-align: center; }
+.back .chiffres { margin: 6mm 0; }
 
-/* thèmes plus longs : on resserre pour garder 1 page d'introduction et 1 page de questions */
-.dense-q ol.questions li { margin-bottom: 2.6mm; }
-.dense-q .ql { height: 6.2mm; }
-.dense-i .th-num { font-size: 50pt; }
-.dense-i .th-head { padding-bottom: 4mm; margin-bottom: 4mm; }
-.dense-i .objectif { padding: 3.5mm 5mm; margin-bottom: 3.5mm; }
-.dense-i .objectif p { font-size: 12pt; }
-.dense-i .ref { padding: 1.3mm 0; }
-.dense-i .ref-n, .dense-i ol.conseils li { font-size: 9pt; line-height: 1.38; }
-.dense-i .alerte { margin-bottom: 3.5mm; }
-.prose table.grid { break-inside: avoid; }
+/* rythme fixe : 5 questions par page, réflexion des deux fiancés sur une page */
+ol.questions li:nth-child(6) { break-before: page; }
+.person { padding: 3mm 4.5mm 2mm; margin-bottom: 3.5mm; }
+.rp { margin-top: 1.8mm; }
+.rp .wl, .person .wl { height: 6.2mm; }
+.parcours .lead { font-size: 13.5pt; margin-bottom: 3mm; }
+.parcours .step { padding: 0.9mm 0; }
+.parcours .step-dot { flex: 0 0 9.5mm; width: 9.5mm; height: 9.5mm; line-height: 9.5mm; }
+.parcours .step-t { font-size: 12.5pt; }
+.parcours .steps-map { margin-bottom: 4mm; }
+.prose li, ol.steps > li { break-inside: avoid; }
+table.dash { table-layout: fixed; }
+table.dash th:nth-child(1), table.dash td:nth-child(1) { width: 9mm; }
+table.dash th:nth-child(3), table.dash td:nth-child(3) { width: 15mm; }
+table.dash th:nth-child(n+4), table.dash td:nth-child(n+4) { width: 12mm; padding-left: 0.5mm; padding-right: 0.5mm; text-align: center; }
+table.dash th { font-size: 6.4pt; letter-spacing: .2pt; }
+.opener { padding-top: 15mm; }
+.op-icon { width: 18mm; height: 18mm; line-height: 18mm; }
+.op-icon .ic { width: 10mm !important; height: 10mm !important; vertical-align: -2.2mm; }
+.op-label { margin-top: 5mm; }
+.op-intro { font-size: 12.5pt; }
+.op-list li { padding: 1.5mm 3mm; margin-bottom: 1.6mm; }
+.op-dots { bottom: 11mm; }
