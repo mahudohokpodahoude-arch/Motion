@@ -27,7 +27,7 @@ L = {
           <p><b>Anne Marie</b> OUSSA</p>
         </div>''', title='En mémoire de Madame Ruth Bonney Oussa',
   memory='EN MÉMOIRE DE', of='notre très chère épouse, maman, grand-mère, sœur, tante et amie',
-  madam='Madame Veuve', aka='(alias Da Adzo)', aged='63 ans', called='Rappelée à Dieu le 26 octobre 2026',
+  madam='Veuve', aka='(alias Da Adzo)', aged='63 ans', called='Rappelée à Dieu le 26 octobre 2026',
   lifequote='Une vie bien vécue, un cœur plein d’amour, un héritage qui restera à jamais.',
   prog_title='PROGRAMME DES OBSÈQUES', prog_place='Ewegbe-Hohoe, Région de la Volta, Ghana',
   d1='VENDREDI 6 NOVEMBRE 2026', t1='Veillée mortuaire', p1='à la résidence familiale',
