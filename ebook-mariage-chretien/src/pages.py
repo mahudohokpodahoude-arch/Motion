@@ -9,7 +9,7 @@ ACCROCHE = "Un guide de dialogue pour se connaître, discerner librement et bât
 
 MENTIONS = """
 <p><strong>Avant de dire oui</strong> — 300 questions pour préparer un mariage chrétien. Édition enrichie.</p>
-<p>© [Nom de l'auteur ou de l'éditeur], 2026. Tous droits réservés.<br>
+<p>© Géofroyd KPODAHOUDE, 2026. Tous droits réservés.<br>
 ISBN : [à compléter] · Dépôt légal : [à compléter]</p>
 <p>Toute reproduction, même partielle, est interdite sans autorisation écrite, à l'exception des fiches de suivi,
 que l'acheteur peut imprimer pour son usage personnel ou pour les couples qu'il accompagne.</p>

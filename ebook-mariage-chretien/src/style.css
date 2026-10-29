@@ -299,3 +299,6 @@ table.dash th { font-size: 6.4pt; letter-spacing: .2pt; }
 .op-intro { font-size: 12.5pt; }
 .op-list li { padding: 1.5mm 3mm; margin-bottom: 1.6mm; }
 .op-dots { bottom: 11mm; }
+.tp-author { font-family: Garamond; font-size: 14pt; letter-spacing: 1.5pt; color: var(--c); margin-top: 7mm; }
+.cover-author { font-size: 13pt; letter-spacing: 1.5pt; }
+table.grid tr { break-inside: avoid; }

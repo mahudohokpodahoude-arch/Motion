@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 """Génère l'e-book (HTML puis PDF via WeasyPrint), format A5.
 
-Usage : python3 src/build.py            -> build/avant-de-dire-oui.html + .pdf
-        python3 src/build.py --html     -> HTML seulement
+Deux versions à partir du même contenu :
+- « telephone » : pages étroites au format écran (108 × 192 mm), gros texte, sans lignes d'écriture ;
+- « imprimable » : A5 avec lignes d'écriture et fiches à remplir (s'imprime aussi en A4).
+
+Usage : python3 src/build.py                 -> les deux versions dans build/
+        python3 src/build.py telephone       -> une seule version
+        python3 src/build.py --html          -> HTML seulement
 """
 import html
 import json
@@ -24,6 +29,8 @@ ROMAINS = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"]
 COULEURS = ["#2e6b5e", "#3b5f8f", "#b4553a", "#a0445f", "#5a7834", "#9a6a1f", "#2f7f8a", "#7b5791", "#23463c"]
 ICONES_PARTIES = ["user", "cross", "message", "heart", "pulse", "coins", "home", "users", "rings"]
 SAPIN, OR = "#23463c", "#c39a55"
+FORMATS = {"telephone": "avant-de-dire-oui-telephone", "imprimable": "avant-de-dire-oui-imprimable"}
+MODE = "telephone"  # modifié par main() ; lu par les fonctions de mise en page
 
 
 # ------------------------------------------------------------------ données
@@ -174,6 +181,11 @@ def css_parties():
     out = []
     for i, c in enumerate(COULEURS, 1):
         cd = fonce(c)
+        if MODE == "telephone":  # liseré fin sur la tranche, sans texte
+            onglet = f'@right-middle {{ content: ""; background: {c}; width: 1.6mm; height: 16mm; margin-left: 6.4mm; }}'
+        else:
+            onglet = (f'@right-middle {{ content: "{ROMAINS[i - 1]}"; background: {c}; color: #fff; font-family: Inter; font-size: 6.5pt; '
+                      f'font-weight: 700; text-align: center; vertical-align: middle; width: 5mm; height: 22mm; margin-left: 11mm; }}')
         out.append(f"""
 .p{i} {{ --c: {c}; --cd: {cd}; --t1: {teinte(c, .07)}; --t2: {teinte(c, .16)}; --t3: {teinte(c, .35)}; }}
 .p{i} .band, .o{i} {{ background: linear-gradient(135deg, {c} 0%, {cd} 100%); }}
@@ -182,8 +194,7 @@ def css_parties():
 @page part{i} {{
   @bottom-left {{ content: string(run); font-family: Inter; font-size: 7.4pt; font-weight: 600; color: {c}; }}
   @bottom-right {{ content: counter(page); font-family: Inter; font-size: 8pt; font-weight: 700; color: {c}; }}
-  @right-middle {{ content: "{ROMAINS[i - 1]}"; background: {c}; color: #fff; font-family: Inter; font-size: 6.5pt;
-                   font-weight: 700; text-align: center; vertical-align: middle; width: 5mm; height: 22mm; margin-left: 11mm; }}
+  {onglet}
 }}
 .opener.o{i} {{ page: opener{i}; }}
 @page opener{i} {{ margin: 0; background: {cd}; }}""")
@@ -219,7 +230,7 @@ def couverture():
   <div class="cover-orn">{orn("#d9b779")}</div>
   <div class="cover-tag">{esc(P.ACCROCHE)}</div>
   <div class="cover-aud">Pour les fiancés · les pasteurs · les accompagnateurs</div>
-  <div class="cover-author">[Nom de l\u2019auteur]</div>
+  <div class="cover-author">Géofroyd KPODAHOUDE</div>
 </section>"""
 
 
@@ -228,6 +239,7 @@ def page_titre():
 <section class="titlepage">
   <div class="tp-title">Avant de dire <em>oui</em></div>
   <div class="tp-sub">{esc(P.SOUS_TITRE)}</div>
+  <div class="tp-author">Géofroyd KPODAHOUDE</div>
   <div class="orn-wrap">{orn()}</div>
   <div class="tp-meta">{esc(P.MENTION_EDITION)}</div>
   <div class="mentions">{fr(P.MENTIONS)}</div>
@@ -253,7 +265,7 @@ def sommaire():
             out.append(f'<li class="t-theme"><a href="#theme-{t["num"]}"><span class="tn" style="color:{c}">{t["num"]}</span>{esc(t["titre"])}{badge}</a></li>')
     out.append(f'<li class="t-part" style="color:{SAPIN}"><a href="#fin"><span class="pill" style="background:{OR}">+</span>Pour la suite du chemin</a></li>')
     for sid, lab in [("conclusion", "Conclusion"), ("accompagnement-pro", "Quand demander un accompagnement professionnel"),
-                     ("fiches", "Fiches de suivi"), ("concordance", "Annexe : concordance et journal éditorial"), ("sources", "Sources")]:
+                     ("fiches", "Outils de suivi" if MODE == "telephone" else "Fiches de suivi"), ("concordance", "Annexe : concordance et journal éditorial"), ("sources", "Sources")]:
         out.append(row(sid, esc(lab), "t-front"))
     out.append("</ul></section>")
     return "\n".join(out)
@@ -317,6 +329,23 @@ def lignes_ecriture(questions, budget=150, car_ligne=50):
     return res
 
 
+def apres_discussion(n, c):
+    """Version téléphone : questions de réflexion et de bilan, sans lignes d'écriture."""
+    perso = ["Qu'ai-je découvert, sur moi ou sur l'autre ?", "Qu'est-ce qui me questionne ou m'inquiète ?",
+             "Qu'est-ce que je m'engage à faire ?"]
+    ensemble = ["Sur quoi sommes-nous d'accord ?", "Où sont nos différences ?", "Quelles décisions ou actions retenons-nous ?",
+                "Qui pourrions-nous consulter, si nécessaire ?"]
+    li = lambda xs: "".join(f"<li>{esc(x)}</li>" for x in xs)  # noqa: E731
+    return f"""<div class="apres">
+    <div class="pghead"><span class="pg-ic">{icone("check", "#ffffff", "5mm", 2)}</span><div><div class="pg-k">Thème {n}</div><div class="pg-t">Après la discussion</div></div></div>
+    <div class="card m-perso"><div class="card-h">{icone("pen", c, "4.2mm", 2)} Chacun pour soi</div><ul class="m-list">{li(perso)}</ul></div>
+    <div class="card m-ens"><div class="card-h">{icone("users", c, "4.2mm", 2)} Ensemble</div><ul class="m-list">{li(ensemble)}</ul></div>
+    <div class="m-statut"><div class="card-h">Où en sommes-nous ?</div>
+      <span class="chip">Sujet apaisé</span><span class="chip">À reprendre</span><span class="chip">Accompagnement souhaité</span></div>
+    <p class="hint">{esc("Notez vos réponses dans un carnet ou dans l'application Notes de votre téléphone. Pour écrire directement dans le guide, utilisez la version imprimable.")}</p>
+  </div>"""
+
+
 def bloc_theme(t):
     n, ip = t["num"], t["partie"]
     c = COULEURS[ip]
@@ -328,8 +357,14 @@ def bloc_theme(t):
     alerte = (f'<div class="alerte"><div class="card-h">{icone("alert", "#a8402a", "4.4mm", 2)} Attention</div><p>{esc(t["alerte"])}</p></div>'
               if t.get("alerte") else "")
     voir = " · ".join(f'<a href="#theme-{NUM[v]}">{NUM[v]}. {esc(T[v]["titre"])}</a>' for v in t.get("voir", []))
+    if MODE == "telephone":
+        qs = "".join(f'<li><div class="q"><span class="qn">{i}</span><span class="qt">{esc(q)}</span></div></li>'
+                     for i, q in enumerate(t["questions"], 1))
+        travail = apres_discussion(n, c)
+    else:
+        travail = None
     nl = lignes_ecriture(t["questions"])
-    qs = "".join(
+    qs = qs if MODE == "telephone" else "".join(
         f'<li><div class="q"><span class="qn">{i}</span><span class="qt">{esc(q)}</span></div>{lines(k)}</li>'
         for i, (q, k) in enumerate(zip(t["questions"], nl), 1))
     prompts = ["Ce que j'ai découvert, sur moi ou sur l'autre", "Ce qui me questionne ou m'inquiète", "Ce que je m'engage à faire"]
@@ -355,7 +390,7 @@ def bloc_theme(t):
     <ol class="questions">{qs}</ol>
   </div>
 
-  <div class="rpage">
+  {travail or f"""<div class="rpage">
     <div class="pghead"><span class="pg-ic">{icone("pen", "#ffffff", "5mm", 2)}</span><div><div class="pg-k">Thème {n}</div><div class="pg-t">Espace de réflexion personnelle</div></div></div>
     <p class="hint">Chacun écrit pour soi, avant ou après la rencontre. Vous pourrez ensuite partager ce que vous souhaitez.</p>
     <div class="person"><div class="who">Prénom <span class="blank"></span></div>{personne}</div>
@@ -372,7 +407,7 @@ def bloc_theme(t):
         <div><span class="box"></span>À reprendre le <span class="blank s"></span></div>
         <div><span class="box"></span>Nous souhaitons un accompagnement</div></div>
     </div>
-  </div>
+  </div>"""}
 </section>"""
 
 
@@ -455,6 +490,50 @@ def fiches():
     return tableau + desaccords + registre + mi + final + an
 
 
+def fiches_telephone():
+    """Version téléphone : les outils de suivi deviennent des listes de vérification."""
+    def liste(k, titre, icon, intro, qs):
+        items = "".join(f"<li>{esc(q)}</li>" for q in qs)
+        return f'<div class="fiche">{fiche_entete(k, titre, icon)}<p class="hint">{esc(intro)}</p><ul class="m-list big">{items}</ul></div>'
+
+    intro = ('<div class="prose"><p class="lead">' + esc("Sur téléphone, utilisez ces outils comme des listes de vérification.") + "</p>"
+             "<p>" + esc("Le tableau de bord du parcours, la fiche des désaccords et le registre des décisions sont à remplir dans la version "
+                        "imprimable fournie avec ce guide.") + "</p></div>")
+    mi = liste("Outil 1", "Bilan à mi-parcours", "pulse", "À faire ensemble après la partie IV.", [
+        "Qu'avons-nous découvert l'un sur l'autre que nous ignorions ?",
+        "Quels thèmes ont été les plus faciles ? Les plus difficiles ? Pourquoi ?",
+        "Notre manière de dialoguer s'est-elle améliorée ? Sur quoi devons-nous encore progresser ?",
+        "Y a-t-il un sujet que l'un de nous évite ? Comment l'aborder ?",
+        "Avons-nous besoin d'un accompagnement pour la suite du parcours ?",
+    ])
+    affirmations = [
+        "Je me sens libre de dire non, ou de demander à reporter le mariage, sans craindre la réaction de l'autre ni de mon entourage.",
+        "Je n'ai pas peur de mon fiancé ou de ma fiancée, ni de ses colères.",
+        "Je connais sa situation financière, ses dettes et ses engagements, et il ou elle connaît les miens.",
+        "Nous avons partagé les informations de santé importantes pour notre vie commune.",
+        "Nous sommes d'accord sur le fait d'avoir ou non des enfants, ou nous savons comment porter notre différence.",
+        "Je sais comment nous prendrons les décisions importantes, et j'y aurai réellement ma place.",
+        "Aucun secret important ne pourrait, s'il était découvert, changer ma décision.",
+        "Nos familles respectent notre décision, ou nous savons comment poser des limites.",
+        "Je choisis ce mariage pour l'autre, et non pour échapper à une situation, plaire à quelqu'un ou obéir à une pression.",
+        "Je sais vers qui me tourner si un jour je ne me sens plus en sécurité.",
+    ]
+    aff = "".join(f'<li><span class="box"></span>{esc(a)}</li>' for a in affirmations)
+    final = f"""<div class="fiche">{fiche_entete("Outil 2", "Pouvons-nous dire oui librement ?", "rings")}
+  <div class="callout"><p><strong>{esc("À faire chacun séparément.")}</strong> {esc("Pour chaque phrase, demandez-vous : oui, pas sûr, ou non ? Une réponse « non » ou « pas sûr » n'est pas un échec : c'est une information précieuse à prendre au sérieux avant de fixer ou de maintenir une date.")}</p></div>
+  <ul class="m-check">{aff}</ul></div>"""
+    an = liste("Outil 3", "Bilan après un an de mariage", "heart",
+               "Autour de votre premier anniversaire, puis chaque année si vous le souhaitez.", [
+        "Qu'est-ce qui nous a le plus rapprochés cette année ?",
+        "Qu'est-ce qui a été plus difficile que prévu ?",
+        "Quelles décisions devons-nous revoir ?",
+        "Chacun se sent-il en sécurité, respecté et libre de grandir dans ce mariage ?",
+        "Quels thèmes de ce guide voulons-nous reprendre cette année ?",
+        "Pour quoi voulons-nous dire merci, l'un à l'autre et à Dieu ?",
+    ])
+    return f'<div id="fiches">{intro}</div>' + mi + final + an
+
+
 def concordance():
     rows = []
     for o in ORIG:
@@ -496,10 +575,17 @@ def concordance():
 def document():
     sign = ('<div class="sign"><div><div class="k">Prénom et signature</div><div class="wl"></div><div class="k">Date</div><div class="wl"></div></div>'
             '<div><div class="k">Prénom et signature</div><div class="wl"></div><div class="k">Date</div><div class="wl"></div></div></div>')
+    if MODE == "telephone":
+        sign = ('<div class="callout"><p>' + esc("Lisez cet engagement à voix haute, ensemble. Vous pouvez aussi le signer sur la version imprimable du guide.") + "</p></div>")
+    emploi = P.MODE_EMPLOI
+    if MODE == "telephone":
+        emploi = ('<div class="callout"><p><strong>Vous lisez sur téléphone ?</strong> ' + esc(
+            "Lisez les questions ici et notez vos réponses dans un carnet ou dans l'application Notes. Pour écrire directement "
+            "dans le guide et remplir les fiches de suivi, imprimez la version imprimable fournie avec ce livre.") + "</p></div>") + emploi
     parts = [couverture(), page_titre(), sommaire(), parcours(),
              chapitre("introduction", "Ouverture", "Introduction", P.INTRODUCTION, icon="heart"),
              chapitre("ne-mesure-pas", "Avant de commencer", "Ce que ce guide ne mesure pas", P.NE_MESURE_PAS, icon="question"),
-             chapitre("mode-emploi", "Avant de commencer", "Mode d'emploi pour le couple", P.MODE_EMPLOI, icon="map"),
+             chapitre("mode-emploi", "Avant de commencer", "Mode d'emploi pour le couple", emploi, icon="map"),
              chapitre("accompagnateurs", "Avant de commencer", "Pour les pasteurs et accompagnateurs", P.ACCOMPAGNATEURS, icon="compass"),
              chapitre("lire-bible", "Avant de commencer", "Lire la Bible avec justesse", P.LIRE_BIBLE, icon="book"),
              chapitre("engagement", "Avant de commencer", "Notre engagement de dialogue", P.ENGAGEMENT + sign, cls="engage", icon="pen")]
@@ -512,8 +598,12 @@ def document():
 <p class="op-intro">Conclusion, ressources pour demander de l\u2019aide, fiches de suivi et annexes.</p></section>""")
     parts.append(chapitre("conclusion", "Pour la suite", "Conclusion", P.CONCLUSION, icon="heart"))
     parts.append(chapitre("accompagnement-pro", "Ressources", "Quand demander un accompagnement professionnel", P.ACCOMPAGNEMENT_PRO, icon="compass"))
-    parts.append(f'<section class="chap fiches-wrap"><div class="run">Fiches de suivi</div>{band("Outils", "Fiches de suivi", icon="check")}'
-                 f'<div class="prose"><p class="lead">Six fiches à imprimer ou à remplir à l\u2019écran pour garder la trace de votre parcours.</p></div>{fr(fiches())}</section>')
+    if MODE == "telephone":
+        parts.append(f'<section class="chap fiches-wrap"><div class="run">Outils de suivi</div>{band("Outils", "Outils de suivi", icon="check")}'
+                     f'{fr(fiches_telephone())}</section>')
+    else:
+        parts.append(f'<section class="chap fiches-wrap"><div class="run">Fiches de suivi</div>{band("Outils", "Fiches de suivi", icon="check")}'
+                     f'<div class="prose"><p class="lead">Six fiches à imprimer ou à remplir à l\u2019écran pour garder la trace de votre parcours.</p></div>{fr(fiches())}</section>')
     parts.append(concordance())
     parts.append(chapitre("sources", "Annexe", "Sources", P.SOURCES, icon="book"))
     parts.append(f'<section class="back"><div class="back-in"><div class="back-title">Avant de dire <em>oui</em></div>'
@@ -521,23 +611,30 @@ def document():
                  f'<p>{esc("Un guide pour aborder, avant le mariage, tout ce qui compte vraiment : la foi, la communication, la sexualité, l'argent, les familles, les enfants, et aussi les sujets que l'on évite : sécurité, infidélité, dépendances, deuil, crises.")}</p>'
                  f'<div class="chiffres light"><div><b>38</b><span>thèmes</span></div><div><b>380</b><span>questions</span></div><div><b>6</b><span>fiches</span></div></div>'
                  f'<p>{esc("Des repères bibliques lus dans leur contexte et des outils concrets, pour des fiancés qui veulent dire oui librement, et pour ceux qui les accompagnent.")}</p></div></section>')
-    css = (ROOT / "src" / "style.css").read_text(encoding="utf-8") + css_parties()
+    css = (ROOT / "src" / "style.css").read_text(encoding="utf-8")
+    if MODE == "telephone":
+        css += (ROOT / "src" / "telephone.css").read_text(encoding="utf-8")
+    css += css_parties()
     return f"""<!doctype html><html lang="fr"><head><meta charset="utf-8">
 <title>Avant de dire oui — 300 questions pour préparer un mariage chrétien</title>
-<meta name="author" content="[Nom de l'auteur]"><meta name="description" content="Guide de préparation au mariage chrétien">
+<meta name="author" content="Géofroyd KPODAHOUDE"><meta name="description" content="Guide de préparation au mariage chrétien">
 <style>{css}</style></head><body>{''.join(parts)}</body></html>"""
 
 
 def main():
+    global MODE
     out = ROOT / "build"
     out.mkdir(exist_ok=True)
-    doc = document()
-    (out / "avant-de-dire-oui.html").write_text(doc, encoding="utf-8")
-    if "--html" in sys.argv:
-        return
-    from weasyprint import HTML
-    HTML(string=doc, base_url=str(ROOT)).write_pdf(out / "avant-de-dire-oui.pdf")
-    print("PDF :", out / "avant-de-dire-oui.pdf")
+    modes = [m for m in FORMATS if m in sys.argv] or list(FORMATS)
+    for MODE in modes:
+        doc = document()
+        nom = FORMATS[MODE]
+        (out / f"{nom}.html").write_text(doc, encoding="utf-8")
+        if "--html" in sys.argv:
+            continue
+        from weasyprint import HTML
+        HTML(string=doc, base_url=str(ROOT)).write_pdf(out / f"{nom}.pdf")
+        print("PDF :", out / f"{nom}.pdf")
 
 
 if __name__ == "__main__":

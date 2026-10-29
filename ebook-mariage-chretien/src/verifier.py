@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Contrôles éditoriaux : aucune question perdue, 10 questions par thème, pas de doublon.
 
-Usage : python3 src/verifier.py   (après python3 src/build.py)
+Usage : python3 src/verifier.py   (après python3 src/build.py ; contrôle les deux versions)
 """
 import difflib
 import re
@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
-from build import ORIG, THEMES, fr  # noqa: E402
+from build import FORMATS, ORIG, THEMES, fr  # noqa: E402
 from themes import REFORMULATIONS  # noqa: E402
 
 erreurs = []
@@ -54,22 +54,26 @@ for a in range(len(items)):
 for r, a, b in proches:
     erreurs.append(f"questions très proches ({r}) : {a} / {b}")
 
-# 4. Chaque question figure bien dans le PDF
-pdf = ROOT / "build" / "avant-de-dire-oui.pdf"
-if pdf.exists():
+# 4. Chaque question figure bien dans chacun des deux PDF
+norm = lambda s: re.sub(r"[\W_]+", "", s.replace("\u2010", "")).lower()  # noqa: E731
+presence = {}
+for nom in FORMATS.values():
+    pdf = ROOT / "build" / f"{nom}.pdf"
+    if not pdf.exists():
+        presence[nom] = None
+        continue
     texte = subprocess.run(["pdftotext", str(pdf), "-"], capture_output=True, text=True).stdout
-    norm = lambda s: re.sub(r"[\W_]+", "", s.replace("‐", "")).lower()  # noqa: E731
     texte_n = norm(re.sub(r"-\n", "", texte))
     absentes = [k for k, q in finales.items() if norm(fr(q)) not in texte_n]
+    presence[nom] = len(finales) - len(absentes)
     for k in absentes:
-        erreurs.append(f"question {k} absente du PDF")
-else:
-    absentes = None
+        erreurs.append(f"question {k} absente de {nom}.pdf")
 
 print(f"Thèmes : {len(THEMES)} · questions : {len(finales)}")
 print(f"Questions d'origine : {conservees} conservées telles quelles + {reformulees} reformulées = {conservees + reformulees}/300")
 print(f"Questions nouvelles : {len(finales) - 300}")
-print("Présence dans le PDF :", "non vérifiée (PDF absent)" if absentes is None else f"{len(finales) - len(absentes)}/{len(finales)}")
+for nom, n in presence.items():
+    print(f"Présence dans {nom}.pdf :", "non vérifiée (PDF absent)" if n is None else f"{n}/{len(finales)}")
 if erreurs:
     print("\nPROBLÈMES :")
     print("\n".join(" - " + e for e in erreurs))
