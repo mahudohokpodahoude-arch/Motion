@@ -21,7 +21,7 @@ L = {
   john_ref='JOHN 11:25'),
  'fr': dict(lang='fr', children_html='''<div class="kids">
           <p><b>Huldah</b> OUSSA OROUNLA, <span>son époux et leurs enfants</span></p>
-          <p><b>Michèle</b> OUSSA <span>et son enfant</span></p>
+          <p><b>Michèle</b> OUSSA, <span>son époux et son enfant</span></p>
           <p><b>Godwill</b> OUSSA <span>et son épouse</span></p>
           <p><b>Jean Claude</b> OUSSA, <span>son épouse et leurs enfants</span></p>
           <p><b>Anne Marie</b> OUSSA</p>
