@@ -1,0 +1,10 @@
+<div class="mourners">
+        <h4 class="solo">{{h_mourners}}</h4>
+        <div class="m3">
+          <p><b>TOGBE KEHXII</b><small>{{m1}}</small></p>
+          <p><b>AMETSITSIE MANKRA MATHIAS</b><small>{{m2}}</small></p>
+          <p><b>M. ANTHONY ALAYI</b><small>{{m3}}</small></p>
+          <p><b>KOFI BRAHENE</b><small>Vinor</small></p>
+          <p><b>ADJOS ADZRAKUTSE</b><small>Vitor</small></p>
+        </div>
+      </div>

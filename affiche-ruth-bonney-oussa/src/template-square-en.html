@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+<meta charset="utf-8">
+<title>{{title}}</title>
+<style>
+@font-face{font-family:'Playfair';src:url(../fonts/PlayfairDisplay.ttf);font-weight:400 900;}
+@font-face{font-family:'Playfair';src:url(../fonts/PlayfairDisplay-Italic.ttf);font-style:italic;font-weight:400 900;}
+@font-face{font-family:'Cormorant';src:url(../fonts/Cormorant.ttf);font-weight:300 700;}
+@font-face{font-family:'Cormorant';src:url(../fonts/Cormorant-Italic.ttf);font-style:italic;font-weight:300 700;}
+@font-face{font-family:'Vibes';src:url(../fonts/GreatVibes.ttf);}
+@font-face{font-family:'Oswald';src:url(../fonts/Oswald.ttf);font-weight:200 700;}
+@font-face{font-family:'Poppins';src:url(../fonts/Poppins-Regular.ttf);font-weight:400;}
+@font-face{font-family:'Poppins';src:url(../fonts/Poppins-SemiBold.ttf);font-weight:600;}
+@font-face{font-family:'Poppins';src:url(../fonts/Poppins-Bold.ttf);font-weight:700;}
+
+:root{--ink:#4a1d2a;--ink-soft:#6b3a3f;--gold:#b98a3e;--gold-light:#f0d38d;--coral:#e0705f;--cream:#fff8ee}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#e9d3bd}
+.poster{
+  position:relative;width:1200px;height:1200px;overflow:hidden;
+  font-family:'Poppins',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(ellipse 480px 440px at 210px 400px, rgba(255,222,160,.85), rgba(255,222,160,0) 70%),
+    radial-gradient(ellipse 600px 420px at 960px 120px, rgba(255,240,215,.9), rgba(255,240,215,0) 70%),
+    linear-gradient(180deg,#fffaf2 0%,#fde9d2 32%,#f9d2b3 68%,#f4c09b 100%);
+}
+.bg-arches{position:absolute;inset:0;pointer-events:none}
+
+/* header */
+header{position:absolute;top:18px;left:0;right:0;text-align:center}
+header .cross{width:20px;height:29px;display:block;margin:0 auto 3px}
+header .memory{font-weight:600;font-size:22px;letter-spacing:9px;padding-left:9px}
+header .of{font-family:'Cormorant',serif;font-style:italic;font-weight:500;font-size:28px;line-height:1.1;margin-top:2px;color:var(--ink-soft)}
+header .orn{display:block;margin:5px auto 0}
+
+/* photo */
+.photocol{position:absolute;left:44px;top:158px;width:330px}
+.frame{
+  position:relative;width:330px;height:500px;padding:7px;
+  border-radius:172px 172px 24px 24px / 104px 104px 24px 24px;
+  background:linear-gradient(135deg,#f6dd98 0%,#b98a3e 45%,#f3d894 70%,#a97a30 100%);
+  box-shadow:0 20px 40px rgba(120,60,30,.28),0 4px 10px rgba(120,60,30,.2);
+}
+.frame::after{content:'';position:absolute;inset:-11px;border:2px solid rgba(185,138,62,.6);border-radius:183px 183px 34px 34px / 115px 115px 34px 34px}
+.photo{width:100%;height:100%;border-radius:165px 165px 17px 17px / 97px 97px 17px 17px;
+  background:url(../assets/portrait.jpg) center top / cover no-repeat;filter:saturate(1.06) contrast(1.03)}
+
+/* top right */
+.topright{position:absolute;left:412px;right:44px;top:158px}
+.tab{position:relative;z-index:2;margin:0 auto;width:62%;text-align:center;padding:10px 10px 8px;color:#fff;
+  background:linear-gradient(135deg,#4f1a2b 0%,#7b3446 55%,#9a5a43 100%);border-radius:16px;border:2px solid var(--gold-light);box-shadow:0 8px 18px rgba(80,30,40,.28)}
+.tab b{display:block;font-weight:700;font-size:22px;letter-spacing:1.3px;line-height:1.1;white-space:nowrap}
+.tab span{display:block;font-weight:400;font-size:13.5px;letter-spacing:.4px;margin-top:2px;color:#f7e3c0;white-space:nowrap}
+.card{position:relative;background:rgba(255,252,246,.93);border-radius:24px;border:1.5px solid rgba(255,255,255,.9);box-shadow:0 14px 32px rgba(120,60,30,.18)}
+.prog .card{margin-top:-20px;padding:34px 20px 10px}
+.items{display:grid;grid-template-columns:repeat(3,1fr);column-gap:14px}
+.item{position:relative;padding:0 10px 8px;border-radius:14px}
+.item.last{background:rgba(224,112,95,.12);padding-top:8px;margin-top:-8px}
+.pill{display:inline-block;border-radius:999px;font-weight:600;font-size:11.5px;letter-spacing:.9px;text-transform:uppercase;padding:6px 11px;white-space:nowrap;background:#1d1210;color:#fff}
+.pill.gold{border:2px solid var(--gold);color:var(--ink);background:rgba(255,255,255,.55);font-size:12.5px;letter-spacing:1.1px;padding:7px 14px}
+.pill.dark{background:#1d1210;color:#fff;font-size:12.5px;letter-spacing:1.1px;padding:8px 14px}
+.item h3{font-weight:700;font-size:22px;line-height:1.1;margin-top:8px;color:var(--ink)}
+.item p{font-size:15.5px;line-height:1.25;margin-top:3px;color:var(--ink-soft)}
+.verse{margin-top:4px;padding-top:6px;border-top:1.5px solid rgba(185,138,62,.55);text-align:center;font-family:'Vibes',cursive;font-size:29px;line-height:1.15;color:var(--ink);white-space:nowrap}
+
+.nameblock{margin-top:12px}
+.madam{display:flex;align-items:baseline;gap:12px;line-height:1}
+.madam small{font-family:'Playfair',serif;font-style:italic;font-size:26px;color:var(--ink-soft)}
+.madam span{font-family:'Vibes',cursive;font-size:68px;line-height:.9;background:linear-gradient(90deg,#c9534a,#e8806f);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1{font-family:'Oswald',sans-serif;font-weight:700;font-size:110px;line-height:1.02;letter-spacing:.5px;white-space:nowrap;display:block;width:max-content;
+  background:linear-gradient(90deg,#3a1220 0%,#5c2230 55%,#8a4a3a 100%);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:-2px}
+.aka{font-family:'Playfair',serif;font-style:italic;font-size:23px;color:var(--ink-soft)}
+.dates{display:flex;gap:8px;margin-top:8px;align-items:center}
+.quote{font-family:'Cormorant',serif;font-style:italic;font-weight:500;font-size:21px;line-height:1.15;margin-top:8px;color:var(--ink-soft);white-space:nowrap}
+
+/* family */
+.family{position:absolute;left:44px;right:44px}
+.family .tab{width:340px;padding:9px 10px 8px}
+.family .tab b{font-size:20px}
+.family .card{margin-top:-20px;padding:32px 24px 12px}
+.surnames{text-align:center;font-weight:600;font-size:13.5px;letter-spacing:1.6px;padding-bottom:8px;border-bottom:1.5px solid rgba(185,138,62,.5);white-space:nowrap}
+.surnames i{color:var(--gold);font-style:normal;padding:0 6px}
+.fam{display:grid;grid-template-columns:352px 330px 1fr;column-gap:24px;margin-top:8px}
+h4{font-family:'Playfair',serif;font-style:italic;font-weight:600;font-size:18px;color:var(--gold);margin:0 0 3px;display:flex;align-items:center;gap:8px}
+h4::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,rgba(185,138,62,.6),rgba(185,138,62,0))}
+.chiefs-h{grid-column:1 / 3}
+.side{font-weight:600;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:var(--coral);margin:1px 0 3px}
+.fam p{font-size:13.2px;line-height:1.38;color:var(--ink)}
+.fam p b{font-weight:700}
+.fam p span{color:var(--ink-soft)}
+.fam .c3 h4{margin-top:8px}
+.fam .c3 h4:first-child{margin-top:0}
+.vv p{margin-bottom:0}
+.vv{margin-bottom:4px;padding-bottom:5px;border-bottom:1px dashed rgba(185,138,62,.45)}
+.nw{white-space:nowrap}
+.names{display:flex;flex-wrap:wrap;gap:1px 12px}
+
+/* footer */
+footer{position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(90deg,#2a0d1b 0%,#4a1a33 50%,#2a0d1b 100%);border-top:3px solid var(--gold);display:flex;align-items:center;justify-content:center}
+footer .rip{width:470px;text-align:center;white-space:nowrap}
+footer .rip .s{display:inline-block;padding:0 12px 4px;font-family:'Vibes',cursive;font-size:46px;line-height:1;background:linear-gradient(90deg,#f6dd98,#e8b86a,#f6dd98);-webkit-background-clip:text;background-clip:text;color:transparent}
+footer .rip .t{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#f1dcc0;margin-top:1px}
+footer .div{width:1.5px;height:58px;background:linear-gradient(180deg,transparent,var(--gold-light),transparent);margin:0 26px}
+footer .jn{width:480px;font-family:'Cormorant',serif;font-style:italic;font-weight:500;font-size:19px;line-height:1.2;color:#f6e7d0;text-align:center;text-wrap:balance}
+footer .jn b{display:block;font-family:'Poppins',sans-serif;font-style:normal;font-weight:600;font-size:11px;letter-spacing:3px;color:var(--gold-light);margin-top:2px}
+</style>
+</head>
+<body>
+<div class="poster">
+  <svg class="bg-arches" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d38d"/><stop offset="1" stop-color="#b98a3e"/></linearGradient></defs>
+    <g fill="none" stroke="url(#gl)">
+      <path d="M-40 560 V380 A250 250 0 0 1 460 380 V425" stroke-width="2" opacity=".55"/>
+      <path d="M-100 560 V380 A310 310 0 0 1 520 380 V425" stroke-width="2" opacity=".35"/>
+      <path d="M-170 560 V380 A380 380 0 0 1 590 380 V425" stroke-width="2" opacity=".2"/>
+    </g>
+  </svg>
+
+  <header>
+    <svg class="cross" viewBox="0 0 30 44"><defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d38d"/><stop offset="1" stop-color="#a97a30"/></linearGradient></defs><path d="M12.5 0h5v12H30v5H17.5v27h-5V17H0v-5h12.5z" fill="url(#cg)"/></svg>
+    <div class="memory">{{memory}}</div>
+    <div class="of">{{of}}</div>
+    <svg class="orn" width="300" height="12" viewBox="0 0 360 16"><defs><linearGradient id="og" x1="0" x2="1"><stop offset="0" stop-color="#b98a3e" stop-opacity="0"/><stop offset=".5" stop-color="#b98a3e"/><stop offset="1" stop-color="#b98a3e" stop-opacity="0"/></linearGradient></defs><rect x="0" y="7.5" width="360" height="1.5" fill="url(#og)"/><path d="M180 1l7 7-7 7-7-7z" fill="#b98a3e"/></svg>
+  </header>
+
+  <div class="photocol"><div class="frame"><div class="photo"></div></div></div>
+
+  <div class="topright">
+    <div class="prog">
+      <div class="tab"><b>{{prog_title}}</b><span>{{prog_place}}</span></div>
+      <div class="card">
+        <div class="items">
+          <div class="item"><span class="pill">{{d1}}</span><h3>{{t1}}</h3><p>{{p1}}</p></div>
+          <div class="item"><span class="pill">{{d2}}</span><h3>{{t2}}</h3><p>{{p2}}</p></div>
+          <div class="item last"><span class="pill">{{d3}}</span><h3>{{t3}}</h3></div>
+        </div>
+        <div class="verse">{{lovequote}}</div>
+      </div>
+    </div>
+    <div class="nameblock">
+      <div class="madam"><small>{{madam}}</small><span>Ruth</span></div>
+      <h1>BONNEY OUSSA</h1>
+      <div class="aka">{{aka}}</div>
+      <div class="dates"><span class="pill dark">{{aged}}</span><span class="pill gold">{{called}}</span></div>
+      <p class="quote">{{lifequote}}</p>
+    </div>
+  </div>
+
+  <section class="family">
+    <div class="tab"><b>{{family_title}}</b></div>
+    <div class="card">
+      <div class="surnames">ADZRAKUTSE<i>•</i>BONNEY<i>•</i>OUSSA<i>•</i>HOUSSOU<i>•</i>OROUNLA<i>•</i>AGOUNKPE</div>
+      <div class="fam">
+        <div class="chiefs-h"><h4>{{h_mourners}}</h4></div>
+        <div class="c3" style="grid-row:1 / span 2;grid-column:3">
+          <div class="vv">{{vv_html}}</div>
+          <h4>{{h_children}}</h4>
+          {{children_html}}
+          <h4>{{h_siblings}}</h4>
+          <p class="names"><span class="nw"><b>TERESA</b> VIDEKPUE</span> <span class="nw"><b>NOAH</b> VIDEKPUR</span> <span class="nw"><b>MAWUNI</b> ADZRAKUTSE</span> <span class="nw"><b>EMMANUEL</b> ADZRAKUTSE</span> <span class="nw"><b>DAVID</b> AIIZRI</span> <span class="nw"><b>FLORENCE</b> ADZEI</span> <span class="nw"><b>ABUYA</b></span></p>
+        </div>
+        <div class="c1" style="grid-row:2;grid-column:1"><div class="side">{{side_father}}</div>{{father_html}}</div>
+        <div class="c2" style="grid-row:2;grid-column:2"><div class="side">{{side_mother}}</div>{{mother_html}}</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="rip"><div class="s">{{rip}}</div><div class="t">{{rip2}}</div></div>
+    <div class="div"></div>
+    <div class="jn">{{john}}<b>{{john_ref}}</b></div>
+  </footer>
+</div>
+
+<script>
+Promise.all([document.fonts.load('700 80px Oswald'),document.fonts.load('400 30px Poppins'),document.fonts.load('600 30px Poppins'),document.fonts.load('700 30px Poppins'),document.fonts.load('40px Vibes'),document.fonts.load('italic 30px Playfair'),document.fonts.load('italic 30px Cormorant')]).then(()=>{
+  const h=document.querySelector('h1');let fs=140;h.style.fontSize=fs+'px';
+  while(h.scrollWidth>520&&fs>40){fs-=1;h.style.fontSize=fs+'px';}
+  const poster=document.querySelector('.poster').getBoundingClientRect();
+  const a=document.querySelector('.photocol').getBoundingClientRect().bottom,b=document.querySelector('.topright').getBoundingClientRect().bottom;
+  document.querySelector('.family').style.top=(Math.max(a+14,b)-poster.top+18)+'px';
+  document.body.setAttribute('data-ready','1');
+});
+</script>
+</body>
+</html>

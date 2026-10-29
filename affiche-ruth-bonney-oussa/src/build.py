@@ -3,8 +3,29 @@ root = pathlib.Path(__file__).resolve().parent.parent
 tpl = (root/'src'/'template.html').read_text(encoding='utf-8')
 sprigs = (root/'src'/'sprigs.js').read_text(encoding='utf-8') if (root/'src'/'sprigs.js').exists() else ''
 
+
+FR_CHIEFS = (root/'src'/'fr_chiefs_block.txt').read_text(encoding='utf-8')
+EN_FATHER = [("TOGBE KOMLA KUNDE V","Chief of Alavanyo Abehenease"),("MR ROBERT ADZRAKU","Rtd Educationist"),
+  ("MR SAI ADZRAKUTSE ATSU",None),("TOGBE ADJOS ASANGO",None),("PHILOMENA BONNIE",None),("MAMA FAFA MEDINAWO AGBO II",None),
+  ("MADAM VERONICA KOFIYAO",None),("CHRISTINE ADRAKU",None),("REGINA KOFIYAO",None),("ELISA ADZRAKU",None),("NESTOR ADZRAKU",None)]
+EN_MOTHER = [("TOGBE KEH XII","Divisional Chief of Gbi Wegbe"),("TOGBE KATABUA IV","Dzabe Sub-Divisional Chief"),
+  ("KPUKPOTOR JOHN KUBI","Gbi Wegbe"),("MR MANKRA MATHIAS","Fiator Nyive"),("MR ANTHONY ALAYI","Clan Head Nyive"),
+  ("MAMA AMETORWOYOR","Queen Mother Nyive"),("AFETOR KOKU SOGLO","Fiatefenorla Nyive"),("MADAM BERNICE BRAHENE",None),
+  ("ME KOFI ADUSU","Fiatefenorla Dzabe")]
+EN_VV = [("KOFI BRAHENE","Vinor"),("ADJOS ADZRAKUTSE","Vitor")]
+def entries(lst):
+    return "\n".join('<p><b>%s</b>%s</p>' % (n, (', <span>%s</span>' % r) if r else '') for n, r in lst)
+EN_CHIEFS = '''<div class="mourners">
+        <h4 class="solo">Chief Mourners</h4>
+        <div class="m2">
+          <div><div class="side">Father’s side</div>%s</div>
+          <div><div class="side">Mother’s side</div>%s</div>
+        </div>
+        <div class="vv">%s</div>
+      </div>''' % (entries(EN_FATHER), entries(EN_MOTHER), entries(EN_VV))
+
 L = {
- 'en': dict(lang='en', children_html='''<p class="names"><span class="nw"><b>Huldah</b> OROUNLA</span> <span class="nw"><b>Michèle</b> OUSSA</span> <span class="nw"><b>Godwill</b> OUSSA</span> <span class="nw"><b>Anne Marie</b> OUSSA</span> <span class="nw"><b>Jean Claude</b> OUSSA</span></p>''', title='In Loving Memory – Madam Ruth Bonney Oussa',
+ 'en': dict(lang='en', chiefs_html=EN_CHIEFS, father_html=entries(EN_FATHER), mother_html=entries(EN_MOTHER), vv_html=entries(EN_VV), side_father='Father’s side', side_mother='Mother’s side', children_html='''<p class="names"><span class="nw"><b>Huldah</b> OROUNLA</span> <span class="nw"><b>Michèle</b> OUSSA</span> <span class="nw"><b>Godwill</b> OUSSA</span> <span class="nw"><b>Anne Marie</b> OUSSA</span> <span class="nw"><b>Jean Claude</b> OUSSA</span></p>''', title='In Loving Memory – Madam Ruth Bonney Oussa',
   memory='IN LOVING MEMORY', of='of a beloved wife, mother, grandmother, sister, aunt and friend',
   madam='Madam', aka='(a.k.a. Da Adzo)', aged='Aged 63', called='Called to rest on 26th October 2026',
   lifequote='A life well lived, a heart full of love, a legacy that will forever remain.',
@@ -15,11 +36,11 @@ L = {
   lovequote='Your love, your strength, your kindness will forever live in our hearts.',
   family_title='THE BELOVED FAMILY', h_mourners='Chief Mourners',
   m1='Head of Gbi-Wegbe Division', m2='Fiator de Nyive', m3='Head of Nyive',
-  h_husband='Husband', h_son='Son', h_children='Children', h_siblings='Brothers and Sisters',
+  h_husband='Husband', h_son='Son', h_children='Children', h_siblings='Siblings',
   rip='Rest in peace, dear mother.', rip2='She will always be in our hearts',
   john='“Jesus said unto her, I am the resurrection, and the life: he that believeth in me, though he were dead, yet shall he live.”',
   john_ref='JOHN 11:25'),
- 'fr': dict(lang='fr', children_html='''<div class="kids">
+ 'fr': dict(lang='fr', chiefs_html=FR_CHIEFS, children_html='''<div class="kids">
           <p><b>Huldah</b> OUSSA OROUNLA, <span>son époux et leurs enfants</span></p>
           <p><b>Michèle</b> OUSSA, <span>son époux et son enfant</span></p>
           <p><b>Godwill</b> OUSSA <span>et son épouse</span></p>
@@ -41,13 +62,16 @@ L = {
   john='« Jésus lui dit : Je suis la résurrection et la vie. Celui qui croit en moi vivra, quand même il serait mort. »',
   john_ref='JEAN 11:25'),
 }
-VARIANTS = [('template.html', 'affiche-{code}.html'), ('template-square.html', 'affiche-{code}-square.html')]
+VARIANTS = {
+    'en': [('template.html', 'affiche-{code}.html'), ('template-square-en.html', 'affiche-{code}-square.html')],
+    'fr': [('template.html', 'affiche-{code}.html'), ('template-square.html', 'affiche-{code}-square.html')],
+}
 for code, d in L.items():
-    for tname, oname in VARIANTS:
-        t = (root/'src'/tname).read_text(encoding='utf-8')
-        html = t
-        for k, v in d.items():
-            html = html.replace('{{%s}}' % k, v)
+    for tname, oname in VARIANTS[code]:
+        html = (root/'src'/tname).read_text(encoding='utf-8')
+        for _ in range(2):  # second pass fills placeholders nested in chiefs_html
+            for k, v in d.items():
+                html = html.replace('{{%s}}' % k, v)
         html = html.replace('{{sprigs}}', sprigs)
         assert '{{' not in html, html.split('{{')[1][:40]
         (root/'src'/oname.format(code=code)).write_text(html, encoding='utf-8')

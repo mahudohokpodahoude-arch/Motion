@@ -10,9 +10,8 @@ const path = require('path');
     await page.waitForTimeout(500);
     await page.locator('.poster').screenshot({ path: path.join(root, `affiche-ruth-bonney-oussa-${lang}-carre.png`) });
     const m = await page.evaluate(() => {
-      const r = s => { const b = document.querySelector(s).getBoundingClientRect(); return [Math.round(b.top), Math.round(b.bottom), Math.round(b.left), Math.round(b.right)]; };
-      return { left: r('.left'), prog: r('.prog'), family: r('.family .card'), footer: r('footer'), h1: r('h1'),
-               famCols: [...document.querySelectorAll('.family .col')].map(c => Math.round(c.getBoundingClientRect().height)),
+      const r = s => { const e = document.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return [Math.round(b.top), Math.round(b.bottom), Math.round(b.left), Math.round(b.right)]; };
+      return { left: r('.left') || r('.photocol'), prog: r('.prog'), topright: r('.topright'), family: r('.family .card'), footer: r('footer'), h1: r('h1'),
                surn: document.querySelector('.surnames').scrollWidth + '/' + document.querySelector('.surnames').clientWidth };
     });
     console.log(lang, JSON.stringify(m));
