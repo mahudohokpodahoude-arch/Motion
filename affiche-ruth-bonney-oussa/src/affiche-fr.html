@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>En mémoire de Madame Ruth Bonney Oussa</title>
+<style>
+@font-face{font-family:'Playfair';src:url(../fonts/PlayfairDisplay.ttf);font-weight:400 900;}
+@font-face{font-family:'Playfair';src:url(../fonts/PlayfairDisplay-Italic.ttf);font-style:italic;font-weight:400 900;}
+@font-face{font-family:'Cormorant';src:url(../fonts/Cormorant.ttf);font-weight:300 700;}
+@font-face{font-family:'Cormorant';src:url(../fonts/Cormorant-Italic.ttf);font-style:italic;font-weight:300 700;}
+@font-face{font-family:'Vibes';src:url(../fonts/GreatVibes.ttf);}
+@font-face{font-family:'Oswald';src:url(../fonts/Oswald.ttf);font-weight:200 700;}
+@font-face{font-family:'Poppins';src:url(../fonts/Poppins-Regular.ttf);font-weight:400;}
+@font-face{font-family:'Poppins';src:url(../fonts/Poppins-SemiBold.ttf);font-weight:600;}
+@font-face{font-family:'Poppins';src:url(../fonts/Poppins-Bold.ttf);font-weight:700;}
+
+:root{
+  --ink:#4a1d2a;
+  --ink-soft:#6b3a3f;
+  --gold:#b98a3e;
+  --gold-light:#f0d38d;
+  --coral:#e0705f;
+  --cream:#fff8ee;
+  --plum:#33111f;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#e9d3bd}
+.poster{
+  position:relative;width:1080px;height:1700px;overflow:hidden;
+  font-family:'Poppins',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(ellipse 620px 520px at 300px 520px, rgba(255,222,160,.85), rgba(255,222,160,0) 70%),
+    radial-gradient(ellipse 700px 500px at 900px 150px, rgba(255,240,215,.9), rgba(255,240,215,0) 70%),
+    linear-gradient(180deg,#fffaf2 0%,#fde9d2 32%,#f9d2b3 68%,#f4c09b 100%);
+}
+.bg-arches{position:absolute;inset:0;pointer-events:none}
+
+/* ---------- header ---------- */
+header{position:absolute;top:34px;left:0;right:0;text-align:center}
+header .cross{width:30px;height:44px;display:block;margin:0 auto 6px}
+header .memory{font-weight:600;font-size:28px;letter-spacing:10px;padding-left:10px;color:var(--ink)}
+header .of{font-family:'Cormorant',serif;font-style:italic;font-weight:500;font-size:33px;line-height:1.15;margin-top:6px;color:var(--ink-soft)}
+header .orn{display:block;margin:10px auto 0}
+
+/* ---------- main ---------- */
+.main{position:absolute;top:218px;left:50px;right:50px;display:grid;grid-template-columns:540px 1fr;column-gap:38px}
+.left{position:relative}
+.frame{
+  position:relative;width:540px;height:566px;padding:9px;
+  border-radius:279px 279px 30px 30px / 170px 170px 30px 30px;
+  background:linear-gradient(135deg,#f6dd98 0%,#b98a3e 45%,#f3d894 70%,#a97a30 100%);
+  box-shadow:0 26px 50px rgba(120,60,30,.28), 0 4px 10px rgba(120,60,30,.2);
+}
+.frame::after{
+  content:'';position:absolute;inset:-14px;border:2px solid rgba(185,138,62,.6);
+  border-radius:293px 293px 42px 42px / 184px 184px 42px 42px;
+}
+.photo{
+  width:100%;height:100%;
+  border-radius:270px 270px 21px 21px / 161px 161px 21px 21px;
+  background:url(../assets/portrait.jpg) center top / cover no-repeat;
+  filter:saturate(1.06) contrast(1.03);
+}
+.nameblock{margin-top:26px;position:relative}
+.madam{display:flex;align-items:baseline;gap:14px;line-height:1}
+.madam small{font-family:'Playfair',serif;font-style:italic;font-size:32px;color:var(--ink-soft)}
+.madam span{font-family:'Vibes',cursive;font-size:88px;color:var(--coral);line-height:.9;
+  background:linear-gradient(90deg,#c9534a,#e8806f);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1{font-family:'Oswald',sans-serif;font-weight:700;font-size:80px;line-height:1.05;letter-spacing:.5px;white-space:nowrap;display:block;width:max-content;max-width:100%;
+  background:linear-gradient(90deg,#3a1220 0%,#5c2230 55%,#8a4a3a 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-top:-4px}
+.aka{font-family:'Playfair',serif;font-style:italic;font-size:28px;color:var(--ink-soft);margin-top:2px}
+.dates{display:flex;gap:10px;margin-top:16px;align-items:center}
+.pill{display:inline-block;border-radius:999px;font-weight:600;font-size:16px;letter-spacing:1.4px;text-transform:uppercase;padding:9px 18px;white-space:nowrap}
+.pill.dark{background:#1d1210;color:#fff}
+.pill.gold{border:2px solid var(--gold);color:var(--ink);background:rgba(255,255,255,.55)}
+.quote{font-family:'Cormorant',serif;font-style:italic;font-weight:500;font-size:26px;line-height:1.2;margin-top:14px;color:var(--ink-soft);max-width:520px}
+
+/* ---------- programme ---------- */
+.prog{position:relative;display:flex;flex-direction:column}
+.tab{
+  position:relative;z-index:2;margin:0 auto;width:92%;text-align:center;padding:16px 10px 14px;color:#fff;
+  background:linear-gradient(135deg,#4f1a2b 0%,#7b3446 55%,#9a5a43 100%);
+  border-radius:20px;border:2px solid var(--gold-light);
+  box-shadow:0 10px 22px rgba(80,30,40,.28);
+}
+.tab b{display:block;font-weight:700;font-size:27px;letter-spacing:1.5px;line-height:1.1}
+.tab span{white-space:nowrap;display:block;font-weight:400;font-size:16px;letter-spacing:.5px;margin-top:5px;color:#f7e3c0}
+.card{
+  position:relative;background:rgba(255,252,246,.93);border-radius:30px;border:1.5px solid rgba(255,255,255,.9);
+  box-shadow:0 18px 40px rgba(120,60,30,.18);
+}
+.prog .card{margin-top:-30px;padding:62px 26px 26px 26px;flex:1;display:flex;flex-direction:column;justify-content:flex-start}
+.timeline{position:relative;padding-left:34px;flex:1;display:flex;flex-direction:column;justify-content:space-evenly;margin-bottom:10px}
+.tl-line{position:absolute;left:8px;width:2px;background:repeating-linear-gradient(180deg,var(--gold) 0 7px,transparent 7px 13px)}
+.item{position:relative;margin-bottom:0}
+.item::before{content:'';position:absolute;left:-34px;top:9px;width:18px;height:18px;border-radius:50%;background:var(--coral);border:4px solid #fff;box-shadow:0 0 0 2px var(--gold)}
+.item .pill{background:#1d1210;color:#fff;font-size:14.5px;letter-spacing:1.1px;padding:8px 14px}
+.item h3{font-weight:700;font-size:27px;line-height:1.12;margin-top:11px;color:var(--ink)}
+.item p{font-size:18px;margin-top:5px;color:var(--ink-soft)}
+.item.last{background:rgba(224,112,95,.12);border-radius:18px;padding:14px 14px 14px 14px;margin-left:-14px;margin-right:-6px}
+.item.last::before{left:-20px;top:23px}
+.verse{
+  margin-top:26px;padding-top:20px;border-top:1.5px solid rgba(185,138,62,.55);text-align:center;
+  font-family:'Vibes',cursive;font-size:40px;line-height:1.15;color:var(--ink)
+}
+
+html[lang=fr] .prog .tab b{font-size:21.5px;letter-spacing:.8px;white-space:nowrap}
+html[lang=fr] footer .rip .s{font-size:50px}
+html[lang=fr] .prog .tab span{font-size:15px;letter-spacing:.2px}
+.verse,.quote,header .of{text-wrap:balance}
+
+/* ---------- family ---------- */
+.family{position:absolute;left:50px;right:50px;top:1148px}
+.family .tab{width:420px}
+.family .card{margin-top:-28px;padding:48px 34px 22px}
+.surnames{text-align:center;font-weight:600;font-size:19px;letter-spacing:2.2px;color:var(--ink);padding-bottom:16px;border-bottom:1.5px solid rgba(185,138,62,.5)}
+.surnames i{color:var(--gold);font-style:normal;padding:0 7px}
+.mourners{padding:12px 0 12px;border-bottom:1.5px solid rgba(185,138,62,.5)}
+.m3{display:grid;grid-template-columns:1fr 1.3fr 1fr;column-gap:22px}
+.hs{display:grid;grid-template-columns:auto 1fr;column-gap:34px}
+.hs h4::after{display:none}
+.nw{white-space:nowrap}
+.names{display:flex;flex-wrap:wrap;gap:2px 22px}
+.cols{display:grid;grid-template-columns:1fr 1fr;column-gap:44px;margin-top:12px}
+.col h4{font-family:'Playfair',serif;font-style:italic;font-weight:600;font-size:23px;color:var(--gold);margin:10px 0 5px;display:flex;align-items:center;gap:10px}
+.col h4::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,rgba(185,138,62,.6),rgba(185,138,62,0))}
+.col h4:first-child,.hs h4,h4.solo{margin-top:0}
+h4.solo{margin-bottom:6px}
+.mourners h4{font-family:'Playfair',serif;font-style:italic;font-weight:600;font-size:23px;color:var(--gold);display:flex;align-items:center;gap:10px}
+.mourners h4::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,rgba(185,138,62,.6),rgba(185,138,62,0))}
+.mourners p{font-size:17.5px;line-height:1.35}
+.mourners p small{display:block;font-size:15px;color:var(--ink-soft)}
+.col p{font-size:17.5px;line-height:1.42;color:var(--ink)}
+.col p b{font-weight:700}
+.col p small{display:block;font-size:15px;color:var(--ink-soft);margin-bottom:5px;line-height:1.3}
+.col p .sep{color:var(--gold);padding:0 4px}
+
+/* ---------- footer ---------- */
+footer{
+  position:absolute;left:0;right:0;bottom:0;height:112px;
+  background:linear-gradient(90deg,#2a0d1b 0%,#4a1a33 50%,#2a0d1b 100%);
+  border-top:3px solid var(--gold);display:flex;align-items:center;justify-content:center;gap:0;
+}
+footer .rip{width:480px;text-align:center;white-space:nowrap}
+footer .rip .s{display:inline-block;padding:0 14px 6px;font-family:'Vibes',cursive;font-size:56px;line-height:1;background:linear-gradient(90deg,#f6dd98,#e8b86a,#f6dd98);-webkit-background-clip:text;background-clip:text;color:transparent}
+footer .rip .t{font-size:13px;letter-spacing:4.5px;text-transform:uppercase;color:#f1dcc0;margin-top:6px}
+footer .div{width:1.5px;height:70px;background:linear-gradient(180deg,transparent,var(--gold-light),transparent);margin:0 28px}
+footer .jn{width:450px;font-family:'Cormorant',serif;font-style:italic;font-weight:500;font-size:21px;line-height:1.22;color:#f6e7d0;text-wrap:balance;text-align:center}
+footer .jn b{display:block;font-family:'Poppins',sans-serif;font-style:normal;font-weight:600;font-size:13px;letter-spacing:3px;color:var(--gold-light);margin-top:5px}
+
+.leaf-layer{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <!-- decorative arches + light -->
+  <svg class="bg-arches" viewBox="0 0 1080 1700" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d38d"/><stop offset="1" stop-color="#b98a3e"/></linearGradient>
+    </defs>
+    <g fill="none" stroke="url(#gl)">
+      <path d="M-30 1000 V470 A350 350 0 0 1 670 470 V1000" stroke-width="2" opacity=".55"/>
+      <path d="M-90 1000 V470 A410 410 0 0 1 730 470 V1000" stroke-width="2" opacity=".35"/>
+      <path d="M-160 1000 V470 A480 480 0 0 1 800 470 V1000" stroke-width="2" opacity=".2"/>
+    </g>
+  </svg>
+
+  <header>
+    <svg class="cross" viewBox="0 0 30 44"><defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d38d"/><stop offset="1" stop-color="#a97a30"/></linearGradient></defs>
+      <path d="M12.5 0h5v12H30v5H17.5v27h-5V17H0v-5h12.5z" fill="url(#cg)"/></svg>
+    <div class="memory">EN MÉMOIRE DE</div>
+    <div class="of">notre très chère épouse, maman, grand-mère, sœur, tante et amie</div>
+    <svg class="orn" width="360" height="16" viewBox="0 0 360 16"><defs><linearGradient id="og" x1="0" x2="1"><stop offset="0" stop-color="#b98a3e" stop-opacity="0"/><stop offset=".5" stop-color="#b98a3e"/><stop offset="1" stop-color="#b98a3e" stop-opacity="0"/></linearGradient></defs>
+      <rect x="0" y="7.5" width="360" height="1.5" fill="url(#og)"/><path d="M180 1l7 7-7 7-7-7z" fill="#b98a3e"/></svg>
+  </header>
+
+  <section class="main">
+    <div class="left">
+      <div class="frame"><div class="photo"></div></div>
+      <div class="nameblock">
+        <div class="madam"><small>Madame</small><span>Ruth</span></div>
+        <h1>BONNEY OUSSA</h1>
+        <div class="aka">(alias Da Adzo)</div>
+        <div class="dates"><span class="pill dark">63 ans</span><span class="pill gold">Rappelée à Dieu le 26 octobre 2026</span></div>
+        <p class="quote">Une vie bien vécue, un cœur plein d’amour, un héritage qui restera à jamais.</p>
+      </div>
+    </div>
+
+    <div class="prog">
+      <div class="tab"><b>PROGRAMME DES OBSÈQUES</b><span>Ewegbe-Hohoe, Région de la Volta, Ghana</span></div>
+      <div class="card">
+        <div class="timeline">
+          <div class="tl-line"></div>
+          <div class="item"><span class="pill">VENDREDI 6 NOVEMBRE 2026</span><h3>Veillée mortuaire</h3><p>à la résidence familiale</p></div>
+          <div class="item"><span class="pill">SAMEDI 7 NOVEMBRE 2026</span><h3>Service funèbre et inhumation</h3><p>au cimetière d’<span style="white-space:nowrap">Ewegbe-Hohoe</span></p></div>
+          <div class="item last"><span class="pill">DIMANCHE 8 NOVEMBRE 2026</span><h3>Culte d’action de grâce</h3><p>au cimetière</p></div>
+        </div>
+        <div class="verse">Ton amour, ta force, ta bonté vivront à jamais dans nos cœurs.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="family">
+    <div class="tab"><b>LA FAMILLE</b></div>
+    <div class="card">
+      <div class="surnames">ADZRAKUTSE<i>•</i>BONNEY<i>•</i>OUSSA<i>•</i>HOUSSOU<i>•</i>OROUNLA<i>•</i>AGOUNKPE</div>
+      <div class="mourners">
+        <h4 class="solo">Chefs de deuil</h4>
+        <div class="m3">
+          <p><b>TOGBE KEHXII</b><small>Chef de la division Gbi-Wegbe</small></p>
+          <p><b>AMETSITSIE MANKRA MATHIAS</b><small>Fiator de Nyive</small></p>
+          <p><b>M. ANTHONY ALAYI</b><small>Chef de Nyive</small></p>
+        </div>
+      </div>
+      <div class="cols">
+        <div class="col">
+          <div class="hs">
+            <div><h4>Époux</h4><p><b>KOFI BRAHENE</b></p></div>
+            <div><h4>Fils</h4><p><b>ADJOS ADZRAKUTSE</b></p></div>
+          </div>
+          <h4>Enfants</h4>
+          <p class="names"><span class="nw"><b>Huldah</b> OROUNLA</span> <span class="nw"><b>Michèle</b> OUSSA</span> <span class="nw"><b>Godwill</b> OUSSA</span> <span class="nw"><b>Anne Marie</b> OUSSA</span> <span class="nw"><b>Jean Claude</b> OUSSA</span></p>
+        </div>
+        <div class="col">
+          <h4>Frères et sœurs</h4>
+          <p class="names"><span class="nw"><b>TERESA</b> VIDEKPUE</span> <span class="nw"><b>NOAH</b> VIDEKPUR</span> <span class="nw"><b>MAWUNI</b> ADZRAKUTSE</span> <span class="nw"><b>EMMANUEL</b> ADZRAKUTSE</span> <span class="nw"><b>DAVID</b> AIIZRI</span> <span class="nw"><b>FLORENCE</b> ADZEI</span> <span class="nw"><b>ABUYA</b></span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <svg class="leaf-layer" id="leaves" viewBox="0 0 1080 1700"></svg>
+
+  <footer>
+    <div class="rip"><div class="s">Repose en paix, chère maman.</div><div class="t">Elle restera à jamais dans nos cœurs</div></div>
+    <div class="div"></div>
+    <div class="jn">« Jésus lui dit : Je suis la résurrection et la vie. Celui qui croit en moi vivra, quand même il serait mort. »<b>JEAN 11:25</b></div>
+  </footer>
+</div>
+
+<script>
+/* gold botanical sprigs */
+(function(){
+  const svg=document.getElementById('leaves'),NS='http://www.w3.org/2000/svg';
+  const defs=document.createElementNS(NS,'defs');
+  defs.innerHTML='<linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d38d"/><stop offset="1" stop-color="#b98a3e"/></linearGradient>';
+  svg.appendChild(defs);
+  function sprig(x0,y0,x1,y1,cx,cy,n,size,flip){
+    const g=document.createElementNS(NS,'g');
+    const stem=document.createElementNS(NS,'path');
+    stem.setAttribute('d',`M${x0} ${y0} Q${cx} ${cy} ${x1} ${y1}`);
+    stem.setAttribute('fill','none');stem.setAttribute('stroke','url(#lg)');stem.setAttribute('stroke-width','2.4');
+    g.appendChild(stem);
+    for(let i=1;i<=n;i++){
+      const t=i/(n+1);
+      const px=(1-t)*(1-t)*x0+2*(1-t)*t*cx+t*t*x1, py=(1-t)*(1-t)*y0+2*(1-t)*t*cy+t*t*y1;
+      const dx=2*(1-t)*(cx-x0)+2*t*(x1-cx), dy=2*(1-t)*(cy-y0)+2*t*(y1-cy);
+      const ang=Math.atan2(dy,dx)*180/Math.PI;
+      const s=size*(1-0.45*t);
+      [-1,1].forEach(side=>{
+        const l=document.createElementNS(NS,'path');
+        l.setAttribute('d',`M0 0 C ${s*.35} ${-s*.38}, ${s*.85} ${-s*.3}, ${s} 0 C ${s*.85} ${s*.3}, ${s*.35} ${s*.38}, 0 0Z`);
+        l.setAttribute('fill','url(#lg)');l.setAttribute('opacity',(0.95-0.35*t).toFixed(2));
+        l.setAttribute('transform',`translate(${px} ${py}) rotate(${ang+side*38})`);
+        g.appendChild(l);
+      });
+    }
+    if(flip)g.setAttribute('transform',`translate(${flip} 0) scale(-1 1)`);
+    svg.appendChild(g);
+  }
+  window.sprig=sprig;
+  Promise.all([document.fonts.load('700 80px Oswald'),document.fonts.load('400 30px Poppins'),document.fonts.load('600 30px Poppins'),document.fonts.load('700 30px Poppins'),document.fonts.load('40px Vibes'),document.fonts.load('italic 30px Playfair'),document.fonts.load('italic 30px Cormorant')]).then(()=>{
+  const h=document.querySelector('h1');let fs=140;h.style.fontSize=fs+'px';while(h.scrollWidth>532&&fs>40){fs-=1;h.style.fontSize=fs+'px';}
+  const left=document.querySelector('.left').getBoundingClientRect(),poster=document.querySelector('.poster').getBoundingClientRect();
+  const fam=document.querySelector('.family');fam.style.top=(left.bottom-poster.top+30)+'px';
+  const fc=fam.querySelector('.card').getBoundingClientRect();
+  document.querySelector('.poster').style.height=(fc.bottom-poster.top+30+112)+'px';
+  svg.setAttribute('viewBox','0 0 1080 '+Math.round(fc.bottom-poster.top+30+112));
+  const tl=document.querySelector('.timeline'),its=tl.querySelectorAll('.item'),ln=tl.querySelector('.tl-line');
+  const c=el=>el.offsetTop+(el.classList.contains('last')?32:18);
+  ln.style.top=c(its[0])+'px';ln.style.height=(c(its[its.length-1])-c(its[0]))+'px';
+  document.body.setAttribute('data-ready','1');
+  });
+  
+})();
+</script>
+</body>
+</html>
