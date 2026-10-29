@@ -4,7 +4,7 @@ tpl = (root/'src'/'template.html').read_text(encoding='utf-8')
 sprigs = (root/'src'/'sprigs.js').read_text(encoding='utf-8') if (root/'src'/'sprigs.js').exists() else ''
 
 L = {
- 'en': dict(lang='en', title='In Loving Memory – Madam Ruth Bonney Oussa',
+ 'en': dict(lang='en', children_html='''<p class="names"><span class="nw"><b>Huldah</b> OROUNLA</span> <span class="nw"><b>Michèle</b> OUSSA</span> <span class="nw"><b>Godwill</b> OUSSA</span> <span class="nw"><b>Anne Marie</b> OUSSA</span> <span class="nw"><b>Jean Claude</b> OUSSA</span></p>''', title='In Loving Memory – Madam Ruth Bonney Oussa',
   memory='IN LOVING MEMORY', of='of a beloved wife, mother, grandmother, sister, aunt and friend',
   madam='Madam', aka='(a.k.a. Da Adzo)', aged='Aged 63', called='Called to rest on 26th October 2026',
   lifequote='A life well lived, a heart full of love, a legacy that will forever remain.',
@@ -19,9 +19,15 @@ L = {
   rip='Rest in peace, dear mother.', rip2='She will always be in our hearts',
   john='“Jesus said unto her, I am the resurrection, and the life: he that believeth in me, though he were dead, yet shall he live.”',
   john_ref='JOHN 11:25'),
- 'fr': dict(lang='fr', title='En mémoire de Madame Ruth Bonney Oussa',
+ 'fr': dict(lang='fr', children_html='''<div class="kids">
+          <p><b>Huldah</b> OUSSA OROUNLA, <span>son époux et leurs enfants</span></p>
+          <p><b>Michèle</b> OUSSA <span>et son enfant</span></p>
+          <p><b>Godwill</b> OUSSA <span>et son épouse</span></p>
+          <p><b>Jean Claude</b> OUSSA, <span>son épouse et leurs enfants</span></p>
+          <p><b>Anne Marie</b> OUSSA</p>
+        </div>''', title='En mémoire de Madame Ruth Bonney Oussa',
   memory='EN MÉMOIRE DE', of='notre très chère épouse, maman, grand-mère, sœur, tante et amie',
-  madam='Madame', aka='(alias Da Adzo)', aged='63 ans', called='Rappelée à Dieu le 26 octobre 2026',
+  madam='Madame Veuve', aka='(alias Da Adzo)', aged='63 ans', called='Rappelée à Dieu le 26 octobre 2026',
   lifequote='Une vie bien vécue, un cœur plein d’amour, un héritage qui restera à jamais.',
   prog_title='PROGRAMME DES OBSÈQUES', prog_place='Ewegbe-Hohoe, Région de la Volta, Ghana',
   d1='VENDREDI 6 NOVEMBRE 2026', t1='Veillée mortuaire', p1='à la résidence familiale',
