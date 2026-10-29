@@ -35,11 +35,14 @@ L = {
   john='« Jésus lui dit : Je suis la résurrection et la vie. Celui qui croit en moi vivra, quand même il serait mort. »',
   john_ref='JEAN 11:25'),
 }
+VARIANTS = [('template.html', 'affiche-{code}.html'), ('template-square.html', 'affiche-{code}-square.html')]
 for code, d in L.items():
-    html = tpl
-    for k, v in d.items():
-        html = html.replace('{{%s}}' % k, v)
-    html = html.replace('{{sprigs}}', sprigs)
-    assert '{{' not in html.replace('{{sprigs}}',''), [x for x in html.split('{{')[1:2]]
-    (root/'src'/f'affiche-{code}.html').write_text(html, encoding='utf-8')
-    print('built', code)
+    for tname, oname in VARIANTS:
+        t = (root/'src'/tname).read_text(encoding='utf-8')
+        html = t
+        for k, v in d.items():
+            html = html.replace('{{%s}}' % k, v)
+        html = html.replace('{{sprigs}}', sprigs)
+        assert '{{' not in html, html.split('{{')[1][:40]
+        (root/'src'/oname.format(code=code)).write_text(html, encoding='utf-8')
+        print('built', oname.format(code=code))
