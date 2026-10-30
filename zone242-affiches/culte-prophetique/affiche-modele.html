@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Zone 242 – Culte de prière et de déclaration prophétique</title>
+<style>
+@font-face{font-family:'M';src:url(assets/montserrat-latin-700-normal.woff2);font-weight:700}
+@font-face{font-family:'M';src:url(assets/montserrat-latin-800-normal.woff2);font-weight:800}
+@font-face{font-family:'M';src:url(assets/montserrat-latin-900-normal.woff2);font-weight:900}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#111}
+.p{position:relative;width:1080px;height:1080px;overflow:hidden;font-family:'M',sans-serif;background:url(ref/base-clean.png) 0 0/1080px 1080px}
+.abs{position:absolute}
+.logo{left:50%;top:26px;height:102px;transform:translateX(-50%);filter:drop-shadow(0 3px 10px rgba(255,255,255,.35))}
+.title{left:0;width:1080px;text-align:center;font-weight:900;letter-spacing:-.045em;line-height:1;white-space:nowrap;
+ background:linear-gradient(90deg,#0a0306 0%,#12030a 18%,#8e0a0c 36%,#f1160a 50%,#8e0a0c 64%,#12030a 82%,#0a0306 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.de{left:630px;top:330px;width:92px;height:92px;border-radius:50%;background:#e8101c;color:#fff;font-weight:900;font-size:40px;letter-spacing:-.02em;display:flex;align-items:center;justify-content:center;padding-bottom:3px}
+.boxtxt{left:217px;width:662px;top:594px;height:216px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;text-shadow:0 2px 14px rgba(20,0,90,.55)}
+.boxtxt small{font-weight:800;font-size:25px;letter-spacing:.02em;margin-bottom:8px}
+.boxtxt b{display:block;font-weight:900;line-height:.98;letter-spacing:-.03em;text-transform:uppercase;white-space:nowrap}
+.lab{top:846px;font-weight:800;font-size:22px;color:#ffc94a;letter-spacing:.01em;height:50px;display:flex;align-items:center}
+.pill{top:841px;height:54px;background:#f3efe4;color:#16091f;display:flex;align-items:center;padding:0 26px;font-size:30px;font-weight:700;white-space:nowrap}
+.pill b{font-weight:900;margin-left:.28em}
+.r{top:917px;height:113px}
+.red{left:150px;width:251px;background:#e8101c;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;padding-right:4px}
+.red small{font-weight:800;font-size:18px;line-height:1.05;text-align:right}
+.red strong{font-weight:900;font-size:80px;letter-spacing:-.06em;line-height:1}
+.red span{font-weight:800;font-size:19px;line-height:1.05;text-align:left}
+.white{left:406px;width:132px;background:#fffdf8;color:#0b0508;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.white small{font-weight:700;font-size:15px;line-height:1.1;text-align:center}
+.white strong{font-weight:900;font-size:43px;letter-spacing:-.07em;line-height:1;white-space:nowrap}
+.yellow{left:540px;width:391px;background:linear-gradient(90deg,#fffdf6 0%,#fff3ae 38%,#ffe21d 100%);color:#0b0508;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.yellow strong{font-weight:900;font-size:42px;letter-spacing:-.04em;line-height:1}
+.yellow small{font-weight:600;font-size:17px;line-height:1.2;margin-top:5px}
+.grain{left:0;top:0;width:1080px;height:1080px;pointer-events:none}
+</style></head><body>
+<div class="p">
+ <img class="abs logo" src="assets/logo-couleur.png">
+ <div class="abs title" id="t1" style="top:190px">Culte</div>
+ <div class="abs de">de</div>
+ <div class="abs boxtxt"><small>Et de</small><b id="b1">Déclaration</b><b id="b2">prophétique</b></div>
+ <div class="abs lab" id="lab">avec</div>
+ <div class="abs pill" id="pill">L’Apôtre <b>AMOS ELITE</b></div>
+ <div class="abs r red"><small>Ven.<br>&gt;</small><strong>30</strong><span>octobre<br>2026</span></div>
+ <div class="abs r white"><small>ce soir à</small><strong>19h45</strong></div>
+ <div class="abs r yellow"><strong>ZONE 242</strong><small>Rejoignez-nous pour<br>ce temps de prière</small></div>
+ <img class="abs grain" src="assets/grain.png">
+</div>
+<script>
+Promise.all(['900 100px M','700 30px M','800 30px M'].map(f=>document.fonts.load(f))).then(()=>{
+  function fit(el,target,start){let fs=start;el.style.fontSize=fs+'px';el.style.display='inline-block';while(el.getBoundingClientRect().width>target&&fs>10){fs--;el.style.fontSize=fs+'px'}return fs}
+  const t=document.getElementById('t1');t.style.display='block';
+  const probe=document.createElement('span');probe.textContent='Culte';probe.style.cssText='position:absolute;visibility:hidden;white-space:nowrap;font:900 200px M;letter-spacing:-.045em';document.body.appendChild(probe);
+  let fs=260;probe.style.fontSize=fs+'px';while(probe.getBoundingClientRect().width>690&&fs>60){fs--;probe.style.fontSize=fs+'px'}probe.remove();
+  t.style.fontSize=fs+'px';t.style.top=(334-fs*0.78)+'px';   /* baseline of the word on the old title's baseline */
+  for(const id of ['b1','b2']){const e=document.getElementById(id);const w=e.style.width;const s=document.createElement('span');s.textContent=e.textContent;s.style.cssText='position:absolute;visibility:hidden;white-space:nowrap;font:900 80px M;letter-spacing:-.03em;text-transform:uppercase';document.body.appendChild(s);let f=84;s.style.fontSize=f+'px';while(s.getBoundingClientRect().width>590&&f>20){f--;s.style.fontSize=f+'px'}s.remove();e.style.fontSize=f+'px'}
+  // orator row: label + pill, centred as a pair
+  const lab=document.getElementById('lab'),pill=document.getElementById('pill');
+  const total=lab.getBoundingClientRect().width+14+pill.getBoundingClientRect().width;const left=(1080-total)/2+4;
+  lab.style.left=left+'px';pill.style.left=(left+lab.getBoundingClientRect().width+14)+'px';
+  document.body.setAttribute('data-ready','1');
+});
+</script></body></html>
