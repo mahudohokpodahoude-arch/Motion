@@ -70,3 +70,14 @@ h4{font-size:14pt;margin:5mm 0 2mm}
 .text .p{font-size:11.5pt;margin-bottom:2.8mm}
 .text .q{font-size:11pt;margin:1.2mm 4mm 3.2mm}
 .sur{font-size:6.6pt;letter-spacing:.3mm;white-space:nowrap}
+
+/* hymns v3 */
+.hymn .center{top:13mm;bottom:12mm}
+.hymn .rule{margin:2.5mm 0 3mm}
+.hymn .script.h{font-size:23pt}
+.stanzas{width:104mm;text-align:left}
+.stz{display:grid;grid-template-columns:9mm 1fr;margin-top:3.1mm;font-size:10.7pt;line-height:1.36;color:var(--cream)}
+.stz .mk{font-family:'Playfair',serif;font-weight:700;font-size:14pt;color:var(--gold);line-height:1.05}
+.stz.rf .tx{font-style:italic;color:var(--goldl);border-left:.45mm solid var(--gold);padding-left:3.2mm;margin-left:-.5mm}
+.stz .lab{display:block;font-family:'Poppins',sans-serif;font-style:normal;font-weight:600;font-size:6.2pt;letter-spacing:.9mm;text-transform:uppercase;color:var(--gold);margin-bottom:.6mm}
+.hymn.h2 .stz{font-size:12.4pt;margin-top:5.2mm;line-height:1.4}.hymn.h2 .stz .mk{font-size:16pt}.hymn.h2 .stanzas{width:108mm}

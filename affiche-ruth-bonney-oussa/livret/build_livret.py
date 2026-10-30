@@ -43,6 +43,7 @@ pages.append('''<section class="page"><div class="frame"></div><div class="cente
   <div class="ev"><span class="pill">Friday, 6 November 2026</span><h3>Wake-Keeping</h3><p>at the family residence</p></div>
   <div class="ev"><span class="pill">Saturday, 7 November 2026</span><h3>Funeral Service and Burial</h3><p>at the cemetery in Ewegbe-Hohoe</p></div>
   <div class="ev"><span class="pill">Sunday, 8 November 2026</span><h3>Thanksgiving Service</h3></div>
+  <div class="rule"></div><div class="script small">A life well lived, a heart full of love, a legacy that will forever remain.</div>
  </div></section>''')
 pages.append('''<section class="page"><div class="frame"></div><div class="center">
   <div class="cross">✝</div><div class="script h">The Beloved Family</div><div class="rule"></div>
@@ -59,13 +60,19 @@ pages.append('<section class="page"><div class="frame"></div><div class="center"
 
 def hymn_page(num, title, sub, path):
     f = root/path
-    if f.exists():
-        blocks = [b for b in f.read_text(encoding='utf-8').strip().split('\n\n')]
-        body = ''.join('<div class="st%s">%s</div>' % (' rf' if b.startswith('~') else '', '<br>'.join(html.escape(l.lstrip('~')) for l in b.split('\n'))) for b in blocks)
-    else:
-        body = '<div class="st">(lyrics to come)</div>'
-    return ('<section class="page hymn"><div class="frame"></div><div class="center"><div class="cross">✝</div><div class="kicker sm">HYMN %d</div>'
-            '<div class="script h">%s</div><div class="sub">%s</div><div class="rule"></div>%s</div></section>') % (num, title, sub, body)
+    blocks = f.read_text(encoding='utf-8').strip().split('\n\n')
+    out, v, seen_rf = [], 0, False
+    for b in blocks:
+        lines = '<br>'.join(html.escape(l.lstrip('~')) for l in b.split('\n'))
+        if b.startswith('~'):
+            lab = '' if seen_rf else '<span class="lab">Refrain</span>'
+            seen_rf = True
+            out.append('<div class="stz rf"><div class="mk"></div><div class="tx">%s%s</div></div>' % (lab, lines))
+        else:
+            v += 1
+            out.append('<div class="stz"><div class="mk">%d</div><div class="tx">%s</div></div>' % (v, lines))
+    return ('<section class="page hymn h%d"><div class="frame"></div><div class="center"><div class="cross">✝</div><div class="kicker sm">HYMN %d</div>'
+            '<div class="script h">%s</div><div class="rule"></div><div class="stanzas">%s</div></div></section>') % (num, num, title, ''.join(out))
 hy1 = hymn_page(1, 'It Is Well with My Soul', 'When peace like a river', 'hymn1.txt')
 hy2 = hymn_page(2, 'The Old Rugged Cross', 'On a hill far away', 'hymn2.txt')
 tribute = [tribute_page(i, c) for i, c in enumerate(chunks)]
@@ -76,8 +83,8 @@ back = '''<section class="page back"><div class="frame"></div><img class="dove l
   <div class="script big">Rest in peace dear Mother</div><div class="sub">She will always be in our hearts</div>
  </div></section>'''
 blank = '<section class="page blank"><div class="frame"></div></section>'
-pages = [cover, dedication, programme, hy1, hy2] + tribute + [blank, blank, blank, back]
-assert len(pages) == 12
+pages = [cover, programme, hy1, hy2] + tribute + [back]
+assert len(pages) % 4 == 0, len(pages)
 pages = [p if (i in (0, len(pages)-1) or 'page blank' in p) else p.replace('</section>', '<div class="pn">%d</div></section>' % (i+1)) for i, p in enumerate(pages)]
 css = (root/'livret.css').read_text()
 (root/'livret.html').write_text('<!doctype html><html lang="en"><head><meta charset="utf-8"><title>In Loving Memory – Madam Ruth Bonney Oussa</title><style>%s</style></head><body>%s</body></html>' % (css, '\n'.join(pages)), encoding='utf-8')
