@@ -99,7 +99,15 @@ def bio_html(lines):
     return ''.join(('<div class="bh">%s</div>' % html.escape(t[3:])) if t.startswith('## ') else '<p class="p">%s</p>' % html.escape(t) for t in lines)
 bio1 = '<section class="page text bio"><div class="bt">%s</div><div class="ba">%s</div>%s</section>' % (html.escape(bio_title), html.escape(bio_alias), bio_html(bio_body[:split]))
 bio2 = '<section class="page text bio">%s</section>' % bio_html(bio_body[split:])
-pages = [cover, order, programme, bio1, bio2] + tribute + [back]
+
+MIN = [("Apostle Dr Alfred Awuda", "Founder and Head Pastor"), ("Rev JWK Etu", "Associate and Snr Minister"), ("Pastor Wisdom K. Adzimah", None),
+       ("Madam Rose Bidi", "Deaconess"), ("Elder Divine Kenukpor", None)]
+ministers = ('<section class="page mins"><div class="frame"></div><div class="center"><div class="cross">✝</div><div class="script h">Order of Service</div><div class="rule"></div>'
+  '<div class="chu">Blood Covenant Church of Ghana</div><div class="forl">For the late</div><div class="forn">Ruth Adzo Adzrakutse Bonnie</div><div class="rule"></div>'
+  '<div class="part c">Officiating Ministers</div>%s</div></section>') % ''.join(
+  '<div class="mn"><b>%s</b>%s</div>' % (html.escape(n), ('<span>%s</span>' % html.escape(r)) if r else '') for n, r in MIN)
+pages = [cover, order, programme, bio1, bio2] + tribute + [ministers, back]
+
 
 
 

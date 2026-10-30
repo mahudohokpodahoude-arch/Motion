@@ -122,3 +122,14 @@ html,body{background:#d9d4c8}
 .bio .bh{font-family:'Poppins',sans-serif;font-weight:600;font-size:8.5pt;letter-spacing:1.1mm;text-transform:uppercase;color:#4a3809;margin:4mm 0 1.6mm;text-align:left}
 .bio2 .p{}
 .bio .p{font-size:10.6pt;line-height:1.34;margin-bottom:2.4mm}
+
+/* officiating ministers page */
+.mins .center{justify-content:center;top:0;bottom:0}
+.mins .script.h{font-size:28pt}
+.chu{font-family:'Poppins',sans-serif;font-weight:600;font-size:10pt;letter-spacing:.9mm;text-transform:uppercase;color:#111;margin-top:1mm}
+.forl{font-family:'Cormorant',serif;font-style:italic;font-size:13pt;color:#4f473b;margin-top:5mm}
+.forn{font-family:'Playfair',serif;font-weight:700;font-size:15pt;color:#111;margin-top:1mm}
+.part.c{margin:0 0 5mm;align-self:center}
+.mn{margin-bottom:5.2mm;text-align:center}
+.mn b{display:block;font-family:'Poppins',sans-serif;font-weight:600;font-size:11pt;color:#111}
+.mn span{display:block;font-family:'Cormorant',serif;font-style:italic;font-size:12.5pt;color:#4f473b;margin-top:.6mm}
