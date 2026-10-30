@@ -19,7 +19,7 @@ title = paras[0]
 assert sum(len(c) for c in chunks)+1 == len(paras)
 def tribute_page(i, c):
     head = '<div class="ttl"><span>Tribute to</span><b>Sister Adjo</b><em>By Her Children</em></div>' if i == 0 else ''
-    return '<section class="page text">%s%s<div class="pn">%d</div></section>' % (head, ''.join(render(t) for t in c), 7+i)
+    return '<section class="page text">%s%s</section>' % (head, ''.join(render(t) for t in c))
 
 def ent(n, r=None): return '<p><b>%s</b>%s</p>' % (n, (', <span>%s</span>' % r) if r else '')
 FATHER = [("TOGBE KOMLA KUNDE V","Chief of Alavanyo Abehenease"),("MR ROBERT ADZRAKU","Rtd Educationist"),("MR SAI ADZRAKUTSE ATSU",None),("TOGBE ADJOS ASANGO",None),("PHILOMENA BONNIE",None),("MAMA FAFA MEDINAWO AGBO II",None),("MADAM VERONICA KOFIYAO",None),("CHRISTINE ADRAKU",None),("REGINA KOFIYAO",None),("ELISA ADZRAKU",None),("NESTOR ADZRAKU",None)]
@@ -37,13 +37,13 @@ pages.append('''<section class="page"><div class="frame"></div>
   <div class="dates">Aged 63 &nbsp;·&nbsp; Called to rest on 26th October 2026</div>
   <div class="rule"></div>
   <div class="script small">A life well lived, a heart full of love, a legacy that will forever remain.</div>
- </div><div class="pn">2</div></section>''')
+ </div></section>''')
 pages.append('''<section class="page"><div class="frame"></div><div class="center">
   <div class="cross">✝</div><div class="script h">Funeral Programme</div><div class="sub">Ewegbe-Hohoe, Volta Region, Ghana</div><div class="rule"></div>
   <div class="ev"><span class="pill">Friday, 6 November 2026</span><h3>Wake-Keeping</h3><p>at the family residence</p></div>
   <div class="ev"><span class="pill">Saturday, 7 November 2026</span><h3>Funeral Service and Burial</h3><p>at the cemetery in Ewegbe-Hohoe</p></div>
   <div class="ev"><span class="pill">Sunday, 8 November 2026</span><h3>Thanksgiving Service</h3></div>
- </div><div class="pn">3</div></section>''')
+ </div></section>''')
 pages.append('''<section class="page"><div class="frame"></div><div class="center">
   <div class="cross">✝</div><div class="script h">The Beloved Family</div><div class="rule"></div>
   <div class="sur">ADZRAKUTSE • BONNEY • OUSSA • HOUSSOU • OROUNLA • AGOUNKPE</div>
@@ -53,23 +53,31 @@ pages.append('''<section class="page"><div class="frame"></div><div class="cente
   <p class="nm"><b>TERESA</b> VIDEKPUE</p><p class="nm"><b>NOAH</b> VIDEKPUR</p><p class="nm"><b>MAWUNI</b> ADZRAKUTSE</p><p class="nm"><b>EMMANUEL</b> ADZRAKUTSE</p><p class="nm"><b>DAVID</b> AIIZRI</p><p class="nm"><b>FLORENCE</b> ADZEI</p><p class="nm"><b>ABUYA</b></p>
   <div class="rule"></div>
   <p class="nm"><b>KOFI BRAHENE</b>, <span>Vinor</span></p><p class="nm"><b>ADJOS ADZRAKUTSE</b>, <span>Vitor</span></p>
- </div><div class="pn">4</div></section>''')
-pages.append('<section class="page"><div class="frame"></div><div class="center"><div class="cross">✝</div><div class="script h">Chief Mourners</div><div class="side">Father’s side</div><div class="rule"></div><div class="list">%s</div></div><div class="pn">5</div></section>' % ''.join(ent(*e) for e in FATHER))
-pages.append('<section class="page"><div class="frame"></div><div class="center"><div class="cross">✝</div><div class="script h">Chief Mourners</div><div class="side">Mother’s side</div><div class="rule"></div><div class="list">%s</div></div><div class="pn">6</div></section>' % ''.join(ent(*e) for e in MOTHER))
-for i, c in enumerate(chunks):
-    pages.append(tribute_page(i, c))
-pages.append('''<section class="page"><div class="frame"></div><div class="center photo">
-  <div class="ring big"><div class="ph"></div></div>
-  <div class="script small">Your love, your strength, your kindness will forever live in our hearts.</div>
- </div><div class="pn">10</div></section>''')
-pages.append('''<section class="page"><div class="frame"></div><img class="dove l" src="assets/dove-l.png"><img class="dove r" src="assets/dove-r.png"><div class="center mid">
-  <div class="cross">✝</div>
-  <div class="verse">“Jesus said unto her, I am the resurrection, and the life: he that believeth in me, though he were dead, yet shall he live.”</div><div class="jn">JOHN 11:25</div>
- </div><div class="pn">11</div></section>''')
-pages.append('''<section class="page back"><div class="frame"></div><img class="dove l" src="assets/dove-l.png"><img class="dove r" src="assets/dove-r.png"><div class="center mid">
-  <div class="script big">Rest in peace dear Mother</div><div class="rule"></div><div class="sub">She will always be in our hearts</div>
  </div></section>''')
+pages.append('<section class="page"><div class="frame"></div><div class="center"><div class="cross">✝</div><div class="script h">Chief Mourners</div><div class="side">Father’s side</div><div class="rule"></div><div class="list">%s</div></div></section>' % ''.join(ent(*e) for e in FATHER))
+pages.append('<section class="page"><div class="frame"></div><div class="center"><div class="cross">✝</div><div class="script h">Chief Mourners</div><div class="side">Mother’s side</div><div class="rule"></div><div class="list">%s</div></div></section>' % ''.join(ent(*e) for e in MOTHER))
+
+def hymn_page(num, title, sub, path):
+    f = root/path
+    if f.exists():
+        blocks = [b for b in f.read_text(encoding='utf-8').strip().split('\n\n')]
+        body = ''.join('<div class="st%s">%s</div>' % (' rf' if b.startswith('~') else '', '<br>'.join(html.escape(l.lstrip('~')) for l in b.split('\n'))) for b in blocks)
+    else:
+        body = '<div class="st">(lyrics to come)</div>'
+    return ('<section class="page hymn"><div class="frame"></div><div class="center"><div class="cross">✝</div><div class="kicker sm">HYMN %d</div>'
+            '<div class="script h">%s</div><div class="sub">%s</div><div class="rule"></div>%s</div></section>') % (num, title, sub, body)
+hy1 = hymn_page(1, 'It Is Well with My Soul', 'When peace like a river', 'hymn1.txt')
+hy2 = hymn_page(2, 'The Old Rugged Cross', 'On a hill far away', 'hymn2.txt')
+tribute = [tribute_page(i, c) for i, c in enumerate(chunks)]
+cover, dedication, programme, family, father, mother = pages[0], pages[1], pages[2], pages[3], pages[4], pages[5]
+back = '''<section class="page back"><div class="frame"></div><img class="dove l" src="assets/dove-l.png"><img class="dove r" src="assets/dove-r.png"><div class="center mid">
+  <div class="verse">“Jesus said unto her, I am the resurrection, and the life: he that believeth in me, though he were dead, yet shall he live.”</div><div class="jn">JOHN 11:25</div>
+  <div class="rule"></div>
+  <div class="script big">Rest in peace dear Mother</div><div class="sub">She will always be in our hearts</div>
+ </div></section>'''
+pages = [cover, dedication, programme, hy1, hy2] + tribute + [family, father, mother, back]
 assert len(pages) == 12
+pages = [p if i in (0, len(pages)-1) else p.replace('</section>', '<div class="pn">%d</div></section>' % (i+1)) for i, p in enumerate(pages)]
 css = (root/'livret.css').read_text()
 (root/'livret.html').write_text('<!doctype html><html lang="en"><head><meta charset="utf-8"><title>In Loving Memory – Madam Ruth Bonney Oussa</title><style>%s</style></head><body>%s</body></html>' % (css, '\n'.join(pages)), encoding='utf-8')
 print('pages', len(pages), 'tribute paras', len(paras))

@@ -48,3 +48,25 @@ h4{font-family:'Playfair',serif;font-style:italic;font-weight:600;font-size:13pt
 .verse{font-family:'Cormorant',serif;font-style:italic;font-size:17pt;line-height:1.4;max-width:92mm;color:#fff;margin-top:2mm}
 .jn{font-family:'Poppins',sans-serif;font-weight:600;font-size:8pt;letter-spacing:1.2mm;color:var(--gold);margin-top:6mm}
 .pn{position:absolute;bottom:10.5mm;left:0;right:0;text-align:center;font-family:'Poppins',sans-serif;font-size:7pt;color:var(--soft)}
+
+.kicker.sm{font-size:7pt;letter-spacing:2mm}
+.hymn .center{top:14mm;bottom:13mm}
+.hymn .script.h{font-size:24pt}
+.st{font-size:9.8pt;line-height:1.36;margin-top:2.6mm;text-align:center;color:var(--cream)}
+.st.rf{font-style:italic;color:var(--goldl)}
+/* v2 adjustments */
+.text .p{font-size:11.9pt;line-height:1.38;margin-bottom:3mm}
+.text .q{font-size:11.4pt;margin:1.5mm 4mm 3.6mm}
+.list p{font-size:10.2pt;margin-bottom:3.1mm}
+.nm{font-size:9.6pt;line-height:1.6}.sur{font-size:7.4pt}
+h4{font-size:14pt;margin:5mm 0 2mm}
+.ev{margin-top:12mm}.ev h3{font-size:17pt}.ev p{font-size:13pt}.pill{font-size:8.2pt;padding:2mm 5mm}
+.st{font-size:10.2pt;line-height:1.38;margin-top:2.8mm}
+.page.back .dove{top:34mm;width:34mm}
+.page.back .dove.l{left:14mm}.page.back .dove.r{right:14mm}
+.page.back .center.mid{padding-top:40mm}
+.back .verse{font-size:16pt;max-width:104mm}
+.dedic{}
+.text .p{font-size:11.5pt;margin-bottom:2.8mm}
+.text .q{font-size:11pt;margin:1.2mm 4mm 3.2mm}
+.sur{font-size:6.6pt;letter-spacing:.3mm;white-space:nowrap}
