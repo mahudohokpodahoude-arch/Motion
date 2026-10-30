@@ -106,7 +106,18 @@ ministers = ('<section class="page mins"><div class="frame"></div><div class="ce
   '<div class="chu">Blood Covenant Church of Ghana</div><div class="forl">For the late</div><div class="forn">Ruth Adzo Adzrakutse Bonney</div><div class="rule"></div>'
   '<div class="part c">Officiating Ministers</div>%s</div></section>') % ''.join(
   '<div class="mn"><b>%s</b>%s</div>' % (html.escape(n), ('<span>%s</span>' % html.escape(r)) if r else '') for n, r in MIN)
-pages = [cover, order, programme, bio1, bio2] + tribute + [ministers, back]
+
+ew_blocks = (root/'hymns-ewe.txt').read_text(encoding='utf-8').strip().split('\n\n')
+def ew_block(b):
+    return '<div class="ewb">%s</div>' % ''.join('<div class="ln%s">%s</div>' % (' c' if l.startswith('>') else '', html.escape(l.lstrip('>'))) for l in b.split('\n'))
+def ew_page(blocks, title):
+    head = '<div class="script h">%s</div><div class="rule"></div>' % title if title else ''
+    return ('<section class="page hymn ew"><div class="frame"></div><div class="center"><div class="cross">✝</div>%s%s</div></section>'
+            % (head, '<div class="orn">◆</div>'.join(ew_block(b) for b in blocks)))
+hyA = ew_page(ew_blocks[:2], 'Hymns')
+hyB = ew_page(ew_blocks[2:], '')
+pages = [cover, order, programme, hyA, hyB, bio1, bio2] + tribute + [ministers, back]
+
 
 
 

@@ -133,3 +133,14 @@ html,body{background:#d9d4c8}
 .mn{margin-bottom:5.2mm;text-align:center}
 .mn b{display:block;font-family:'Poppins',sans-serif;font-weight:600;font-size:11pt;color:#111}
 .mn span{display:block;font-family:'Cormorant',serif;font-style:italic;font-size:12.5pt;color:#4f473b;margin-top:.6mm}
+
+/* Ewe hymns: Gentium Plus covers ɖ ɔ ɛ ɣ ŋ ƒ */
+@font-face{font-family:'Gentium';src:url(../fonts/GentiumPlus-Regular.ttf);font-weight:400}
+@font-face{font-family:'Gentium';src:url(../fonts/GentiumPlus-Italic.ttf);font-style:italic}
+.ew .center{top:13mm;bottom:12mm}
+.ew .ewb{font-family:'Gentium',serif;font-size:11.2pt;line-height:1.38;color:#1a1611;text-align:left;width:96mm}
+.ew .ln{padding-left:0}.ew .ln.c{padding-left:6mm}
+.ew .orn{color:#6b4f10;font-size:7pt;margin:4.2mm 0;text-align:center}
+.ew .script.h{font-size:26pt}
+.ew .rule{margin:2mm 0 4mm}
+.ew .ewb{font-size:12.6pt;line-height:1.4;width:104mm}.ew .orn{font-size:9pt;margin:5mm 0}.ew .ln.c{padding-left:7mm}
