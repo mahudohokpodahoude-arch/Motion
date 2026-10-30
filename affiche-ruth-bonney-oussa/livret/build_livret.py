@@ -75,9 +75,10 @@ back = '''<section class="page back"><div class="frame"></div><img class="dove l
   <div class="rule"></div>
   <div class="script big">Rest in peace dear Mother</div><div class="sub">She will always be in our hearts</div>
  </div></section>'''
-pages = [cover, dedication, programme, hy1, hy2] + tribute + [family, father, mother, back]
+blank = '<section class="page blank"><div class="frame"></div></section>'
+pages = [cover, dedication, programme, hy1, hy2] + tribute + [blank, blank, blank, back]
 assert len(pages) == 12
-pages = [p if i in (0, len(pages)-1) else p.replace('</section>', '<div class="pn">%d</div></section>' % (i+1)) for i, p in enumerate(pages)]
+pages = [p if (i in (0, len(pages)-1) or 'page blank' in p) else p.replace('</section>', '<div class="pn">%d</div></section>' % (i+1)) for i, p in enumerate(pages)]
 css = (root/'livret.css').read_text()
 (root/'livret.html').write_text('<!doctype html><html lang="en"><head><meta charset="utf-8"><title>In Loving Memory – Madam Ruth Bonney Oussa</title><style>%s</style></head><body>%s</body></html>' % (css, '\n'.join(pages)), encoding='utf-8')
 print('pages', len(pages), 'tribute paras', len(paras))
