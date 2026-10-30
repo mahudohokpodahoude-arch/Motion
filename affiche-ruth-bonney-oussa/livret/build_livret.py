@@ -103,7 +103,7 @@ bio2 = '<section class="page text bio">%s</section>' % bio_html(bio_body[split:]
 MIN = [("Apostle Dr Alfred Awuda", "Founder and Head Pastor"), ("Rev JWK Etu", "Associate and Snr Minister"), ("Pastor Wisdom K. Adzimah", None),
        ("Madam Rose Bidi", "Deaconess"), ("Elder Divine Kenukpor", None)]
 ministers = ('<section class="page mins"><div class="frame"></div><div class="center"><div class="cross">✝</div><div class="script h">Order of Service</div><div class="rule"></div>'
-  '<div class="chu">Blood Covenant Church of Ghana</div><div class="forl">For the late</div><div class="forn">Ruth Adzo Adzrakutse Bonnie</div><div class="rule"></div>'
+  '<div class="chu">Blood Covenant Church of Ghana</div><div class="forl">For the late</div><div class="forn">Ruth Adzo Adzrakutse Bonney</div><div class="rule"></div>'
   '<div class="part c">Officiating Ministers</div>%s</div></section>') % ''.join(
   '<div class="mn"><b>%s</b>%s</div>' % (html.escape(n), ('<span>%s</span>' % html.escape(r)) if r else '') for n, r in MIN)
 pages = [cover, order, programme, bio1, bio2] + tribute + [ministers, back]
