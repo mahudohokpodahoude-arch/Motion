@@ -28,7 +28,7 @@ MOTHER = [("TOGBE KEH XII","Divisional Chief of Gbi Wegbe"),("TOGBE KATABUA IV",
 pages = []
 pages.append('<section class="page cover"><img src="assets/cover.jpg"></section>')
 pages.append('''<section class="page"><div class="frame"></div>
- <img class="dove l" src="assets/dove-l.png"><img class="dove r" src="assets/dove-r.png">
+ <img class="dove l" src="assets/dove-dark-l.png"><img class="dove r" src="assets/dove-dark-r.png">
  <div class="center top">
   <div class="cross">✝</div><div class="kicker">IN LOVING MEMORY</div>
   <div class="ring"><div class="ph"></div></div>
@@ -77,14 +77,23 @@ hy1 = hymn_page(1, 'It Is Well with My Soul', 'When peace like a river', 'hymn1.
 hy2 = hymn_page(2, 'The Old Rugged Cross', 'On a hill far away', 'hymn2.txt')
 tribute = [tribute_page(i, c) for i, c in enumerate(chunks)]
 cover, dedication, programme, family, father, mother = pages[0], pages[1], pages[2], pages[3], pages[4], pages[5]
-back = '''<section class="page back"><div class="frame"></div><img class="dove l" src="assets/dove-l.png"><img class="dove r" src="assets/dove-r.png"><div class="center mid">
+back = '''<section class="page back"><div class="frame"></div><img class="dove l" src="assets/dove-dark-l.png"><img class="dove r" src="assets/dove-dark-r.png"><div class="center mid">
   <div class="verse">“Jesus said unto her, I am the resurrection, and the life: he that believeth in me, though he were dead, yet shall he live.”</div><div class="jn">JOHN 11:25</div>
   <div class="rule"></div>
   <div class="script big">Rest in peace dear Mother</div><div class="sub">She will always be in our hearts</div>
  </div></section>'''
 blank = '<section class="page blank"><div class="frame"></div></section>'
-pages = [cover, programme, hy1, hy2] + tribute + [back]
-assert len(pages) % 4 == 0, len(pages)
+
+P1 = ['Arrival of Congregation and family', 'Opening Prayer', 'Praises of songs', 'Arrival and acceptance of the casket and corpse', 'Worship and Adoration', 'Acknowledgement of dignitaries', 'Biography', 'Tributes', 'Offertory', 'Song by the church choir – BCC', 'Sermon message', 'Prayer for the deceased family', 'Presentation of wreaths', 'Announcements', 'Vote of thanks by a family member', 'Closing prayer']
+P2 = ['Opening Prayer', 'Songs of Praises', 'Word of Exhortation', 'Interment', 'Closing and Benediction']
+order = ('<section class="page ordr"><div class="frame"></div><div class="center"><div class="cross">✝</div><div class="script h">Order of Service</div><div class="rule"></div>'
+  '<div class="part">Part One</div><ol class="ol">%s</ol>'
+  '<div class="part p2">Part 2</div><div class="at">At the Grave Site</div><ul class="ul">%s</ul></div></section>') % (
+  ''.join('<li><span>%d.</span>%s</li>' % (i+1, html.escape(t)) for i, t in enumerate(P1)),
+  ''.join('<li>%s</li>' % html.escape(t) for t in P2))
+pages = [cover, order, programme] + tribute + [back]
+
+
 pages = [p if (i in (0, len(pages)-1) or 'page blank' in p) else p.replace('</section>', '<div class="pn">%d</div></section>' % (i+1)) for i, p in enumerate(pages)]
 css = (root/'livret.css').read_text()
 (root/'livret.html').write_text('<!doctype html><html lang="en"><head><meta charset="utf-8"><title>In Loving Memory – Madam Ruth Bonney Oussa</title><style>%s</style></head><body>%s</body></html>' % (css, '\n'.join(pages)), encoding='utf-8')

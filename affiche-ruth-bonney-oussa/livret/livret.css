@@ -81,3 +81,37 @@ h4{font-size:14pt;margin:5mm 0 2mm}
 .stz.rf .tx{font-style:italic;color:var(--goldl);border-left:.45mm solid var(--gold);padding-left:3.2mm;margin-left:-.5mm}
 .stz .lab{display:block;font-family:'Poppins',sans-serif;font-style:normal;font-weight:600;font-size:6.2pt;letter-spacing:.9mm;text-transform:uppercase;color:var(--gold);margin-bottom:.6mm}
 .hymn.h2 .stz{font-size:12.4pt;margin-top:5.2mm;line-height:1.4}.hymn.h2 .stz .mk{font-size:16pt}.hymn.h2 .stanzas{width:108mm}
+/* ===== light theme (print friendly, B/W safe). The cover image is untouched ===== */
+:root{--gold:#7a5b14;--goldl:#5f4610;--cream:#1a1611;--soft:#4f473b}
+html,body{background:#d9d4c8}
+.page{color:var(--cream);background:#fbf8f0}
+.page.cover{background:#000}
+.frame{border:.35mm solid #7a5b14;opacity:.9}
+.frame::after{border:.15mm solid #7a5b14;opacity:.7}
+.kicker,.madam,.name,.aka,.dates{color:#111}
+.script,.ttl b{color:#6b4f10}
+.ev h3,.nm b,.list p b,.verse,.st,.ttl em{color:#111}
+.ev p,.sub,.nm,.nm span,.list p,.ttl span{color:var(--soft)}
+.pill{border-color:#6b4f10;color:#3d2e08;background:transparent}
+.stz{color:#1a1611}
+.stz .mk{color:#6b4f10}
+.stz.rf .tx{color:#3d2e08;border-left-color:#6b4f10}
+.stz .lab{color:#6b4f10}
+.text .q,.text .q *{color:#4a3809}
+.jn,.rule{}
+.rule{background:linear-gradient(90deg,transparent,#6b4f10,transparent)}
+.jn{color:#4a3809}
+.pn{color:#6b6458}
+.ph,.ring{}
+
+/* order of service */
+.ordr .center{top:15mm;bottom:12mm;align-items:stretch}
+.ordr .script.h{align-self:center;font-size:26pt}.ordr .rule{align-self:center;margin:2.5mm 0 3mm}.ordr .cross{align-self:center;margin-bottom:1mm}
+.part{font-family:'Poppins',sans-serif;font-weight:600;font-size:8.5pt;letter-spacing:1.4mm;text-transform:uppercase;color:#4a3809;margin:1mm 0 2mm 6mm;border-bottom:.3mm solid #6b4f10;padding-bottom:1mm;width:max-content}
+.part.p2{margin-top:5mm}
+.at{font-family:'Poppins',sans-serif;font-weight:600;font-size:9.5pt;color:#111;margin:0 0 1.5mm 6mm}
+.ol,.ul{list-style:none;margin-left:6mm}
+.ol li,.ul li{font-family:'Poppins',sans-serif;font-size:9.6pt;line-height:1.3;color:#111;padding:.75mm 0;display:flex;gap:2.2mm}
+.ol li span{width:7mm;text-align:right;color:#6b4f10;font-weight:600;flex:none}
+.ul li{padding-left:9.2mm}
+.at{text-align:left}.part,.ol,.ul{text-align:left}
