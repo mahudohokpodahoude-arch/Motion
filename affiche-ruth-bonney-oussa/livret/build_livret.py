@@ -107,15 +107,21 @@ ministers = ('<section class="page mins"><div class="frame"></div><div class="ce
   '<div class="part c">Officiating Ministers</div>%s</div></section>') % ''.join(
   '<div class="mn"><b>%s</b>%s</div>' % (html.escape(n), ('<span>%s</span>' % html.escape(r)) if r else '') for n, r in MIN)
 
-ew_blocks = (root/'hymns-ewe.txt').read_text(encoding='utf-8').strip().split('\n\n')
-def ew_block(b):
-    return '<div class="ewb">%s</div>' % ''.join('<div class="ln%s">%s</div>' % (' c' if l.startswith('>') else '', html.escape(l.lstrip('>'))) for l in b.split('\n'))
-def ew_page(blocks, title):
+s1 = (root/'hymns-ewe-stanza1.txt').read_text(encoding='utf-8').strip().split('\n\n')
+s2 = (root/'hymns-ewe-stanza2.txt').read_text(encoding='utf-8').strip().split('\n\n')
+assert len(s1) == len(s2) == 4
+def ew_lines(b):
+    return ''.join('<div class="ln%s">%s</div>' % (' c' if l.startswith('>') else '', html.escape(l.lstrip('>'))) for l in b.split('\n'))
+def ew_hymn(n, a, b):
+    return ('<div class="hy"><div class="hh">Hymn %d</div><div class="cols2"><div class="stz2"><div class="sn">1</div>%s</div>'
+            '<div class="stz2"><div class="sn">2</div>%s</div></div></div>') % (n, ew_lines(a), ew_lines(b))
+def ew_page(hymns, title):
     head = '<div class="script h">%s</div><div class="rule"></div>' % title if title else ''
     return ('<section class="page hymn ew"><div class="frame"></div><div class="center"><div class="cross">✝</div>%s%s</div></section>'
-            % (head, '<div class="orn">◆</div>'.join(ew_block(b) for b in blocks)))
-hyA = ew_page(ew_blocks[:2], 'Hymns')
-hyB = ew_page(ew_blocks[2:], '')
+            % (head, '<div class="orn">◆</div>'.join(hymns)))
+hyms = [ew_hymn(k+1, s1[k], s2[k]) for k in range(4)]
+hyA = ew_page(hyms[:2], 'Hymns')
+hyB = ew_page(hyms[2:], '')
 pages = [cover, order, programme, hyA, hyB, bio1, bio2] + tribute + [ministers, back]
 
 

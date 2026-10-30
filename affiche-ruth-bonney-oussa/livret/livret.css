@@ -144,3 +144,14 @@ html,body{background:#d9d4c8}
 .ew .script.h{font-size:26pt}
 .ew .rule{margin:2mm 0 4mm}
 .ew .ewb{font-size:12.6pt;line-height:1.4;width:104mm}.ew .orn{font-size:9pt;margin:5mm 0}.ew .ln.c{padding-left:7mm}
+
+/* Ewe hymns v2: two stanzas side by side */
+.ew .center{left:11mm;right:11mm;top:12mm;bottom:12mm}
+.ew .hy{width:100%}
+.ew .hh{font-family:'Poppins',sans-serif;font-weight:600;font-size:7.5pt;letter-spacing:1.4mm;text-transform:uppercase;color:#4a3809;text-align:center;margin:0 0 3mm;border-bottom:.3mm solid #6b4f10;padding-bottom:1.2mm}
+.ew .cols2{display:grid;grid-template-columns:1fr 1fr;column-gap:7mm;align-items:start}
+.ew .stz2{font-family:'Gentium',serif;font-size:10.6pt;line-height:1.36;color:#1a1611;text-align:left}
+.ew .sn{font-family:'Playfair',serif;font-weight:700;font-size:13pt;color:#6b4f10;margin-bottom:1mm;line-height:1}
+.ew .ln{padding-left:4mm;text-indent:-4mm}.ew .ln.c{padding-left:4mm;text-indent:0}
+.ew .orn{margin:4.5mm 0}
+.ew .script.h{font-size:24pt}.ew .rule{margin:1.5mm 0 3.5mm}
