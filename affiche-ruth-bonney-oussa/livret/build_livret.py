@@ -91,7 +91,16 @@ order = ('<section class="page ordr"><div class="frame"></div><div class="center
   '<div class="part p2">Part 2</div><div class="at">At the Grave Site</div><ul class="ul">%s</ul></div></section>') % (
   ''.join('<li><span>%d.</span>%s</li>' % (i+1, html.escape(t)) for i, t in enumerate(P1)),
   ''.join('<li>%s</li>' % html.escape(t) for t in P2))
-pages = [cover, order, programme] + tribute + [back]
+
+bio_lines = (root/'biography.txt').read_text(encoding='utf-8').strip().split('\n')
+bio_title, bio_alias, bio_body = bio_lines[0], bio_lines[1], bio_lines[2:]
+split = next(i for i, t in enumerate(bio_body) if t.startswith('A woman of profound grace'))
+def bio_html(lines):
+    return ''.join(('<div class="bh">%s</div>' % html.escape(t[3:])) if t.startswith('## ') else '<p class="p">%s</p>' % html.escape(t) for t in lines)
+bio1 = '<section class="page text bio"><div class="bt">%s</div><div class="ba">%s</div>%s</section>' % (html.escape(bio_title), html.escape(bio_alias), bio_html(bio_body[:split]))
+bio2 = '<section class="page text bio">%s</section>' % bio_html(bio_body[split:])
+pages = [cover, order, programme, bio1, bio2] + tribute + [back]
+
 
 
 pages = [p if (i in (0, len(pages)-1) or 'page blank' in p) else p.replace('</section>', '<div class="pn">%d</div></section>' % (i+1)) for i, p in enumerate(pages)]
