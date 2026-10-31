@@ -1,5 +1,6 @@
-import re, zipfile, pathlib, html
+import re, zipfile, pathlib, html, os
 root = pathlib.Path(__file__).resolve().parent
+LANG = os.environ.get('LANG_BOOK', 'en')
 # ---- tribute text, verbatim from the docx ----
 z = zipfile.ZipFile('/root/.claude/uploads/6ec7674e-28d5-5d9b-96df-1be1e7ee9249/f7c17cdf-TRIBUTE-SISTER-ADJO.docx')
 x = z.read('word/document.xml').decode('utf8')
@@ -122,6 +123,53 @@ def ew_page(hymns, title):
 hyms = [ew_hymn(k+1, s1[k], s2[k]) for k in range(4)]
 hyA = ew_page(hyms[:2], 'Hymns')
 hyB = ew_page(hyms[2:], '')
+
+if LANG == 'fr':
+    cover = '<section class="page cover"><img src="assets/cover-fr.jpg"></section>'
+    P1 = ["Arrivée de l’assemblée et de la famille","Prière d’ouverture","Chants de louange","Arrivée et accueil du cercueil et de la dépouille","Adoration et louange","Salutation des personnalités","Biographie","Hommages","Offrande","Chant de la chorale de l’église – BCC","Message de prédication","Prière pour la famille de la défunte","Dépôt des gerbes","Annonces","Mot de remerciement par un membre de la famille","Prière de clôture"]
+    P2 = ["Prière d’ouverture","Chants de louange","Parole d’exhortation","Mise en terre","Clôture et bénédiction"]
+    order = ('<section class="page ordr"><div class="frame"></div><div class="center"><div class="cross">✝</div><div class="script h">Ordre du culte</div><div class="rule"></div>'
+      '<div class="part">Première partie</div><ol class="ol">%s</ol>'
+      '<div class="part p2">Deuxième partie</div><div class="at">Au cimetière</div><ul class="ul">%s</ul></div></section>') % (
+      ''.join('<li><span>%d.</span>%s</li>' % (i+1, html.escape(t)) for i, t in enumerate(P1)),
+      ''.join('<li>%s</li>' % html.escape(t) for t in P2))
+    programme = '''<section class="page"><div class="frame"></div><div class="center">
+      <div class="cross">✝</div><div class="script h">Programme des obsèques</div><div class="sub">Ewegbe-Hohoe, Région de la Volta, Ghana</div><div class="rule"></div>
+      <div class="ev"><span class="pill">Vendredi 6 novembre 2026</span><h3>Veillée mortuaire</h3><p>à la résidence familiale</p></div>
+      <div class="ev"><span class="pill">Samedi 7 novembre 2026</span><h3>Messe d’enterrement et inhumation</h3><p>au cimetière d’Ewegbe-Hohoe</p></div>
+      <div class="ev"><span class="pill">Dimanche 8 novembre 2026</span><h3>Culte d’action de grâce</h3></div>
+      <div class="rule"></div><div class="script small">Une vie bien vécue, un cœur plein d’amour, un héritage qui restera à jamais.</div>
+     </div></section>'''
+    hyA = hyA.replace('Hymns','Cantiques').replace('Hymn ','Cantique ')
+    hyB = hyB.replace('Hymn ','Cantique ')
+    bl = (root/'biography-fr.txt').read_text(encoding='utf-8').strip().split('\n')
+    bio_title, bio_alias, bio_body = bl[0], bl[1], bl[2:]
+    split = next(i for i, t in enumerate(bio_body) if t.startswith('Femme de grâce et de foi profonde'))
+    bio1 = '<section class="page text bio"><div class="bt">%s</div><div class="ba">%s</div>%s</section>' % (html.escape(bio_title), html.escape(bio_alias), bio_html(bio_body[:split]))
+    bio2 = '<section class="page text bio">%s</section>' % bio_html(bio_body[split:])
+    tl = [t for t in (root/'tribute-fr.txt').read_text(encoding='utf-8').strip().split('\n\n')]
+    def fr_render(t):
+        return '<p class="%s">%s</p>' % ('q' if t.startswith('«') and ' – ' in t else 'p', html.escape(t))
+    ttl_fr = tl[0]
+    body = tl[1:]
+    a = next(i for i, t in enumerate(body) if t.startswith('Sister Adjo était une femme de prière'))
+    b = next(i for i, t in enumerate(body) if t.startswith('Nous avons l’assurance') or t.startswith("Nous avons l'assurance"))
+    chunks_fr = [body[:a], body[a:b], body[b:]]
+    tribute = []
+    for i, c in enumerate(chunks_fr):
+        head = '<div class="ttl"><span>Hommage à</span><b>Sister Adjo</b><em>De la part de ses enfants</em></div>' if i == 0 else ''
+        tribute.append('<section class="page text">%s%s</section>' % (head, ''.join(fr_render(t) for t in c)))
+    MINF = [("Apôtre Dr Alfred Awuda", "Fondateur et pasteur principal"), ("Rév. JWK Etu", "Pasteur associé et ministre principal"), ("Pasteur Wisdom K. Adzimah", None),
+            ("Madame Rose Bidi", "Diaconesse"), ("Ancien Divine Kenukpor", None)]
+    ministers = ('<section class="page mins"><div class="frame"></div><div class="center"><div class="cross">✝</div><div class="script h">Ordre du culte</div><div class="rule"></div>'
+      '<div class="chu">Blood Covenant Church of Ghana</div><div class="forl">Pour feue</div><div class="forn">Ruth Adzo Adzrakutse Bonney</div><div class="rule"></div>'
+      '<div class="part c">Ministres officiants</div>%s</div></section>') % ''.join(
+      '<div class="mn"><b>%s</b>%s</div>' % (html.escape(n), ('<span>%s</span>' % html.escape(r)) if r else '') for n, r in MINF)
+    back = '''<section class="page back"><div class="frame"></div><img class="dove l" src="assets/dove-dark-l.png"><img class="dove r" src="assets/dove-dark-r.png"><div class="center mid">
+      <div class="verse">« Jésus lui dit : Je suis la résurrection et la vie. Celui qui croit en moi vivra, quand même il serait mort. »</div><div class="jn">JEAN 11:25</div>
+      <div class="rule"></div>
+      <div class="script big">Repose en paix, chère maman</div><div class="sub">Elle restera à jamais dans nos cœurs</div>
+     </div></section>'''
 pages = [cover, order, programme, hyA, hyB, bio1, bio2] + tribute + [ministers, back]
 
 
@@ -130,5 +178,5 @@ pages = [cover, order, programme, hyA, hyB, bio1, bio2] + tribute + [ministers, 
 
 pages = [p if (i in (0, len(pages)-1) or 'page blank' in p) else p.replace('</section>', '<div class="pn">%d</div></section>' % (i+1)) for i, p in enumerate(pages)]
 css = (root/'livret.css').read_text()
-(root/'livret.html').write_text('<!doctype html><html lang="en"><head><meta charset="utf-8"><title>In Loving Memory – Madam Ruth Bonney Oussa</title><style>%s</style></head><body>%s</body></html>' % (css, '\n'.join(pages)), encoding='utf-8')
+(root/('livret.html' if LANG == 'en' else 'livret-fr.html')).write_text('<!doctype html><html lang="%s"><head><meta charset="utf-8"><title>%s</title>' % (LANG, 'In Loving Memory – Madam Ruth Bonney Oussa' if LANG == 'en' else 'En mémoire – Veuve Ruth Bonney Oussa') + '<style>%s</style></head><body>%s</body></html>' % (css, '\n'.join(pages)), encoding='utf-8')
 print('pages', len(pages), 'tribute paras', len(paras))

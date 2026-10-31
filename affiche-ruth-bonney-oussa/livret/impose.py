@@ -1,7 +1,8 @@
 from pypdf import PdfReader, PdfWriter, PageObject, Transformation
-import pathlib
+import pathlib, sys
+FR = len(sys.argv) > 1 and sys.argv[1] == 'fr'
 d = pathlib.Path(__file__).resolve().parent
-src = PdfReader(d/'livret-A5.pdf'); n = len(src.pages)
+src = PdfReader(d/('livret-A5-fr.pdf' if FR else 'livret-A5.pdf')); n = len(src.pages)
 assert n % 4 == 0, n
 W, H = 841.89, 595.28   # A4 landscape
 pw, ph = float(src.pages[0].mediabox.width), float(src.pages[0].mediabox.height)
@@ -15,5 +16,5 @@ def sheet(left, right):
 for i in range(n//4):
     sheet(n-2*i, 1+2*i)        # outer face (recto of the sheet)
     sheet(2+2*i, n-1-2*i)      # inner face (verso)
-out.write(d/'livret-A4-impression.pdf')
+out.write(d/('livret-A4-impression-fr.pdf' if FR else 'livret-A4-impression.pdf'))
 print('imposed sheets:', n//2, 'faces; order:', [(n-2*i,1+2*i,2+2*i,n-1-2*i) for i in range(n//4)])
