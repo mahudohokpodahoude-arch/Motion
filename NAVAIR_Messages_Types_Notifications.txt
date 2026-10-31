@@ -1,0 +1,623 @@
+NAVAIR GLOBAL LOGISTICS
+BIBLIOTHÈQUE DES MESSAGES TYPES ET NOTIFICATIONS AUTOMATIQUES
+
+PARTIE 1 – INSCRIPTION ET GESTION DU COMPTE
+
+1.1. Confirmation d'inscription
+Déclencheur : création réussie d'un compte client.
+
+Bonjour [Nom du client],
+
+Bienvenue chez Navair Global Logistics !
+
+Votre inscription sur notre plateforme a bien été effectuée.
+
+Vous pouvez désormais accéder à votre espace client pour enregistrer vos colis, ouvrir vos groupages et suivre vos expéditions en toute simplicité.
+
+Merci de nous faire confiance !
+
+1.2. Confirmation de mise à jour du profil
+Déclencheur : modification des informations personnelles.
+
+Bonjour [Nom du client],
+
+Nous vous confirmons que les informations de votre profil ont été mises à jour avec succès.
+
+Vous pouvez désormais retrouver vos nouvelles informations dans votre espace client.
+
+Merci de votre confiance !
+
+1.3. Réinitialisation du mot de passe
+Déclencheur : demande de réinitialisation du mot de passe.
+
+Bonjour [Nom du client],
+
+Vous avez demandé la réinitialisation du mot de passe de votre compte Navair Global Logistics.
+
+Veuillez utiliser le lien ci-dessous pour définir un nouveau mot de passe :
+
+[Lien de réinitialisation]
+
+Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer ce message.
+
+PARTIE 2 – RÉCEPTION ET GESTION DES COLIS
+
+2.1. Confirmation de réception d'un colis à l'entrepôt
+Déclencheur : réception physique et enregistrement du colis.
+
+Bonjour [Nom du client],
+
+Nous vous informons que votre colis a bien été réceptionné dans notre entrepôt en Chine.
+
+Notre équipe procédera aux vérifications nécessaires et mettra à jour les informations de votre colis sur votre compte.
+
+Vous recevrez une notification dès que le traitement sera terminé.
+
+Merci de faire confiance à Navair Global Logistics !
+
+2.2. Confirmation après vérification du colis
+Déclencheur : vérification et identification terminées.
+
+Bonjour [Nom du client],
+
+Bonne nouvelle !
+
+Les vérifications de votre colis [Référence du colis] sont terminées et sa réception a été confirmée.
+
+Vous pouvez consulter son statut depuis la rubrique « Mes colis » de votre espace client.
+
+Merci pour votre confiance !
+
+2.3. Colis reçu mais non identifié
+Déclencheur : colis physiquement réceptionné sans identification suffisante.
+
+Bonjour [Nom du client],
+
+Un colis susceptible de vous appartenir a été réceptionné dans notre entrepôt en Chine, mais nous n'avons pas encore pu confirmer son identification.
+
+Nous vous invitons à contacter notre service clientèle en fournissant les informations relatives à votre commande afin de faciliter son identification.
+
+Merci pour votre collaboration.
+
+2.4. Colis en attente de vérification
+Déclencheur : colis enregistré mais contrôles non terminés.
+
+Bonjour [Nom du client],
+
+Votre colis [Référence du colis] est actuellement en attente de vérification dans notre entrepôt en Chine.
+
+Notre équipe procède aux contrôles nécessaires afin de confirmer les informations relatives à votre marchandise.
+
+Nous vous tiendrons informé dès que les vérifications seront terminées.
+
+2.5. Informations complémentaires nécessaires
+Déclencheur : informations insuffisantes pour poursuivre le traitement.
+
+Bonjour [Nom du client],
+
+Afin de poursuivre le traitement de votre colis [Référence du colis], nous avons besoin de quelques informations complémentaires.
+
+Informations demandées : [Informations nécessaires].
+
+Nous vous invitons à nous les communiquer dans les meilleurs délais.
+
+Merci pour votre collaboration.
+
+2.6. Confirmation de l'enregistrement d'un colis par le client
+Déclencheur : enregistrement d'un colis sur la plateforme.
+
+Bonjour [Nom du client],
+
+Votre colis a bien été enregistré sur votre compte Navair Global Logistics.
+
+Référence du colis : [Référence].
+
+Nous vous invitons à vous assurer que les informations renseignées sont exactes afin de faciliter son identification lors de sa réception dans notre entrepôt en Chine.
+
+Merci pour votre confiance !
+
+PARTIE 3 – GESTION DES GROUPAGES
+
+3.1. Confirmation d'ouverture d'un groupage
+Déclencheur : création d'un groupage.
+
+Bonjour [Nom du client],
+
+Nous vous confirmons que votre groupage [Référence du groupage] a bien été ouvert sur notre plateforme.
+
+Vous pouvez désormais y associer vos différents colis afin de faciliter leur regroupement et leur expédition.
+
+Merci pour votre confiance !
+
+3.2. Rappel concernant un groupage en attente
+Déclencheur : groupage ouvert depuis une certaine période et toujours en attente de fermeture.
+
+Bonjour [Nom du client],
+
+Nous vous informons que votre groupage [Référence du groupage] est toujours ouvert sur notre plateforme.
+
+Si vous avez terminé d'enregistrer vos colis, vous pouvez procéder à sa fermeture afin de permettre la poursuite du traitement.
+
+Pour toute assistance, notre service clientèle reste à votre disposition.
+
+3.3. Confirmation de fermeture d'un groupage
+Déclencheur : fermeture effective du groupage.
+
+Bonjour [Nom du client],
+
+Nous vous confirmons que votre groupage [Référence du groupage] a bien été fermé.
+
+Aucun nouveau colis ne pourra être ajouté à ce groupage.
+
+Notre équipe procédera aux prochaines étapes de traitement en vue de sa consolidation et de son expédition.
+
+Merci de votre confiance !
+
+3.4. Confirmation de mise en consolidation
+Déclencheur : début du processus de consolidation.
+
+Bonjour [Nom du client],
+
+Votre groupage [Référence du groupage] est actuellement en cours de consolidation dans notre entrepôt en Chine.
+
+Cette étape consiste à effectuer les vérifications nécessaires et à regrouper vos différents colis en un seul envoi avant leur expédition.
+
+Vous recevrez une nouvelle notification dès que la consolidation sera terminée.
+
+3.5. Notification de fin de consolidation
+Déclencheur : consolidation terminée.
+
+Bonjour [Nom du client],
+
+Bonne nouvelle !
+
+La consolidation de votre groupage [Référence du groupage] est terminée.
+
+Vos colis ont été regroupés et sont désormais prêts pour la prochaine étape : l'expédition.
+
+Vous serez informé dès que vos marchandises auront effectivement quitté notre entrepôt.
+
+Merci de faire confiance à Navair Global Logistics !
+
+PARTIE 4 – EXPÉDITION ET TRANSPORT
+
+4.1. Confirmation de planification d'une expédition
+Déclencheur : affectation du colis à un départ programmé.
+
+Bonjour [Nom du client],
+
+Votre colis [Référence du colis] est prévu pour le prochain départ programmé.
+
+Date prévisionnelle de départ : [Date].
+
+Veuillez noter que cette date reste prévisionnelle jusqu'à la confirmation effective de l'expédition.
+
+Nous vous tiendrons informé de son évolution.
+
+4.2. Notification de report d'une date de départ
+Déclencheur : modification d'une date de départ initialement annoncée.
+
+Bonjour [Nom du client],
+
+Nous souhaitons vous informer d'un changement concernant le calendrier d'expédition de votre colis [Référence du colis].
+
+Le départ initialement prévu le [Ancienne date] a été reporté au [Nouvelle date prévisionnelle].
+
+Nous vous présentons nos excuses pour ce changement et vous tiendrons informé de toute nouvelle évolution.
+
+Merci pour votre compréhension.
+
+4.3. Confirmation effective d'expédition
+Déclencheur : confirmation réelle du départ de la marchandise.
+
+Bonjour [Nom du client],
+
+Nous avons le plaisir de vous informer que votre colis [Référence du colis] a effectivement été expédié depuis notre entrepôt en Chine.
+
+Date de départ : [Date].
+
+Votre marchandise est désormais en cours d'acheminement vers sa destination.
+
+Vous pouvez suivre son évolution dans la rubrique « Mes colis » de votre espace client.
+
+Merci pour votre confiance !
+
+4.4. Notification de retard d'expédition
+Déclencheur : retard constaté par rapport au calendrier prévu.
+
+Bonjour [Nom du client],
+
+Nous tenons à vous informer que votre expédition connaît un retard par rapport au calendrier initialement annoncé.
+
+Nous comprenons les désagréments que cette situation peut occasionner et nous vous présentons nos sincères excuses.
+
+Notre équipe suit attentivement l'évolution de votre expédition et nous vous communiquerons toute nouvelle information dès qu'elle sera disponible.
+
+Merci pour votre patience et votre compréhension.
+
+4.5. Notification de départ du navire ou de l'avion
+Déclencheur : confirmation du départ du moyen de transport.
+
+Bonjour [Nom du client],
+
+Nous vous confirmons que le transport de votre marchandise a commencé.
+
+Moyen de transport : [Maritime/Aérien].
+
+Date de départ : [Date].
+
+Destination : [Destination].
+
+Votre marchandise est actuellement en cours d'acheminement.
+
+Merci de faire confiance à Navair Global Logistics !
+
+4.6. Notification de transit
+Déclencheur : marchandise en transit vers sa destination.
+
+Bonjour [Nom du client],
+
+Votre colis [Référence du colis] est actuellement en transit vers sa destination.
+
+Nous continuons de suivre son acheminement et vous informerons dès qu'une nouvelle étape importante sera enregistrée.
+
+Merci pour votre confiance !
+
+PARTIE 5 – ARRIVÉE ET LIVRAISON
+
+5.1. Notification d'arrivée à destination
+Déclencheur : arrivée confirmée de la marchandise au pays de destination.
+
+Bonjour [Nom du client],
+
+Nous avons le plaisir de vous informer que votre colis [Référence du colis] est bien arrivé à destination.
+
+Notre équipe procède aux opérations nécessaires avant sa mise à disposition.
+
+Vous recevrez une nouvelle notification dès qu'il sera disponible pour retrait ou livraison.
+
+Merci pour votre confiance !
+
+5.2. Colis disponible pour retrait
+Déclencheur : colis enregistré comme disponible à l'agence.
+
+Bonjour [Nom du client],
+
+Bonne nouvelle !
+
+Votre colis [Référence du colis] est désormais disponible dans notre agence de [Ville].
+
+Vous pouvez passer le récupérer aux horaires d'ouverture de notre agence.
+
+Pour toute information complémentaire, notre service clientèle reste à votre disposition.
+
+Merci de faire confiance à Navair Global Logistics !
+
+5.3. Rappel de retrait d'un colis
+Déclencheur : colis disponible mais non retiré après un délai défini.
+
+Bonjour [Nom du client],
+
+Nous vous rappelons que votre colis [Référence du colis] est toujours disponible dans notre agence de [Ville].
+
+Nous vous invitons à prendre les dispositions nécessaires pour son retrait.
+
+Pour toute difficulté, veuillez contacter notre service clientèle.
+
+Merci pour votre confiance !
+
+5.4. Notification de livraison en cours
+Déclencheur : colis confié au service de livraison.
+
+Bonjour [Nom du client],
+
+Nous vous informons que votre colis [Référence du colis] est actuellement en cours de livraison à l'adresse indiquée.
+
+Notre équipe vous contactera si des informations supplémentaires sont nécessaires pour finaliser la livraison.
+
+Merci de votre confiance !
+
+5.5. Confirmation de livraison
+Déclencheur : livraison effectivement confirmée.
+
+Bonjour [Nom du client],
+
+Nous vous confirmons que votre colis [Référence du colis] vous a été livré avec succès.
+
+Nous espérons que vous êtes satisfait de nos services.
+
+Merci d'avoir choisi Navair Global Logistics pour vos expéditions.
+
+Au plaisir de vous accompagner pour vos prochaines commandes !
+
+5.6. Confirmation de retrait à l'agence
+Déclencheur : retrait du colis confirmé par l'agent.
+
+Bonjour [Nom du client],
+
+Nous vous confirmons que votre colis [Référence du colis] a bien été retiré dans notre agence de [Ville].
+
+Nous vous remercions pour votre confiance et espérons vous accompagner à nouveau pour vos prochaines expéditions.
+
+5.7. Échec de livraison
+Déclencheur : livraison non effectuée.
+
+Bonjour [Nom du client],
+
+Nous vous informons que la tentative de livraison de votre colis [Référence du colis] n'a pas pu aboutir.
+
+Motif : [Motif de l'échec].
+
+Nous vous invitons à contacter notre service clientèle afin de convenir des prochaines dispositions pour la réception de votre marchandise.
+
+Merci pour votre compréhension.
+
+PARTIE 6 – PAIEMENTS ET FACTURATION
+
+6.1. Confirmation de réception d'un paiement
+Déclencheur : paiement confirmé.
+
+Bonjour [Nom du client],
+
+Nous vous confirmons la bonne réception de votre paiement d'un montant de [Montant] FCFA.
+
+Votre règlement a bien été enregistré dans notre système.
+
+Merci pour votre confiance !
+
+6.2. Facture ou frais d'expédition disponibles
+Déclencheur : génération d'une facture ou d'un montant à régler.
+
+Bonjour [Nom du client],
+
+Les frais relatifs à l'expédition de votre colis [Référence du colis] sont désormais disponibles.
+
+Montant à régler : [Montant] FCFA.
+
+Vous pouvez consulter les détails de votre facture depuis votre espace client.
+
+Pour toute question concernant votre facturation, notre équipe reste à votre disposition.
+
+6.3. Rappel de paiement en attente
+Déclencheur : facture non réglée après un délai défini.
+
+Bonjour [Nom du client],
+
+Nous vous rappelons que le paiement relatif à votre colis [Référence du colis] est toujours en attente.
+
+Montant restant à régler : [Montant] FCFA.
+
+Nous vous invitons à procéder au règlement afin de permettre la poursuite du traitement de votre dossier, conformément aux conditions applicables.
+
+Merci pour votre collaboration.
+
+6.4. Confirmation de paiement partiel
+Déclencheur : réception d'un paiement inférieur au montant total dû.
+
+Bonjour [Nom du client],
+
+Nous vous confirmons la réception de votre paiement partiel de [Montant payé] FCFA.
+
+Montant total dû : [Montant total] FCFA.
+
+Reste à payer : [Solde restant] FCFA.
+
+Merci pour votre règlement. Pour toute information complémentaire, contactez notre service clientèle.
+
+6.5. Échec ou rejet d'un paiement
+Déclencheur : transaction refusée ou échouée.
+
+Bonjour [Nom du client],
+
+Nous vous informons que votre dernière tentative de paiement n'a pas abouti.
+
+Nous vous invitons à vérifier les informations de votre transaction ou à essayer un autre moyen de paiement disponible.
+
+Si le montant a été débité de votre compte, veuillez contacter notre service clientèle avant de procéder à un nouveau paiement.
+
+PARTIE 7 – SOURCING ET ACHATS EN CHINE
+
+7.1. Confirmation de réception d'une demande de sourcing
+
+Bonjour [Nom du client],
+
+Nous avons bien reçu votre demande de sourcing.
+
+Notre équipe va procéder à l'étude de votre demande et effectuer les recherches nécessaires auprès de nos fournisseurs en Chine.
+
+Nous reviendrons vers vous avec les informations disponibles, notamment les prix et les modalités d'acquisition.
+
+Merci d'avoir choisi Navair Global Logistics !
+
+7.2. Devis de sourcing disponible
+
+Bonjour [Nom du client],
+
+Nous vous informons que le devis relatif à votre demande de sourcing est désormais disponible.
+
+Vous pouvez consulter les détails de votre demande, notamment les caractéristiques des produits, les prix et les conditions d'acquisition.
+
+Pour toute question ou confirmation de commande, notre équipe reste à votre disposition.
+
+7.3. Demande de sourcing en attente de validation du client
+
+Bonjour [Nom du client],
+
+Votre devis de sourcing est disponible et nous sommes actuellement dans l'attente de votre confirmation.
+
+Veuillez nous confirmer si vous souhaitez procéder à l'achat des produits proposés.
+
+Nous restons disponibles pour répondre à vos questions.
+
+7.4. Confirmation de validation d'une commande de sourcing
+
+Bonjour [Nom du client],
+
+Nous vous confirmons que votre commande de sourcing a été validée.
+
+Notre équipe va procéder aux démarches nécessaires auprès du fournisseur conformément aux conditions convenues.
+
+Nous vous tiendrons informé de l'évolution de votre commande.
+
+7.5. Confirmation d'achat auprès du fournisseur
+
+Bonjour [Nom du client],
+
+Nous vous informons que l'achat de vos produits auprès du fournisseur a bien été effectué.
+
+Votre commande est désormais en attente des prochaines étapes de traitement et d'acheminement vers notre entrepôt.
+
+Nous vous tiendrons informé de sa progression.
+
+7.6. Commande de sourcing expédiée par le fournisseur
+
+Bonjour [Nom du client],
+
+Votre fournisseur nous a confirmé l'expédition de votre commande vers notre entrepôt en Chine.
+
+Dès sa réception, notre équipe procédera aux vérifications nécessaires et vous enverra une notification de confirmation.
+
+Merci pour votre confiance !
+
+7.7. Retard d'une commande fournisseur
+
+Bonjour [Nom du client],
+
+Nous souhaitons vous informer que votre commande auprès du fournisseur connaît un retard.
+
+Nous sommes en contact avec notre partenaire afin d'obtenir des informations actualisées sur son traitement.
+
+Nous vous tiendrons informé dès que nous disposerons de nouvelles informations.
+
+Nous vous remercions pour votre patience.
+
+PARTIE 8 – ANOMALIES ET ASSISTANCE CLIENTÈLE
+
+8.1. Colis présentant une anomalie
+
+Bonjour [Nom du client],
+
+Nous vous informons qu'une anomalie a été constatée lors du traitement de votre colis [Référence du colis] dans notre entrepôt.
+
+Afin de poursuivre son traitement dans les meilleures conditions, nous aurions besoin de quelques informations complémentaires.
+
+Nous vous invitons à contacter notre service clientèle afin que nous puissions examiner la situation et vous accompagner dans sa résolution.
+
+8.2. Colis endommagé à la réception
+
+Bonjour [Nom du client],
+
+Nous vous informons qu'une anomalie concernant l'état de votre colis [Référence du colis] a été constatée lors de sa réception.
+
+Notre équipe procède à l'examen de la situation et vous communiquera les informations nécessaires concernant les prochaines démarches.
+
+Nous vous prions de nous excuser pour ce désagrément.
+
+8.3. Réclamation enregistrée
+
+Bonjour [Nom du client],
+
+Nous vous confirmons que votre réclamation a bien été enregistrée auprès de notre service clientèle.
+
+Référence de la réclamation : [Référence].
+
+Notre équipe va examiner votre dossier et reviendra vers vous dès que possible.
+
+Merci pour votre patience et votre confiance.
+
+8.4. Réclamation en cours de traitement
+
+Bonjour [Nom du client],
+
+Nous vous informons que votre réclamation [Référence] est actuellement en cours de traitement par notre équipe.
+
+Nous poursuivons les vérifications nécessaires afin de vous apporter une réponse appropriée.
+
+Merci pour votre compréhension.
+
+8.5. Réclamation traitée
+
+Bonjour [Nom du client],
+
+Nous vous informons que le traitement de votre réclamation [Référence] est terminé.
+
+Voici les éléments de réponse : [Réponse ou solution apportée].
+
+Nous vous remercions pour votre patience et restons à votre disposition pour toute autre assistance.
+
+8.6. Confirmation de prise en charge d'une demande client
+
+Bonjour [Nom du client],
+
+Nous avons bien reçu votre demande et celle-ci a été transmise à notre équipe pour traitement.
+
+Référence de votre demande : [Référence].
+
+Nous reviendrons vers vous dès que nous disposerons des informations nécessaires.
+
+Merci de faire confiance à Navair Global Logistics !
+
+
+PARTIE 9 – RELANCES CLIENTS
+
+9.1. Relance prospect non inscrit – 1re relance
+Déclencheur : client ayant reçu les informations mais non inscrit après [X] jours.
+
+Bonjour [Nom du client],
+
+Nous revenons vers vous suite à notre échange sur nos services d'expédition depuis la Chine.
+
+Avez-vous eu le temps de consulter les informations que nous vous avons transmises ? Si vous avez des questions, nous sommes là pour y répondre.
+
+Pour commencer, il suffit de vous inscrire sur notre plateforme : https://navairdistribution.com
+
+9.2. Relance prospect non inscrit – 2e relance
+Déclencheur : client toujours non inscrit après [X] jours.
+
+Bonjour [Nom du client],
+
+Vous aviez un projet d'achat ou d'expédition depuis la Chine. Où en êtes-vous ?
+
+L'inscription est rapide et vous donne accès à votre code client, aux tarifs, aux dates de départ et au suivi de vos colis.
+
+Prochain départ : [Date].
+
+9.3. Relance prospect non inscrit – dernière relance
+Déclencheur : client toujours non inscrit après [X] jours.
+
+Bonjour [Nom du client],
+
+Sans nouvelle de votre part, nous ne vous relancerons plus pour le moment.
+
+Si votre projet reprend, vous pourrez vous inscrire à tout moment : https://navairdistribution.com. Nous serons ravis de vous accompagner.
+
+9.4. Relance client inscrit sans colis envoyé – 1re relance
+Déclencheur : client inscrit n'ayant pas envoyé son colis à l'entrepôt après [X] jours.
+
+Bonjour [Nom du client],
+
+Votre compte est bien créé. Avez-vous déjà passé commande auprès de votre fournisseur ?
+
+Pour expédier avec nous, il reste trois étapes : déclarer votre colis sur la plateforme, télécharger la fiche de pré-envoi, puis la transmettre à votre fournisseur avec l'adresse de notre entrepôt.
+
+Nous pouvons vous aider à chaque étape si besoin.
+
+9.5. Relance client inscrit sans colis envoyé – 2e relance
+Déclencheur : colis toujours non envoyé à l'entrepôt après [X] jours.
+
+Bonjour [Nom du client],
+
+Nous revenons vers vous au sujet de votre expédition. Votre fournisseur a-t-il rencontré une difficulté (adresse, fiche de pré-envoi, délai de préparation) ?
+
+Dites-nous où vous bloquez, nous vous aiderons.
+
+Prochain départ : [Date].
+
+9.6. Relance client inscrit sans colis envoyé – dernière relance
+Déclencheur : colis toujours non envoyé à l'entrepôt après [X] jours.
+
+Bonjour [Nom du client],
+
+Nous n'avons pas eu de retour concernant votre expédition, donc nous ne vous relancerons plus pour le moment.
+
+Votre compte reste actif : dès que votre colis sera prêt, vous pourrez le déclarer sur la plateforme et nous le prendrons en charge.
