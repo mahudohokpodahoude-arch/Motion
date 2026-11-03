@@ -1,0 +1,28 @@
+{
+  "fps": 30,
+  "bpm": 120,
+  "duration": 90,
+  "scenes": [
+    { "id": "s1", "name": "L'éveil d'une vision", "t0": 0, "t1": 8 },
+    { "id": "s2", "name": "Les fondations", "t0": 8, "t1": 18 },
+    { "id": "s3", "name": "Connecter", "t0": 18, "t1": 30 },
+    { "id": "s4", "name": "Transformer", "t0": 30, "t1": 43 },
+    { "id": "s5", "name": "Envoyer", "t0": 43, "t1": 55 },
+    { "id": "s6", "name": "Une Église vivante et structurée", "t0": 55, "t1": 66 },
+    { "id": "s7", "name": "L'Église augmentée", "t0": 66, "t1": 77 },
+    { "id": "s8", "name": "Le cap des 36 mois", "t0": 77, "t1": 86 },
+    { "id": "s9", "name": "La signature finale", "t0": 86, "t1": 90 }
+  ],
+  "events": [
+    { "id": "s1.fadein", "t": 0.0, "sfx": "drone_in" },
+    { "id": "s1.lines", "t": 1.0, "sfx": "line_draw", "dur": 2.8 },
+    { "id": "s1.title1", "t": 2.0, "sfx": "title_soft" },
+    { "id": "s1.title2", "t": 3.0, "sfx": "title_soft" },
+    { "id": "s1.title3", "t": 4.0, "sfx": "title_soft" },
+    { "id": "s1.gates", "t": 0.6, "sfx": "gate_pass", "dur": 5.0 },
+    { "id": "s1.light", "t": 4.6, "sfx": "riser_light", "dur": 1.4 },
+    { "id": "s1.logo", "t": 6.0, "sfx": "logo_hit" },
+    { "id": "s1.dissolve", "t": 7.7, "sfx": "dissolve" },
+    { "id": "s2.tilt", "t": 7.8, "sfx": "whoosh_long", "dur": 2.2 }
+  ]
+}
