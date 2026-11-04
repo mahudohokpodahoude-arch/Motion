@@ -177,17 +177,42 @@ for (let i = 0; i < 9; i++) {
 
 // bulletin (paper) texture
 function paperTex() {
-  const cv = document.createElement('canvas'); cv.width = 600; cv.height = 850; const c = cv.getContext('2d');
-  c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, 600, 850);
-  c.fillStyle = GREEN; c.fillRect(0, 0, 200, 14); c.fillStyle = YELLOW; c.fillRect(200, 0, 200, 14); c.fillStyle = RED; c.fillRect(400, 0, 200, 14);
-  txt(c, 'BULLETIN DU', 50, 100, '700 24px M', '#5E6A63'); txt(c, 'CASIER JUDICIAIRE', 50, 146, '900 40px M', INK);
-  c.fillStyle = '#E3E8E1'; for (let i = 0; i < 9; i++) { rr(c, 50, 210 + i * 44, i % 3 === 2 ? 300 : 500, 18, 9); c.fill(); }
-  c.strokeStyle = GREEN; c.lineWidth = 8; c.beginPath(); c.arc(480, 700, 66, 0, 7); c.stroke();
-  c.lineWidth = 10; c.lineCap = 'round'; c.lineJoin = 'round'; c.beginPath(); c.moveTo(450, 702); c.lineTo(473, 728); c.lineTo(514, 672); c.stroke();
-  txt(c, 'Authenticité', 50, 700, '800 30px M', INK); txt(c, 'vérifiable', 50, 740, '800 30px M', GREEN);
+  const cv = document.createElement('canvas'); cv.width = 1000; cv.height = 1414; const c = cv.getContext('2d');
+  c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, 1000, 1414);
+  const T = (s, x, y, f, col = '#222', al = 'left') => txt(c, s, x, y, f, col, al);
+  T('MINISTÈRE DE LA JUSTICE', 70, 82, '700 22px M', '#333'); T('ET DE LA LÉGISLATION', 70, 110, '700 22px M', '#333');
+  c.fillStyle = GREEN; c.fillRect(70, 124, 90, 5); c.fillStyle = YELLOW; c.fillRect(160, 124, 90, 5); c.fillStyle = RED; c.fillRect(250, 124, 90, 5);
+  T('RÉPUBLIQUE DU BÉNIN', 70, 160, '500 20px M', '#444');
+  T('Le centre national du casier judiciaire', 500, 262, '800 34px M', '#111', 'center');
+  c.strokeStyle = '#111'; c.lineWidth = 3; c.strokeRect(340, 300, 320, 92);
+  T('CASIER JUDICIAIRE', 500, 340, '800 28px M', '#111', 'center'); T('Bulletin n°3', 500, 376, '500 24px M', '#111', 'center');
+  T('IDENTITÉ', 70, 470, '800 21px M'); T('INFORMATIONS SUPPLÉMENTAIRES', 540, 470, '800 21px M');
+  const rows = [['Nom :', 'EXEMPLE'], ['Prénoms :', 'MARIAM'], ['Date de naissance :', '01-01-1990'], ['Lieu de naissance :', 'Cotonou LITTORAL'], ['Genre :', 'F']];
+  rows.forEach((r, i) => { T(r[0], 76, 520 + i * 30, '700 17px M'); T(r[1], 300, 520 + i * 30, '500 17px M'); });
+  const rows2 = [['Nationalité :', 'Béninoise'], ['Domicile :', 'Cotonou'], ['Profession :', 'Enseignante'], ['Enfants à charge :', '0']];
+  rows2.forEach((r, i) => { T(r[0], 546, 520 + i * 30, '700 17px M'); T(r[1], 760, 520 + i * 30, '500 17px M'); });
+  T('FILIATION', 70, 720, '800 21px M');
+  T('Nom et Prénom du père :', 76, 764, '700 17px M'); T('EXEMPLE PÈRE', 330, 764, '500 17px M');
+  T('Nom et Prénom de la mère :', 76, 794, '700 17px M'); T('EXEMPLE MÈRE', 330, 794, '500 17px M');
+  T('Vérification de l’état civil faite sur la base :', 70, 866, '800 26px M');
+  c.strokeStyle = '#333'; c.lineWidth = 2; c.strokeRect(76, 892, 14, 14); c.strokeRect(300, 892, 14, 14);
+  c.beginPath(); c.moveTo(302, 899); c.lineTo(307, 905); c.lineTo(313, 893); c.stroke();
+  T('Registre des personnes physiques', 100, 905, '500 15px M'); T('Enquête par le Procureur de la République', 324, 905, '500 15px M');
+  T('Ce bulletin ne mentionne que les condamnations à des peines privatives de liberté prononcées par', 76, 950, '500 15px M', '#444');
+  T('une juridiction de répression pour crime et délit.', 76, 972, '500 15px M', '#444');
+  T('Condamnations', 70, 1030, '800 28px M'); T('AUCUNE CONDAMNATION', 76, 1068, '500 17px M');
+  c.setLineDash([8, 6]); c.strokeStyle = '#B5BDB8'; c.lineWidth = 2; c.strokeRect(560, 1110, 340, 120); c.setLineDash([]);
+  T('Signature et cachet', 730, 1165, '600 16px M', '#9AA39D', 'center'); T('(spécimen)', 730, 1190, '500 15px M', '#9AA39D', 'center');
+  T('Numéro de référence :', 76, 1120, '500 15px M'); T('XXXX XXXX XXXX', 76, 1146, '700 17px M');
+  c.strokeStyle = '#C7CEC9'; c.lineWidth = 2; c.strokeRect(76, 1260, 850, 100);
+  T('VÉRIFIEZ LA CONFORMITÉ DE CE DOCUMENT', 190, 1288, '800 14px M');
+  T('1. Suivez les instructions de https://service-public.bj/public/search-document', 190, 1312, '500 13px M');
+  T('2. Utilisez le numéro de référence', 190, 1332, '500 13px M'); T('3. Assurez-vous que le document est identique à celui en ligne', 190, 1352, '500 13px M');
+  c.fillStyle = GREEN; c.fillRect(380, 1396, 80, 6); c.fillStyle = YELLOW; c.fillRect(460, 1396, 80, 6); c.fillStyle = RED; c.fillRect(540, 1396, 80, 6);
+  c.save(); c.translate(500, 760); c.rotate(-0.55); c.globalAlpha = .16; txt(c, 'SPÉCIMEN', 0, 0, '900 190px M', RED, 'center'); c.restore();
   const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
 }
-const paper = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.7, .02), new THREE.MeshStandardMaterial({ map: paperTex(), roughness: .6, metalness: 0 }));
+const paper = new THREE.Mesh(new THREE.BoxGeometry(1.34, 1.9, .02), (tx => new THREE.MeshStandardMaterial({ map: tx, emissiveMap: tx, emissive: 0xffffff, emissiveIntensity: .55, roughness: .6, metalness: 0 }))(paperTex()));
 paper.castShadow = true; paper.visible = false; scene.add(paper);
 
 // recap cards
@@ -218,7 +243,7 @@ const CAPS = [
   { a: 26, b: 35, step: 4, kick: 'Étape 4', ttl: 'Saisissez<br>le code OTP', sub: 'Un code de vérification est envoyé par e-mail. Saisissez-le, appuyez sur <b>« Soumettre »</b>, puis sur <b>« Continuer »</b>.' },
   { a: 35, b: 41, step: 5, kick: 'Étape 5', ttl: 'Vérifiez vos<br>informations', sub: 'Votre <b>NPI</b>, votre e-mail et votre nationalité sont déjà renseignés : l’administration les connaît. C’est le principe <b>« Dites-le nous une fois »</b>.' },
   { a: 41, b: 49, step: 6, kick: 'Étape 6', ttl: 'Payez<br>les frais', sub: 'Indiquez votre <b>profession</b>, choisissez votre solution de paiement (<b>Fedapay</b> ou <b>Kkiapay</b>) pour régler <b>1 900 F CFA</b>, puis <b>« Soumettre »</b>.' },
-  { a: 49, b: 55, step: 7, kick: 'Étape 7', ttl: 'Téléchargez<br>votre bulletin', sub: 'Le bulletin est <b>délivré instantanément</b> et téléchargeable immédiatement, sans déplacement ni intermédiaire.' },
+  { a: 49, b: 55, step: 7, kick: 'Étape 7', ttl: 'Téléchargez<br>votre bulletin', sub: 'Le bulletin est <b>délivré instantanément</b> et téléchargeable immédiatement, sans déplacement ni intermédiaire. <i>(Spécimen fictif.)</i>' },
   { a: 55, b: 62, kick: 'En pratique', ttl: 'Aucune pièce.<br>Aucun déplacement.', sub: 'Même depuis l’étranger : la démarche se fait entièrement en ligne. Le bulletin garde la même valeur juridique et reste vérifiable.' },
   { a: 62, b: 68, kick: 'Bon à savoir', ttl: 'Dites-le<br>nous une fois.', sub: 'Source : communiqué de presse du Ministère de la Justice et de la Législation (Bénin), 2 novembre 2026. Captures réelles du site, données personnelles remplacées par des valeurs fictives. Certains moyens de paiement peuvent être temporairement indisponibles : lisez le bandeau d’information du site. Vidéo non officielle.', small: true },
 ];
@@ -281,9 +306,9 @@ function render(t) {
   paper.visible = pk > 0 && t < 55.7;
   if (paper.visible) {
     const k = eo(pk), fadeOut = 1 - eo((t - 55) / .6);
-    paper.position.set(lerp(px, px + 1.55, k), lerp(0, .2, k) + .06 * Math.sin(t * 2), lerp(.1, .5, k));
-    paper.rotation.set(.1 * k, lerp(0, -.4, k) + .1 * Math.sin(t * 1.3), lerp(0, .08, k));
-    paper.scale.setScalar(Math.max(lerp(.35, 1, back(pk)), .001) * fadeOut);
+    paper.position.set(lerp(px, px + 1.6, k), lerp(0, .2, k) + .06 * Math.sin(t * 2), lerp(.1, .5, k));
+    paper.rotation.set(.1 * k, lerp(0, -.22, k) + .06 * Math.sin(t * 1.3), lerp(0, .08, k));
+    paper.scale.setScalar(Math.max(lerp(.35, 1.12, back(pk)), .001) * fadeOut);
   }
   // recap cards
   cards.forEach((m, i) => {
