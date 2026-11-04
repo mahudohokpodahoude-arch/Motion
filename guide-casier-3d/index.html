@@ -19,10 +19,20 @@
   #ttl { font: 900 84px/1.04 M; margin: 0 0 28px; letter-spacing: -1px; }
   #sub { font: 500 36px/1.4 M; margin: 0; color: #44514A; }
   #sub.small { font-size: 26px; line-height: 1.5; color: #5E6A63; }
-  #bar { position: absolute; left: 0; bottom: 0; height: 12px; width: 0; background: linear-gradient(90deg, #008751 0 33.3%, #FCD116 33.3% 66.6%, #E8112D 66.6% 100%); background-size: 1920px 12px; }
+  #bar { position: absolute; left: 0; bottom: 0; height: 12px; width: 0; background: linear-gradient(90deg, #008751 0 33.3%, #FCD116 33.3% 66.6%, #E8112D 66.6% 100%); background-size: 100vw 12px; }
   #dots { position: absolute; left: 130px; bottom: 56px; display: flex; gap: 14px; opacity: 0; }
   #dots i { width: 44px; height: 10px; border-radius: 5px; background: #C9D2CC; }
   #dots i.on { background: #008751; }
+  /* ---- version verticale 1080 x 1920 ---- */
+  #stage.portrait { background: radial-gradient(1100px 1000px at 50% 68%, #FFFFFF 0%, #F3F1E8 55%, #E4EBE2 100%); }
+  .portrait #cap { left: 0; width: 1080px; top: 130px; height: 800px; justify-content: flex-start; align-items: center; text-align: center; padding: 0 80px; box-sizing: border-box; }
+  .portrait #kick { font-size: 26px; margin-bottom: 22px; }
+  .portrait #num { width: 96px; height: 96px; border-radius: 48px; font-size: 54px; margin-bottom: 22px; }
+  .portrait #ttl { font-size: 86px; margin-bottom: 22px; }
+  .portrait #sub { font-size: 38px; }
+  .portrait #sub.small { font-size: 26px; }
+  .portrait #dots { left: 0; right: 0; justify-content: center; bottom: auto; top: 64px; }
+  .portrait #bar { height: 14px; }
 </style>
 <script type="importmap">
 { "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }
@@ -38,7 +48,9 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-const W = 1920, H = 1080;
+const PORT = new URLSearchParams(location.search).has('portrait');   // 1080 x 1920
+const W = PORT ? 1080 : 1920, H = PORT ? 1920 : 1080;
+{ const st = document.getElementById('stage'); st.style.width = W + 'px'; st.style.height = H + 'px'; if (PORT) st.classList.add('portrait'); }
 const TL = await (await fetch('timeline.json')).json();   // calé sur la voix off (voice/make_voice.py)
 const TT = TL.TT;                          // titre, 7 étapes, récap, outro, fin
 const DUR = TT[10];
@@ -234,7 +246,8 @@ const cards = CARDS.map(([l, v, col], i) => {
   const m = new THREE.Mesh(new THREE.BoxGeometry(2.1, 1.1, .05), (tx => new THREE.MeshStandardMaterial({ map: tx, emissiveMap: tx, emissive: 0xffffff, emissiveIntensity: .5, roughness: .5 }))(cardTex(l, v, col)));
   m.castShadow = true; m.visible = false; scene.add(m); return m;
 });
-const CARD_POS = [[1.45, 1.0], [3.5, 1.0], [1.45, -.45], [3.5, -.45]];
+const CARD_POS = PORT ? [[-.9, -.1], [.9, -.1], [-.9, -1.2], [.9, -1.2]] : [[1.45, 1.0], [3.5, 1.0], [1.45, -.45], [3.5, -.45]];
+const CARD_S = PORT ? .7 : .85;
 
 // outro flag slabs
 const slabs = cols.map((c, i) => { const m = new THREE.Mesh(new THREE.BoxGeometry(2.6, .5, .12), new THREE.MeshStandardMaterial({ color: c, roughness: .4 })); m.castShadow = true; m.visible = false; scene.add(m); return m; });
@@ -269,60 +282,65 @@ function setCaption(t) {
   const inn = eo(lt / .3), out = last ? 0 : eo((cp.b - t) / .2);
   const o = Math.min(inn, last ? 1 : 1 - (1 - out));
   el('cap').style.opacity = last ? inn : Math.min(inn, out);
-  el('cap').style.transform = `translateX(${(1 - inn) * -90}px)`;
+  el('cap').style.transform = PORT ? `translateY(${(1 - inn) * 70}px)` : `translateX(${(1 - inn) * -90}px)`;
   el('dots').style.opacity = cp.step ? Math.min(inn, out) : 0;
-  el('bar').style.width = (t / DUR * 1920) + 'px';
+  el('bar').style.width = (t / DUR * W) + 'px';
 }
 
 // ---------- timeline ----------
 function render(t) {
   drawScreen(t); scrTex.needsUpdate = true;
   setCaption(t);
+  const BY = PORT ? -.85 : 0;                      // hauteur de repos du téléphone
   const ent = back(t / .9);
-  let px = 1.95, py = lerp(-3.2, 0, eo(t / .8)), ps = lerp(.55, 1, ent);
+  let px = PORT ? 0 : 1.95, py = lerp(BY - 3.4, BY, eo(t / .8)), ps = lerp(.55, 1, ent);
   let ry = lerp(1.3, -.28, eio(t / 1.1)) + .09 * Math.sin(t * .8), rx = .05 * Math.sin(t * .6) - .04;
-  let camZ = 9, camX = 0;
-  if (t >= TT[1] - .6) { const k = eio((t - TT[1] + .6) / .6); camZ = lerp(9, 8.1, k); px = lerp(1.95, 1.75, k); ry = lerp(ry, -.2 + .06 * Math.sin(t * .8), k); }
+  let camZ = PORT ? 10 : 9, camX = 0;
+  if (t >= TT[1] - .6) { const k = eio((t - TT[1] + .6) / .6); if (!PORT) { camZ = lerp(9, 8.1, k); px = lerp(1.95, 1.75, k); } ry = lerp(ry, -.2 + .06 * Math.sin(t * .8), k); }
   for (let i = 1; i <= 6; i++) { const a0 = TT[i] + .5, b0 = TT[i + 1] - .3; if (t > a0 && t < b0) ry -= .11 * Math.sin(clamp((t - a0) / (b0 - a0)) * Math.PI); }
-  if (t >= TT[7] && t < TT[8]) px = lerp(px, 1.15, eio((t - TT[7]) / .5));
+  if (!PORT && t >= TT[7] && t < TT[8]) px = lerp(px, 1.15, eio((t - TT[7]) / .5));
   let pvis = 1;
   if (t >= TT[8]) {
     const k = eio((t - TT[8]) / .5);
-    camZ = lerp(8.1, 10, eio((t - TT[8]) / .8)); px = lerp(1.15, 6.5, k); ps *= 1 - .3 * k; ry = lerp(ry, -.7, k); pvis = 1 - k;
+    if (PORT) { camZ = lerp(10, 11.5, eio((t - TT[8]) / .8)); py = lerp(BY, BY - 5, k); ps *= 1 - .2 * k; }
+    else { camZ = lerp(8.1, 10, eio((t - TT[8]) / .8)); px = lerp(1.15, 6.5, k); ps *= 1 - .3 * k; }
+    ry = lerp(ry, -.7, k); pvis = 1 - k;
   }
-  // coup de caméra à chaque changement d'écran (zoom + virage du téléphone)
   for (let i = 1; i <= 8; i++) { const d = t - TT[i]; if (d > 0 && d < .45) { const p = 1 - eo(d / .45); camZ -= .55 * p; ry += (i % 2 ? .4 : -.4) * p; } }
   phone.position.set(px, py, 0); phone.scale.setScalar(Math.max(ps, .001)); phone.rotation.set(rx, ry, 0);
   phone.visible = pvis > .01;
   camera.position.set(camX, 0, camZ); camera.lookAt(camX, 0, 0);
   const aShow = eo(t / .8) * (1 - eo((t - TT[9]) / .4));
+  const RS = PORT ? .5 : .9;
   accents.forEach((m, i) => {
     const u = m.userData, a = u.a + t * .3;
-    m.position.set(px + Math.cos(a) * u.r * .9 - .2, u.y + Math.sin(t * 1.1 + i) * .2, u.z - 1.0 + Math.sin(a) * .8);
-    m.rotation.set(t * .9 + i, t * .6, 0); m.scale.setScalar(u.s * aShow + .0001);
+    m.position.set(px + Math.cos(a) * u.r * RS - (PORT ? 0 : .2), (PORT ? BY + .2 : 0) + u.y * (PORT ? .85 : 1) + Math.sin(t * 1.1 + i) * .2, u.z - 1.0 + Math.sin(a) * .8);
+    m.rotation.set(t * .9 + i, t * .6, 0); m.scale.setScalar(u.s * aShow * (PORT ? .8 : 1) + .0001);
     m.visible = aShow > .01;
   });
   const pk = (t - TT[7] - .2) / .7;
   paper.visible = pk > 0 && t < TT[8] + .3;
   if (paper.visible) {
     const k = eo(pk), fadeOut = 1 - eo((t - TT[8]) / .3);
-    paper.position.set(lerp(px, px + 1.6, k), lerp(0, .2, k) + .06 * Math.sin(t * 2), lerp(.1, .5, k));
-    paper.rotation.set(.1 * k, lerp(0, -.22, k) + .06 * Math.sin(t * 1.3), lerp(0, .08, k));
-    paper.scale.setScalar(Math.max(lerp(.35, 1.12, back(pk)), .001) * fadeOut);
+    if (PORT) paper.position.set(lerp(0, .05, k), lerp(BY, BY + .25, k) + .06 * Math.sin(t * 2), lerp(.1, 1.5, k));
+    else paper.position.set(lerp(px, px + 1.6, k), lerp(0, .2, k) + .06 * Math.sin(t * 2), lerp(.1, .5, k));
+    paper.rotation.set(.1 * k, lerp(0, PORT ? -.15 : -.22, k) + .06 * Math.sin(t * 1.3), lerp(0, PORT ? -.04 : .08, k));
+    paper.scale.setScalar(Math.max(lerp(.35, PORT ? 1.0 : 1.12, back(pk)), .001) * fadeOut);
   }
   cards.forEach((m, i) => {
     const k = back((t - TT[8] - .25 - i * .14) / .45), out = 1 - eo((t - TT[9]) / .35);
     m.visible = k > .01 && out > .01 && t < TT[9] + .5;
     if (!m.visible) return;
-    m.position.set(CARD_POS[i][0], CARD_POS[i][1] + .12 * Math.sin(t * 1.8 + i), lerp(-1.5, .2, clamp(k)));
-    m.rotation.set(-.06 + .04 * Math.sin(t + i), .22 + .05 * Math.sin(t * .9 + i), 0);
-    m.scale.setScalar(Math.max(k * out * .85, .001));
+    m.position.set(CARD_POS[i][0], CARD_POS[i][1] + .1 * Math.sin(t * 1.8 + i), lerp(-1.5, .2, clamp(k)));
+    m.rotation.set(-.06 + .04 * Math.sin(t + i), (PORT ? (i % 2 ? -.12 : .12) : .22) + .05 * Math.sin(t * .9 + i), 0);
+    m.scale.setScalar(Math.max(k * out * CARD_S, .001));
   });
   slabs.forEach((m, i) => {
     const k = back((t - TT[9] - .2 - i * .12) / .5);
     m.visible = k > .01;
-    m.position.set(lerp(7, 3.3, clamp(k)), 1 - i * .7 + .05 * Math.sin(t + i), 0);
-    m.rotation.set(0, -.35, 0); m.scale.setScalar(Math.max(k, .001));
+    if (PORT) { m.position.set(lerp(6, 0, clamp(k)), -.5 - i * .75 + .05 * Math.sin(t + i), 0); m.rotation.set(0, -.18, 0); }
+    else { m.position.set(lerp(7, 3.3, clamp(k)), 1 - i * .7 + .05 * Math.sin(t + i), 0); m.rotation.set(0, -.35, 0); }
+    m.scale.setScalar(Math.max(k, .001));
   });
   renderer.render(scene, camera);
 }

@@ -9,7 +9,8 @@ import fs from 'node:fs';
 import http from 'node:http';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const args = process.argv.slice(2);
+let args = process.argv.slice(2);
+const PORT = args[0] === '--portrait'; if (PORT) args = args.slice(1);
 // serve the parent folder over http (ES modules and fonts are blocked on file://)
 const root = path.resolve(here, '..');
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.woff2': 'font/woff2', '.json': 'application/json' };
@@ -18,9 +19,9 @@ const server = http.createServer((req, res) => {
   if (!f.startsWith(root) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); return res.end(); }
   res.writeHead(200, { 'content-type': types[path.extname(f)] ?? 'application/octet-stream' }); fs.createReadStream(f).pipe(res);
 }).listen(0);
-const url = `http://127.0.0.1:${server.address().port}/guide-casier-3d/index.html?render=1`;
+const url = `http://127.0.0.1:${server.address().port}/guide-casier-3d/index.html?render=1${PORT ? '&portrait=1' : ''}`;
 const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
-const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
+const page = await browser.newPage({ viewport: PORT ? { width: 1080, height: 1920 } : { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
 page.on('pageerror', e => console.error('PAGE ERROR', e.message));
 page.on('console', m => { if (m.type() === 'error') console.error('CONSOLE', m.text()); });
 await page.goto(url);
