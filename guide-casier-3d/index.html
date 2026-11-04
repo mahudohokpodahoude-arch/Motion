@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Guide vidéo 3D · Casier judiciaire instantané</title>
+<style>
+  @font-face { font-family: M; font-weight: 500; src: url(../milmo-zone242/fonts/montserrat-latin-500-normal.woff2); }
+  @font-face { font-family: M; font-weight: 600; src: url(../milmo-zone242/fonts/montserrat-latin-600-normal.woff2); }
+  @font-face { font-family: M; font-weight: 700; src: url(../milmo-zone242/fonts/montserrat-latin-700-normal.woff2); }
+  @font-face { font-family: M; font-weight: 800; src: url(../milmo-zone242/fonts/montserrat-latin-800-normal.woff2); }
+  @font-face { font-family: M; font-weight: 900; src: url(../milmo-zone242/fonts/montserrat-latin-900-normal.woff2); }
+  html, body { margin: 0; background: #fff; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden;
+    background: radial-gradient(1200px 900px at 75% 40%, #FFFFFF 0%, #F3F1E8 55%, #E4EBE2 100%); font-family: M, sans-serif; }
+  #stage canvas { position: absolute; inset: 0; }
+  #cap { position: absolute; left: 130px; top: 0; width: 900px; height: 1080px; display: flex; flex-direction: column; justify-content: center; opacity: 0; color: #14201A; }
+  #kick { font: 700 24px M; letter-spacing: 6px; color: #008751; text-transform: uppercase; margin-bottom: 26px; }
+  #num { width: 104px; height: 104px; border-radius: 52px; background: #008751; color: #fff; font: 900 60px M; display: none; align-items: center; justify-content: center; margin-bottom: 30px; box-shadow: 0 14px 30px rgba(0,135,81,.35); }
+  #ttl { font: 900 84px/1.04 M; margin: 0 0 28px; letter-spacing: -1px; }
+  #sub { font: 500 36px/1.4 M; margin: 0; color: #44514A; }
+  #sub.small { font-size: 26px; line-height: 1.5; color: #5E6A63; }
+  #bar { position: absolute; left: 0; bottom: 0; height: 12px; width: 0; background: linear-gradient(90deg, #008751 0 33.3%, #FCD116 33.3% 66.6%, #E8112D 66.6% 100%); background-size: 1920px 12px; }
+  #dots { position: absolute; left: 130px; bottom: 56px; display: flex; gap: 14px; opacity: 0; }
+  #dots i { width: 56px; height: 10px; border-radius: 5px; background: #C9D2CC; }
+  #dots i.on { background: #008751; }
+</style>
+<script type="importmap">
+{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }
+</script>
+</head>
+<body>
+<div id="stage">
+  <div id="cap"><div id="kick"></div><div id="num"></div><h1 id="ttl"></h1><p id="sub"></p></div>
+  <div id="dots"><i></i><i></i><i></i></div>
+  <div id="bar"></div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const W = 1920, H = 1080, DUR = 44;
+window.DUR = DUR;
+await Promise.all([500,600,700,800,900].map(w => document.fonts.load(`${w} 20px M`)));
+const GREEN = '#008751', YELLOW = '#FCD116', RED = '#E8112D', INK = '#14201A';
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const eo = x => 1 - Math.pow(1 - clamp(x), 3);
+const eio = x => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const back = x => { x = clamp(x); const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const lerp = (a, b, k) => a + (b - a) * k;
+
+// ---------- canvas helpers ----------
+function rr(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+function txt(c, s, x, y, font, color, align = 'left') { c.font = font; c.fillStyle = color; c.textAlign = align; c.textBaseline = 'alphabetic'; c.fillText(s, x, y); }
+
+// ---------- phone screen (540 x 1184) ----------
+const SW = 540, SH = 1184;
+const screenCv = document.createElement('canvas'); screenCv.width = SW; screenCv.height = SH;
+const sc = screenCv.getContext('2d');
+const layer = document.createElement('canvas'); layer.width = SW; layer.height = SH;
+const lc = layer.getContext('2d');
+
+function chrome(c) {
+  c.fillStyle = '#F5F7F3'; c.fillRect(0, 0, SW, SH);
+  c.fillStyle = GREEN; c.fillRect(0, 0, SW, 150);
+  txt(c, '9:41', 40, 52, '700 24px M', '#fff');
+  c.fillStyle = '#fff'; rr(c, SW - 90, 32, 46, 22, 6); c.fill();
+  txt(c, 'service-public.bj', 40, 112, '800 34px M', '#fff');
+  c.fillStyle = YELLOW; c.fillRect(0, 150, SW, 6); c.fillStyle = RED; c.fillRect(SW * .66, 150, SW * .34, 6);
+}
+function cursorAt(pts, lt) {
+  if (lt <= pts[0].t) return { x: pts[0].x, y: pts[0].y };
+  for (let i = 1; i < pts.length; i++) if (lt <= pts[i].t) {
+    const a = pts[i - 1], b = pts[i], k = eio((lt - a.t) / (b.t - a.t));
+    return { x: lerp(a.x, b.x, k), y: lerp(a.y, b.y, k) };
+  }
+  const l = pts[pts.length - 1]; return { x: l.x, y: l.y };
+}
+function drawCursor(c, pts, taps, lt, fadeOutAt = 1e9) {
+  const p = cursorAt(pts, lt);
+  const alpha = clamp((lt - pts[0].t) / .3) * (1 - clamp((lt - fadeOutAt) / .4));
+  if (alpha <= 0) return;
+  for (const tp of taps) {
+    const d = lt - tp;
+    if (d > 0 && d < .7) {
+      c.strokeStyle = `rgba(0,135,81,${(1 - d / .7) * .8 * alpha})`; c.lineWidth = 5;
+      c.beginPath(); c.arc(p.x, p.y, 26 + d * 120, 0, 7); c.stroke();
+    }
+  }
+  let press = 0; for (const tp of taps) { const d = lt - tp; if (d > -.1 && d < .25) press = Math.max(press, 1 - Math.abs(d - .075) / .2); }
+  c.globalAlpha = alpha;
+  c.fillStyle = 'rgba(20,32,26,.28)'; c.beginPath(); c.arc(p.x, p.y, 34 * (1 - .22 * press), 0, 7); c.fill();
+  c.strokeStyle = '#fff'; c.lineWidth = 5; c.stroke();
+  c.globalAlpha = 1;
+}
+function pressAmt(lt, tp) { const d = lt - tp; return d > 0 && d < .25 ? 1 - d / .25 : 0; }
+function button(c, x, y, w, h, label, press, fill = GREEN, color = '#fff') {
+  const s = 1 - .04 * press; c.save(); c.translate(x + w / 2, y + h / 2); c.scale(s, s); c.translate(-w / 2, -h / 2);
+  c.shadowColor = 'rgba(0,0,0,.18)'; c.shadowBlur = 18; c.shadowOffsetY = 8;
+  c.fillStyle = fill; rr(c, 0, 0, w, h, h / 2); c.fill(); c.shadowColor = 'transparent';
+  txt(c, label, w / 2, h / 2 + 11, '800 30px M', color, 'center'); c.restore();
+}
+function skeleton(c, y, a = 1) { c.globalAlpha = a; c.fillStyle = '#E7EBE5'; rr(c, 36, y, SW - 72, 96, 20); c.fill(); c.fillStyle = '#D5DCD3'; rr(c, 64, y + 28, 70, 40, 12); c.fill(); rr(c, 156, y + 30, 210, 14, 7); c.fill(); rr(c, 156, y + 54, 140, 12, 6); c.fill(); c.globalAlpha = 1; }
+
+function screen0(c, lt) {
+  chrome(c);
+  txt(c, 'Vos démarches', 40, 260, '900 44px M', INK); txt(c, 'en ligne, sans', 40, 312, '900 44px M', INK); txt(c, 'déplacement.', 40, 364, '900 44px M', GREEN);
+  const sh = (Math.sin(lt * 2) + 1) / 2;
+  for (let i = 0; i < 4; i++) skeleton(c, 430 + i * 118, .7 + .3 * sh * (i % 2));
+}
+function screen1(c, lt) {
+  chrome(c);
+  txt(c, 'Connexion', 40, 260, '900 50px M', INK);
+  txt(c, 'Identifiez-vous avec votre NPI', 40, 306, '500 24px M', '#5E6A63');
+  txt(c, 'Numéro personnel d’identification', 40, 392, '700 22px M', '#44514A');
+  const foc = lt > 1.0;
+  c.fillStyle = '#fff'; rr(c, 36, 410, SW - 72, 96, 18); c.fill();
+  c.strokeStyle = foc ? GREEN : '#CFD6CC'; c.lineWidth = foc ? 4 : 2; c.stroke();
+  const digits = '1234567890'; const n = Math.floor(clamp((lt - 1.6) / 3.2) * digits.length);
+  let s = ''; for (let i = 0; i < n; i++) s += digits[i] + (i % 3 === 2 && i < 9 ? ' ' : '');
+  txt(c, s, 64, 472, '700 38px M', INK);
+  if (foc && Math.floor(lt * 2.4) % 2 === 0 && lt < 5.5) { const w = c.measureText(s).width; c.fillStyle = GREEN; c.fillRect(66 + w, 436, 3, 44); }
+  txt(c, 'Vos données sont vérifiées par l’administration.', 40, 548, '500 20px M', '#7A857E');
+  button(c, 36, 600, SW - 72, 104, 'Se connecter', pressAmt(lt, 6.3));
+  drawCursor(c, [{ t: 0, x: 440, y: 900 }, { t: 1.0, x: 300, y: 470 }, { t: 5.4, x: 300, y: 470 }, { t: 6.3, x: 300, y: 652 }], [1.0, 6.3], lt, 7.2);
+}
+function screen2(c, lt) {
+  chrome(c);
+  txt(c, 'Services', 40, 260, '900 50px M', INK);
+  const rows = [skeleton, null, skeleton, skeleton];
+  const ys = [300, 410, 600, 706];
+  for (let i = 0; i < 4; i++) {
+    const a = eo((lt - .3 - i * .18) / .5), off = (1 - a) * 60;
+    c.save(); c.globalAlpha = a; c.translate(off, 0);
+    if (rows[i]) rows[i](c, ys[i], 1);
+    else {
+      const pulse = lt > 3 && lt < 5.6 ? (Math.sin((lt - 3) * 6) + 1) / 2 : 0;
+      const prs = pressAmt(lt, 5.6);
+      c.save(); c.translate(SW / 2, ys[i] + 85); c.scale(1 - .03 * prs, 1 - .03 * prs); c.translate(-SW / 2, -ys[i] - 85);
+      c.shadowColor = `rgba(0,135,81,${.25 + .35 * pulse})`; c.shadowBlur = 26 + 20 * pulse; c.shadowOffsetY = 10;
+      c.fillStyle = '#fff'; rr(c, 30, ys[i], SW - 60, 170, 26); c.fill(); c.shadowColor = 'transparent';
+      c.strokeStyle = GREEN; c.lineWidth = 4; c.stroke();
+      c.fillStyle = GREEN; c.beginPath(); c.arc(98, ys[i] + 85, 40, 0, 7); c.fill();
+      c.strokeStyle = '#fff'; c.lineWidth = 7; c.lineCap = 'round'; c.lineJoin = 'round';
+      c.beginPath(); c.moveTo(80, ys[i] + 86); c.lineTo(94, ys[i] + 100); c.lineTo(120, ys[i] + 70); c.stroke();
+      txt(c, 'Casier judiciaire', 160, ys[i] + 76, '800 30px M', INK);
+      txt(c, 'en instantané', 160, ys[i] + 116, '800 30px M', GREEN);
+      c.fillStyle = YELLOW; rr(c, SW - 170, ys[i] + 16, 112, 34, 17); c.fill(); txt(c, 'NOUVEAU', SW - 114, ys[i] + 40, '800 17px M', INK, 'center');
+      c.restore();
+    }
+    c.restore();
+  }
+  drawCursor(c, [{ t: 0, x: 440, y: 1000 }, { t: 3.2, x: 440, y: 900 }, { t: 5.6, x: 330, y: 500 }], [5.6], lt, 6.4);
+}
+function screen3(c, lt) {
+  chrome(c);
+  const A = 1 - eo((lt - 4.3) / .4);
+  if (A > .001) {
+    c.save(); c.globalAlpha = A;
+    txt(c, 'Récapitulatif', 40, 260, '900 50px M', INK);
+    txt(c, 'Casier judiciaire en instantané', 40, 304, '600 23px M', '#5E6A63');
+    const rows = [['Pièces à fournir', 'Aucune', INK], ['Frais', '1 900 F CFA', GREEN], ['Délivrance', 'Instantanée', INK]];
+    rows.forEach((r, i) => {
+      const a = eo((lt - .5 - i * .55) / .5), y = 350 + i * 118;
+      c.save(); c.globalAlpha = A * a; c.translate((1 - a) * 50, 0);
+      c.fillStyle = '#fff'; rr(c, 36, y, SW - 72, 98, 22); c.fill();
+      txt(c, r[0], 66, y + 40, '600 21px M', '#7A857E'); txt(c, r[1], 66, y + 78, '800 33px M', r[2]);
+      c.restore();
+    });
+    button(c, 36, 750, SW - 72, 108, 'Valider la demande', pressAmt(lt, 3.8));
+    drawCursor(c, [{ t: 0, x: 460, y: 1000 }, { t: 3.0, x: 300, y: 810 }, { t: 3.8, x: 300, y: 806 }], [3.8], lt, 4.3);
+    c.restore();
+  }
+  const B = eo((lt - 4.5) / .5);
+  if (B > .001) {
+    c.save(); c.globalAlpha = B;
+    const cy = 440, r = 100 * back((lt - 4.6) / .6);
+    c.fillStyle = GREEN; c.beginPath(); c.arc(SW / 2, cy, Math.max(r, 0), 0, 7); c.fill();
+    const k = eo((lt - 5.0) / .5);
+    c.strokeStyle = '#fff'; c.lineWidth = 16; c.lineCap = 'round'; c.lineJoin = 'round'; c.beginPath();
+    const p0 = [SW / 2 - 44, cy + 4], p1 = [SW / 2 - 12, cy + 38], p2 = [SW / 2 + 48, cy - 30];
+    c.moveTo(...p0);
+    if (k < .4) { const q = k / .4; c.lineTo(lerp(p0[0], p1[0], q), lerp(p0[1], p1[1], q)); }
+    else { c.lineTo(...p1); const q = (k - .4) / .6; c.lineTo(lerp(p1[0], p2[0], q), lerp(p1[1], p2[1], q)); }
+    c.stroke();
+    txt(c, 'Bulletin délivré', SW / 2, 650, '900 44px M', INK, 'center');
+    txt(c, 'Téléchargeable immédiatement', SW / 2, 698, '500 24px M', '#5E6A63', 'center');
+    const pulse = lt > 6.4 ? (Math.sin((lt - 6.4) * 5) + 1) / 2 : 0;
+    button(c, 60, 760, SW - 120, 104, 'Télécharger', 0, GREEN);
+    c.strokeStyle = `rgba(252,209,22,${pulse})`; c.lineWidth = 8; rr(c, 52, 752, SW - 104, 120, 60); c.stroke();
+    c.restore();
+  }
+}
+const SCREENS = [screen0, screen1, screen2, screen3], BOUNDS = [0, 5, 13, 21];
+function drawScreen(t) {
+  let idx = 0; for (let i = 0; i < BOUNDS.length; i++) if (t >= BOUNDS[i]) idx = i;
+  const tr = idx > 0 ? eio((t - BOUNDS[idx]) / .6) : 1;
+  sc.fillStyle = '#000'; sc.fillRect(0, 0, SW, SH);
+  sc.save(); rr(sc, 0, 0, SW, SH, 44); sc.clip();
+  if (tr < 1) {
+    lc.save(); SCREENS[idx - 1](lc, t - BOUNDS[idx - 1] > 7.9 ? 7.9 : t - BOUNDS[idx - 1]); lc.restore();
+    sc.drawImage(layer, -SW * .35 * tr, 0); sc.fillStyle = `rgba(0,0,0,${.25 * tr})`; sc.fillRect(0, 0, SW, SH);
+  }
+  sc.save(); sc.translate(SW * (1 - tr), 0);
+  if (tr < 1) { sc.shadowColor = 'rgba(0,0,0,.3)'; sc.shadowBlur = 40; }
+  SCREENS[idx](sc, t - BOUNDS[idx]); sc.restore();
+  sc.restore();
+}
+
+// ---------- 3D ----------
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H); renderer.setClearColor(0x000000, 0);
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.getElementById('stage').prepend(renderer.domElement);
+const scene = new THREE.Scene();
+const pm = new THREE.PMREMGenerator(renderer);
+scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture;
+const camera = new THREE.PerspectiveCamera(30, W / H, .1, 100);
+const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(-3, 5, 6); sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -6; sun.shadow.camera.right = 6; sun.shadow.camera.top = 5; sun.shadow.camera.bottom = -5; sun.shadow.bias = -0.0004;
+scene.add(sun);
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(40, 20), new THREE.ShadowMaterial({ opacity: .16 }));
+floor.position.z = -.9; floor.receiveShadow = true; scene.add(floor);
+
+// phone
+const PW = 1.72, PH = 3.64, PR = .3, PD = .13;
+const shape = new THREE.Shape();
+shape.moveTo(-PW / 2 + PR, -PH / 2); shape.lineTo(PW / 2 - PR, -PH / 2); shape.absarc(PW / 2 - PR, -PH / 2 + PR, PR, -Math.PI / 2, 0);
+shape.lineTo(PW / 2, PH / 2 - PR); shape.absarc(PW / 2 - PR, PH / 2 - PR, PR, 0, Math.PI / 2);
+shape.lineTo(-PW / 2 + PR, PH / 2); shape.absarc(-PW / 2 + PR, PH / 2 - PR, PR, Math.PI / 2, Math.PI);
+shape.lineTo(-PW / 2, -PH / 2 + PR); shape.absarc(-PW / 2 + PR, -PH / 2 + PR, PR, Math.PI, Math.PI * 1.5);
+const bodyGeo = new THREE.ExtrudeGeometry(shape, { depth: PD, bevelEnabled: true, bevelThickness: .035, bevelSize: .035, bevelSegments: 6, curveSegments: 24 });
+bodyGeo.translate(0, 0, -PD / 2);
+const phone = new THREE.Group(); scene.add(phone);
+const body = new THREE.Mesh(bodyGeo, new THREE.MeshStandardMaterial({ color: 0x1b2420, metalness: .85, roughness: .28 }));
+body.castShadow = true; phone.add(body);
+const scrTex = new THREE.CanvasTexture(screenCv); scrTex.colorSpace = THREE.SRGBColorSpace; scrTex.anisotropy = 8;
+const SCW = 1.58, SCH = SCW * SH / SW;
+const scr = new THREE.Mesh(new THREE.PlaneGeometry(SCW, SCH), new THREE.MeshBasicMaterial({ map: scrTex, toneMapped: false }));
+scr.position.z = PD / 2 + .037; phone.add(scr);
+const glass = new THREE.Mesh(new THREE.PlaneGeometry(SCW, SCH), new THREE.MeshPhysicalMaterial({ transparent: true, opacity: .06, roughness: .05, metalness: 0, clearcoat: 1 }));
+glass.position.z = PD / 2 + .04; phone.add(glass);
+
+// floating accent shapes (flag colours)
+const accents = [];
+const cols = [0x008751, 0xFCD116, 0xE8112D];
+for (let i = 0; i < 9; i++) {
+  const g = i % 3 === 0 ? new THREE.SphereGeometry(.16, 32, 32) : i % 3 === 1 ? new THREE.TorusGeometry(.17, .055, 20, 40) : new THREE.IcosahedronGeometry(.17, 0);
+  const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: cols[i % 3], metalness: .15, roughness: .35 })); m.castShadow = true;
+  const a = i / 9 * Math.PI * 2;
+  m.userData = { a, r: 2.4 + (i % 3) * .5, y: Math.sin(a * 2) * 1.6, z: -.4 + (i % 4) * .35, s: .8 + (i % 3) * .3 };
+  scene.add(m); accents.push(m);
+}
+
+// bulletin (paper) texture
+function paperTex() {
+  const cv = document.createElement('canvas'); cv.width = 600; cv.height = 850; const c = cv.getContext('2d');
+  c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, 600, 850);
+  c.fillStyle = GREEN; c.fillRect(0, 0, 200, 14); c.fillStyle = YELLOW; c.fillRect(200, 0, 200, 14); c.fillStyle = RED; c.fillRect(400, 0, 200, 14);
+  txt(c, 'BULLETIN DU', 50, 100, '700 24px M', '#5E6A63'); txt(c, 'CASIER JUDICIAIRE', 50, 146, '900 40px M', INK);
+  c.fillStyle = '#E3E8E1'; for (let i = 0; i < 9; i++) { rr(c, 50, 210 + i * 44, i % 3 === 2 ? 300 : 500, 18, 9); c.fill(); }
+  c.strokeStyle = GREEN; c.lineWidth = 8; c.beginPath(); c.arc(480, 700, 66, 0, 7); c.stroke();
+  c.lineWidth = 10; c.lineCap = 'round'; c.lineJoin = 'round'; c.beginPath(); c.moveTo(450, 702); c.lineTo(473, 728); c.lineTo(514, 672); c.stroke();
+  txt(c, 'Authenticité', 50, 700, '800 30px M', INK); txt(c, 'vérifiable', 50, 740, '800 30px M', GREEN);
+  const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
+}
+const paper = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.7, .02), new THREE.MeshStandardMaterial({ map: paperTex(), roughness: .6, metalness: 0 }));
+paper.castShadow = true; paper.visible = false; scene.add(paper);
+
+// recap cards
+function cardTex(label, value, color) {
+  const cv = document.createElement('canvas'); cv.width = 760; cv.height = 400; const c = cv.getContext('2d');
+  c.fillStyle = '#fff'; rr(c, 0, 0, 760, 400, 44); c.fill();
+  c.fillStyle = color; rr(c, 0, 0, 760, 26, 0); c.save(); rr(c, 0, 0, 760, 400, 44); c.clip(); c.fillRect(0, 0, 760, 26); c.restore();
+  txt(c, label.toUpperCase(), 52, 130, '700 30px M', '#7A857E');
+  const fs = value.length > 12 ? 62 : 78; txt(c, value, 52, 250, `900 ${fs}px M`, color === YELLOW ? INK : color);
+  const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
+}
+const CARDS = [['Accès', 'service-public.bj', GREEN], ['Pièces à fournir', 'Aucune', GREEN], ['Frais', '1 900 F CFA', '#C9A100'], ['Délivrance', 'Instantanée', RED]];
+const cards = CARDS.map(([l, v, col], i) => {
+  const m = new THREE.Mesh(new THREE.BoxGeometry(2.1, 1.1, .05), (tx => new THREE.MeshStandardMaterial({ map: tx, emissiveMap: tx, emissive: 0xffffff, emissiveIntensity: .5, roughness: .5 }))(cardTex(l, v, col)));
+  m.castShadow = true; m.visible = false; scene.add(m); return m;
+});
+const CARD_POS = [[1.45, 1.0], [3.5, 1.0], [1.45, -.45], [3.5, -.45]];
+
+// outro flag slabs
+const slabs = cols.map((c, i) => { const m = new THREE.Mesh(new THREE.BoxGeometry(2.6, .5, .12), new THREE.MeshStandardMaterial({ color: c, roughness: .4 })); m.castShadow = true; m.visible = false; scene.add(m); return m; });
+
+// ---------- captions ----------
+const CAPS = [
+  { a: 0, b: 5, kick: 'Guide vidéo · non officiel', ttl: 'Casier judiciaire<br><span style="color:#008751">instantané</span>', sub: 'Obtenez votre bulletin en 3 clics sur service-public.bj' },
+  { a: 5, b: 13, step: 1, kick: 'Étape 1', ttl: 'Connectez-vous', sub: 'Rendez-vous sur <b>service-public.bj</b> et identifiez-vous avec votre <b>NPI</b>, votre numéro personnel d’identification.' },
+  { a: 13, b: 21, step: 2, kick: 'Étape 2', ttl: 'Choisissez<br>le service', sub: 'Sélectionnez <b>« Casier judiciaire en instantané »</b>.' },
+  { a: 21, b: 29, step: 3, kick: 'Étape 3', ttl: 'Validez<br>la demande', sub: 'Le bulletin est <b>délivré automatiquement</b> et téléchargeable immédiatement.' },
+  { a: 29, b: 38, kick: 'En pratique', ttl: 'Aucune pièce.<br>Aucun déplacement.', sub: 'Même depuis l’étranger : la démarche se fait entièrement en ligne, depuis un téléphone.', right: true },
+  { a: 38, b: 44, kick: 'Dites-le nous une fois', ttl: 'L’administration<br>vérifie pour vous.', sub: 'Source : communiqué de presse du Ministère de la Justice et de la Législation (Bénin), 2 novembre 2026.<br>Illustration schématique : l’interface réelle peut différer. Vidéo non officielle.', small: true },
+];
+const el = id => document.getElementById(id);
+let capIdx = -1;
+function setCaption(t) {
+  let i = CAPS.findIndex(c => t >= c.a && t < c.b); if (i < 0) i = CAPS.length - 1;
+  const cp = CAPS[i];
+  if (i !== capIdx) {
+    capIdx = i;
+    el('kick').textContent = cp.kick; el('ttl').innerHTML = cp.ttl; el('sub').innerHTML = cp.sub;
+    el('sub').className = cp.small ? 'small' : '';
+    const n = el('num'); n.style.display = cp.step ? 'flex' : 'none'; n.textContent = cp.step || '';
+    document.querySelectorAll('#dots i').forEach((d, k) => d.classList.toggle('on', cp.step ? k < cp.step : false));
+    el('dots').style.display = cp.step ? 'flex' : 'none';
+  }
+  const lt = t - cp.a, last = i === CAPS.length - 1;
+  const inn = eo(lt / .6), out = last ? 0 : eo((cp.b - t) / .4);
+  const o = Math.min(inn, last ? 1 : 1 - (1 - out));
+  el('cap').style.opacity = last ? inn : Math.min(inn, out);
+  el('cap').style.transform = `translateX(${(1 - inn) * -50}px)`;
+  el('dots').style.opacity = cp.step ? Math.min(inn, out) : 0;
+  el('bar').style.width = (t / DUR * 1920) + 'px';
+}
+
+// ---------- timeline ----------
+function render(t) {
+  drawScreen(t); scrTex.needsUpdate = true;
+  setCaption(t);
+  const step = t >= 5 && t < 29;
+  // phone entrance + pose
+  const ent = back(t / 1.5);
+  let px = 1.95, py = lerp(-3.2, 0, eo(t / 1.3)), ps = lerp(.55, 1, ent);
+  let ry = lerp(1.3, -.28, eio(t / 1.8)) + .09 * Math.sin(t * .8), rx = .05 * Math.sin(t * .6) - .04;
+  let camZ = 9, camX = 0;
+  if (t >= 4.4) { const k = eio((t - 4.4) / 1.2); camZ = lerp(9, 8.1, k); px = lerp(1.95, 1.75, k); ry = lerp(ry, -.2 + .06 * Math.sin(t * .8), k); }
+  // step-specific nudges (look at the tapped area)
+  if (t >= 11 && t < 13.6) { const k = Math.sin(clamp((t - 11) / 2.6) * Math.PI); ry -= .12 * k; }
+  if (t >= 18 && t < 20.6) { const k = Math.sin(clamp((t - 18) / 2.6) * Math.PI); ry -= .12 * k; }
+  if (t >= 24 && t < 26.6) { const k = Math.sin(clamp((t - 24) / 2.6) * Math.PI); ry -= .12 * k; }
+  // step 3: phone shifts left to make room for the bulletin
+  if (t >= 26.2 && t < 29) { px = lerp(px, 1.15, eio((t - 26.2) / 1.0)); }
+  // recap: phone leaves to the right
+  let pvis = 1;
+  if (t >= 29) {
+    const k = eio((t - 29) / 1.0);
+    camZ = lerp(8.1, 10, eio((t - 29) / 1.4)); px = lerp(1.15, 6.5, k); ps *= 1 - .3 * k; ry = lerp(ry, -.7, k); pvis = 1 - k;
+  }
+  phone.position.set(px, py, 0); phone.scale.setScalar(Math.max(ps, .001)); phone.rotation.set(rx, ry, 0);
+  phone.visible = pvis > .01;
+  camera.position.set(camX, 0, camZ); camera.lookAt(camX, 0, 0);
+  // accents orbit (fade out in outro)
+  const aShow = eo(t / 1.5) * (1 - eo((t - 37.6) / .8));
+  accents.forEach((m, i) => {
+    const u = m.userData, a = u.a + t * .18;
+    m.position.set(px + Math.cos(a) * u.r * .9 - .2, u.y + Math.sin(t * .7 + i) * .2, u.z - 1.0 + Math.sin(a) * .8);
+    m.rotation.set(t * .6 + i, t * .4, 0); m.scale.setScalar(u.s * aShow + .0001);
+    m.visible = aShow > .01;
+  });
+  // bulletin paper
+  const pk = (t - 26.2) / 1.5;
+  paper.visible = pk > 0 && t < 29.7;
+  if (paper.visible) {
+    const k = eo(pk), fadeOut = 1 - eo((t - 29) / .6);
+    paper.position.set(lerp(px, px + 1.55, k), lerp(0, .2, k) + .06 * Math.sin(t * 2), lerp(.1, .5, k));
+    paper.rotation.set(.1 * k, lerp(0, -.4, k) + .1 * Math.sin(t * 1.3), lerp(0, .08, k));
+    paper.scale.setScalar(Math.max(lerp(.35, 1, back(pk)), .001) * fadeOut);
+  }
+  // recap cards
+  cards.forEach((m, i) => {
+    const k = back((t - 29.9 - i * .28) / .7), out = 1 - eo((t - 37.6) / .7);
+    m.visible = k > .01 && out > .01 && t < 38.5;
+    if (!m.visible) return;
+    m.position.set(CARD_POS[i][0], CARD_POS[i][1] + .12 * Math.sin(t * 1.4 + i), lerp(-1.5, .2, clamp(k)));
+    m.rotation.set(-.06 + .04 * Math.sin(t + i), .22 + .05 * Math.sin(t * .9 + i), 0);
+    m.scale.setScalar(Math.max(k * out * .85, .001));
+  });
+  // outro slabs
+  slabs.forEach((m, i) => {
+    const k = back((t - 38.3 - i * .18) / .7);
+    m.visible = k > .01;
+    m.position.set(lerp(7, 3.3, clamp(k)), 1 - i * .7 + .05 * Math.sin(t + i), 0);
+    m.rotation.set(0, -.35, 0); m.scale.setScalar(Math.max(k, .001));
+  });
+  renderer.render(scene, camera);
+}
+window.render = render;
+window.ready = Promise.resolve().then(() => { render(0); });
+if (!new URLSearchParams(location.search).has('render')) {
+  window.ready.then(() => { const t0 = performance.now(); (function loop() { render(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); })(); });
+}
+</script>
+</body>
+</html>
