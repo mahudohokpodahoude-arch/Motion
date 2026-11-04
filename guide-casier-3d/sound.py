@@ -3,7 +3,7 @@ Usage : python3 sound.py sound.wav   (numpy uniquement)"""
 import sys, wave
 import numpy as np
 
-SR, DUR = 44100, 44.0
+SR, DUR = 44100, 68.0
 N = int(SR * DUR)
 L = np.zeros(N); R = np.zeros(N)
 
@@ -45,32 +45,32 @@ for bar in range(int(DUR / 2)):
 # pouls léger (120 BPM)
 for b in range(int(DUR * 2)):
     t = b * .5
-    if t >= 1.0 and t < 41:
+    if t >= 1.0 and t < 62:
         add(tone(60, .22, .002, .2, (1, .5)), t, 0, .16 if b % 2 == 0 else .08)
 # whooshes de transition
-for t in (5.0, 13.0, 21.0, 29.0, 38.0):
+for t in (5.0, 12.0, 19.0, 26.0, 35.0, 41.0, 49.0, 55.0, 62.0):
     add(noise_sweep(.9, 300, 5000), t - .2, 0, .35)
 # titre : arpège d'ouverture
 for k, f in enumerate((523.3, 659.3, 784, 1046.5)):
     add(tone(f, .6, .01, .5, (1, .2)), .4 + k * .13, -.2 + k * .15, .12)
-# clics (taps) : NPI, bouton connexion, service, valider
-for t in (6.0, 11.3, 18.6, 24.8):
+# clics (taps) calés sur les gestes du curseur
+for t in (8.0, 15.5, 21.3, 24.0, 27.2, 31.2, 33.4, 42.5, 47.6):
     click(t)
-# frappe NPI
-for i in range(10):
-    add(tone(880 + (i % 3) * 60, .04, .001, .035, (1,)), 6.6 + i * .32, .1, .08)
-# succès : carillon montant
+# frappe du code OTP
+for i in range(5):
+    add(tone(880 + (i % 3) * 60, .04, .001, .035, (1,)), 27.8 + i * .22, .1, .08)
+# succès : carillon montant (bulletin délivré)
 for k, f in enumerate((659.3, 784, 987.8, 1318.5)):
-    add(tone(f, .9, .01, .8, (1, .3, .1)), 25.4 + k * .09, 0, .16)
+    add(tone(f, .9, .01, .8, (1, .3, .1)), 49.6 + k * .09, 0, .16)
 # apparition du bulletin
-add(noise_sweep(.5, 800, 7000), 26.0, 0.2, .28)
-add(tone(1568, .7, .005, .6, (1, .25)), 26.5, .2, .12)
+add(noise_sweep(.5, 800, 7000), 50.2, 0.2, .28)
+add(tone(1568, .7, .005, .6, (1, .25)), 50.9, .2, .12)
 # cartes récap
 for i in range(4):
-    add(tone(523.3 * (1.2 ** i), .35, .003, .3, (1, .35)), 29.9 + i * .28, -.3 + .2 * i, .14)
+    add(tone(523.3 * (1.2 ** i), .35, .003, .3, (1, .35)), 55.9 + i * .28, -.3 + .2 * i, .14)
 # final : accord ouvert
 for f in (261.6, 392, 523.3, 784):
-    add(tone(f, 4.5, .1, 3.0, (1, .3, .1)), 38.4, 0, .11)
+    add(tone(f, 5.5, .1, 3.5, (1, .3, .1)), 62.4, 0, .11)
 
 # master : normalisation douce + fondu de sortie
 out = np.stack([L, R], 1)

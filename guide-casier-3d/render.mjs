@@ -24,6 +24,7 @@ const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, de
 page.on('pageerror', e => console.error('PAGE ERROR', e.message));
 page.on('console', m => { if (m.type() === 'error') console.error('CONSOLE', m.text()); });
 await page.goto(url);
+await page.waitForFunction(() => window.ready, null, { timeout: 60000 });
 await page.evaluate(() => window.ready);
 const shot = () => page.locator('#stage').screenshot({ type: 'png' });
 
