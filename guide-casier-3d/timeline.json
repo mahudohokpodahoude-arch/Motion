@@ -1,0 +1,71 @@
+{
+ "BPM": 128,
+ "beats": [
+  0,
+  7,
+  12,
+  17,
+  21,
+  26,
+  30,
+  36,
+  42,
+  48,
+  58
+ ],
+ "TT": [
+  0.0,
+  3.28125,
+  5.625,
+  7.96875,
+  9.84375,
+  12.1875,
+  14.0625,
+  16.875,
+  19.6875,
+  22.5,
+  27.1875
+ ],
+ "lines": [
+  {
+   "voice": "F",
+   "text": "Votre casier judiciaire, en ligne, instantanément !"
+  },
+  {
+   "voice": "F",
+   "text": "Rendez-vous sur service-public point B J."
+  },
+  {
+   "voice": "F",
+   "text": "Choisissez la délivrance du casier judiciaire."
+  },
+  {
+   "voice": "F",
+   "text": "Indiquez votre profil."
+  },
+  {
+   "voice": "F",
+   "text": "Saisissez le code reçu par e-mail."
+  },
+  {
+   "voice": "F",
+   "text": "Vérifiez vos informations."
+  },
+  {
+   "voice": "F",
+   "text": "Payez mille neuf cents francs C F A."
+  },
+  {
+   "voice": "F",
+   "text": "Et voilà : votre bulletin, tout de suite !"
+  },
+  {
+   "voice": "M",
+   "text": "Aucune pièce. Aucun déplacement."
+  },
+  {
+   "voice": "M",
+   "text": "Dites-le nous une fois."
+  }
+ ]
+}

@@ -38,7 +38,10 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-const W = 1920, H = 1080, DUR = 68;
+const W = 1920, H = 1080;
+const TL = await (await fetch('timeline.json')).json();   // calé sur la voix off (voice/make_voice.py)
+const TT = TL.TT;                          // titre, 7 étapes, récap, outro, fin
+const DUR = TT[10];
 window.DUR = DUR;
 await Promise.all([500,600,700,800,900].map(w => document.fonts.load(`${w} 20px M`)));
 const GREEN = '#008751', YELLOW = '#FCD116', RED = '#E8112D', INK = '#14201A';
@@ -92,40 +95,42 @@ function img(c, name, dy = 0) { c.drawImage(IMG[name], 0, dy); }
 
 // coordonnées en pixels de la capture rognée (720 x 1465)
 const SCREENS = [
-  { b: 0,  f: (c, lt) => img(c, '01_accueil') },
-  { b: 5,  f: (c, lt) => { img(c, '01_accueil'); glow(c, 48, 1209, 624, 98, lt, 1.6, 3.6, 49);
+  { b: TT[0], old: 5, f: (c, lt) => img(c, '01_accueil') },
+  { b: TT[1], old: 7, f: (c, lt) => { img(c, '01_accueil'); glow(c, 48, 1209, 624, 98, lt, 1.6, 3.6, 49);
       drawCursor(c, [{ t: 0, x: 600, y: 1380 }, { t: 2.6, x: 330, y: 1262 }, { t: 3.0, x: 330, y: 1262 }], [3.0], lt, 4.0); } },
-  { b: 12, f: (c, lt) => { img(c, '02_service'); glow(c, 66, 691, 437, 80, lt, 1.6, 3.5, 40);
+  { b: TT[2], old: 7, f: (c, lt) => { img(c, '02_service'); glow(c, 66, 691, 437, 80, lt, 1.6, 3.5, 40);
       drawCursor(c, [{ t: 0, x: 620, y: 1100 }, { t: 3.0, x: 280, y: 735 }, { t: 3.5, x: 280, y: 735 }], [3.5], lt, 4.5); } },
-  { b: 19, f: (c, lt) => { img(c, '03_profil');
+  { b: TT[3], old: 7, f: (c, lt) => { img(c, '03_profil');
       if (lt > 2.3) { c.fillStyle = '#1B4F8A'; c.beginPath(); c.arc(115, 655, 14, 0, 7); c.fill(); c.strokeStyle = '#1B4F8A'; c.lineWidth = 6; rr(c, 63, 584, 594, 140, 18); c.stroke(); }
       glow(c, 63, 584, 594, 140, lt, .6, 2.3, 18); glow(c, 72, 1303, 530, 96, lt, 3.6, 5.0, 48);
       drawCursor(c, [{ t: 0, x: 620, y: 900 }, { t: 1.8, x: 115, y: 655 }, { t: 2.3, x: 115, y: 655 }, { t: 4.8, x: 340, y: 1352 }, { t: 5.0, x: 340, y: 1352 }], [2.3, 5.0], lt, 6.0); } },
-  { b: 26, f: (c, lt) => {
+  { b: TT[4], old: 9, f: (c, lt) => {
       img(c, '04_otp_vide');
       const A = eo((lt - 3.0) / .5); if (A > 0) { c.globalAlpha = A; img(c, '05_otp_saisi'); c.globalAlpha = 1; }
       glow(c, 63, 567, 594, 94, lt, .5, 1.5, 18);
       if (lt > 5.3) glow(c, 63, 1235, 594, 96, lt, 5.6, 7.2, 48);
       drawCursor(c, [{ t: 0, x: 620, y: 900 }, { t: 1.2, x: 300, y: 565 }, { t: 3.8, x: 300, y: 565 }, { t: 5.2, x: 340, y: 745 }, { t: 7.2, x: 340, y: 1270 }, { t: 7.4, x: 340, y: 1270 }], [1.2, 5.2, 7.4], lt, 8.3); } },
-  { b: 35, f: (c, lt) => { img(c, '06_informations');
+  { b: TT[5], old: 6, f: (c, lt) => { img(c, '06_informations');
       glow(c, 63, 903, 594, 94, lt, 1.0, 5.4, 16); glow(c, 63, 1108, 594, 94, lt, 1.6, 5.4, 16); glow(c, 63, 1312, 594, 94, lt, 2.2, 5.4, 16); } },
-  { b: 41, f: (c, lt) => { img(c, '07_paiement');
+  { b: TT[6], old: 8, f: (c, lt) => { img(c, '07_paiement');
       glow(c, 63, 698, 594, 94, lt, .5, 3.0, 18); glow(c, 63, 975, 290, 94, lt, 3.4, 6.0, 18); glow(c, 378, 975, 280, 94, lt, 3.4, 6.0, 18);
       drawCursor(c, [{ t: 0, x: 620, y: 900 }, { t: 1.5, x: 300, y: 745 }, { t: 5.6, x: 300, y: 745 }, { t: 6.4, x: 350, y: 1175 }, { t: 6.6, x: 350, y: 1175 }], [1.5, 6.6], lt, 7.5); } },
 ];
 const BOUNDS = SCREENS.map(s => s.b);
+const durOf = i => (i + 1 < SCREENS.length ? SCREENS[i + 1].b : TT[7]) - SCREENS[i].b;
+const kOf = i => SCREENS[i].old / durOf(i);                 // compresse le temps local des gestes
 function drawScreen(t) {
   let idx = 0; for (let i = 0; i < BOUNDS.length; i++) if (t >= BOUNDS[i]) idx = i;
-  const tr = idx > 0 ? eio((t - BOUNDS[idx]) / .6) : 1;
+  const tr = idx > 0 ? eio((t - BOUNDS[idx]) / .28) : 1;
   sc.fillStyle = '#000'; sc.fillRect(0, 0, SW, SH);
   sc.save(); rr(sc, 0, 0, SW, SH, 58); sc.clip();
   if (tr < 1) {
-    lc.save(); SCREENS[idx - 1].f(lc, Math.min(t - BOUNDS[idx - 1], 12)); lc.restore();
+    lc.save(); SCREENS[idx - 1].f(lc, Math.min(t - BOUNDS[idx - 1], durOf(idx - 1)) * kOf(idx - 1)); lc.restore();
     sc.drawImage(layer, -SW * .35 * tr, 0); sc.fillStyle = `rgba(0,0,0,${.25 * tr})`; sc.fillRect(0, 0, SW, SH);
   }
   sc.save(); sc.translate(SW * (1 - tr), 0);
   if (tr < 1) { sc.shadowColor = 'rgba(0,0,0,.3)'; sc.shadowBlur = 40; }
-  SCREENS[idx].f(sc, t - BOUNDS[idx]); sc.restore();
+  SCREENS[idx].f(sc, (t - BOUNDS[idx]) * kOf(idx)); sc.restore();
   sc.restore();
 }
 
@@ -236,16 +241,16 @@ const slabs = cols.map((c, i) => { const m = new THREE.Mesh(new THREE.BoxGeometr
 
 // ---------- captions ----------
 const CAPS = [
-  { a: 0, b: 5, kick: 'Guide vidéo · non officiel', ttl: 'Casier judiciaire<br><span style="color:#008751">en ligne</span>', sub: 'Le parcours pas à pas sur service-public.bj.<br>Depuis le 1<sup>er</sup> novembre 2026, le bulletin est délivré instantanément.' },
-  { a: 5, b: 12, step: 1, kick: 'Étape 1', ttl: 'Ouvrez le site', sub: 'Rendez-vous sur <b>service-public.bj</b>, depuis un téléphone ou un ordinateur, et cherchez un service avec <b>« Trouver un service »</b>.' },
-  { a: 12, b: 19, step: 2, kick: 'Étape 2', ttl: 'Choisissez<br>le service', sub: 'Sélectionnez <b>« Délivrance du Casier judiciaire (Extrait B3) »</b>, puis appuyez sur <b>« Faire une demande »</b>.' },
-  { a: 19, b: 26, step: 3, kick: 'Étape 3', ttl: 'Indiquez<br>votre profil', sub: 'Choisissez le profil demandeur qui vous correspond : nationalité béninoise (né au Bénin ou à l’étranger) ou étrangère (avec ou sans NPI). Puis <b>« Soumettre »</b>.' },
-  { a: 26, b: 35, step: 4, kick: 'Étape 4', ttl: 'Saisissez<br>le code OTP', sub: 'Un code de vérification est envoyé par e-mail. Saisissez-le, appuyez sur <b>« Soumettre »</b>, puis sur <b>« Continuer »</b>.' },
-  { a: 35, b: 41, step: 5, kick: 'Étape 5', ttl: 'Vérifiez vos<br>informations', sub: 'Votre <b>NPI</b>, votre e-mail et votre nationalité sont déjà renseignés : l’administration les connaît. C’est le principe <b>« Dites-le nous une fois »</b>.' },
-  { a: 41, b: 49, step: 6, kick: 'Étape 6', ttl: 'Payez<br>les frais', sub: 'Indiquez votre <b>profession</b>, choisissez votre solution de paiement (<b>Fedapay</b> ou <b>Kkiapay</b>) pour régler <b>1 900 F CFA</b>, puis <b>« Soumettre »</b>.' },
-  { a: 49, b: 55, step: 7, kick: 'Étape 7', ttl: 'Téléchargez<br>votre bulletin', sub: 'Le bulletin est <b>délivré instantanément</b> et téléchargeable immédiatement, sans déplacement ni intermédiaire. <i>(Spécimen fictif.)</i>' },
-  { a: 55, b: 62, kick: 'En pratique', ttl: 'Aucune pièce.<br>Aucun déplacement.', sub: 'Même depuis l’étranger : la démarche se fait entièrement en ligne. Le bulletin garde la même valeur juridique et reste vérifiable.' },
-  { a: 62, b: 68, kick: 'Bon à savoir', ttl: 'Dites-le<br>nous une fois.', sub: 'Source : communiqué de presse du Ministère de la Justice et de la Législation (Bénin), 2 novembre 2026. Captures réelles du site, données personnelles remplacées par des valeurs fictives. Certains moyens de paiement peuvent être temporairement indisponibles : lisez le bandeau d’information du site. Vidéo non officielle.', small: true },
+  { a: TT[0], b: TT[1], kick: 'Guide vidéo · non officiel', ttl: 'Casier judiciaire<br><span style="color:#008751">en ligne</span>', sub: 'Votre bulletin, instantanément.<br>Le parcours pas à pas sur service-public.bj' },
+  { a: TT[1], b: TT[2], step: 1, kick: 'Étape 1', ttl: 'Ouvrez le site', sub: '<b>service-public.bj</b> puis <b>« Trouver un service »</b>' },
+  { a: TT[2], b: TT[3], step: 2, kick: 'Étape 2', ttl: 'Choisissez<br>le service', sub: '<b>« Délivrance du Casier judiciaire (Extrait B3) »</b>, puis <b>« Faire une demande »</b>' },
+  { a: TT[3], b: TT[4], step: 3, kick: 'Étape 3', ttl: 'Indiquez<br>votre profil', sub: 'Béninois ou étranger, né ici ou ailleurs : choisissez, puis <b>« Soumettre »</b>' },
+  { a: TT[4], b: TT[5], step: 4, kick: 'Étape 4', ttl: 'Code OTP', sub: 'Saisissez le code reçu <b>par e-mail</b>, puis <b>« Continuer »</b>' },
+  { a: TT[5], b: TT[6], step: 5, kick: 'Étape 5', ttl: 'Vérifiez vos<br>informations', sub: 'NPI, e-mail, nationalité : <b>déjà renseignés</b>. Dites-le nous une fois.' },
+  { a: TT[6], b: TT[7], step: 6, kick: 'Étape 6', ttl: 'Payez<br>1 900 F CFA', sub: 'Profession, puis <b>Fedapay</b> ou <b>Kkiapay</b>, et <b>« Soumettre »</b>' },
+  { a: TT[7], b: TT[8], step: 7, kick: 'Étape 7', ttl: 'Votre bulletin,<br>instantanément', sub: 'Téléchargeable immédiatement. <i>(Spécimen fictif.)</i>' },
+  { a: TT[8], b: TT[9], kick: 'En pratique', ttl: 'Aucune pièce.<br>Aucun déplacement.', sub: 'Même depuis l’étranger. Même valeur juridique.' },
+  { a: TT[9], b: TT[10], kick: 'Bon à savoir', ttl: 'Dites-le<br>nous une fois.', sub: 'Source : communiqué du Ministère de la Justice et de la Législation (Bénin), 2 novembre 2026. Captures réelles, données fictives. Certains moyens de paiement peuvent être temporairement indisponibles. Vidéo non officielle.', small: true },
 ];
 const el = id => document.getElementById(id);
 let capIdx = -1;
@@ -261,10 +266,10 @@ function setCaption(t) {
     el('dots').style.display = cp.step ? 'flex' : 'none';
   }
   const lt = t - cp.a, last = i === CAPS.length - 1;
-  const inn = eo(lt / .6), out = last ? 0 : eo((cp.b - t) / .4);
+  const inn = eo(lt / .3), out = last ? 0 : eo((cp.b - t) / .2);
   const o = Math.min(inn, last ? 1 : 1 - (1 - out));
   el('cap').style.opacity = last ? inn : Math.min(inn, out);
-  el('cap').style.transform = `translateX(${(1 - inn) * -50}px)`;
+  el('cap').style.transform = `translateX(${(1 - inn) * -90}px)`;
   el('dots').style.opacity = cp.step ? Math.min(inn, out) : 0;
   el('bar').style.width = (t / DUR * 1920) + 'px';
 }
@@ -273,55 +278,48 @@ function setCaption(t) {
 function render(t) {
   drawScreen(t); scrTex.needsUpdate = true;
   setCaption(t);
-  const step = t >= 5 && t < 29;
-  // phone entrance + pose
-  const ent = back(t / 1.5);
-  let px = 1.95, py = lerp(-3.2, 0, eo(t / 1.3)), ps = lerp(.55, 1, ent);
-  let ry = lerp(1.3, -.28, eio(t / 1.8)) + .09 * Math.sin(t * .8), rx = .05 * Math.sin(t * .6) - .04;
+  const ent = back(t / .9);
+  let px = 1.95, py = lerp(-3.2, 0, eo(t / .8)), ps = lerp(.55, 1, ent);
+  let ry = lerp(1.3, -.28, eio(t / 1.1)) + .09 * Math.sin(t * .8), rx = .05 * Math.sin(t * .6) - .04;
   let camZ = 9, camX = 0;
-  if (t >= 4.4) { const k = eio((t - 4.4) / 1.2); camZ = lerp(9, 8.1, k); px = lerp(1.95, 1.75, k); ry = lerp(ry, -.2 + .06 * Math.sin(t * .8), k); }
-  // step-specific nudges (look at the tapped area)
-  for (const s0 of [5, 12, 19, 26, 35, 41]) if (t >= s0 + 2 && t < s0 + 6.5) { const k = Math.sin(clamp((t - s0 - 2) / 4.5) * Math.PI); ry -= .11 * k; }
-  // step 3: phone shifts left to make room for the bulletin
-  if (t >= 49 && t < 55) { px = lerp(px, 1.15, eio((t - 49) / 1.0)); }
-  // recap: phone leaves to the right
+  if (t >= TT[1] - .6) { const k = eio((t - TT[1] + .6) / .6); camZ = lerp(9, 8.1, k); px = lerp(1.95, 1.75, k); ry = lerp(ry, -.2 + .06 * Math.sin(t * .8), k); }
+  for (let i = 1; i <= 6; i++) { const a0 = TT[i] + .5, b0 = TT[i + 1] - .3; if (t > a0 && t < b0) ry -= .11 * Math.sin(clamp((t - a0) / (b0 - a0)) * Math.PI); }
+  if (t >= TT[7] && t < TT[8]) px = lerp(px, 1.15, eio((t - TT[7]) / .5));
   let pvis = 1;
-  if (t >= 55) {
-    const k = eio((t - 55) / 1.0);
-    camZ = lerp(8.1, 10, eio((t - 55) / 1.4)); px = lerp(1.15, 6.5, k); ps *= 1 - .3 * k; ry = lerp(ry, -.7, k); pvis = 1 - k;
+  if (t >= TT[8]) {
+    const k = eio((t - TT[8]) / .5);
+    camZ = lerp(8.1, 10, eio((t - TT[8]) / .8)); px = lerp(1.15, 6.5, k); ps *= 1 - .3 * k; ry = lerp(ry, -.7, k); pvis = 1 - k;
   }
+  // coup de caméra à chaque changement d'écran (zoom + virage du téléphone)
+  for (let i = 1; i <= 8; i++) { const d = t - TT[i]; if (d > 0 && d < .45) { const p = 1 - eo(d / .45); camZ -= .55 * p; ry += (i % 2 ? .4 : -.4) * p; } }
   phone.position.set(px, py, 0); phone.scale.setScalar(Math.max(ps, .001)); phone.rotation.set(rx, ry, 0);
   phone.visible = pvis > .01;
   camera.position.set(camX, 0, camZ); camera.lookAt(camX, 0, 0);
-  // accents orbit (fade out in outro)
-  const aShow = eo(t / 1.5) * (1 - eo((t - 61.6) / .8));
+  const aShow = eo(t / .8) * (1 - eo((t - TT[9]) / .4));
   accents.forEach((m, i) => {
-    const u = m.userData, a = u.a + t * .18;
-    m.position.set(px + Math.cos(a) * u.r * .9 - .2, u.y + Math.sin(t * .7 + i) * .2, u.z - 1.0 + Math.sin(a) * .8);
-    m.rotation.set(t * .6 + i, t * .4, 0); m.scale.setScalar(u.s * aShow + .0001);
+    const u = m.userData, a = u.a + t * .3;
+    m.position.set(px + Math.cos(a) * u.r * .9 - .2, u.y + Math.sin(t * 1.1 + i) * .2, u.z - 1.0 + Math.sin(a) * .8);
+    m.rotation.set(t * .9 + i, t * .6, 0); m.scale.setScalar(u.s * aShow + .0001);
     m.visible = aShow > .01;
   });
-  // bulletin paper
-  const pk = (t - 49.4) / 1.5;
-  paper.visible = pk > 0 && t < 55.7;
+  const pk = (t - TT[7] - .2) / .7;
+  paper.visible = pk > 0 && t < TT[8] + .3;
   if (paper.visible) {
-    const k = eo(pk), fadeOut = 1 - eo((t - 55) / .6);
+    const k = eo(pk), fadeOut = 1 - eo((t - TT[8]) / .3);
     paper.position.set(lerp(px, px + 1.6, k), lerp(0, .2, k) + .06 * Math.sin(t * 2), lerp(.1, .5, k));
     paper.rotation.set(.1 * k, lerp(0, -.22, k) + .06 * Math.sin(t * 1.3), lerp(0, .08, k));
     paper.scale.setScalar(Math.max(lerp(.35, 1.12, back(pk)), .001) * fadeOut);
   }
-  // recap cards
   cards.forEach((m, i) => {
-    const k = back((t - 55.9 - i * .28) / .7), out = 1 - eo((t - 61.6) / .7);
-    m.visible = k > .01 && out > .01 && t < 62.5;
+    const k = back((t - TT[8] - .25 - i * .14) / .45), out = 1 - eo((t - TT[9]) / .35);
+    m.visible = k > .01 && out > .01 && t < TT[9] + .5;
     if (!m.visible) return;
-    m.position.set(CARD_POS[i][0], CARD_POS[i][1] + .12 * Math.sin(t * 1.4 + i), lerp(-1.5, .2, clamp(k)));
+    m.position.set(CARD_POS[i][0], CARD_POS[i][1] + .12 * Math.sin(t * 1.8 + i), lerp(-1.5, .2, clamp(k)));
     m.rotation.set(-.06 + .04 * Math.sin(t + i), .22 + .05 * Math.sin(t * .9 + i), 0);
     m.scale.setScalar(Math.max(k * out * .85, .001));
   });
-  // outro slabs
   slabs.forEach((m, i) => {
-    const k = back((t - 62.3 - i * .18) / .7);
+    const k = back((t - TT[9] - .2 - i * .12) / .5);
     m.visible = k > .01;
     m.position.set(lerp(7, 3.3, clamp(k)), 1 - i * .7 + .05 * Math.sin(t + i), 0);
     m.rotation.set(0, -.35, 0); m.scale.setScalar(Math.max(k, .001));
