@@ -1,0 +1,11 @@
+# Build artifacts (never publish)
+.DS_Store
+node_modules/
+*.log
+
+# Local-only operator context (excluded from the published bundle)
+corpus/
+extractions/
+state.sqlite
+.env
+.env.*
