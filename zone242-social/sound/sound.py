@@ -152,29 +152,33 @@ add(T(4) + 0.06, whoosh(T(1.5) - 0.06, False), 0.55)  # la barre fuit dans la pr
 add(T(6) - T(1.0), riser(T(1.0)), 0.5)  # montée vers l'arrivée du téléphone
 add(T(7), boom(0.8), 0.85)  # le téléphone se pose
 
-# Panneaux 3D (src/timeline.ts : PANELS) : souffle qui finit sur une croche, puis petit coup
-PANELS = [(1, 8), (9, 16), (17, 25), (30, 40), (41, 52), (53, 64), (65, 76), (77, 89), (95, 106), (107, 115)]
+# Plans (src/timeline.ts : SHOTS) : une coupe sur chaque temps de début de plan,
+# puis le panneau arrive une croche plus tard (souffle qui finit sur la note).
+SHOTS = [(0, 10), (10, 18), (18, 28), (28, 38), (38, 48), (48, 58), (58, 68), (68, 80), (80, 92), (92, 104), (104, 116)]
 NOTES = [F5, D5]
-for idx, (s, e) in enumerate(PANELS):
-    land = W(s + 0.5)
-    add(land - 0.32, whoosh(0.32, True), 0.5, pan=-0.2 if idx % 2 == 0 else 0.2)
-    add(land, boom(0.3, 1.0), 0.6)
-    add(land + 0.02, pop(NOTES[idx % 2]), 0.45)
-    add(W(e), whoosh(0.3, False), 0.3)  # sortie, très discrète
+for idx, (s, e) in enumerate(SHOTS):
+    if s > 0:  # coupe : petit coup grave accordé + souffle qui finit pile sur le temps
+        add(W(s) - 0.25, whoosh(0.25, True), 0.4)
+        add(W(s), boom(0.35, 0.8), 0.55)
+    land = W(s + 1.0)
+    add(land - 0.32, whoosh(0.32, True), 0.45, pan=-0.2 if idx % 2 == 0 else 0.2)
+    add(land, pop(NOTES[idx % 2]), 0.45)
 
-# Contenus animés
+# Contenus animés (les panneaux commencent une croche après le plan)
 for k in range(6):  # compteur « 2 / 20 » : 6 tics en double-croches
-    add(W(17 + 0.25 * k), tick(D6), 0.5)
-add(W(17 + 1.75), ding(F6, 0.45), 0.5)
+    add(W(18.5 + 0.25 * k), tick(D6), 0.5)
+add(W(18.5 + 1.75), ding(F6, 0.45), 0.5)
 SCALE = [D5, E5, F5, G5, A5, D6]  # les 6 étapes : gamme de ré mineur qui monte
 for k in range(6):
-    add(W(30 + 1.5 + 1.5 * k), ding(SCALE[k]), 0.8)
+    add(W(30 + 1.5 * k), ding(SCALE[k]), 0.8)
 for k in range(5):  # compteur « 7 » puis barre de progression
-    add(W(65 + 0.25 * k), tick(D6), 0.4)
-add(W(65 + 4), ding(A5, 0.5), 0.5)
-add(W(107 + 2), ding(D6, 0.5), 0.5)
+    add(W(58.5 + 0.25 * k), tick(D6), 0.4)
+add(W(58.5 + 4), ding(A5, 0.5), 0.5)
+add(W(92.5 + 2), ding(D6, 0.5), 0.5)
 
 # Appel à l'action (src/World.tsx : CTA_START = 116)
+add(W(116) - 0.25, whoosh(0.25, True), 0.4)
+add(W(116), boom(0.35, 0.8), 0.55)  # coupe vers le plan final
 add(W(116 + 0.5) - T(2.0), riser(T(2.0)), 0.55)
 add(W(116 + 1.0), boom(0.9), 0.9)  # le logo se pose
 add(W(116 + 2.5), pop(F5), 0.6)  # adresse du site

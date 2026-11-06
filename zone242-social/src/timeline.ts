@@ -16,24 +16,20 @@ export const INTRO_BEATS = 6;
 export const WORLD_START = INTRO_BEATS;
 export const WORLD_BEATS = TOTAL_BEATS - INTRO_BEATS;
 
-// Vitesse de lecture de l'enregistrement d'écran (s d'enregistrement par s de vidéo)
-// et dernier instant montré (avant la section don, que l'on n'affiche pas).
-export const REC_RATE = 1.6;
-export const REC_LAST_S = 86.5;
-
-// Panneaux 3D autour du téléphone : [début, fin] en temps (beats) depuis le début du monde.
-// Calés sur ce que l'enregistrement montre au même moment (vitesse × 1,6).
-export const PANELS = {
-  slogan: [1, 8],
-  verset: [9, 16],
-  chiffres: [17, 25],
-  etapes: [30, 40],
-  piliers: [41, 52],
-  vision: [53, 64],
-  eglises: [65, 76],
-  equipe: [77, 89],
-  ressources: [95, 106],
-  venir: [107, 115],
+// Plans (coupes sur le temps) : [début, fin] en beats depuis le début du monde 3D.
+// Chaque plan a sa propre pose de caméra et son propre extrait de l'enregistrement.
+export const SHOTS = {
+  slogan: [0, 10],
+  verset: [10, 18],
+  chiffres: [18, 28],
+  etapes: [28, 38],
+  piliers: [38, 48],
+  vision: [48, 58],
+  eglises: [58, 68],
+  equipe: [68, 80],
+  ressources: [80, 92],
+  venir: [92, 104],
+  tour: [104, 116],
 } as const;
 
 export const CTA_START = 116; // beats depuis le début du monde

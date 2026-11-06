@@ -1,9 +1,9 @@
 import {
   AbsoluteFill,
   Easing,
-  Freeze,
   Img,
   OffthreadVideo,
+  Sequence,
   interpolate,
   spring,
   staticFile,
@@ -11,7 +11,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { C, FONT, FPS, loadBrandFonts } from "./brand";
-import { BEAT, CTA_START, PANELS, REC_LAST_S, REC_RATE, b } from "./timeline";
+import { BEAT, CTA_START, SHOTS, b } from "./timeline";
 
 loadBrandFonts();
 
@@ -143,12 +143,14 @@ const Pill: React.FC<{ children: React.ReactNode; hot?: boolean; dark?: boolean 
 const count = (rel: number, to: number, beats = 1.6) =>
   Math.round(interpolate(rel, [0, b(beats)], [0, to], { ...clamp, easing: Easing.out(Easing.cubic) }));
 
+const rg = (k: keyof typeof SHOTS) => [SHOTS[k][0] + 0.5, SHOTS[k][1]] as const;
+
 const STEPS = ["Accueil", "Fondements", "Baptême", "Membre", "Service", "Leadership"];
 
 const Panels: React.FC = () => (
   <>
     {/* 1. Slogan */}
-    <Panel range={PANELS.slogan} slot="top">
+    <Panel range={rg("slogan")} slot="top">
       {() => (
         <div style={{ fontSize: 104, fontWeight: 900, lineHeight: 1.02, textAlign: "center" }}>
           <div style={{ color: C.BLUE }}>CONNECTER</div>
@@ -159,7 +161,7 @@ const Panels: React.FC = () => (
     </Panel>
 
     {/* 2. Verset */}
-    <Panel range={PANELS.verset} slot="bottom" dark>
+    <Panel range={rg("verset")} slot="bottom" dark>
       {() => (
         <>
           <Label dark>Née d&apos;un verset</Label>
@@ -170,7 +172,7 @@ const Panels: React.FC = () => (
     </Panel>
 
     {/* 3. Chiffres */}
-    <Panel range={PANELS.chiffres} slot="top">
+    <Panel range={rg("chiffres")} slot="top">
       {(rel) => (
         <div style={{ display: "flex", gap: 40 }}>
           {[
@@ -188,7 +190,7 @@ const Panels: React.FC = () => (
     </Panel>
 
     {/* 4. Six étapes */}
-    <Panel range={PANELS.etapes} slot="bottom" dark>
+    <Panel range={rg("etapes")} slot="bottom" dark>
       {(rel) => {
         const active = Math.min(5, Math.max(0, Math.floor((rel - b(1.5)) / b(1.5))));
         return (
@@ -210,7 +212,7 @@ const Panels: React.FC = () => (
     </Panel>
 
     {/* 5. Piliers */}
-    <Panel range={PANELS.piliers} slot="top">
+    <Panel range={rg("piliers")} slot="top">
       {() => (
         <>
           <div style={{ fontSize: 112, fontWeight: 900, color: C.BLUE, lineHeight: 1 }}>4 PILIERS</div>
@@ -226,7 +228,7 @@ const Panels: React.FC = () => (
     </Panel>
 
     {/* 6. Vision */}
-    <Panel range={PANELS.vision} slot="bottom" dark>
+    <Panel range={rg("vision")} slot="bottom" dark>
       {() => (
         <>
           <div style={{ fontSize: 62, fontWeight: 800, lineHeight: 1.15 }}>« Lève-toi, sois éclairée, car ta lumière arrive. »</div>
@@ -243,7 +245,7 @@ const Panels: React.FC = () => (
     </Panel>
 
     {/* 7. Églises */}
-    <Panel range={PANELS.eglises} slot="top">
+    <Panel range={rg("eglises")} slot="top">
       {(rel) => {
         const bar = interpolate(rel, [b(1), b(4)], [0, 7 / 30], { ...clamp, easing: Easing.out(Easing.cubic) });
         return (
@@ -264,7 +266,7 @@ const Panels: React.FC = () => (
     </Panel>
 
     {/* 8. Équipe */}
-    <Panel range={PANELS.equipe} slot="bottom" dark>
+    <Panel range={rg("equipe")} slot="bottom" dark>
       {() => (
         <>
           <div style={{ fontSize: 86, fontWeight: 900, lineHeight: 1.05 }}>
@@ -281,7 +283,7 @@ const Panels: React.FC = () => (
     </Panel>
 
     {/* 9. Ressources */}
-    <Panel range={PANELS.ressources} slot="top">
+    <Panel range={rg("ressources")} slot="top">
       {() => (
         <div style={{ display: "flex", gap: 40 }}>
           <div style={{ flex: 1 }}>
@@ -298,7 +300,7 @@ const Panels: React.FC = () => (
     </Panel>
 
     {/* 10. Venir */}
-    <Panel range={PANELS.venir} slot="bottom" dark>
+    <Panel range={rg("venir")} slot="bottom" dark>
       {() => (
         <>
           <div style={{ fontSize: 86, fontWeight: 900, lineHeight: 1, whiteSpace: "nowrap" }}>
@@ -312,6 +314,24 @@ const Panels: React.FC = () => (
             Avenue Yèkpè · <span style={{ color: "#FFB8A6" }}>50 m avant Golf-FM</span>
           </div>
           <div style={{ fontSize: 34, fontWeight: 700, color: "#C9C3FF", marginTop: 6 }}>Sikècodji, Cotonou</div>
+        </>
+      )}
+    </Panel>
+
+    {/* 11. Menu du site */}
+    <Panel range={rg("tour")} slot="top">
+      {() => (
+        <>
+          <div style={{ fontSize: 96, fontWeight: 900, color: C.BLUE, lineHeight: 1 }}>
+            TOUT EST SUR <span style={{ color: C.ORANGE }}>LE SITE</span>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 14, marginTop: 26 }}>
+            {["Qui sommes-nous", "Grandir", "Piliers", "L'équipe", "Ses livres", "Servir", "Zone TV", "Nous trouver", "Inviter"].map((m, i) => (
+              <Pill key={m} hot={i % 4 === 0}>
+                {m}
+              </Pill>
+            ))}
+          </div>
         </>
       )}
     </Panel>
@@ -403,29 +423,157 @@ const Cta: React.FC = () => {
   );
 };
 
-/* ───────────── Monde 3D ───────────── */
+/* ───────────── Téléphone et plans ───────────── */
 const PHONE_W = 540;
 const PHONE_H = 1130;
 
+type Pose = { x: number; y: number; z: number; rx: number; ry: number; rz: number; s: number };
+
+const PhoneView: React.FC<{ rec: number; rate?: number; pose: Pose; opacity?: number }> = ({ rec, rate = 1, pose, opacity = 1 }) => (
+  <div
+    style={{
+      position: "absolute",
+      left: (1080 - PHONE_W) / 2,
+      top: (1920 - PHONE_H) / 2,
+      width: PHONE_W,
+      height: PHONE_H,
+      borderRadius: 92,
+      padding: 18,
+      boxSizing: "border-box",
+      background: "linear-gradient(145deg, #2d2d40, #08080f)",
+      boxShadow: "0 60px 110px rgba(0,0,0,0.6), inset 0 0 0 4px #43435e",
+      opacity,
+      backfaceVisibility: "hidden",
+      transform: `translate3d(${pose.x}px, ${pose.y}px, ${pose.z}px) rotateX(${pose.rx}deg) rotateY(${pose.ry}deg) rotateZ(${pose.rz}deg) scale(${pose.s})`,
+    }}
+  >
+    <div style={{ width: "100%", height: "100%", borderRadius: 76, overflow: "hidden", background: "#fff", position: "relative" }}>
+      <OffthreadVideo
+        src={staticFile("screen.mp4")}
+        startFrom={Math.round(rec * FPS)}
+        playbackRate={rate}
+        muted
+        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+      />
+      <div style={{ position: "absolute", top: 16, left: "50%", marginLeft: -56, width: 112, height: 28, borderRadius: 14, background: "#050508" }} />
+    </div>
+  </div>
+);
+
+const ease = Easing.inOut(Easing.cubic);
+const mix = (a: number, c: number, p: number) => a + (c - a) * ease(p);
+const base: Pose = { x: 0, y: 0, z: 0, rx: 0, ry: 0, rz: 0, s: 1 };
+
+/** Frame relatif au plan, avancement 0→1 et flottement. */
+const useShot = (range: readonly [number, number]) => {
+  const f = useCurrentFrame();
+  const dur = b(range[1]) - b(range[0]);
+  return { f, p: Math.min(1, f / dur), bob: Math.sin(f / 24) * 12 };
+};
+
+const ShotArrival: React.FC = () => {
+  const { f, bob } = useShot(SHOTS.slogan);
+  const { fps } = useVideoConfig();
+  const pe = spring({ frame: f, fps, config: { damping: 18, stiffness: 70 } });
+  return <PhoneView rec={0} opacity={Math.min(1, pe * 2)} pose={{ ...base, y: bob, z: -2400 * (1 - pe), ry: (1 - pe) * 75 + Math.sin(f / 45) * 7 }} />;
+};
+
+const ShotVerset: React.FC = () => {
+  const { p, bob } = useShot(SHOTS.verset);
+  return <PhoneView rec={6} pose={{ ...base, x: mix(110, 50, p), y: 90 + bob, z: mix(20, 70, p), rx: 4, ry: mix(-26, -10, p), rz: -3, s: 1.18 }} />;
+};
+
+const Carousel: React.FC<{ recs: number[]; range: readonly [number, number]; radius: number; spread: number; sweep: [number, number]; s: number }> = ({
+  recs,
+  range,
+  radius,
+  spread,
+  sweep,
+  s,
+}) => {
+  const { f, p } = useShot(range);
+  return (
+    <>
+      {recs.map((rec, i) => {
+        const th = (i - (recs.length - 1) / 2) * spread + mix(sweep[0], sweep[1], p);
+        const r = (th * Math.PI) / 180;
+        return (
+          <PhoneView
+            key={i}
+            rec={rec}
+            pose={{ ...base, x: radius * Math.sin(r), y: 60 + Math.sin(f / 20 + i * 2) * 12, z: radius * Math.cos(r) - radius + 60, ry: th, s }}
+          />
+        );
+      })}
+    </>
+  );
+};
+
+const ShotFlat: React.FC = () => {
+  const { p, bob } = useShot(SHOTS.etapes);
+  return <PhoneView rec={24} pose={{ ...base, y: 80 + bob, rx: mix(64, 50, p), rz: mix(8, -32, p), s: 0.98 }} />;
+};
+
+const ShotPiliers: React.FC = () => {
+  const { p, bob } = useShot(SHOTS.piliers);
+  return <PhoneView rec={30} pose={{ ...base, x: mix(-70, -30, p), y: mix(-30, 10, p) + bob, z: 0, rx: mix(-20, -8, p), ry: mix(28, 10, p), s: 1.1 }} />;
+};
+
+const ShotVision: React.FC = () => {
+  const { p, bob } = useShot(SHOTS.vision);
+  return <PhoneView rec={42} pose={{ ...base, y: -150 + bob, z: -160, rx: 6, ry: mix(-50, 34, p), s: mix(0.72, 0.8, p) }} />;
+};
+
+const ShotEglises: React.FC = () => {
+  const { p, bob } = useShot(SHOTS.eglises);
+  return <PhoneView rec={48} pose={{ ...base, y: 40 + bob, rx: mix(68, 46, p), rz: mix(20, -14, p), s: 1.0 }} />;
+};
+
+const ShotEquipe: React.FC = () => {
+  const { p, bob } = useShot(SHOTS.equipe);
+  return <PhoneView rec={60} pose={{ ...base, x: mix(100, 60, p), y: 60 + bob, z: 30, rx: 6, ry: mix(26, 8, p), rz: 2, s: 1.15 }} />;
+};
+
+const ShotRessources: React.FC = () => {
+  const { f, p } = useShot(SHOTS.ressources);
+  return (
+    <>
+      <PhoneView rec={72} pose={{ ...base, x: -250, y: 20 + Math.sin(f / 22) * 14, rx: 4, ry: mix(26, 16, p), rz: -3, s: 0.86 }} />
+      <PhoneView rec={78} pose={{ ...base, x: 250, y: 20 + Math.sin(f / 22 + 3) * 14, rx: 4, ry: mix(-26, -16, p), rz: 3, s: 0.86 }} />
+    </>
+  );
+};
+
+const ShotVenir: React.FC = () => {
+  const { p, bob } = useShot(SHOTS.venir);
+  return <PhoneView rec={84} pose={{ ...base, y: mix(60, 0, p) + bob, z: mix(-100, 160, p), rx: 4, ry: mix(-16, 14, p), s: 1.06 }} />;
+};
+
+const ShotCta: React.FC = () => {
+  const { f, bob } = useShot([CTA_START, 130]);
+  return <PhoneView rec={84} rate={0.5} pose={{ ...base, y: 290 + bob, ry: Math.sin(f / 45) * 8, s: 0.52 }} />;
+};
+
+/** Plan : monté sur le temps, avec son propre extrait de l'enregistrement. */
+const Shot: React.FC<{ range: readonly [number, number]; children: React.ReactNode }> = ({ range, children }) => (
+  <Sequence from={b(range[0])} durationInFrames={b(range[1]) - b(range[0])} layout="none">
+    {children}
+  </Sequence>
+);
+
+/* ───────────── Monde 3D ───────────── */
 export const World: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
 
   // Caméra : léger balancement + coup de pouce sur chaque temps.
   const beat = frame / BEAT;
   const kick = Math.exp(-(beat % 1) * 7) * 22;
-  const ry = Math.sin(frame / 55) * 10;
-  const rx = 3 + Math.sin(frame / 75) * 3;
+  const ry = Math.sin(frame / 55) * 5;
+  const rx = 2 + Math.sin(frame / 75) * 2;
 
-  // Téléphone : arrivée en profondeur, puis réduction pour l'appel à l'action.
-  const pe = spring({ frame, fps, config: { damping: 18, stiffness: 70 } });
-  const cta = interpolate(frame, [b(CTA_START - 1.5), b(CTA_START + 1)], [0, 1], { ...clamp, easing: Easing.bezier(0.6, 0, 0.2, 1) });
-  const phoneScale = interpolate(cta, [0, 1], [1, 0.52]);
-  const phoneY = interpolate(cta, [0, 1], [0, 290]);
-  const float = Math.sin(frame / 24) * 12;
-  const phoneRy = (1 - pe) * 75 + Math.sin(frame / 45) * 7;
-
-  const recCut = Math.round((REC_LAST_S / REC_RATE) * FPS);
+  // Éclair bref à chaque coupure de plan.
+  const cuts = [...Object.values(SHOTS).map((r) => r[0]), CTA_START].filter((x) => x > 0).map((x) => b(x));
+  const flash = Math.max(0, ...cuts.map((c) => (frame >= c ? 0.45 * Math.exp(-(frame - c) / 4) : 0)));
 
   return (
     <AbsoluteFill style={{ fontFamily: FONT, perspective: 2400, perspectiveOrigin: "50% 48%", overflow: "hidden" }}>
@@ -439,33 +587,34 @@ export const World: React.FC = () => {
       >
         <Particles />
 
-        <div
-          style={{
-            position: "absolute",
-            left: (1080 - PHONE_W) / 2,
-            top: (1920 - PHONE_H) / 2,
-            width: PHONE_W,
-            height: PHONE_H,
-            borderRadius: 92,
-            padding: 18,
-            boxSizing: "border-box",
-            background: "linear-gradient(145deg, #2d2d40, #08080f)",
-            boxShadow: "0 90px 160px rgba(0,0,0,0.65), inset 0 0 0 4px #43435e",
-            opacity: Math.min(1, pe * 2),
-            transform: `translateY(${float + phoneY}px) translateZ(${interpolate(pe, [0, 1], [-2400, 0])}px) rotateY(${phoneRy}deg) scale(${phoneScale})`,
-          }}
-        >
-          <div style={{ width: "100%", height: "100%", borderRadius: 76, overflow: "hidden", background: "#fff", position: "relative" }}>
-            <Freeze frame={Math.min(frame, recCut)}>
-              <OffthreadVideo src={staticFile("screen.mp4")} muted playbackRate={REC_RATE} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-            </Freeze>
-            <div style={{ position: "absolute", top: 16, left: "50%", marginLeft: -56, width: 112, height: 28, borderRadius: 14, background: "#050508" }} />
-          </div>
-        </div>
+        <Shot range={SHOTS.slogan}><ShotArrival /></Shot>
+        <Shot range={SHOTS.verset}><ShotVerset /></Shot>
+        <Shot range={SHOTS.chiffres}>
+          <Carousel recs={[12, 24, 60]} range={SHOTS.chiffres} radius={560} spread={44} sweep={[-28, 28]} s={0.7} />
+        </Shot>
+        <Shot range={SHOTS.etapes}><ShotFlat /></Shot>
+        <Shot range={SHOTS.piliers}><ShotPiliers /></Shot>
+        <Shot range={SHOTS.vision}><ShotVision /></Shot>
+        <Shot range={SHOTS.eglises}><ShotEglises /></Shot>
+        <Shot range={SHOTS.equipe}><ShotEquipe /></Shot>
+        <Shot range={SHOTS.ressources}><ShotRessources /></Shot>
+        <Shot range={SHOTS.venir}><ShotVenir /></Shot>
+        <Shot range={SHOTS.tour}>
+          <Carousel recs={[0, 24, 30, 60, 84]} range={SHOTS.tour} radius={600} spread={72} sweep={[-36, 36]} s={0.62} />
+        </Shot>
+        <Shot range={[CTA_START, 130]}><ShotCta /></Shot>
 
         <Panels />
         <Cta />
       </div>
+      <AbsoluteFill
+        style={{
+          background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9), rgba(170,160,255,0.6))",
+          opacity: flash,
+          mixBlendMode: "screen",
+          pointerEvents: "none",
+        }}
+      />
     </AbsoluteFill>
   );
 };
