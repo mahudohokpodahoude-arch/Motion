@@ -5,3 +5,6 @@ dist
 
 # Ignore the output video from Git but not videos you import into src/.
 out
+
+# Enregistrement d'écran fourni par le client (non commité)
+public/screen.mp4
