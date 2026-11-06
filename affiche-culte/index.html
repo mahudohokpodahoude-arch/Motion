@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Affiche · Culte de percée prophétique</title>
+<style>
+@font-face{font-family:Anton;src:url(fonts/anton-latin-400-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:400;src:url(fonts/poppins-latin-400-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:700;src:url(fonts/poppins-latin-700-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:800;src:url(fonts/poppins-latin-800-normal.woff2)}
+:root{--yellow:#FEBF00;--navy:#0A2A8A;--red:#E8201C}
+html,body{margin:0;background:#000}
+#poster{position:relative;width:735px;height:919px;overflow:hidden;font-family:Poppins,sans-serif;
+  background:#00247d url(assets/bg_clean.png) 0 0/735px 919px no-repeat}
+.abs{position:absolute}
+.c{left:0;width:735px;text-align:center}
+
+/* logo */
+#logo{left:322px;top:82px;width:92px;height:94px}
+#logo img{position:absolute;left:0;top:0;width:92px;height:94px}
+
+/* theme tag + frame */
+#frame{left:146px;top:258px;width:441px;height:296px;border:2px solid #fff}
+#theme{left:153px;top:242px;width:84px;height:29px;background:#fff;color:var(--navy);font-family:Anton,sans-serif;font-size:20px;
+  line-height:31px;text-align:center;letter-spacing:.6px}
+#title{left:148px;top:260px;width:441px;height:296px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.tl{color:#fff;font-family:Anton,Impact,sans-serif;font-weight:400;line-height:1.02;letter-spacing:.005em;white-space:nowrap}
+#tag{left:0;top:0;background:var(--red);color:#fff;font-family:Anton,sans-serif;font-size:27px;padding:5px 22px 6px;letter-spacing:.4px;
+  transform:rotate(-3.5deg);line-height:1.15;box-shadow:0 3px 8px rgba(0,0,40,.3)}
+
+/* speaker box */
+#who{left:0;top:540px;height:37px;background:#fff;color:var(--navy);font-size:13.6px;line-height:37px;text-transform:uppercase;
+  white-space:nowrap;padding:0 20px;letter-spacing:.2px}
+#who b{font-weight:700}#who i{font-style:normal;font-weight:800}
+
+/* date */
+.date{color:#fff;font-weight:500;font-size:35.5px;line-height:30px;white-space:nowrap}
+.date b{color:var(--yellow);font-weight:700}
+.date small{font-size:12px;font-weight:500;vertical-align:baseline}
+
+/* info pill */
+#pill{left:180px;top:727px;width:374px;height:81px;background:var(--yellow);border-radius:24px 24px 46px 24px}
+#loc{left:192px;top:745px;width:122px;text-align:center;color:var(--navy);font-weight:700;font-size:17px;line-height:19.5px}
+#pin{left:314px;top:743px;width:34px;height:42px}
+#soc{left:402px;top:747px;width:140px;color:var(--navy);text-align:center}
+#soc .ic{display:flex;justify-content:center;gap:14px;align-items:center;height:13px}
+#soc .nm{font-weight:800;font-size:13.4px;letter-spacing:.3px;margin-top:8px;line-height:14px}
+#soc .ph{font-weight:700;font-size:14.8px;margin-top:5px;line-height:16px;display:flex;justify-content:center;gap:5px;align-items:center}
+#foot{top:838px;font-size:8.6px;letter-spacing:3.3px;color:rgba(255,255,255,.62);font-weight:400;text-transform:uppercase;white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="poster">
+  <!-- logo ZONE 242 en blanc -->
+  <div class="abs" id="logo"><img src="assets/zone_w_a.svg"><img src="assets/zone_w_b.svg"></div>
+
+  <div class="abs" id="frame"></div>
+  <div class="abs" id="theme">THÈME:</div>
+  <div class="abs" id="title">
+    <div class="tl" id="l1">Culte de</div>
+    <div class="tl" id="l2" style="margin-top:14px">prophétique</div>
+    <div class="abs" id="tag">percée</div>
+  </div>
+
+  <div class="abs" id="who">Avec l'Apôtre <b>Amos</b> <i>Elite</i></div>
+
+  <div class="abs c date" style="top:643px">Ven. <b>06 NOV.</b> 2026</div>
+  <div class="abs c date" style="top:673px">à <b>19H45</b></div>
+
+  <div class="abs" id="pill"></div>
+  <div class="abs" id="loc">Sikècodji<br>Rue Golf FM</div>
+  <svg class="abs" id="pin" viewBox="0 0 34 42"><path d="M17 1C9 1 3 7 3 15c0 10 14 25 14 25s14-15 14-25C31 7 25 1 17 1z" fill="#0A2A8A"/><circle cx="17" cy="15" r="5.5" fill="#FEBF00"/><path d="M5 38c4 3 20 3 24 0" stroke="#0A2A8A" stroke-width="2.4" fill="none" stroke-linecap="round" transform="translate(0,-2)"/></svg>
+  <div class="abs" id="soc">
+    <div class="ic">
+      <!-- tiktok -->
+      <svg width="11" height="12" viewBox="0 0 12 14"><path d="M8 0v9.2a3 3 0 1 1-3-3v2a1 1 0 1 0 1 1V0z M8 0c.2 1.6 1.4 2.8 3.2 3v2c-1.2 0-2.2-.4-3.2-1z" fill="#0A2A8A"/></svg>
+      <!-- youtube -->
+      <svg width="15" height="11" viewBox="0 0 15 11"><rect width="15" height="11" rx="3" fill="#0A2A8A"/><path d="M6 3l4 2.5L6 8z" fill="#FEBF00"/></svg>
+      <!-- instagram -->
+      <svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="3" fill="none" stroke="#0A2A8A" stroke-width="1.5"/><circle cx="6" cy="6" r="2.2" fill="none" stroke="#0A2A8A" stroke-width="1.5"/><circle cx="9" cy="3" r=".8" fill="#0A2A8A"/></svg>
+      <!-- facebook -->
+      <svg width="8" height="13" viewBox="0 0 8 14"><path d="M5.2 14V7.7h2.1l.3-2.5H5.2V3.7c0-.7.2-1.2 1.2-1.2H7.7V.3C7.5.3 6.700.2 5.800.2 3.900.2 2.700 1.300 2.700 3.400v1.800H.6v2.500h2.100V14z" fill="#0A2A8A"/></svg>
+    </div>
+    <div class="nm">ZONE 242</div>
+    <div class="ph">
+      <svg width="13" height="13" viewBox="0 0 24 24"><path d="M6.6 10.800a15.100 15.100 0 0 0 6.600 6.600l2.200-2.200a1 1 0 0 1 1-.25c1.100.35 2.300.55 3.600.55a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.600 21 3 13.400 3 4a1 1 0 0 1 1-1h3.500a1 1 0 0 1 1 1c0 1.300.2 2.500.55 3.600a1 1 0 0 1-.25 1z" fill="#0A2A8A"/></svg>
+      <span>01 41 62 77 77</span>
+    </div>
+  </div>
+
+  <div class="abs c" id="foot">Connecter · Transformer · Envoyer</div>
+</div>
+<script>
+// fit each title line to the same width (justified lock-up like the original)
+window.ready = (async () => {
+  await Promise.all([400,500,600,700,800].map(w => document.fonts.load(w + ' 20px Poppins')).concat(document.fonts.load('20px Anton')));
+  await document.fonts.ready;
+  await Promise.all([...document.images].map(i => i.decode().catch(() => {})));
+  const target = 380;
+  for (const id of ['l1', 'l2']) {
+    const el = document.getElementById(id);
+    el.style.fontSize = '100px';
+    const w = el.getBoundingClientRect().width;
+    el.style.fontSize = (100 * target / w).toFixed(1) + 'px';
+  }
+  // red tag sits on the junction of the two lines, right side
+  const f = document.getElementById('title').getBoundingClientRect();
+  const a = document.getElementById('l1').getBoundingClientRect(), b = document.getElementById('l2').getBoundingClientRect();
+  const junction = (a.bottom + b.top) / 2 - f.top;
+  const tag = document.getElementById('tag');
+  tag.style.top = (junction - tag.offsetHeight / 2 - 6) + 'px';
+  tag.style.left = (566 - 148 - tag.offsetWidth) + 'px';
+  const who = document.getElementById('who'); who.style.left = (573 - who.offsetWidth) + 'px';
+})();
+</script>
+</body>
+</html>
