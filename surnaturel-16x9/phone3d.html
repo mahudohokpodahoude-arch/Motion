@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Téléphone 3D · écrans en orbite</title>
+<style>
+html,body{margin:0;background:#000}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#0a0560}
+#stage canvas{position:absolute;left:0;top:0}
+#fade{position:absolute;inset:0;background:#06033a;opacity:0;pointer-events:none}
+</style>
+<script type="importmap">
+{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }
+</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="bg" width="1920" height="1080"></canvas>
+  <div id="fade"></div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const DUR = 8.0;
+const stage = document.getElementById('stage');
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const outC = x => 1 - Math.pow(1 - x, 3), inC = x => x * x * x;
+const inOut = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const outBack = x => { const c1 = 1.4, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+
+// ---------------------------------------------------------------- background (same rays as the film)
+const cv = document.getElementById('bg'), ctx = cv.getContext('2d');
+const CX = 960, CY = 520;
+const rnd = (() => { let s = 11; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+const stars = Array.from({ length: 170 }, () => ({ x: rnd() * 1920, y: rnd() * 1080, r: .7 + rnd() * 1.8, p: rnd() * 6.28, f: .6 + rnd() * 1.6, a: .25 + rnd() * .6 }));
+function bg(t) {
+  ctx.globalCompositeOperation = 'source-over'; ctx.filter = 'none';
+  ctx.fillStyle = '#0a0560'; ctx.fillRect(0, 0, 1920, 1080);
+  let g = ctx.createRadialGradient(CX, CY, 0, CX, CY, 1250);
+  g.addColorStop(0, 'rgba(120,80,235,.95)'); g.addColorStop(.18, 'rgba(70,40,210,.8)'); g.addColorStop(.5, 'rgba(32,16,160,.55)'); g.addColorStop(1, 'rgba(8,3,70,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 1920, 1080);
+  const pulse = .88 + .12 * Math.sin(t * 2.2), rot = t * .035, N = 26;
+  ctx.globalCompositeOperation = 'lighter'; ctx.filter = 'blur(5px)';
+  for (let i = 0; i < N; i++) {
+    const a = rot + i * Math.PI * 2 / N, L = 1500, w = .024 + (i % 3) * .005;
+    const lg = ctx.createRadialGradient(CX, CY, 0, CX, CY, L), k = pulse * (.9 + .1 * Math.sin(t * 1.3 + i));
+    lg.addColorStop(0, `rgba(225,195,250,${.5 * k})`); lg.addColorStop(.35, `rgba(205,170,240,${.26 * k})`); lg.addColorStop(1, 'rgba(190,150,235,0)');
+    ctx.fillStyle = lg; ctx.beginPath(); ctx.moveTo(CX, CY);
+    ctx.lineTo(CX + Math.cos(a - w) * L, CY + Math.sin(a - w) * L); ctx.lineTo(CX + Math.cos(a + w) * L, CY + Math.sin(a + w) * L); ctx.closePath(); ctx.fill();
+  }
+  ctx.filter = 'blur(40px)';
+  g = ctx.createRadialGradient(CX, CY, 0, CX, CY, 150); g.addColorStop(0, `rgba(245,230,255,${.9 * pulse})`); g.addColorStop(.4, `rgba(190,150,255,${.45 * pulse})`); g.addColorStop(1, 'rgba(120,80,230,0)');
+  ctx.fillStyle = g; ctx.fillRect(CX - 220, CY - 220, 440, 440);
+  ctx.filter = 'none';
+  for (const s of stars) { ctx.fillStyle = `rgba(215,205,255,${s.a * (.55 + .45 * Math.sin(t * s.f + s.p))})`; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283); ctx.fill(); }
+  ctx.globalCompositeOperation = 'source-over';
+  g = ctx.createRadialGradient(CX, CY, 500, CX, CY, 1150); g.addColorStop(0, 'rgba(5,2,45,0)'); g.addColorStop(1, 'rgba(5,2,45,.62)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 1920, 1080);
+}
+
+// ---------------------------------------------------------------- three
+const _q = new URLSearchParams(location.search);
+const renderer = new THREE.WebGLRenderer({ antialias: !_q.has('noaa'), alpha: true, preserveDrawingBuffer: true });
+renderer.setSize(1920, 1080); renderer.setPixelRatio(1); renderer.setClearColor(0x000000, 0);
+renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+stage.insertBefore(renderer.domElement, document.getElementById('fade'));
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.9;
+const camera = new THREE.PerspectiveCamera(28, 16 / 9, 0.1, 100);
+camera.position.set(0, 1.15, 8.6); camera.lookAt(0, 0.05, 0);
+
+const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(3, 4, 5); scene.add(key);
+const rimB = new THREE.PointLight(0x6a7dff, 60, 14); rimB.position.set(-4.5, 1.5, -2.5); scene.add(rimB);
+const rimO = new THREE.PointLight(0xff7a3a, 46, 14); rimO.position.set(4.5, -1.2, -2); scene.add(rimO);
+
+const loader = new THREE.TextureLoader();
+const aniso = renderer.capabilities.getMaxAnisotropy();
+const loadTex = url => new Promise(res => loader.load(url, tx => { tx.colorSpace = THREE.SRGBColorSpace; tx.anisotropy = aniso; res(tx); }));
+const screens = await Promise.all(Array.from({ length: 8 }, (_, i) => loadTex(`assets/screens/s${i}.png`)));
+// back logo: both layers of the white ZONE 242 mark drawn on one canvas
+const logoTex = await (async () => {
+  const c = document.createElement('canvas'); c.width = 512; c.height = 522; const x = c.getContext('2d');
+  for (const f of ['zone_w_a', 'zone_w_b']) {
+    const img = new Image(); img.src = `assets/${f}.svg`; await img.decode(); x.drawImage(img, 0, 0, 512, 522);
+  }
+  const tx = new THREE.CanvasTexture(c); tx.colorSpace = THREE.SRGBColorSpace; tx.anisotropy = aniso; return tx;
+})();
+
+function rrShape(w, h, r) {
+  const s = new THREE.Shape(), x = -w / 2, y = -h / 2;
+  s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.absarc(x + w - r, y + r, r, -Math.PI / 2, 0, false);
+  s.lineTo(x + w, y + h - r); s.absarc(x + w - r, y + h - r, r, 0, Math.PI / 2, false);
+  s.lineTo(x + r, y + h); s.absarc(x + r, y + h - r, r, Math.PI / 2, Math.PI, false);
+  s.lineTo(x, y + r); s.absarc(x + r, y + r, r, Math.PI, 1.5 * Math.PI, false); return s;
+}
+function rrPlane(w, h, r) {           // flat rounded plane with 0..1 UVs
+  const g = new THREE.ShapeGeometry(rrShape(w, h, r), 24), p = g.attributes.position, uv = g.attributes.uv;
+  for (let i = 0; i < p.count; i++) uv.setXY(i, (p.getX(i) + w / 2) / w, (p.getY(i) + h / 2) / h);
+  return g;
+}
+function rrSlab(w, h, r, depth, bevel) {
+  const g = new THREE.ExtrudeGeometry(rrShape(w, h, r), { depth: depth - 2 * bevel, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 6, curveSegments: 28 });
+  g.translate(0, 0, -(depth - 2 * bevel) / 2); return g;
+}
+
+// ------------------------------------------------ the phone (≈ 9 : 19.5, titanium frame)
+const PW = 1.06, PH = 2.23, PD = 0.12;
+const frameMat = new THREE.MeshStandardMaterial({ color: 0x4a5f9c, metalness: 1, roughness: .27, envMapIntensity: 1.5 });
+const phone = new THREE.Group(); const spinner = new THREE.Group(); phone.add(spinner);
+spinner.add(new THREE.Mesh(rrSlab(PW, PH, .17, PD, .02), frameMat));
+const glassBlack = new THREE.MeshPhysicalMaterial({ color: 0x04040a, roughness: .12, metalness: 0, clearcoat: 1, clearcoatRoughness: .05 });
+const bez = new THREE.Mesh(rrPlane(PW - .05, PH - .05, .145), glassBlack); bez.position.z = PD / 2 + .0008; spinner.add(bez);
+const SW = .99, SH = SW / (1080 / 2340);
+const screenMat = new THREE.MeshBasicMaterial({ map: screens[7], toneMapped: false });
+const scr = new THREE.Mesh(rrPlane(SW, SH, .13), screenMat); scr.position.z = PD / 2 + .0016; spinner.add(scr);
+const sheen = new THREE.Mesh(rrPlane(SW, SH, .13), new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: .07, roughness: 0, metalness: 0, envMapIntensity: 3 }));
+sheen.position.z = PD / 2 + .0024; spinner.add(sheen);
+// back glass
+const backGlass = new THREE.Mesh(rrPlane(PW - .05, PH - .05, .145), new THREE.MeshPhysicalMaterial({ color: 0x1c2f78, roughness: .32, metalness: .1, clearcoat: .7, clearcoatRoughness: .25 }));
+backGlass.rotation.y = Math.PI; backGlass.position.z = -PD / 2 - .0008; spinner.add(backGlass);
+const logo = new THREE.Mesh(new THREE.PlaneGeometry(.34, .34 * 522 / 512), new THREE.MeshBasicMaterial({ map: logoTex, transparent: true, opacity: .92, toneMapped: false }));
+logo.rotation.y = Math.PI; logo.position.set(0, -.34, -PD / 2 - .002); spinner.add(logo);
+// camera island + 3 lenses + flash
+const isl = new THREE.Group(); isl.position.set(-.5 + .33, PH / 2 - .38, 0); spinner.add(isl);
+const ringFrame = new THREE.Mesh(rrSlab(.56, .56, .14, .028, .008), frameMat); ringFrame.position.z = -PD / 2 - .014; isl.add(ringFrame);
+const islGlass = new THREE.Mesh(rrPlane(.5, .5, .115), new THREE.MeshPhysicalMaterial({ color: 0x0b1030, roughness: .18, clearcoat: 1, metalness: .2 }));
+islGlass.rotation.y = Math.PI; islGlass.position.z = -PD / 2 - .0292; isl.add(islGlass);
+const lensRing = new THREE.MeshStandardMaterial({ color: 0xb9c3e6, metalness: 1, roughness: .22 });
+const lensGlass = new THREE.MeshPhysicalMaterial({ color: 0x03030a, roughness: .05, clearcoat: 1, metalness: .3 });
+const lensIris = new THREE.MeshStandardMaterial({ color: 0x2438c8, emissive: 0x0c1a8a, emissiveIntensity: .6, roughness: .2, metalness: .4 });
+for (const [lx, ly] of [[-.115, .115], [-.115, -.115], [.115, 0]]) {
+  const L = new THREE.Group(); L.position.set(lx, ly, -PD / 2 - .03); isl.add(L);
+  const tor = new THREE.Mesh(new THREE.TorusGeometry(.09, .014, 18, 56), lensRing); tor.position.z = -.006; L.add(tor);
+  const disc = new THREE.Mesh(new THREE.CircleGeometry(.083, 48), lensGlass); disc.rotation.y = Math.PI; disc.position.z = -.002; L.add(disc);
+  const iris = new THREE.Mesh(new THREE.CircleGeometry(.04, 40), lensIris); iris.rotation.y = Math.PI; iris.position.z = -.004; L.add(iris);
+}
+const flash = new THREE.Mesh(new THREE.CircleGeometry(.024, 24), new THREE.MeshStandardMaterial({ color: 0xffe2a8, emissive: 0xffc870, emissiveIntensity: .6 }));
+flash.rotation.y = Math.PI; flash.position.set(.17, .16, -PD / 2 - .0305); isl.add(flash);
+// side buttons
+for (const [bx, by, bh] of [[-1, .58, .17], [-1, .33, .2], [-1, .09, .2], [1, .42, .3]]) {
+  const b = new THREE.Mesh(new THREE.BoxGeometry(.022, bh, .05), frameMat); b.position.set(bx * (PW / 2 + .003), by, 0); spinner.add(b);
+}
+scene.add(phone);
+
+// ------------------------------------------------ the 8 orbiting screens
+const K = .8, CW = SW * K, CH = SH * K, R = 2.7;
+const ring = new THREE.Group(); scene.add(ring);
+const cardFrameMat = new THREE.MeshStandardMaterial({ color: 0x5a6fb0, metalness: 1, roughness: .3, envMapIntensity: 1.3 });
+const cards = screens.map((tex, i) => {
+  const g = new THREE.Group(), pos = new THREE.Group(); pos.add(g); ring.add(pos);
+  g.add(new THREE.Mesh(rrSlab(CW + .045, CH + .045, .1 * K, .016, .005), cardFrameMat));
+  const m = new THREE.MeshBasicMaterial({ map: tex, toneMapped: false });
+  const f = new THREE.Mesh(rrPlane(CW, CH, .09 * K), m); f.position.z = .0085; g.add(f);
+  const b = new THREE.Mesh(rrPlane(CW, CH, .09 * K), m); b.rotation.y = Math.PI; b.position.z = -.0085; g.add(b);
+  return { g, pos, i };
+});
+
+// ------------------------------------------------ timeline
+function render(t) {
+  bg(t);
+  // --- phone
+  const intro = outC(seg(t, 0, 1.15));
+  const spin = inOut(seg(t, 1.1, 3.5)) * Math.PI * 2;
+  const sway = t > 3.9 ? Math.sin((t - 3.9) * 1.7) * .32 * Math.min(1, (t - 3.9) / .6) * (1 - seg(t, 6.8, 7.4)) : 0;
+  const retract = seg(t, 7.0, 7.6);
+  phone.position.set(0, -4.2 * (1 - intro) + Math.sin(t * 1.6) * .035, 0);
+  spinner.rotation.set(-.1 * (1 - seg(t, 3.5, 4)) , (1 - intro) * -1.1 + spin + sway, 0);
+  spinner.rotation.x += Math.sin(t * 1.3) * .02;
+  const finalPop = 1 + .07 * outBack(seg(t, 7.2, 7.8));
+  phone.scale.setScalar((.88 + .12 * intro) * finalPop);
+  // --- screens
+  const turn = inOut(seg(t, 3.95, 7.05)) * Math.PI * 2;
+  ring.rotation.y = turn;
+  ring.position.y = 0;
+  for (const c of cards) {
+    const e = outBack(seg(t, 3.7 + c.i * .07, 4.5 + c.i * .07)), r = R * Math.min(1.04, e) * (1 - inC(retract));
+    const a = c.i * Math.PI / 4;
+    c.pos.position.set(Math.sin(a) * r, Math.sin(c.i * 1.9) * .05, Math.cos(a) * r);
+    c.pos.rotation.y = a;
+    const s = Math.max(.001, Math.min(1.02, e)) * (1 - inC(retract));
+    c.pos.scale.setScalar(s);
+    c.pos.visible = t > 3.69 && s > .002;
+  }
+  // --- gentle camera drift + final fade
+  camera.position.x = Math.sin(t * .35) * .35; camera.position.y = 1.15 + Math.sin(t * .5) * .08; camera.lookAt(0, .05, 0);
+  renderer.render(scene, camera);
+  document.getElementById('fade').style.opacity = clamp((t - 7.55) / .45).toFixed(3);
+}
+window.render = render; window.DUR = DUR;
+window.ready = Promise.resolve();
+const q = new URLSearchParams(location.search);
+if (q.has('t')) render(parseFloat(q.get('t'))); else render(0);
+</script>
+</body>
+</html>
