@@ -8,3 +8,7 @@ out
 
 # Enregistrement d'écran fourni par le client (non commité)
 public/screen.mp4
+
+# Musique et rendus (fichiers du client / générés)
+out/
+*.m4a

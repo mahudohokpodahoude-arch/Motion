@@ -50,7 +50,7 @@ const Word: React.FC<{ text: string; at: number; color: string }> = ({ text, at,
 export const Slogan: React.FC = () => {
   const frame = useCurrentFrame();
   const logoIn = interpolate(frame, [0, b(2)], [0, 1], { ...clamp, easing: Easing.bezier(0.2, 0.7, 0.2, 1) });
-  const sub = useEnter(14, 200);
+  const sub = useEnter(11.5, 200);
   return (
     <AbsoluteFill style={{ background: C.WHITE, fontFamily: FONT, alignItems: "center" }}>
       <Logo
@@ -58,9 +58,9 @@ export const Slogan: React.FC = () => {
         style={{ position: "absolute", top: interpolate(logoIn, [0, 1], [380, -40]) }}
       />
       <div style={{ position: "absolute", top: 640, display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <Word text="CONNECTER" at={2} color={C.BLUE} />
-        <Word text="TRANSFORMER" at={6} color={C.BLUE} />
-        <Word text="ENVOYER" at={10} color={C.ORANGE} />
+        <Word text="CONNECTER" at={1.5} color={C.BLUE} />
+        <Word text="TRANSFORMER" at={5} color={C.BLUE} />
+        <Word text="ENVOYER" at={8.5} color={C.ORANGE} />
       </div>
       <div
         style={{
