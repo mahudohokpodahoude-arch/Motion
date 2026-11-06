@@ -226,8 +226,8 @@ if __name__ == "__main__":
     music[:fi] *= np.linspace(0, 1, fi)[:, None]
     fo = int(2.4 * SR)
     music[-fo:] *= np.linspace(1, 0, fo)[:, None] ** 1.5
-    # Niveau des effets : environ 4 dB sous la version précédente (retour client : trop forts).
-    SFX_LEVEL = 0.5
+    # Niveau des effets : réduit deux fois sur retour client (0,9 → 0,5 → 0,35).
+    SFX_LEVEL = 0.35
     mix = 0.85 * music + SFX_LEVEL * sfx
     write_wav(out_mix, mix / max(1.0, np.abs(mix).max() / 0.98))
     if len(sys.argv) > 3:
