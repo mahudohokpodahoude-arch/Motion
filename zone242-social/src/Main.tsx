@@ -1,36 +1,17 @@
 import { AbsoluteFill, Sequence } from "remotion";
+import { C } from "./brand";
 import { Intro } from "./Intro";
-import { Chiffres, Cta, Parcours, Site, Slogan, Venir } from "./Scenes";
-import { S, b } from "./timeline";
-
-const seq = (range: readonly [number, number]) => ({
-  from: b(range[0]),
-  durationInFrames: b(range[1]) - b(range[0]),
-});
+import { INTRO_BEATS, TOTAL_FRAMES, WORLD_START, b } from "./timeline";
+import { World } from "./World";
 
 export const Main: React.FC = () => {
   return (
-    <AbsoluteFill style={{ background: "#fff" }}>
-      <Sequence {...seq(S.intro)}>
+    <AbsoluteFill style={{ background: `radial-gradient(120% 80% at 50% 40%, ${C.BLUE_M}, ${C.NAVY} 62%, ${C.NIGHT})` }}>
+      <Sequence from={0} durationInFrames={b(INTRO_BEATS)}>
         <Intro />
       </Sequence>
-      <Sequence {...seq(S.slogan)}>
-        <Slogan />
-      </Sequence>
-      <Sequence {...seq(S.chiffres)}>
-        <Chiffres />
-      </Sequence>
-      <Sequence {...seq(S.parcours)}>
-        <Parcours />
-      </Sequence>
-      <Sequence {...seq(S.site)}>
-        <Site />
-      </Sequence>
-      <Sequence {...seq(S.venir)}>
-        <Venir />
-      </Sequence>
-      <Sequence {...seq(S.cta)}>
-        <Cta />
+      <Sequence from={b(WORLD_START)} durationInFrames={TOTAL_FRAMES - b(WORLD_START)}>
+        <World />
       </Sequence>
     </AbsoluteFill>
   );
