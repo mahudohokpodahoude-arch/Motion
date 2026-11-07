@@ -4,10 +4,10 @@ flow: automation
 storyboard: no
 message: "Présenter Dr Hestia Segbey Daoudou, panéliste du Week-end Zone Women (20-22 novembre 2026)."
 destination: réseaux sociaux (Reels, Stories, TikTok, WhatsApp)
-aspect: 1080x1920
+aspect: 1920x1080
 language: fr
 length: 10s
-angle: carte-vidéo d'intervenante, photo plein cadre, titres un par un, panels, sound design sans voix
+angle: carte-vidéo d'intervenante, photo plein cadre, titres un par un, panels, musique originale sans voix
 ---
 
 ## Contenu (source : message de Dr Hestia et programme)
