@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Présentation — Dr Hestia Segbey Daoudou</title>
+    <script src="gsap/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Bebas"; src: url("assets/bebas-neue-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Mont"; font-weight: 600; src: url("assets/montserrat-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Mont"; font-weight: 800; src: url("assets/montserrat-latin-800-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #5c0a02; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; color: #fff; font-family: "Bebas", sans-serif;
+        background: linear-gradient(180deg, #8a1304 0%, #7a1004 40%, #3a0500 100%); }
+      .abs { position: absolute; }
+      #photo { left: -150px; top: -40px; width: 1286px; height: 1800px; background: url("assets/hestia.jpg") center/cover; transform-origin: 50% 25%; }
+      #shade { left: 0; top: 700px; width: 1080px; height: 1220px; background: linear-gradient(180deg, rgba(58,5,0,0) 0%, rgba(58,5,0,.9) 24%, #3a0500 52%); }
+      #glow { left: 0; top: 0; width: 1080px; height: 800px; background: radial-gradient(ellipse 60% 55% at 50% 30%, rgba(255,120,50,.28), rgba(255,120,50,0)); }
+      .sh { inset: 0; }
+      .s1 { background: #ff7a33; opacity: .14; clip-path: polygon(0 0, 14% 0, 4% 100%, 0 100%); }
+      .s2 { background: #ff9a4a; opacity: .12; clip-path: polygon(88% 0, 100% 0, 100% 100%, 80% 100%); }
+      #logo { left: 54px; top: 54px; width: 150px; height: 150px; filter: drop-shadow(0 3px 10px rgba(40,0,0,.5)); }
+      #tag { right: 54px; top: 74px; font-family: "Mont"; font-weight: 800; font-size: 25px; letter-spacing: .12em; background: #fff; color: #c9290a; padding: 14px 26px; border-radius: 40px; }
+      #nom { left: 60px; top: 800px; right: 60px; line-height: .88; text-shadow: 0 8px 30px rgba(30,0,0,.55); }
+      #nom .a { font-size: 250px; letter-spacing: .015em; white-space: nowrap; }
+      #nom .b { font-size: 138px; letter-spacing: .02em; white-space: nowrap; color: #ffd9bf; }
+      #nom .a span, #nom .b span { display: inline-block; }
+      .card { left: 60px; right: 60px; height: 112px; display: flex; align-items: stretch; opacity: 0; }
+      .card .n { flex: none; width: 24px; background: #0260a6; }
+      .card .c { flex: 1; background: rgba(255,255,255,.14); border-radius: 0 10px 10px 0; display: flex; align-items: center; padding: 0 34px; font-size: 62px; letter-spacing: .03em; white-space: nowrap; padding-top: 6px; }
+      .card .c small { font-family: "Mont"; font-weight: 800; font-size: 26px; letter-spacing: 0; color: #ffd9bf; margin-left: 18px; padding-top: 0; }
+      #c1 { top: 1130px; } #c2 { top: 1258px; } #c3 { top: 1386px; }
+      #pan { left: 60px; right: 60px; top: 1540px; }
+      #pan .h { font-family: "Mont"; font-weight: 800; font-size: 26px; letter-spacing: .14em; color: #ffd9bf; margin-bottom: 12px; opacity: 0; }
+      .pr { display: flex; gap: 18px; align-items: stretch; margin-bottom: 12px; opacity: 0; }
+      .pr .t { flex: none; width: 190px; background: #0260a6; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: "Mont"; font-weight: 800; font-size: 40px; box-shadow: 0 8px 18px rgba(0,0,0,.3); }
+      .pr .x { flex: 1; background: #fff; color: #c9290a; border-radius: 8px; padding: 12px 24px 6px; font-size: 54px; line-height: 1; letter-spacing: .02em; white-space: nowrap; }
+      .pr .x small { display: block; font-family: "Mont"; font-weight: 800; font-size: 22px; letter-spacing: .1em; color: #6b3a2a; margin-bottom: 2px; }
+      #foot { left: 60px; right: 60px; bottom: 56px; display: flex; align-items: center; justify-content: center; font-size: 34px; letter-spacing: .07em; opacity: 0; }
+      #foot img { width: 76px; height: 76px; margin-right: 18px; } #foot .l { display: flex; align-items: center; }
+      #wipe { inset: 0; background: #ee1a02; }
+      #flash { inset: 0; background: #fff; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10" data-width="1080" data-height="1920">
+      <div id="photo" class="abs"></div>
+      <div id="glow" class="abs"></div>
+      <div class="sh abs s1"></div><div class="sh abs s2"></div>
+      <div id="shade" class="abs"></div>
+      <img id="logo" class="abs" src="assets/logos_alpha.png" alt="Zone 242" />
+      <div id="tag" class="abs">PANÉLISTE</div>
+      <div id="nom" class="abs">
+        <div class="a"><span>D</span><span>R</span><span>&nbsp;</span><span>H</span><span>E</span><span>S</span><span>T</span><span>I</span><span>A</span></div>
+        <div class="b"><span>S</span><span>E</span><span>G</span><span>B</span><span>E</span><span>Y</span><span>&nbsp;</span><span>D</span><span>A</span><span>O</span><span>U</span><span>D</span><span>O</span><span>U</span></div>
+      </div>
+      <div id="c1" class="card abs"><div class="n"></div><div class="c">DOCTEUR EN MÉDECINE</div></div>
+      <div id="c2" class="card abs"><div class="n"></div><div class="c">CONSULTANTE BIEN-ÊTRE<small>périnatalité et parentalité</small></div></div>
+      <div id="c3" class="card abs"><div class="n"></div><div class="c">LEADER DE LA TDM<small>Tour de Mariage</small></div></div>
+      <div id="pan" class="abs">
+        <div class="h">SAMEDI 21 NOVEMBRE</div>
+        <div class="pr" id="p1"><div class="t">11h30</div><div class="x"><small>PANEL 2</small>Femme et l’appel</div></div>
+        <div class="pr" id="p2"><div class="t">15h30</div><div class="x"><small>PANEL 4 · GRANDE SALLE</small>La femme sage bâtit sa maison</div></div>
+      </div>
+      <div id="foot" class="abs"><div class="l">WEEK-END ZONE WOMEN · 20–22 NOVEMBRE 2026 · ZONE 242, SIKECODJI</div></div>
+      <div id="wipe" class="abs"></div>
+      <div id="flash" class="abs"></div>
+      <audio id="snd" src="assets/sound.mp3" data-start="0" data-duration="10" data-track-index="1" data-volume="1"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      gsap.set("#photo", { scale: 1.16 });
+      gsap.set("#logo", { y: -30, opacity: 0 });
+      gsap.set("#tag", { x: 200, opacity: 0 });
+      gsap.set("#nom span", { yPercent: 120, rotate: -10, opacity: 0 });
+      gsap.set(".card", { x: -120, opacity: 0 });
+      gsap.set("#pan .h", { y: 20, opacity: 0 });
+      gsap.set(".pr", { x: -140, opacity: 0 });
+      gsap.set("#foot", { y: 30, opacity: 0 });
+
+      tl.to("#photo", { scale: 1.0, duration: 10, ease: "sine.out" }, 0);
+      tl.fromTo("#wipe", { clipPath: "circle(150% at 50% 40%)" }, { clipPath: "circle(0% at 50% 40%)", duration: 0.55, ease: "power3.inOut" }, 0);
+      tl.to("#logo", { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 0.45);
+      tl.to("#tag", { x: 0, opacity: 1, duration: 0.5, ease: "back.out(1.6)" }, 0.55);
+      // 0,85 s — le nom claque lettre après lettre
+      tl.to("#nom .a span", { yPercent: 0, rotate: 0, opacity: 1, duration: 0.3, ease: "back.out(2.2)", stagger: 0.04 }, 0.85);
+      tl.to("#nom .b span", { yPercent: 0, rotate: 0, opacity: 1, duration: 0.26, ease: "back.out(2)", stagger: 0.022 }, 1.15);
+      tl.fromTo("#root", { x: 0, y: 0 }, { keyframes: [{ x: -9, y: 7, duration: 0.04 }, { x: 8, y: -6, duration: 0.05 }, { x: 0, y: 0, duration: 0.12 }], ease: "power1.out" }, 0.9);
+      // 2,2 / 3,2 / 4,2 s — les trois titres
+      [["#c1", 2.2], ["#c2", 3.2], ["#c3", 4.2]].forEach(([id, at]) => tl.to(id, { x: 0, opacity: 1, duration: 0.45, ease: "back.out(1.5)" }, at));
+      // 5,9 / 6,7 s — les deux panels
+      tl.to("#pan .h", { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 5.6);
+      tl.to("#p1", { x: 0, opacity: 1, duration: 0.42, ease: "back.out(1.5)" }, 5.9);
+      tl.to("#p2", { x: 0, opacity: 1, duration: 0.42, ease: "back.out(1.5)" }, 6.7);
+      // 8,6 s — final
+      tl.to("#foot", { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 8.4);
+      tl.to("#flash", { opacity: 0.7, duration: 0.06, ease: "power2.out" }, 8.6);
+      tl.to("#flash", { opacity: 0, duration: 0.5, ease: "power2.in" }, 8.66);
+      tl.to("#nom", { scale: 1.02, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut", transformOrigin: "0% 50%" }, 8.6);
+      tl.to("#root", { opacity: 1, duration: 0.01 }, 10);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
