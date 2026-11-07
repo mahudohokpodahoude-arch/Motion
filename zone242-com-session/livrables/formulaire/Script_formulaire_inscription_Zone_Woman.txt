@@ -1,0 +1,88 @@
+/**
+ * Crée le formulaire « Inscription · Week-end Zone Woman 2026 » + sa feuille de réponses.
+ * Utilisation : coller ce code dans https://script.google.com (Nouveau projet),
+ * choisir la fonction « creerFormulaire », cliquer sur Exécuter, autoriser, puis lire les liens dans le journal.
+ */
+function creerFormulaire() {
+  var form = FormApp.create('Inscription · Week-end Zone Woman 2026');
+  form.setDescription(
+    'Réserve ta place pour le week-end du 20 au 22 novembre 2026, à Zone 242, Sikècodji.\n' +
+    'Restaurée · Ointe · Envoyée. « Les femmes prennent le contrôle de la Zone ».\n' +
+    'Les champs marqués * sont obligatoires.');
+  form.setCollectEmail(false);
+  form.setAllowResponseEdits(false);
+  form.setShowLinkToRespondAgain(true);
+  form.setProgressBar(false);
+  form.setConfirmationMessage(
+    'Merci ! Ton inscription est enregistrée. Tu recevras une confirmation sur WhatsApp. ' +
+    'Invite une amie : #ZoneWoman');
+
+  // 1. Toi
+  form.addSectionHeaderItem().setTitle('1. Toi');
+  form.addTextItem().setTitle('Nom et prénom').setRequired(true);
+  var tel = form.addTextItem().setTitle('Numéro WhatsApp')
+    .setHelpText('Avec l’indicatif si possible (ex. +229 01 41 62 77 77). Nous t’y enverrons la confirmation.')
+    .setRequired(true);
+  tel.setValidation(FormApp.createTextValidation()
+    .setHelpText('Entre un numéro valide (chiffres, espaces et + uniquement).')
+    .requireTextMatchesPattern('^\\+?[0-9 .\\-]{8,18}$').build());
+  form.addTextItem().setTitle('E-mail (facultatif)');
+  form.addTextItem().setTitle('Quartier ou ville').setRequired(true);
+  form.addMultipleChoiceItem().setTitle('Tranche d’âge')
+    .setChoiceValues(['Moins de 18 ans', '18 - 25 ans', '26 - 35 ans', '36 - 45 ans', '46 ans et plus'])
+    .setRequired(true);
+
+  // 2. Église
+  form.addSectionHeaderItem().setTitle('2. Ton église');
+  form.addMultipleChoiceItem().setTitle('Es-tu membre de Zone 242 ?')
+    .setChoiceValues(['Oui', 'Non']).setRequired(true);
+  form.addTextItem().setTitle('Si non, quelle est ton église ? (facultatif)');
+
+  // 3. Présence
+  form.addSectionHeaderItem().setTitle('3. Ta présence');
+  form.addCheckboxItem().setTitle('Quels jours seras-tu là ?')
+    .setChoiceValues([
+      'Vendredi 20 novembre, 19h45 : soirée spirituelle',
+      'Samedi 21 novembre : Women’s Experience Day',
+      'Dimanche 22 novembre, 8h45 : culte de clôture'])
+    .setRequired(true);
+  form.addMultipleChoiceItem().setTitle('Samedi à 15h30 : deux ateliers en même temps')
+    .setHelpText('Si tu viens le samedi. Cela nous aide à préparer les salles.')
+    .setChoiceValues([
+      'Panel 4 : La femme sage bâtit sa maison (grande salle)',
+      'Atelier jeunes filles : Femme, tu n’es pas en retard ! (petite salle)',
+      'Je ne sais pas encore']);
+
+  // 4. Women's Night
+  form.addSectionHeaderItem().setTitle('4. Women’s Night, samedi 19h30')
+    .setHelpText('Barbecue, musique, jeux, témoignages. 150 places. Ton inscription n’est confirmée qu’après notre message WhatsApp.');
+  form.addMultipleChoiceItem().setTitle('Viendras-tu à la Women’s Night ?')
+    .setChoiceValues(['Non, pas cette fois', 'Oui, en zone normale', 'Oui, en zone VIP'])
+    .setRequired(true);
+
+  // 5. Zone Détente
+  form.addSectionHeaderItem().setTitle('5. Zone Détente (facultatif)');
+  form.addCheckboxItem().setTitle('Qu’est-ce qui t’intéresse ?')
+    .setChoiceValues(['Salon de thé', 'Massages', 'Beauté et bien-être', 'Soins et conseil thérapeutique', 'Photos']);
+
+  // 6. Invitation
+  form.addSectionHeaderItem().setTitle('6. Invitation');
+  form.addTextItem().setTitle('Qui t’a invitée ? (facultatif)');
+  form.addParagraphTextItem().setTitle('Veux-tu inviter une amie ? Son prénom et son WhatsApp (facultatif)');
+
+  // 7. Accueil et accord
+  form.addSectionHeaderItem().setTitle('7. Pour bien t’accueillir');
+  form.addParagraphTextItem().setTitle('Allergie, régime alimentaire ou besoin particulier (facultatif)');
+  form.addCheckboxItem().setTitle('Contact')
+    .setChoiceValues(['J’accepte d’être contactée sur WhatsApp au sujet de ce week-end.']).setRequired(true);
+  form.addCheckboxItem().setTitle('Photos et vidéos (facultatif)')
+    .setChoiceValues(['J’accepte d’apparaître sur les photos et vidéos de l’événement.']);
+
+  // Feuille de réponses liée
+  var ss = SpreadsheetApp.create('Réponses · Inscription Week-end Zone Woman 2026');
+  form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
+
+  Logger.log('Formulaire à partager (lien public) : ' + form.getPublishedUrl());
+  Logger.log('Formulaire à modifier : ' + form.getEditUrl());
+  Logger.log('Feuille des réponses : ' + ss.getUrl());
+}
