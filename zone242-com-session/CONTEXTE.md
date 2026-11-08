@@ -22,10 +22,10 @@ Thème : **Restaurée · Ointe · Envoyée**. Slogan : « Les femmes prennent le
 - Message fort : pendant tout le week-end, les femmes tiennent l'accueil, la louange, l'animation et l'organisation.
 
 **Décisions prises**
-- **150 places** pour le week-end (inscription obligatoire). Le programme du 8 nov. parle d'une participation payante (zone VIP / normale, « prix à préciser ») pour l'Agapè du dimanche : à confirmer, ne rien afficher en attendant. Plus de Women's Night ni d'atelier jeunes filles dans cette version.
+- **150 places** pour le week-end, **participation gratuite** (confirmé par l'utilisateur le 8 nov.), inscription obligatoire. Aucun prix ni zone VIP à afficher. Plus de Women's Night ni d'atelier jeunes filles : le PDF « Organisation WZW 2026 » est la version **finale** du programme (dates 27-29 nov.).
 - Programme résumé : ven. 27 19h45 lancement · sam. 28 Women's Experience Day (relaxation, Panel 1, Belle et en bonne santé, Panels 2 à 4, table ronde 17h15-18h15) · dim. 29 culte 8h45 + Agapè des Femmes 11h30.
 - Suivi des créations pour le graphiste : Google Sheet « Suivi des créations · Week-end Zone Women 2026 » (copie xlsx dans `livrables/documents/`).
-- Orthographes imposées : **Jessie Vanees**, **Pasteur Veronica**, **Pasteure Anne-Laure**, « 9h00 ».
+- Orthographes imposées : **Jessie Vanessa**, **Pasteure Veronica**, **Pasteure Anne-Laure**, « 9h00 ».
 - Dr Hestia SEGBEY DAOUDOU : docteur en médecine, consultante bien-être en périnatalité et parentalité, leader de la TDM (Tour de Mariage) ; intervient au Panel 2 et au Panel 4.
 - Formulaire d'inscription : **Google Forms** (retenu). En-tête 1600×400 prêt.
 
@@ -36,7 +36,7 @@ Thème : **Restaurée · Ointe · Envoyée**. Slogan : « Les femmes prennent le
 | Brief graphiste mis à jour (avec « Save the date », échéance 4 nov.) | `livrables/documents/` |
 | Script du Google Form (16 questions, 150 places) | `livrables/formulaire/` |
 | En-tête Google Form 1600×400 et 3200×800 | `livrables/entetes/` |
-| Carrousel programme 16:9 (8 diapos, 1920×1080) | `livrables/carrousels/Programme_WZW_*.png` |
+| Carrousel programme carré 1080×1080 (8 diapos, programme final, 27-29 nov.) | `livrables/carrousels/Programme_WZW_carre_*.png` |
 | Carrousel « 4 raisons de venir » carré (6 diapos, 1080×1080) | `livrables/carrousels/4_raisons_WZW_*.png` |
 | Présentation vidéo de Dr Hestia (10 s, 1920×1080, musique) | `presentation-dr-hestia/` (modèle réutilisable pour les autres intervenantes) |
 | Génériques « Question à l'Apôtre Amos » : début et fin, 4 s, formats 9:16, 4:3, 16:9, sound design doux | `generique-questions-pasteurs/`, `generique-fin-zone242/` (sous-dossiers `formats/`) |
