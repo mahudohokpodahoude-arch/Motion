@@ -19,13 +19,12 @@ Dépôt : `mahudohokpodahoude-arch/Motion`, branche `claude/heygen-hyperframes-s
 Thème : **Restaurée · Ointe · Envoyée**. Slogan : « Les femmes prennent le contrôle de la Zone ». Contact (sur l'affiche) : contact.zone242@gmail.com · 0141627777. Hashtags : #ZoneWoman #Restaurée #Ointe #Envoyée. Rue de Golf.FM.
 
 **Programme : version « Organisation WZW 2026 » (reçue le 8 nov., remplace l'ancienne ; seules les dates ont changé).** Voir `livrables/documents/Plan_Com_Week-end_Zone_Women.pdf` (annexe) pour le détail.
-- Ven. 20 : 19h45 grande soirée spirituelle, Prophétesse Mary Favour TONGSI.
-- Sam. 21 (Women's Experience Day) : 9h00 petit-déjeuner · 9h30-10h00 louange et méditation biblique · 10h00-11h00 Panel 1 *Guérir des traumatismes émotionnels* (Pasteure Anne-Laure, Prophétesse Pélagie, Évangéliste Jessie Vanees, Pasteur Veronica, Pasteure Murielle) · 11h00-11h30 pause · 11h30-12h30 Panel 2 *Femme et l'appel* (Prophétesse Manne, Dr Hestia DAOUDOU) · 12h30-14h00 déjeuner, Zone Détente, soins et conseil thérapeutique · 14h00-15h00 Panel 3 *Femme, foi et finances* (Pasteure Espérance, Leader Huldah, Prophétesse Pélagie) · 15h00-15h30 pause · 15h30-16h30 deux ateliers : grande salle Panel 4 *La femme sage bâtit sa maison* (Mme Tossou, Dr Hestia DAOUDOU) ; petite salle Atelier jeunes filles *Femme, tu n'es pas en retard !* (Leader Richmelle, Pasteure Murielle) · 16h30-17h00 pause · 17h00-18h30 grande table ronde *Les conversations que les femmes n'osent pas avoir* (animation Imalia et l'équipe du MD) · 19h30 Women's Night (barbecue, musique, jeux, témoignages) · toute la journée Zone Détente (salon de thé, massages, beauté et bien-être, photos).
-- Dim. 22 : 8h45 grand culte de clôture, Prophétesse Mary Favour TONGSI.
 - Message fort : pendant tout le week-end, les femmes tiennent l'accueil, la louange, l'animation et l'organisation.
 
 **Décisions prises**
-- Women's Night : **150 places** (pas 50). Aucun prix VIP à afficher. Ne pas mettre de prix.
+- **150 places** pour le week-end (inscription obligatoire). Le programme du 8 nov. parle d'une participation payante (zone VIP / normale, « prix à préciser ») pour l'Agapè du dimanche : à confirmer, ne rien afficher en attendant. Plus de Women's Night ni d'atelier jeunes filles dans cette version.
+- Programme résumé : ven. 27 19h45 lancement · sam. 28 Women's Experience Day (relaxation, Panel 1, Belle et en bonne santé, Panels 2 à 4, table ronde 17h15-18h15) · dim. 29 culte 8h45 + Agapè des Femmes 11h30.
+- Suivi des créations pour le graphiste : Google Sheet « Suivi des créations · Week-end Zone Women 2026 » (copie xlsx dans `livrables/documents/`).
 - Orthographes imposées : **Jessie Vanees**, **Pasteur Veronica**, **Pasteure Anne-Laure**, « 9h00 ».
 - Dr Hestia SEGBEY DAOUDOU : docteur en médecine, consultante bien-être en périnatalité et parentalité, leader de la TDM (Tour de Mariage) ; intervient au Panel 2 et au Panel 4.
 - Formulaire d'inscription : **Google Forms** (retenu). En-tête 1600×400 prêt.
