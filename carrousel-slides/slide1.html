@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Carrousel · Slide 1</title>
+<style>
+@font-face{font-family:Montserrat;font-weight:400;src:url(fonts/montserrat-latin-400-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:500;src:url(fonts/montserrat-latin-500-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:900;src:url(fonts/montserrat-latin-900-normal.woff2)}
+:root{--peach:#ffd29a;--paper:#f4f0e1;--navy:#17106e;--orange:#ff5a36}
+html,body{margin:0;background:#000}
+#slide{position:relative;width:1080px;height:1350px;overflow:hidden;font-family:Montserrat,sans-serif;
+  background:radial-gradient(ellipse 85% 70% at 50% 46%,#2b28ad 0%,#1b1782 52%,#0d095a 100%)}
+.abs{position:absolute;white-space:nowrap;line-height:1}
+svg.paper{position:absolute;left:0;top:0}
+.tape{left:346px;top:288px;width:396px;height:92px;transform:rotate(-1.2deg);
+  background:linear-gradient(180deg,rgba(226,206,200,.78),rgba(205,184,180,.7));box-shadow:0 4px 10px rgba(0,0,40,.25);
+  clip-path:polygon(0 0,100% 0,98% 12%,100% 25%,98% 38%,100% 50%,98% 62%,100% 75%,98% 88%,100% 100%,0 100%,2% 88%,0 75%,2% 62%,0 50%,2% 38%,0 25%,2% 12%)}
+#txt{left:0;top:0;width:1080px;height:1350px;transform:rotate(-2.2deg);transform-origin:540px 700px}
+.head{font-weight:900;font-size:62px;color:#0b0a14;left:0;width:1080px;text-align:center;letter-spacing:-.005em}
+.body{font-weight:500;font-size:84px;color:#14121c;left:0;width:1080px;text-align:center;letter-spacing:-.01em}
+.body b{font-weight:500;color:var(--orange)}
+.ref{font-weight:400;font-size:31px;color:#2a2833;left:230px;line-height:1.35;white-space:normal}
+#photo{left:770px;top:1000px;width:240px;height:240px;border-radius:50%;border:10px solid var(--paper);box-sizing:border-box;
+  background:url(assets/amos.jpg) center/cover;box-shadow:0 14px 34px rgba(0,0,40,.55)}
+#dot{left:770px;top:1000px;width:240px;height:240px;border-radius:50%;box-shadow:0 0 0 5px var(--orange);}
+#name{left:740px;top:1262px;width:300px;height:44px;background:var(--orange);color:#fff;font-weight:800;font-size:22px;letter-spacing:.05em;
+  text-align:center;line-height:44px;border-radius:22px;box-shadow:0 8px 20px rgba(0,0,40,.4)}
+</style></head><body>
+<div id="slide">
+  <!-- logo ZONE 242 -->
+  <div class="abs" style="right:58px;top:30px;width:132px;height:135px">
+    <img src="assets/zone_white.svg" style="position:absolute;left:0;top:0" width="132" height="135"><img src="assets/zone_org.svg" style="position:absolute;left:0;top:0" width="132" height="135">
+  </div>
+
+  <div class="abs" style="left:0;width:1080px;text-align:center;top:190px;font-weight:800;font-size:39px;color:var(--peach);letter-spacing:.01em">6 CLÉS POUR ENGAGER LE SURNATUREL</div>
+
+  <!-- paper note with page curl -->
+  <svg class="paper" width="1080" height="1350" viewBox="0 0 1080 1350">
+    <defs>
+      <filter id="sh" x="-10%" y="-10%" width="120%" height="125%"><feGaussianBlur stdDeviation="22"/></filter>
+      <filter id="sh2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="10"/></filter>
+      <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7f4e8"/><stop offset="1" stop-color="#ece8d6"/></linearGradient>
+      <linearGradient id="fl" gradientUnits="userSpaceOnUse" x1="835" y1="734" x2="880" y2="935"><stop offset="0" stop-color="#f8f6ec"/><stop offset="1" stop-color="#cfcab5"/></linearGradient>
+    </defs>
+    <polygon points="126,376 976,344 1004,868 700,1006 164,1068" fill="rgba(0,0,30,.55)" filter="url(#sh)" transform="translate(10,26)"/>
+    <polygon points="116,358 969,327 997,858 700,1000 158,1065" fill="url(#pg)"/>
+    <polygon points="997,858 700,1000 835,734" fill="rgba(30,25,10,.35)" filter="url(#sh2)" transform="translate(-6,10)"/>
+    <polygon points="997,858 700,1000 835,734" fill="url(#fl)"/>
+  </svg>
+  <div class="abs tape"></div>
+
+  <div class="abs" id="txt">
+    <div class="abs head" style="top:445px">COMMENT ACTIVER</div>
+    <div class="abs body" style="top:560px">le <b>surnaturel</b></div>
+    <div class="abs body" style="top:662px">au quotidien ?</div>
+    <div class="abs ref" style="top:792px">6 clés spirituelles pour<br>changer votre réalité</div>
+  </div>
+
+  <!-- bottom call to action -->
+  <div class="abs" style="left:290px;top:1092px;font-weight:800;font-size:29px;line-height:1.28;color:#fff;letter-spacing:.01em">GLISSE POUR DÉCOUVRIR<br>LES 6 CLÉS</div>
+  <svg class="abs" style="left:560px;top:1142px" width="110" height="26" viewBox="0 0 110 26"><path d="M2 13H100M88 3l14 10-14 10" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+  <!-- circle photo (bottom-right corner) -->
+  <div class="abs" id="dot"></div><div class="abs" id="photo"></div>
+  <div class="abs" id="name">APÔTRE AMOS ELITE</div>
+
+  <div class="abs" style="left:42px;top:1292px;font-weight:800;font-size:31px;color:#fff;letter-spacing:.01em">#LESURNATUREL</div>
+  <div class="abs" style="left:560px;top:1290px;font-weight:800;font-size:36px;color:#fff">1</div>
+</div>
+<script>
+window.ready=(async()=>{await Promise.all([400,500,600,700,800,900].map(w=>document.fonts.load(w+' 20px Montserrat')));await document.fonts.ready;await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));
+  await new Promise(r=>{const i=new Image();i.onload=r;i.src='assets/amos.jpg'});})();
+</script></body></html>
