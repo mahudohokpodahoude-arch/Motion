@@ -1,12 +1,13 @@
 /**
- * Crée le formulaire « Inscription · Week-end Zone Woman 2026 » + sa feuille de réponses.
+ * Crée le formulaire « Inscription · Week-end Zone Women 2026 » + sa feuille de réponses.
  * Utilisation : coller ce code dans https://script.google.com (Nouveau projet),
  * choisir la fonction « creerFormulaire », cliquer sur Exécuter, autoriser, puis lire les liens dans le journal.
  */
 function creerFormulaire() {
-  var form = FormApp.create('Inscription · Week-end Zone Woman 2026');
+  var form = FormApp.create('Inscription · Week-end Zone Women 2026');
   form.setDescription(
-    'Réserve ta place pour le week-end du 20 au 22 novembre 2026, à Zone 242, Sikècodji.\n' +
+    'Réserve ta place pour le week-end du 27 au 29 novembre 2026, à Zone 242, Sikècodji (rue de Golf FM, Cotonou).\n' +
+    'Participation gratuite · 150 places · inscription obligatoire.\n' +
     'Restaurée · Ointe · Envoyée. « Les femmes prennent le contrôle de la Zone ».\n' +
     'Les champs marqués * sont obligatoires.');
   form.setCollectEmail(false);
@@ -42,28 +43,33 @@ function creerFormulaire() {
   form.addSectionHeaderItem().setTitle('3. Ta présence');
   form.addCheckboxItem().setTitle('Quels jours seras-tu là ?')
     .setChoiceValues([
-      'Vendredi 20 novembre, 19h45 : soirée spirituelle',
-      'Samedi 21 novembre : Women’s Experience Day',
-      'Dimanche 22 novembre, 8h45 : culte de clôture'])
+      'Vendredi 27 novembre, 19h45 : soirée de lancement',
+      'Samedi 28 novembre, dès 9h00 : Women’s Experience Day',
+      'Dimanche 29 novembre, 8h45 : grand culte de clôture'])
     .setRequired(true);
-  form.addMultipleChoiceItem().setTitle('Samedi à 15h30 : deux ateliers en même temps')
-    .setHelpText('Si tu viens le samedi. Cela nous aide à préparer les salles.')
+  form.addCheckboxItem().setTitle('Samedi : quelles sessions t’intéressent ? (facultatif)')
+    .setHelpText('Si tu viens le samedi. Cela nous aide à préparer la grande salle.')
     .setChoiceValues([
-      'Panel 4 : La femme sage bâtit sa maison (grande salle)',
-      'Atelier jeunes filles : Femme, tu n’es pas en retard ! (petite salle)',
-      'Je ne sais pas encore']);
+      '9h30 : Séance de relaxation',
+      '10h30 : Panel 1 · Guérir des traumatismes émotionnels',
+      '12h00 : Belle et en bonne santé',
+      '14h00 : Panel 2 · Me voici, envoie-moi !',
+      '15h00 : Panel 3 · Femme, foi et finances',
+      '16h00 : Panel 4 · Ma maison, ma mission',
+      '17h15 : Grande table ronde · Les conversations que les femmes n’osent pas avoir']);
 
-  // 4. Women's Night
-  form.addSectionHeaderItem().setTitle('4. Women’s Night, samedi 19h30')
-    .setHelpText('Barbecue, musique, jeux, témoignages. 150 places. Ton inscription n’est confirmée qu’après notre message WhatsApp.');
-  form.addMultipleChoiceItem().setTitle('Viendras-tu à la Women’s Night ?')
-    .setChoiceValues(['Non, pas cette fois', 'Oui, en zone normale', 'Oui, en zone VIP'])
+  // 4. Agapè des Femmes
+  form.addSectionHeaderItem().setTitle('4. L’Agapè des Femmes, dimanche 11h30')
+    .setHelpText('Brunch convivial, témoignages du week-end, petits prix humoristiques, photo de groupe, prière d’envoi. Participation gratuite. 150 places. Ton inscription n’est confirmée qu’après notre message WhatsApp.');
+  form.addMultipleChoiceItem().setTitle('Viendras-tu à l’Agapè des Femmes ?')
+    .setChoiceValues(['Oui', 'Non, pas cette fois', 'Je ne sais pas encore'])
     .setRequired(true);
 
   // 5. Zone Détente
-  form.addSectionHeaderItem().setTitle('5. Zone Détente (facultatif)');
+  form.addSectionHeaderItem().setTitle('5. Zone Détente, samedi 13h00 - 14h00 (facultatif)')
+    .setHelpText('Massages : 4 tables, créneaux de 15 minutes, inscription à l’accueil le jour même.');
   form.addCheckboxItem().setTitle('Qu’est-ce qui t’intéresse ?')
-    .setChoiceValues(['Salon de thé', 'Massages', 'Beauté et bien-être', 'Soins et conseil thérapeutique', 'Photos']);
+    .setChoiceValues(['Salon de thé', 'Massages', 'Beauté et bien-être', 'Coin photo']);
 
   // 6. Invitation
   form.addSectionHeaderItem().setTitle('6. Invitation');
@@ -79,7 +85,7 @@ function creerFormulaire() {
     .setChoiceValues(['J’accepte d’apparaître sur les photos et vidéos de l’événement.']);
 
   // Feuille de réponses liée
-  var ss = SpreadsheetApp.create('Réponses · Inscription Week-end Zone Woman 2026');
+  var ss = SpreadsheetApp.create('Réponses · Inscription Week-end Zone Women 2026');
   form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
 
   Logger.log('Formulaire à partager (lien public) : ' + form.getPublishedUrl());

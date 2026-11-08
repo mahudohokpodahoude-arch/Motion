@@ -33,14 +33,14 @@ body{width:1600px;height:400px;overflow:hidden;position:relative;font-family:B;c
 <div class=shape></div><div class="shape s1"></div><div class="shape s2"></div><div class="shape s3"></div><div class="shape s4"></div><div class="shape s5"></div>
 <div class=glow></div>
 <img id=logo src=logos_alpha.png>
-<div id=dates><div class=l><span>DU VEN.</span><span>AU DIM.</span></div><div class=n><span>20</span><span>22</span></div><div class=m>NOVEMBRE 2026</div></div>
+<div id=dates><div class=l><span>DU VEN.</span><span>AU DIM.</span></div><div class=n><span>27</span><span>29</span></div><div class=m>NOVEMBRE 2026</div></div>
 <img id=titre src=titre_alpha3.png>
 <div id=theme>THÈME : RESTAURÉE · OINTE · ENVOYÉE</div>
 <div id=quote>« LES FEMMES PRENNENT LE CONTRÔLE DE LA ZONE »</div>
 <div id=blue></div>
 <div id=addr>
  <svg width=44 height=62 viewBox="0 0 44 62" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:4px"><path d="M22 4C11 4 4 12 4 22c0 11 18 26 18 26s18-15 18-26C40 12 33 4 22 4z"/><circle cx=22 cy=21 r=7.5 /><path d="M16 56l12 6M28 56l-12 6"/></svg>
- <div><div class=t>ZONE 242 – SIKECODJI<br>RUE DE GOLF.FM</div><div class=c>contact.zone242@gmail.com<br>0141627777</div></div>
+ <div><div class=t>ZONE 242 – SIKECODJI<br>RUE DE GOLF FM</div><div class=c>contact.zone242@gmail.com<br>01 41 62 77 77</div></div>
 </div>
 <script>document.fonts.ready.then(()=>{window.r=1})</script>"""
 (H / "banniere.html").write_text(html)

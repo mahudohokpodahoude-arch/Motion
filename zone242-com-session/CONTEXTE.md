@@ -34,8 +34,8 @@ Thème : **Restaurée · Ointe · Envoyée**. Slogan : « Les femmes prennent le
 |---|---|
 | Plan de com et de design (PDF, 10 p., 22 idées vidéo) | `livrables/documents/` |
 | Brief graphiste mis à jour (avec « Save the date », échéance 4 nov.) | `livrables/documents/` |
-| Script du Google Form (16 questions, 150 places) | `livrables/formulaire/` |
-| En-tête Google Form 1600×400 et 3200×800 | `livrables/entetes/` |
+| Script du Google Form (mis à jour : programme final, 27-29 nov., Agapè, gratuit) | `livrables/formulaire/` |
+| En-tête Google Form 1600×400 et 3200×800 (dates 27-29 nov.) | `livrables/entetes/` |
 | Carrousel programme carré 1080×1080 (8 diapos, programme final, 27-29 nov.) | `livrables/carrousels/Programme_WZW_carre_*.png` |
 | Carrousel « 4 raisons de venir » carré (6 diapos, 1080×1080) | `livrables/carrousels/4_raisons_WZW_*.png` |
 | Présentation vidéo de Dr Hestia (10 s, 1920×1080, musique) | `presentation-dr-hestia/` (modèle réutilisable pour les autres intervenantes) |
@@ -48,9 +48,9 @@ Thème : **Restaurée · Ointe · Envoyée**. Slogan : « Les femmes prennent le
 | Film 3D ZONE 242 (en pause à la scène 1/9) | `zone242-motion-3d/` |
 
 ## 5. Points encore ouverts
-1. **Orthographe du nom** : l'affiche dit « Zone **Women** », le brief graphiste et le formulaire disent « Zone **Woman** ». À trancher partout.
-2. **Zone VIP** : existe-t-elle encore (sans prix) ? Les choix du formulaire proposent « zone normale » et « zone VIP ».
-3. **Lien d'inscription / QR code** : le formulaire n'est pas encore créé. Lancer le script sur script.google.com, puis demander le QR code et l'ajouter sur la diapo 6 du programme, l'affiche et les flyers.
+1. ~~Orthographe du nom~~ : tranché, « Zone Women » partout (hashtag #ZoneWoman conservé).
+2. ~~Zone VIP~~ : supprimée, participation gratuite.
+3. **Lien d'inscription / QR code** : le formulaire n'est pas encore créé. Lancer le script sur script.google.com, puis demander le QR code et l'ajouter sur la diapo 8 du programme carré, l'affiche et les flyers.
 4. **Palette et logo « Zone Women »** pour le graphiste ; **photos HD** des 12 autres intervenantes (déjà reçue : Dr Hestia) ; photo de la Prophétesse.
 5. **Affiche baptême** : brouillon sans illustration (fond « eau », « BAPTÊME », logo, adresse « Cotonou Sikecodji rue Golf FM », 1920×1080). Manque la personne plongée dans l'eau : demander une photo à détourer ou valider une silhouette stylisée.
 6. Textes à corriger côté programme : « Mme Tossou / Dr Hestia » (slash), « etc… », « L'équipe du MD » (préciser).
