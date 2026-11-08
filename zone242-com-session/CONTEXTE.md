@@ -15,10 +15,10 @@ Dépôt : `mahudohokpodahoude-arch/Motion`, branche `claude/heygen-hyperframes-s
 - **Affiche du week-end (référence couleurs)** : dégradé `#EE1A02 → #F12E04 → #F5541A → #FB7A2A`, formes anguleuses claires/foncées, bleu `#0260A6` pour dates et repères, blanc, crème `#FFE3CF`. Titre « WZW » + script « WEEK-END ZONE WOMEN » (extraits de l'affiche d'origine). Polices : Bebas Neue (titres), Montserrat (détails).
 - Règles vidéo : **aucune voix** ; sound design et musique **synthétisés** (originaux) ; niveau doux (pic −9 dBFS pour les effets ; musique à environ −18 LUFS). Horaires écrits « 9h00 » (h minuscule).
 
-## 3. Week-end Zone Women · 20-22 novembre 2026 · Zone 242, Sikècodji
+## 3. Week-end Zone Women · 27-29 novembre 2026 · Zone 242, Sikècodji
 Thème : **Restaurée · Ointe · Envoyée**. Slogan : « Les femmes prennent le contrôle de la Zone ». Contact (sur l'affiche) : contact.zone242@gmail.com · 0141627777. Hashtags : #ZoneWoman #Restaurée #Ointe #Envoyée. Rue de Golf.FM.
 
-**Programme (version validée)**
+**Programme : version « Organisation WZW 2026 » (reçue le 8 nov., remplace l'ancienne ; seules les dates ont changé).** Voir `livrables/documents/Plan_Com_Week-end_Zone_Women.pdf` (annexe) pour le détail.
 - Ven. 20 : 19h45 grande soirée spirituelle, Prophétesse Mary Favour TONGSI.
 - Sam. 21 (Women's Experience Day) : 9h00 petit-déjeuner · 9h30-10h00 louange et méditation biblique · 10h00-11h00 Panel 1 *Guérir des traumatismes émotionnels* (Pasteure Anne-Laure, Prophétesse Pélagie, Évangéliste Jessie Vanees, Pasteur Veronica, Pasteure Murielle) · 11h00-11h30 pause · 11h30-12h30 Panel 2 *Femme et l'appel* (Prophétesse Manne, Dr Hestia DAOUDOU) · 12h30-14h00 déjeuner, Zone Détente, soins et conseil thérapeutique · 14h00-15h00 Panel 3 *Femme, foi et finances* (Pasteure Espérance, Leader Huldah, Prophétesse Pélagie) · 15h00-15h30 pause · 15h30-16h30 deux ateliers : grande salle Panel 4 *La femme sage bâtit sa maison* (Mme Tossou, Dr Hestia DAOUDOU) ; petite salle Atelier jeunes filles *Femme, tu n'es pas en retard !* (Leader Richmelle, Pasteure Murielle) · 16h30-17h00 pause · 17h00-18h30 grande table ronde *Les conversations que les femmes n'osent pas avoir* (animation Imalia et l'équipe du MD) · 19h30 Women's Night (barbecue, musique, jeux, témoignages) · toute la journée Zone Détente (salon de thé, massages, beauté et bien-être, photos).
 - Dim. 22 : 8h45 grand culte de clôture, Prophétesse Mary Favour TONGSI.
