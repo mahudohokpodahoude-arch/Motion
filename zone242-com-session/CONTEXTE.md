@@ -42,6 +42,7 @@ Thème : **Restaurée · Ointe · Envoyée**. Slogan : « Les femmes prennent le
 | Présentation vidéo de Dr Hestia (10 s, 1920×1080, musique) | `presentation-dr-hestia/` (modèle réutilisable pour les autres intervenantes) |
 | Génériques « Question à l'Apôtre Amos » : début et fin, 4 s, formats 9:16, 4:3, 16:9, sound design doux | `generique-questions-pasteurs/`, `generique-fin-zone242/` (sous-dossiers `formats/`) |
 | Génériques de rubriques : « Je déclare » (3 s), « L'essentiel à retenir du Message » (3 s, vibe motion) | `generique-je-declare/`, `generique-essentiel-message/` |
+| Logo animé WZW « Week-end Zone Women » (5 s, 1920×1080, jingle original) ; lettres et mots découpés dans `assets/` | `logo-wzw-anime/` |
 | Quotes Apôtre Amos Elite (5 citations, portrait et carré) ; affiches retouchées ; miniatures YouTube | `livrables/quotes/`, `livrables/affiches/`, `livrables/miniatures/` |
 | Fonds animés boucle 10 s pour paroles (violet, orange, chevrons rouges) | `adoration-fond-fumee/`, `adoration-fond-orange/`, `fond-chevrons-rouges/` |
 | Film 3D ZONE 242 (en pause à la scène 1/9) | `zone242-motion-3d/` |
