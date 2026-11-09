@@ -74,8 +74,8 @@ def letter(name, keys):
 <p>Pour cette édition, le programme s’articule autour de quatre grandes orientations :</p>
 <h3>Pour être restaurée</h3><p>Un espace de dialogue autour des blessures intérieures et des traumatismes émotionnels. L’objectif est d’aborder avec bienveillance des sujets souvent difficiles à exprimer, de sortir du silence et d’ouvrir un chemin vers la guérison et la reconstruction.</p>
 <h3>Pour être ointe</h3><p>Deux grands rendez-vous spirituels avec la Prophétesse Mary Favour TONGSI, prévus le vendredi 27 novembre à 19h45 et le dimanche 29 novembre à 8h45.</p>
-<h3>Pour être envoyée</h3><p>Des panels et un atelier pour aider chaque femme à découvrir et à assumer son appel. Les échanges porteront notamment sur les thèmes : Femme et appel, Femme, foi et finances, La femme sage bâtit sa maison, ainsi qu’un atelier dédié aux jeunes filles.</p>
-<h3>Pour se ressourcer et célébrer</h3><p>Un temps de détente et de bien-être, ainsi qu’une journée spéciale: ateliers, barbecue, musique, jeux et témoignages avec la Women’s Expérience Day.</p>
+<h3>Pour être envoyée</h3><p>Des panels pour aider chaque femme à découvrir et à assumer son appel. Les échanges porteront notamment sur les thèmes : Me voici, envoie-moi !, Femme, foi et finances, Ma maison, ma mission.</p>
+<h3>Pour se ressourcer et célébrer</h3><p>Un temps de détente et de bien-être (séance de relaxation, session « Belle et en bonne santé », Zone Détente), ainsi qu’une journée spéciale, la Women’s Experience Day, et l’Agapè des Femmes le dimanche : brunch convivial, témoignages et prière d’envoi.</p>
 <p>À travers ces différents moments, nous souhaitons que chaque participante reparte fortifiée, renouvelée et mieux disposée à accomplir sa destinée.</p>
 <h2>Votre contribution au programme</h2>
 <p>Les panels et la table ronde seront des moments de partage d’expériences, de réflexion et de transmission. Nous souhaitons des échanges sincères, bienveillants et pratiques, qui apporteront des pistes utiles aux participantes.</p>
