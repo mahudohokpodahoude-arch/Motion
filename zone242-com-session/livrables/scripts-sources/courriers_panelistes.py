@@ -1,4 +1,4 @@
-# Courriers personnalisés aux panélistes (WOMAN ZONE 2026) : 1 PDF par personne + PDF regroupé.
+# Courriers personnalisés aux panélistes (Week-end Zone Women 2026) : 1 PDF par personne + PDF regroupé.
 # Source : courrier officiel (texte repris tel quel) + programme final « Organisation WZW 2026 », dates 27-29 novembre.
 import sys, pathlib, html, subprocess
 from playwright.sync_api import sync_playwright
@@ -64,13 +64,13 @@ def iv_block(i, key, who):
 def letter(name, keys):
     blocks = "".join(iv_block(i+1, k, name) for i, k in enumerate(keys)) if len(keys) > 1 else iv_block("", keys[0], name).replace("Intervention ", "Votre intervention").replace('<div class=n>Votre intervention</div>', '')
     return f"""<!doctype html><meta charset=utf-8><style>{CSS}</style>
-<div class=t>WOMAN ZONE 2026</div><div class=st>COURRIER OFFICIEL À L’ATTENTION DES PANÉLISTES</div>
-<p class=obj>Objet : WOMAN ZONE 2026 – Remerciements, présentation de la vision et préparation de votre intervention</p>
+<div class=t>WEEK-END ZONE WOMEN 2026</div><div class=st>COURRIER OFFICIEL À L’ATTENTION DES PANÉLISTES</div>
+<p class=obj>Objet : Week-end Zone Women 2026 – Remerciements, présentation de la vision et préparation de votre intervention</p>
 <p>Chère {html.escape(name)},</p>
-<p>C’est avec joie et reconnaissance envers le Seigneur que nous vous remercions d’avoir accepté notre invitation à prendre part à WOMAN ZONE 2026, qui se tiendra du 27 au 29 novembre 2026 à l’église MILMO – Zone 242, Sikècodji.</p>
+<p>C’est avec joie et reconnaissance envers le Seigneur que nous vous remercions d’avoir accepté notre invitation à prendre part au Week-end Zone Women 2026, qui se tiendra du 27 au 29 novembre 2026 à l’église MILMO – Zone 242, Sikècodji.</p>
 <p>Votre disponibilité et votre présence comptent beaucoup pour nous. Nous sommes heureuses de pouvoir compter sur vous pour cette rencontre qui porte une vision particulière pour les femmes.</p>
-<h2>WOMAN ZONE 2026 : une rencontre, une vision, une transformation</h2>
-<p>WOMAN ZONE est un rassemblement dédié aux femmes. C’est un temps de communion, de partage, de restauration et de transformation. Nous souhaitons offrir à chaque participante un cadre favorable à la rencontre avec Dieu, au partage d’expériences et à l’épanouissement personnel et spirituel.</p>
+<h2>Week-end Zone Women 2026 : une rencontre, une vision, une transformation</h2>
+<p>Le Week-end Zone Women est un rassemblement dédié aux femmes. C’est un temps de communion, de partage, de restauration et de transformation. Nous souhaitons offrir à chaque participante un cadre favorable à la rencontre avec Dieu, au partage d’expériences et à l’épanouissement personnel et spirituel.</p>
 <p>Pour cette édition, le programme s’articule autour de quatre grandes orientations :</p>
 <h3>Pour être restaurée</h3><p>Un espace de dialogue autour des blessures intérieures et des traumatismes émotionnels. L’objectif est d’aborder avec bienveillance des sujets souvent difficiles à exprimer, de sortir du silence et d’ouvrir un chemin vers la guérison et la reconstruction.</p>
 <h3>Pour être ointe</h3><p>Deux grands rendez-vous spirituels avec la Prophétesse Mary Favour TONGSI, prévus le vendredi 27 novembre à 19h45 et le dimanche 29 novembre à 8h45.</p>
@@ -82,15 +82,15 @@ def letter(name, keys):
 <p style="break-after:avoid">Voici les informations relatives à votre intervention :</p>
 {blocks}
 <p>Les orientations et les informations pratiques concernant votre intervention vous seront communiquées afin de vous permettre de bien vous préparer.</p>
-<p>Par ailleurs, afin de préparer votre présentation et de valoriser votre participation à WOMAN ZONE 2026, nous vous prions de bien vouloir nous transmettre les éléments suivants :</p>
+<p>Par ailleurs, afin de préparer votre présentation et de valoriser votre participation au Week-end Zone Women 2026, nous vous prions de bien vouloir nous transmettre les éléments suivants :</p>
 <ul><li><b>Votre biographie :</b> une présentation de votre parcours personnel et professionnel, rédigée à la troisième personne, en faisant ressortir vos formations, vos responsabilités, vos engagements ministériels, le cas échéant, ainsi que vos domaines d’expertise et principales réalisations. Format souhaité : 150 à 250 mots.</li>
-<li><b>Une courte vidéo d’invitation :</b> une vidéo de 30 à 40 secondes maximum, de préférence en format vertical, dans laquelle vous confirmez votre participation à WOMAN ZONE 2026 et invitez chaleureusement les femmes de votre entourage et de votre communauté à prendre part à cette rencontre.</li></ul>
+<li><b>Une courte vidéo d’invitation :</b> une vidéo de 30 à 40 secondes maximum, de préférence en format vertical, dans laquelle vous confirmez votre participation au Week-end Zone Women 2026 et invitez chaleureusement les femmes de votre entourage et de votre communauté à prendre part à cette rencontre.</li></ul>
 <p><b>Date limite de transmission des éléments : 16-11-2026.</b></p>
 <p>Ces informations nous permettront de préparer votre présentation et d’assurer une communication harmonieuse autour de l’événement.</p>
 <p>Toute l’équipe d’organisation est mobilisée pour assurer le bon déroulement de cette rencontre et vous accueillir dans les meilleures conditions. Nous sommes convaincues que votre expérience et votre contribution enrichiront les échanges et participeront à l’édification des participantes.</p>
-<p>Merci encore pour votre disponibilité et votre engagement à nos côtés. Nous avons hâte de vous retrouver à WOMAN ZONE 2026.</p>
+<p>Merci encore pour votre disponibilité et votre engagement à nos côtés. Nous avons hâte de vous retrouver au Week-end Zone Women 2026.</p>
 <p>Que le Seigneur vous bénisse, renouvelle vos forces et continue de vous utiliser pour l’édification de Son peuple.</p>
-<p>Fraternellement en Christ,<br><b>L’Équipe d’organisation WOMAN ZONE 2026</b><br>MILMO – Zone 242, Sikècodji</p>"""
+<p>Fraternellement en Christ,<br><b>L’Équipe d’organisation Week-end Zone Women 2026</b><br>MILMO – Zone 242, Sikècodji</p>"""
 files = []
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path="/opt/pw-browsers/chromium", args=["--no-sandbox"])
@@ -98,8 +98,8 @@ with sync_playwright() as p:
     for name, keys, slug in PEOPLE:
         h = OUT / f"{slug}.html"; h.write_text(letter(name, keys))
         pg.goto("file://" + str(h)); pg.wait_for_timeout(200)
-        f = OUT / f"Courrier_WOMAN_ZONE_2026_{slug}.pdf"
+        f = OUT / f"Courrier_Week-end_Zone_Women_2026_{slug}.pdf"
         pg.pdf(path=str(f), prefer_css_page_size=True, print_background=True); files.append(f); h.unlink()
     b.close()
-subprocess.run(["pdfunite", *map(str, files), str(OUT / "Courriers_WOMAN_ZONE_2026_tous.pdf")], check=True)
+subprocess.run(["pdfunite", *map(str, files), str(OUT / "Courriers_Week-end_Zone_Women_2026_tous.pdf")], check=True)
 for f in files: print(f.name)

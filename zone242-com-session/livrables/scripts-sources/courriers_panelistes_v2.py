@@ -6,8 +6,8 @@ OUT = pathlib.Path(sys.argv[1]).resolve(); LOGO = pathlib.Path(sys.argv[2]); ONL
 old = (pathlib.Path(__file__).parent / "courriers_panelistes.py").read_text()
 head = old[:old.index('CSS = """')].replace("OUT = pathlib.Path(sys.argv[1]).resolve(); OUT.mkdir(parents=True, exist_ok=True)", "")
 body = old[old.index("def iv_block"):old.index("files = []")]
-body = body.replace('<div class=t>WOMAN ZONE 2026</div><div class=st>COURRIER OFFICIEL À L’ATTENTION DES PANÉLISTES</div>',
-  '<div class=banner><div class=bt>WOMAN ZONE 2026</div><div class=bs>COURRIER OFFICIEL À L’ATTENTION DES PANÉLISTES</div></div>')
+body = body.replace('<div class=t>WEEK-END ZONE WOMEN 2026</div><div class=st>COURRIER OFFICIEL À L’ATTENTION DES PANÉLISTES</div>',
+  '<div class=banner><div class=bt>WEEK-END ZONE WOMEN 2026</div><div class=bs>COURRIER OFFICIEL À L’ATTENTION DES PANÉLISTES</div></div>')
 OUT.mkdir(parents=True, exist_ok=True)
 import html, subprocess
 from playwright.sync_api import sync_playwright
@@ -18,7 +18,7 @@ CSS = """
 *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 body{font-family:Carlito,Calibri,sans-serif;font-size:10.3pt;line-height:1.25;color:#1b1b1b;margin:0}
 .banner{background:linear-gradient(115deg,#ee1a02 0%%,#f12e04 38%%,#f5541a 72%%,#fb7a2a 100%%);color:#fff;border-radius:6px;padding:12px 18px 10px;text-align:center;margin-bottom:14px}
-.bt{font-family:Bebas,Carlito;font-size:34pt;letter-spacing:.06em;line-height:1}
+.bt{font-family:Bebas,Carlito;font-size:30pt;letter-spacing:.05em;line-height:1}
 .bs{font-weight:bold;font-size:9.5pt;letter-spacing:.08em;margin-top:2px}
 p{margin:0 0 6px}
 .obj{font-weight:bold;color:#0260a6}
@@ -36,7 +36,7 @@ logo64 = base64.b64encode(LOGO.read_bytes()).decode()
 GRAD = "linear-gradient(115deg,#ee1a02 0%,#f12e04 38%,#f5541a 72%,#fb7a2a 100%)"
 HEADER = f'''<div style="width:100%;padding:0 20mm;font-family:Carlito,Calibri,sans-serif;-webkit-print-color-adjust:exact">
 <div style="display:flex;align-items:center;justify-content:space-between;height:15mm"><img src="data:image/png;base64,{logo64}" style="height:13mm">
-<div style="text-align:right;font-size:8.5pt;color:#0260a6;line-height:1.25"><b style="font-size:10pt">WOMAN ZONE 2026</b><br>27 – 29 novembre 2026 · Zone 242, Sikècodji</div></div>
+<div style="text-align:right;font-size:8.5pt;color:#0260a6;line-height:1.25"><b style="font-size:10pt">WEEK-END ZONE WOMEN 2026</b><br>27 – 29 novembre 2026 · Zone 242, Sikècodji</div></div>
 <div style="height:1.2mm;background:{GRAD};border-radius:1mm"></div></div>'''
 FOOTER = f'''<div style="width:100%;padding:0 20mm;font-family:Carlito,Calibri,sans-serif;font-size:8pt;color:#333;-webkit-print-color-adjust:exact">
 <div style="height:1.2mm;background:{GRAD};border-radius:1mm;margin-bottom:2mm"></div>
@@ -49,7 +49,7 @@ with sync_playwright() as p:
         if ONLY and slug != ONLY: continue
         h = OUT / f"{slug}.html"; h.write_text(letter(name, keys))
         pg.goto("file://" + str(h)); pg.wait_for_timeout(300)
-        f = OUT / f"Courrier_WOMAN_ZONE_2026_{slug}.pdf"
+        f = OUT / f"Courrier_Week-end_Zone_Women_2026_{slug}.pdf"
         pg.pdf(path=str(f), format="A4", margin=dict(top="26mm", bottom="22mm", left="20mm", right="20mm"), display_header_footer=True,
                header_template=HEADER, footer_template=FOOTER, print_background=True); files.append(f); h.unlink()
     b.close()
