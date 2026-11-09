@@ -24,7 +24,7 @@ Thème : **Restaurée · Ointe · Envoyée**. Slogan : « Les femmes prennent le
 **Décisions prises**
 - **150 places** pour le week-end, **participation gratuite** (confirmé par l'utilisateur le 8 nov.), inscription obligatoire. Aucun prix ni zone VIP à afficher. Plus de Women's Night ni d'atelier jeunes filles : le PDF « Organisation WZW 2026 » est la version **finale** du programme (dates 27-29 nov.).
 - Programme résumé : ven. 27 19h45 lancement · sam. 28 Women's Experience Day (relaxation, Panel 1, Belle et en bonne santé, Panels 2 à 4, table ronde 17h15-18h15) · dim. 29 culte 8h45 + Agapè des Femmes 11h30.
-- Suivi des créations pour le graphiste : Google Sheet « Suivi des créations · Week-end Zone Women 2026 » (https://docs.google.com/spreadsheets/d/1Q-DMSOt9_AD-gYVISwUbQhNz2b3UoxT11IxQcHeq4mA/edit) (copie xlsx dans `livrables/documents/`).
+- Suivi des créations pour le graphiste : Google Sheet « Suivi des créations · Week-end Zone Women 2026 » (https://docs.google.com/spreadsheets/d/1Mno6iyDza4z_s1iIU5NTFxetD6Ya5WsQqNesR9YwURQ/edit) (copie xlsx dans `livrables/documents/`).
 - Orthographes imposées : **Jessie Vanessa**, **Pasteure Veronica**, **Pasteure Anne-Laure**, « 9h00 ».
 - Dr Hestia SEGBEY DAOUDOU : docteur en médecine, consultante bien-être en périnatalité et parentalité, leader de la TDM (Tour de Mariage) ; intervient au Panel 2 et au Panel 4.
 - Formulaire d'inscription : **Google Forms** (retenu). En-tête 1600×400 prêt.
