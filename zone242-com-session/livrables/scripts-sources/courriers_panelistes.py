@@ -82,11 +82,6 @@ def letter(name, keys):
 <p style="break-after:avoid">Voici les informations relatives à votre intervention :</p>
 {blocks}
 <p>Les orientations et les informations pratiques concernant votre intervention vous seront communiquées afin de vous permettre de bien vous préparer.</p>
-<p>Par ailleurs, afin de préparer votre présentation et de valoriser votre participation au Week-end Zone Women 2026, nous vous prions de bien vouloir nous transmettre les éléments suivants :</p>
-<ul><li><b>Votre biographie :</b> une présentation de votre parcours personnel et professionnel, rédigée à la troisième personne, en faisant ressortir vos formations, vos responsabilités, vos engagements ministériels, le cas échéant, ainsi que vos domaines d’expertise et principales réalisations. Format souhaité : 150 à 250 mots.</li>
-<li><b>Une courte vidéo d’invitation :</b> une vidéo de 30 à 40 secondes maximum, de préférence en format vertical, dans laquelle vous confirmez votre participation au Week-end Zone Women 2026 et invitez chaleureusement les femmes de votre entourage et de votre communauté à prendre part à cette rencontre.</li></ul>
-<p><b>Date limite de transmission des éléments : 16-11-2026.</b></p>
-<p>Ces informations nous permettront de préparer votre présentation et d’assurer une communication harmonieuse autour de l’événement.</p>
 <p>Toute l’équipe d’organisation est mobilisée pour assurer le bon déroulement de cette rencontre et vous accueillir dans les meilleures conditions. Nous sommes convaincues que votre expérience et votre contribution enrichiront les échanges et participeront à l’édification des participantes.</p>
 <p>Merci encore pour votre disponibilité et votre engagement à nos côtés. Nous avons hâte de vous retrouver au Week-end Zone Women 2026.</p>
 <p>Que le Seigneur vous bénisse, renouvelle vos forces et continue de vous utiliser pour l’édification de Son peuple.</p>
