@@ -5,7 +5,7 @@ old = (H / "plan_com_base.html").read_text()  # version précédente : source de
 head = old[:old.index("</style></head><body>")] + "</style></head><body>\n"
 annex_old = old[old.index("<!-- 9. ANNEXE -->"):]
 N = 10
-def foot(n): return f'<div class="foot"><span>Week-end Zone Women · Plan de communication et de design · mis à jour le 12 novembre 2026</span><span>{n}</span></div>'
+def foot(n): return ''
 def idea(n, t, kind, fmt, acc, dero, need):
     k = {"M": '<span class="m">Motion</span>', "T": '<span class="t">À tourner</span>', "MT": '<span class="t">Tourné + motion</span>'}[kind]
     return f'<div class="idea"><div class="ih"><span class="n">{n}</span><b>{t}</b></div><div class="meta">{k} · {fmt}</div><p><b>Accroche :</b> {acc}</p><p><b>Déroulé :</b> {dero}</p><p class="need"><b>Il faut :</b> {need}</p></div>'
@@ -16,34 +16,18 @@ S.append('''<section class="page cover"><div class="dots"></div><div class="in">
   <h1>WEEK-END<br>ZONE WOMEN</h1>
   <div class="sub">« Les femmes prennent le contrôle de la Zone »<br>Du vendredi 27 au dimanche 29 novembre 2026 · Zone 242, Sikècodji</div>
   <div class="three"><span>Restaurée</span><span>Ointe</span><span>Envoyée</span></div>
-  <div class="meta">Version mise à jour le 12 novembre 2026, à J-15 (affiche « Coming soon » publiée le 11 novembre)<br>Contenu : situation · stratégie · design · calendrier jour par jour · 22 idées de contenu · organisation et suivi · programme</div>
+  <div class="meta">Version mise à jour le 12 novembre 2026, à J-15 (affiche « Coming soon » publiée le 11 novembre)<br>Contenu : situation · stratégie · design · calendrier jour par jour · 22 idées de contenu · organisation et suivi</div>
   <div class="bar"></div></div></section>''')
 # ---------- 2 situation
 S.append(f'''<section class="page">
 <h1>1. Situation à J-15</h1>
 <p>Le week-end a <b>3 temps forts</b> : une soirée de lancement le vendredi avec la Prophétesse Mary Favour TONGSI, le <b>Women's Experience Day</b> le samedi (relaxation, 4 panels, la session « Belle et en bonne santé », la Zone Détente et une grande table ronde) et, le dimanche, le grand culte de clôture suivi de l'Agapè des Femmes. Les femmes tiennent l'accueil, la louange, l'animation et l'organisation. <b>Participation gratuite, 150 places, inscription obligatoire.</b></p>
 <div class="kpi"><div><b>J-15</b>avant le début</div><div><b>15</b>intervenantes</div><div><b>150</b>places, gratuit</div><div><b>22</b>idées de contenu</div></div>
-<h2>Où en est-on</h2>
+<h2>Reste à faire</h2>
 <table><tr><th>Élément</th><th>État</th></tr>
-<tr><td>Affiche « Coming soon »</td><td><span class="m">Publiée le 11 novembre</span></td></tr>
-<tr><td>Programme final (« Organisation WZW 2026 »)</td><td><span class="m">Reçu, dates 27-29 novembre</span></td></tr>
-<tr><td>Courriers aux 14 intervenantes (hors Prophétesse)</td><td><span class="m">Prêts, un PDF par personne</span></td></tr>
-<tr><td>Suivi des créations pour le graphiste (Google Sheet, 33 créations)</td><td><span class="m">En place, échéances au Sheet</span></td></tr>
-<tr><td>Carrousel du programme (1080×1080, 8 diapos)</td><td><span class="m">Prêt, à publier le 14 novembre</span></td></tr>
 <tr><td>Formulaire d'inscription (script prêt) et QR code</td><td><span class="t">À créer : bloque l'ouverture des inscriptions</span></td></tr>
 <tr><td>Affiche mère officielle</td><td><span class="t">Échéance 12 novembre</span></td></tr>
 <tr><td>Photos HD des intervenantes, noms de famille manquants</td><td><span class="t">À récupérer avant le 19 novembre</span></td></tr></table>
-<h2>Points à trancher cette semaine</h2>
-<div class="box warn">
-<p><b>1. Inscription.</b> Créer le formulaire, produire le QR code et fixer la <b>date limite</b> d'inscription. Sans lien, l'affiche officielle n'a pas d'appel à l'action et les 150 places ne peuvent pas se remplir.</p>
-<p><b>2. Photos HD des 15 intervenantes.</b> Elles conditionnent les affiches de biographie, de session et du programme imprimé (échéances 16 à 20 novembre).</p>
-<p><b>3. Noms de famille</b> de Dr Sylvie, Dr Majolaine, Mme Tossou, Murielle, Imalia et Veronica, à confirmer pour les affiches.</p>
-<p><b>4. Validation.</b> Désigner une seule personne qui donne le « bon pour publication ». À J-15, chaque aller-retour supplémentaire coûte un jour de calendrier.</p>
-<p><b>5. Table ronde.</b> Le programme prévoit « pas de direct ni de vidéo ». Aucune captation de la table ronde (17h15-18h15) : cette règle s'applique à tout le plan de contenu.</p></div>
-<h2>Orientations</h2>
-<ul><li>L'affiche porte l'essentiel ; le programme complet est un document séparé, en deux niveaux (vendredi et dimanche / samedi heure par heure).</li>
-<li>Un seul mécanisme d'inscription (un lien, un QR code), annoncé dès l'ouverture, répété à chaque publication.</li>
-<li>Calendrier resserré : 15 jours, avec une publication par jour dans le feed et 3 à 5 stories pendant la phase de lancement.</li></ul>
 {foot(2)}</section>''')
 # ---------- 3 stratégie
 S.append(f'''<section class="page tight">
@@ -95,8 +79,6 @@ S.append(f'''<section class="page tight">
 <tr><td><span class="p2">P2</span></td><td><b>Supports physiques</b> : bâche, kakémono, panneaux, badges</td><td>Ven 20 nov. (envoi imprimeur lun. 23)</td><td><span class="t">À fournir :</span> dimensions, délais de l'imprimeur, QR code.</td></tr>
 <tr><td><span class="p2">P2</span></td><td><b>Habillage reels et stories</b> Jour 1, 2, 3</td><td>Mar 24 nov.</td><td>Cadre, bandeau, transitions, logo WZW.</td></tr>
 <tr><td><span class="p3">P3</span></td><td><b>Après l'événement</b> : citations, remerciement, habillage du récap</td><td>Mer 2 déc.</td><td>Citations notées pendant les panels (hors table ronde).</td></tr></table>
-<div class="box info"><b>Règle de design :</b> l'affiche porte l'essentiel, le programme est séparé. Un visuel = une idée = un appel à l'action.</div>
-<div class="box warn"><b>Rappel :</b> la validation de l'affiche mère et du lien d'inscription conditionne l'ouverture des inscriptions. Tout retard se répercute sur les affiches de biographie et de session.</div>
 {foot(4)}</section>''')
 # ---------- 5 calendrier (2 pages)
 rows = [
@@ -165,7 +147,7 @@ S.append(f'''<section class="page"><h1>5. Idées de contenu vidéo</h1><p>22 id�
 {idea(6,"Présentation d'intervenante (×15)","M","9:16 · 6–8 s","Une carte animée par intervenante.","Photo et nom · titre et session · thème de sa session en une phrase","15 photos HD, titres exacts (modèle : présentation de Dr Hestia)")}
 </div>{foot(7)}</section>
 <section class="page"><h2>B. Lancement (suite)</h2><div class="grid">
-{idea(7,"« Un panel, une question »","M","9:16 · 10 s × 6","Chaque session démarre par une question qui interpelle (propositions à valider en bas de page 8).","Question à l'écran · titre de la session · heure et intervenantes","Textes validés")}
+{idea(7,"« Un panel, une question »","M","9:16 · 10 s × 6","Chaque session démarre par une question qui interpelle (propositions à valider plus loin dans cette section).","Question à l'écran · titre de la session · heure et intervenantes","Textes validés")}
 {idea(8,"« Je déclare » spécial femmes","M","9:16 · 8–10 s × 3","Trois déclarations à reprendre et partager : « Je suis restaurée. Je suis ointe. Je suis envoyée. »","Générique « Je déclare » de 3 s · la déclaration en grand · un court verset ou une phrase","Déclarations et références validées par les pasteurs")}
 {idea(9,"Le programme en 30 secondes","M","9:16 · 20–30 s","Le samedi, heure par heure, sans rien oublier.","Défilé animé : 9h00 accueil → relaxation → panels → « Belle et en bonne santé » → table ronde 17h15 · dimanche : culte 8h45 et Agapè 11h30","Programme final")}
 {idea(10,"3 raisons de venir","M","9:16 · 10–15 s","Un week-end gratuit, 150 places, ouvert à toutes les femmes.","Une raison par plan : s'y ressourcer · apprendre · être envoyée · « Inscription obligatoire »","Lien d'inscription")}
@@ -229,20 +211,6 @@ S.append(f'''<section class="page">
 <tr><td>Trop d'informations par visuel</td><td>Affiche = essentiel ; programme = document séparé, en deux niveaux.</td></tr>
 <tr><td>Fatigue de l'équipe sur le week-end</td><td>Programmer à l'avance les publications du week-end, garder une personne dédiée au direct.</td></tr></table>
 {foot(10)}</section>''')
-# ---------- 10 annexe
-a = annex_old
-a = a.replace("Annexe : programme source (à valider)", "Annexe : programme").replace("Texte tel que transmis. Les points à corriger avant publication sont signalés ⚠.", "Source : « Organisation WZW 2026 », dates 27-29 novembre. Les points à confirmer figurent en bas de page.")
-a = a.replace("Évangéliste Jessie Vanessa ⚠, Pasteure Veronica ⚠", "Évangéliste Jessie Vanessa, Pasteure Veronica").replace(" ⚠</p>", "</p>").replace("Dr Sylvie, médecin généraliste, et Dr Majolaine", "Docteure Sylvie, médecin généraliste, et Docteure Majolaine").replace("Dr Hestia DAOUDOU", "Docteure Hestia DAOUDOU")
-i = a.index("<h2>Observations sur le programme</h2>"); j = a.index('<div class="foot"')
-obs = '''<h2>Observations sur le programme</h2>
-<ul><li><b>Pélagie MANTANVI</b> intervient à trois panels (1, 3 et 4), <b>Hestia DAOUDOU</b> à deux (2 et 4) : une seule affiche de biographie chacune, reprise à chaque session.</li>
-<li><b>Le samedi</b> va de 9h00 à 18h15 : prévoir un visuel des pauses repas et repos pour rassurer les participantes sur la durée.</li>
-<li><b>À confirmer :</b> noms de famille des Dr Sylvie, Dr Majolaine, Mme Tossou, Murielle, Imalia et Veronica. Orthographes retenues : Jessie Vanessa, Pasteure Veronica.</li></ul>
-'''
-a = a[:i] + obs + a[j:]
-a = re.sub(r'<div class="foot">.*?</div>', foot(11).replace("</span><span>11", "</span><span>11"), a, count=1, flags=re.S)
-a = a.replace("<!-- 9. ANNEXE -->\n", "")
-S.append(a.replace("</body></html>", "").strip())
 out = head + "\n".join(S) + "\n</body></html>\n"
 (H / "plan_com.html").write_text(out)
 print(len(out))
