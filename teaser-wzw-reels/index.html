@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Teaser Coming soon — Week-end Zone Women (reels)</title>
+    <script src="gsap/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Bebas"; src: url("assets/bebas-neue-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Mont"; font-weight: 600; src: url("assets/montserrat-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Mont"; font-weight: 800; src: url("assets/montserrat-latin-800-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #ee1a02; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Bebas", sans-serif; color: #fff;
+        background: linear-gradient(160deg, #ee1a02 0%, #f12e04 38%, #f5541a 72%, #fb7a2a 100%); }
+      .abs { position: absolute; }
+      .sh { inset: 0; }
+      .s1 { background: #ff7a33; opacity: .22; clip-path: polygon(0 0, 22% 0, 8% 100%, 0 100%); }
+      .s2 { background: #b80f00; opacity: .22; clip-path: polygon(34% 0, 48% 0, 30% 100%, 16% 100%); }
+      .s3 { background: #ff9a4a; opacity: .18; clip-path: polygon(66% 0, 80% 0, 62% 100%, 50% 100%); }
+      .s4 { background: #c01200; opacity: .20; clip-path: polygon(88% 0, 100% 0, 100% 100%, 76% 100%); }
+      #halo { left: 40px; top: 560px; width: 1000px; height: 900px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,190,140,.7), rgba(255,190,140,0)); }
+      #ghost { inset: 0; overflow: hidden; }
+      #ghost div { position: absolute; left: -40px; width: 1200px; font-size: 330px; line-height: 1; white-space: nowrap; color: rgba(255,255,255,.07); letter-spacing: .01em; }
+      #logo { left: 440px; top: 110px; width: 200px; }
+      #logo img { display: block; width: 100%; height: auto; }
+      /* scène A */
+      #cs { left: 0; width: 1080px; top: 300px; text-align: center; font-size: 400px; line-height: .9; color: #f6efe3; text-shadow: 0 10px 40px rgba(120,10,0,.35); }
+      #cs .ln { display: block; height: 360px; overflow: hidden; }
+      #cs .ln span { display: inline-block; }
+      #watch { left: 190px; top: 930px; width: 700px; height: 788px; }
+      #watch svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 30px 40px rgba(80,10,0,.45)); }
+      /* scène B */
+      #lock { left: 24px; top: 640px; width: 1664px; height: 806px; transform-origin: 0 0; }
+      .pc { position: absolute; display: block; }
+      .wd { position: absolute; overflow: hidden; }
+      #shine { left: 24px; top: 640px; width: 1664px; height: 806px; transform-origin: 0 0;
+        -webkit-mask-image: url(assets/lockup_masque.png); mask-image: url(assets/lockup_masque.png); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; overflow: hidden; }
+      #band { position: absolute; top: -100px; left: 0; width: 260px; height: 1000px; background: linear-gradient(90deg, rgba(255,235,210,0), rgba(255,235,210,.95), rgba(255,235,210,0)); transform: skewX(-18deg); }
+      .ring { border-radius: 50%; border: 6px solid rgba(255,255,255,.9); opacity: 0; width: 300px; height: 300px; margin: -150px 0 0 -150px; }
+      /* scène C */
+      #dates { left: 0; width: 1080px; top: 870px; text-align: center; }
+      #dates .row { display: flex; justify-content: center; gap: 70px; align-items: flex-end; }
+      #dates .col { text-align: center; }
+      #dates .l { font-family: "Mont"; font-weight: 800; font-size: 44px; letter-spacing: .04em; line-height: 1; }
+      #dates .n { font-size: 300px; line-height: .8; color: #0260a6; text-shadow: 0 0 24px rgba(255,255,255,.25); }
+      #dates .m { font-size: 90px; letter-spacing: .04em; margin-top: 18px; }
+      #theme { left: 90px; width: 900px; top: 1290px; text-align: center; background: rgba(255,255,255,.16); border: 4px solid rgba(255,255,255,.75); border-radius: 80px; padding: 22px 20px 12px; font-size: 62px; letter-spacing: .05em; line-height: 1; }
+      #quote { left: 60px; width: 960px; top: 1408px; text-align: center; font-family: "Mont"; font-weight: 600; font-size: 34px; color: #ffe9d8; }
+      /* scène D */
+      #soon { left: 0; width: 1080px; top: 1500px; text-align: center; }
+      #soon span { display: inline-block; background: #fff; color: #d8300a; font-size: 74px; letter-spacing: .05em; padding: 14px 40px 6px; border-radius: 12px; }
+      #loc { left: 0; width: 1080px; top: 1618px; text-align: center; font-size: 50px; letter-spacing: .06em; line-height: 1.05; }
+      #loc small { display: block; font-family: "Mont"; font-weight: 600; font-size: 28px; letter-spacing: .02em; margin-top: 8px; color: #ffe9d8; }
+      #flash { inset: 0; background: #fff; opacity: 0; }
+      .sp { width: 60px; height: 60px; margin: -30px 0 0 -30px; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="12" data-width="1080" data-height="1920">
+      <div class="sh abs s1"></div><div class="sh abs s2"></div><div class="sh abs s3"></div><div class="sh abs s4"></div>
+      <div id="halo" class="abs"></div>
+      <div id="ghost" class="abs">
+        <div style="top:120px">COMING SOON</div><div style="top:420px">COMING SOON</div><div style="top:720px">COMING SOON</div><div style="top:1020px">COMING SOON</div><div style="top:1320px">COMING SOON</div><div style="top:1620px">COMING SOON</div>
+      </div>
+      <div id="logo" class="abs"><img src="assets/zone242_blanc.png" alt="Zone 242" /></div>
+
+      <div id="cs" class="abs"><span class="ln"><span>COMING</span></span><span class="ln"><span>SOON</span></span></div>
+      <div id="watch" class="abs">
+        <svg viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="br" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9a35a"/><stop offset=".45" stop-color="#7a5a2a"/><stop offset="1" stop-color="#3b2a12"/></linearGradient>
+            <radialGradient id="fc" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#fbf6ea"/><stop offset="1" stop-color="#d9cfb8"/></radialGradient>
+          </defs>
+          <rect x="360" y="40" width="80" height="90" rx="14" fill="url(#br)"/>
+          <circle cx="400" cy="70" r="62" fill="none" stroke="url(#br)" stroke-width="22"/>
+          <rect x="610" y="140" width="70" height="90" rx="12" fill="url(#br)" transform="rotate(38 645 185)"/>
+          <circle cx="400" cy="500" r="372" fill="url(#br)"/>
+          <circle cx="400" cy="500" r="338" fill="#2a1e0e"/>
+          <circle cx="400" cy="500" r="326" fill="url(#fc)"/>
+          <g id="ticks"></g>
+          <g id="nums" font-family="Mont, sans-serif" font-weight="800" font-size="40" fill="#2b2b2b" text-anchor="middle"></g>
+          <circle cx="400" cy="350" r="78" fill="none" stroke="#2b2b2b" stroke-width="3"/><circle cx="400" cy="650" r="78" fill="none" stroke="#2b2b2b" stroke-width="3"/>
+          <line id="h1" x1="400" y1="350" x2="400" y2="290" stroke="#b3270f" stroke-width="5" stroke-linecap="round"/>
+          <line id="h2" x1="400" y1="650" x2="400" y2="590" stroke="#2b2b2b" stroke-width="5" stroke-linecap="round"/>
+          <line id="hr" x1="400" y1="500" x2="400" y2="205" stroke="#b3270f" stroke-width="7" stroke-linecap="round"/>
+          <path id="hm" d="M392 500 L400 250 L408 500 Z" fill="#2b2b2b"/>
+          <circle cx="400" cy="500" r="16" fill="#2b2b2b"/><circle cx="400" cy="500" r="7" fill="#b3270f"/>
+        </svg>
+      </div>
+
+      <div id="rings">
+        <div class="ring abs" id="r1" style="left:300px;top:900px"></div>
+        <div class="ring abs" id="r2" style="left:540px;top:880px"></div>
+        <div class="ring abs" id="r3" style="left:780px;top:900px"></div>
+        <div class="ring abs" id="r4" style="left:540px;top:1000px"></div>
+      </div>
+      <div id="lock" class="abs">
+        <img id="W1" class="pc" src="assets/W1.png" style="left:50px;top:1px;width:609px;height:619px" alt=""><img id="Z" class="pc" src="assets/Z.png" style="left:669px;top:0px;width:312px;height:559px" alt=""><img id="W2" class="pc" src="assets/W2.png" style="left:1005px;top:1px;width:604px;height:615px" alt="">
+        <div class="wd" id="wWEEKEND" style="left:64px;top:595px;width:605px;height:179px"><img src="assets/WEEKEND.png" style="width:100%;height:100%" alt=""></div><div class="wd" id="wZONE" style="left:724px;top:603px;width:347px;height:121px"><img src="assets/ZONE.png" style="width:100%;height:100%" alt=""></div><div class="wd" id="wWOMEN" style="left:1119px;top:612px;width:489px;height:165px"><img src="assets/WOMEN.png" style="width:100%;height:100%" alt=""></div>
+      </div>
+      <div id="shine" class="abs"><div id="band"></div></div>
+
+      <div id="dates" class="abs">
+        <div class="row"><div class="col" id="d1"><div class="l">DU VEN.</div><div class="n">27</div></div><div class="col" id="d2"><div class="l">AU DIM.</div><div class="n">29</div></div></div>
+        <div class="m" id="dm">NOVEMBRE 2026</div>
+      </div>
+      <div id="theme" class="abs">RESTAURÉE · OINTE · ENVOYÉE</div>
+      <div id="quote" class="abs">« Les femmes prennent le contrôle de la Zone »</div>
+      <div id="soon" class="abs"><span>INSCRIPTIONS BIENTÔT OUVERTES</span></div>
+      <div id="loc" class="abs">ZONE 242 · SIKÈCODJI<small>Rue de Golf FM, Cotonou · #ZoneWoman</small></div>
+      <div id="stars"></div>
+      <div id="flash" class="abs"></div>
+      <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="12" data-track-index="1" data-volume="1"></audio>
+    </div>
+    <script>
+      // graduations et chiffres du chronomètre (positions fixes)
+      const NS = "http://www.w3.org/2000/svg", tk = document.getElementById("ticks"), nm = document.getElementById("nums");
+      for (let i = 0; i < 60; i++) {
+        const a = (i / 60) * Math.PI * 2, big = i % 5 === 0, r1 = 318, r2 = big ? 276 : 296;
+        const l = document.createElementNS(NS, "line");
+        l.setAttribute("x1", 400 + Math.sin(a) * r1); l.setAttribute("y1", 500 - Math.cos(a) * r1); l.setAttribute("x2", 400 + Math.sin(a) * r2); l.setAttribute("y2", 500 - Math.cos(a) * r2);
+        l.setAttribute("stroke", "#2b2b2b"); l.setAttribute("stroke-width", big ? 5 : 2); tk.appendChild(l);
+        if (big && i % 15 !== 5 && i !== 30 && i !== 0 || false) {}
+      }
+      [[0, "60"], [10, "10"], [20, "20"], [40, "40"], [50, "50"]].forEach(([i, s]) => {
+        const a = (i / 60) * Math.PI * 2, t = document.createElementNS(NS, "text");
+        t.setAttribute("x", 400 + Math.sin(a) * 236); t.setAttribute("y", 500 - Math.cos(a) * 236 + 14); t.textContent = s; nm.appendChild(t);
+      });
+      // éclats
+      const st = document.getElementById("stars"), SP = [];
+      [[200, 760], [880, 800], [120, 1180], [960, 1240], [540, 700], [300, 1000], [800, 1000]].forEach(([x, y], i) => {
+        const el = document.createElementNS(NS, "svg"); el.setAttribute("class", "sp abs"); el.setAttribute("viewBox", "0 0 100 100"); el.id = "sp" + i;
+        el.style.left = x + "px"; el.style.top = y + "px"; el.innerHTML = '<path d="M50 0 C54 34 66 46 100 50 C66 54 54 66 50 100 C46 66 34 54 0 50 C34 46 46 34 50 0Z" fill="#fff"/>'; st.appendChild(el); SP.push(el);
+      });
+
+      const tl = gsap.timeline({ paused: true });
+      // états initiaux
+      gsap.set(".s1", { xPercent: -110 }); gsap.set(".s2", { xPercent: -60 }); gsap.set(".s3", { xPercent: 70 }); gsap.set(".s4", { xPercent: 110 });
+      gsap.set("#halo", { scale: .3, opacity: 0, transformOrigin: "50% 50%" });
+      gsap.set("#ghost", { opacity: 0 });
+      gsap.set("#logo", { y: -40, opacity: 0 });
+      gsap.set("#cs .ln span", { yPercent: 115 });
+      gsap.set("#watch", { scale: .2, opacity: 0, transformOrigin: "50% 50%" });
+      gsap.set("#hr", { svgOrigin: "400 500", rotation: 0 }); gsap.set("#hm", { svgOrigin: "400 500", rotation: 0 });
+      gsap.set("#h1", { svgOrigin: "400 350", rotation: 0 }); gsap.set("#h2", { svgOrigin: "400 650", rotation: 0 });
+      gsap.set("#W1", { x: -1500, skewX: -28, opacity: 0 });
+      gsap.set("#Z", { scale: 0, rotation: -120, opacity: 0, transformOrigin: "50% 50%" });
+      gsap.set("#W2", { x: 1500, skewX: 28, opacity: 0 });
+      gsap.set(["#wWEEKEND", "#wZONE", "#wWOMEN"], { clipPath: "inset(0 100% 0 0)" });
+      gsap.set("#lock", { scale: .62, opacity: 1 }); gsap.set("#shine", { scale: .62 });
+      gsap.set("#band", { x: -300 });
+      gsap.set("#d1, #d2", { y: 120, opacity: 0 }); gsap.set("#dm", { opacity: 0, y: 40 });
+      gsap.set("#theme", { scale: .6, opacity: 0, transformOrigin: "50% 50%" }); gsap.set("#quote", { opacity: 0, y: 30 });
+      gsap.set("#soon", { scale: .5, opacity: 0, transformOrigin: "50% 50%" }); gsap.set("#loc", { opacity: 0, y: 40 });
+      gsap.set(".ring", { scale: .3, opacity: 0 }); gsap.set(".sp", { scale: 0, opacity: 0 });
+
+      // fond
+      tl.to(".s1", { xPercent: 0, duration: 1.2, ease: "power3.out" }, 0); tl.to(".s2", { xPercent: 0, duration: 1.2, ease: "power3.out" }, .1);
+      tl.to(".s3", { xPercent: 0, duration: 1.2, ease: "power3.out" }, .2); tl.to(".s4", { xPercent: 0, duration: 1.2, ease: "power3.out" }, .3);
+      tl.to("#halo", { scale: 1, opacity: 1, duration: 2, ease: "power2.out" }, .2);
+      tl.to("#logo", { y: 0, opacity: 1, duration: .6, ease: "power3.out" }, .3);
+      // A : COMING SOON + chronomètre (0 → 3,4 s)
+      tl.to("#ghost", { opacity: 1, duration: 1.2 }, .3);
+      tl.to("#ghost div:nth-child(odd)", { x: -120, duration: 3.4, ease: "none" }, 0); tl.to("#ghost div:nth-child(even)", { x: 80, duration: 3.4, ease: "none" }, 0);
+      tl.to("#cs .ln:nth-child(1) span", { yPercent: 0, duration: .7, ease: "power4.out" }, .5);
+      tl.to("#cs .ln:nth-child(2) span", { yPercent: 0, duration: .7, ease: "power4.out" }, .75);
+      tl.to("#watch", { scale: 1, opacity: 1, duration: .8, ease: "back.out(1.5)" }, 1.0);
+      tl.to("#hr", { rotation: 1080, duration: 2.4, ease: "power2.in" }, 1.0); tl.to("#hm", { rotation: 90, duration: 2.4, ease: "power1.in" }, 1.0);
+      tl.to("#h1", { rotation: 360, duration: 2.4, ease: "power2.in" }, 1.0); tl.to("#h2", { rotation: -300, duration: 2.4, ease: "power2.in" }, 1.0);
+      tl.to("#watch", { y: -10, duration: .25, yoyo: true, repeat: 5, ease: "sine.inOut" }, 1.9);
+      // sortie de A + flash
+      tl.to("#flash", { opacity: .85, duration: .1, ease: "power2.out" }, 3.4);
+      tl.to("#cs", { y: -260, opacity: 0, duration: .35, ease: "power3.in" }, 3.3);
+      tl.to("#watch", { scale: 1.5, opacity: 0, duration: .35, ease: "power3.in" }, 3.3);
+      tl.to("#ghost", { opacity: 0, duration: .4 }, 3.4);
+      tl.to("#flash", { opacity: 0, duration: .5, ease: "power2.in" }, 3.5);
+      // B : le logo se construit (W 3,5 · Z 4,0 · W 4,5 · mots 5,0 / 5,5 / 6,0 · reflet 6,5)
+      tl.to("#W1", { x: 0, skewX: 0, opacity: 1, duration: .32, ease: "power4.out" }, 3.5);
+      tl.to("#Z", { scale: 1, rotation: 0, opacity: 1, duration: .5, ease: "back.out(1.9)" }, 4.0);
+      tl.to("#W2", { x: 0, skewX: 0, opacity: 1, duration: .32, ease: "power4.out" }, 4.5);
+      [[3.5, "#r1"], [4.0, "#r2"], [4.5, "#r3"]].forEach(([t, r]) => { tl.to(r, { scale: 2.6, opacity: 0, duration: .8, ease: "power2.out", startAt: { opacity: .9, scale: .3 } }, t); });
+      tl.to("#r4", { scale: 4.5, opacity: 0, duration: 1.0, ease: "power2.out", startAt: { opacity: .8, scale: .3 } }, 5.0);
+      tl.to("#wWEEKEND", { clipPath: "inset(0 0% 0 0)", duration: .45, ease: "power3.out" }, 5.0);
+      tl.to("#wZONE", { clipPath: "inset(0 0% 0 0)", duration: .4, ease: "power3.out" }, 5.5);
+      tl.to("#wWOMEN", { clipPath: "inset(0 0% 0 0)", duration: .45, ease: "power3.out" }, 6.0);
+      tl.to("#band", { x: 1900, duration: .7, ease: "power2.inOut" }, 6.5);
+      SP.forEach((el, i) => { const t = 5.0 + i * .08; tl.to(el, { scale: .6 + (i % 3) * .3, opacity: 1, duration: .25, ease: "expo.out" }, t); tl.to(el, { scale: 0, opacity: 0, duration: .5, ease: "power2.in" }, t + .5); });
+      tl.to("#flash", { opacity: .5, duration: .06 }, 5.0); tl.to("#flash", { opacity: 0, duration: .4 }, 5.06);
+      // C : dates (7,0) — le logo remonte et se réduit
+      tl.to("#lock", { x: 34, y: -280, scale: .58, duration: .6, ease: "power3.inOut" }, 7.0); tl.to("#shine", { x: 34, y: -280, scale: .58, duration: .6, ease: "power3.inOut" }, 7.0);
+      tl.to("#d1", { y: 0, opacity: 1, duration: .5, ease: "back.out(1.5)" }, 7.25); tl.to("#d2", { y: 0, opacity: 1, duration: .5, ease: "back.out(1.5)" }, 7.45);
+      tl.to("#dm", { y: 0, opacity: 1, duration: .45, ease: "power3.out" }, 7.7);
+      tl.to("#theme", { scale: 1, opacity: 1, duration: .5, ease: "back.out(1.6)" }, 8.2);
+      tl.to("#quote", { y: 0, opacity: 1, duration: .5, ease: "power3.out" }, 8.6);
+      // D : annonce (9,8)
+      tl.to("#soon", { scale: 1, opacity: 1, duration: .5, ease: "back.out(1.7)" }, 9.8);
+      tl.to("#loc", { y: 0, opacity: 1, duration: .5, ease: "power3.out" }, 10.1);
+      tl.to("#flash", { opacity: .4, duration: .06 }, 9.8); tl.to("#flash", { opacity: 0, duration: .4 }, 9.86);
+      tl.to("#soon span", { scale: 1.05, duration: .5, yoyo: true, repeat: 1, ease: "sine.inOut" }, 10.6);
+      tl.to("#halo", { scale: 1.1, duration: 1.4, ease: "sine.inOut" }, 10.6);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
