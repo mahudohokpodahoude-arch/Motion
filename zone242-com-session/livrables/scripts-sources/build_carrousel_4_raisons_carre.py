@@ -1,6 +1,7 @@
-import pathlib
+import pathlib, sys
 from playwright.sync_api import sync_playwright
-H = pathlib.Path(__file__).resolve().parent
+H = pathlib.Path(sys.argv[1]).resolve()  # dossier des ressources (f/, logos_alpha.png, titre_alpha3.png)
+O = pathlib.Path(sys.argv[2]).resolve(); O.mkdir(parents=True, exist_ok=True)
 CSS = """
 @font-face{font-family:B;src:url(f/bebas-neue-latin-400-normal.woff2)}
 @font-face{font-family:M;font-weight:600;src:url(f/montserrat-latin-600-normal.woff2)}
@@ -22,7 +23,7 @@ body{width:1080px;height:1080px;overflow:hidden;position:relative;font-family:B;
 """
 def base(inner, n, total=6): return f"""<!doctype html><meta charset=utf-8><style>{CSS}</style>
 <div class=sh></div><div class="sh s1"></div><div class="sh s2"></div><div class="sh s3"></div><div class="sh s4"></div>{inner}
-<div class=foot><div class=l><img src=logos_alpha.png>20–22 NOVEMBRE 2026 · ZONE 242, SIKECODJI</div><div class=r>{n} / {total}</div></div>"""
+<div class=foot><div class=l><img src=logos_alpha.png>27–29 NOVEMBRE 2026 · ZONE 242, SIKECODJI</div><div class=r>{n} / {total}</div></div>"""
 slides = []
 # 1 couverture
 slides.append(f"""<!doctype html><meta charset=utf-8><style>{CSS}
@@ -36,10 +37,10 @@ slides.append(f"""<!doctype html><meta charset=utf-8><style>{CSS}
 <div class=swipe>GLISSE →</div>
 <div class=foot><div class=l><img src=logos_alpha.png>RESTAURÉE · OINTE · ENVOYÉE</div><div class=r>1 / 6</div></div>""")
 RAISONS = [
- ("1", "POUR ÊTRE", "RESTAURÉE", "Guérir des traumatismes émotionnels et parler enfin de ce qu'on n'ose pas dire.", ["Panel 1 · samedi 10h00", "Table ronde · samedi 17h00"]),
- ("2", "POUR ÊTRE", "OINTE", "Deux grands rendez-vous spirituels avec la Prophétesse Mary Favour TONGSI.", ["Vendredi 20 · 19h45", "Dimanche 22 · 8h45"]),
- ("3", "POUR ÊTRE", "ENVOYÉE", "Des panels et un atelier pour comprendre ton appel et avancer.", ["Femme et l'appel", "Femme, foi et finances", "La femme sage bâtit sa maison", "Atelier jeunes filles"]),
- ("4", "POUR TE", "RESSOURCER ET CÉLÉBRER", "Une Zone Détente toute la journée, puis la Women's Night.", ["Salon de thé", "Massages", "Beauté et bien-être", "Photos", "Barbecue · musique · jeux · témoignages"]),
+ ("1", "POUR ÊTRE", "RESTAURÉE", "Guérir des traumatismes émotionnels, prendre soin de son corps et parler enfin de ce qu'on n'ose pas dire.", ["Panel 1 · samedi 10h30", "Belle et en bonne santé · 12h00", "Table ronde · 17h15"]),
+ ("2", "POUR ÊTRE", "OINTE", "Deux grands rendez-vous spirituels avec la Prophétesse Mary Favour TONGSI.", ["Vendredi 27 · 19h45", "Dimanche 29 · 8h45"]),
+ ("3", "POUR ÊTRE", "ENVOYÉE", "Des panels pour comprendre ton appel, bâtir ta vie financière avec Dieu et faire de ta maison une mission.", ["Me voici, envoie-moi !", "Femme, foi et finances", "Ma maison, ma mission"]),
+ ("4", "POUR TE", "RESSOURCER ET CÉLÉBRER", "Une Zone Détente le samedi, puis l'Agapè des Femmes le dimanche.", ["Salon de thé", "Massages", "Beauté et bien-être", "Coin photo", "Agapè · dimanche 11h30"]),
 ]
 for i, (num, l1, l2, body, chips) in enumerate(RAISONS, 2):
     big = 150 if len(l2) < 12 else 104
@@ -55,15 +56,15 @@ for i, (num, l1, l2, body, chips) in enumerate(RAISONS, 2):
 <div class=bd>{body}</div><div class=chips>{ch}</div>""", i))
 # 6 fin
 slides.append(base("""<style>
-.m{position:absolute;left:0;right:0;top:130px;text-align:center}
+.m{position:absolute;left:0;right:0;top:110px;text-align:center}
 .m .a{font-size:150px;line-height:.95;letter-spacing:.03em;text-shadow:0 6px 24px rgba(120,10,0,.35)}
 .m .b{font-size:62px;letter-spacing:.05em;margin-top:18px}
 .m .q{font-family:M;font-weight:600;font-size:28px;margin-top:18px;color:#ffe9d8}
-.bx{position:absolute;left:120px;right:120px;top:600px;background:rgba(2,96,166,.55);border-radius:16px;padding:34px 40px 26px;font-size:60px;line-height:1.06;text-align:center}
+.bx{position:absolute;left:100px;right:100px;top:590px;background:rgba(2,96,166,.55);border-radius:16px;padding:34px 40px 26px;font-size:60px;line-height:1.06;text-align:center}
 .bx .c{font-family:M;font-weight:600;font-size:30px;line-height:1.5;margin-top:12px}
-.inv{position:absolute;left:0;right:0;top:870px;text-align:center;font-size:72px;letter-spacing:.06em}.inv b{font-weight:400;background:#fff;color:#d8300a;padding:8px 30px 0;border-radius:8px}
+.inv{position:absolute;left:0;right:0;top:872px;text-align:center;font-size:72px;letter-spacing:.06em}.inv b{font-weight:400;background:#fff;color:#d8300a;padding:8px 30px 0;border-radius:8px}
 </style><div class=m><div class=a>ET TOI,<br>TU VIENS ?</div><div class=b>WEEK-END ZONE WOMEN</div><div class=q>« Les femmes prennent le contrôle de la Zone »</div></div>
-<div class=bx>DU VEN. 20 AU DIM. 22 NOVEMBRE 2026<div class=c>Zone 242 – Sikecodji, rue de Golf.FM<br>contact.zone242@gmail.com · 0141627777</div></div>
+<div class=bx>DU VEN. 27 AU DIM. 29 NOVEMBRE 2026<div class=c>Zone 242 – Sikècodji, rue de Golf FM<br>Gratuit · 150 places · inscription obligatoire<br>contact.zone242@gmail.com · 01 41 62 77 77</div></div>
 <div class=inv><b>INVITE UNE AMIE</b></div>""", 6))
 out = []
 with sync_playwright() as p:
@@ -71,5 +72,5 @@ with sync_playwright() as p:
     pg = b.new_context(viewport={"width": 1080, "height": 1080}).new_page()
     for i, h in enumerate(slides, 1):
         f = H / f"s{i}.html"; f.write_text(h); pg.goto("file://" + str(f)); pg.evaluate("document.fonts.ready"); pg.wait_for_timeout(300)
-        pg.screenshot(path=str(H / f"4_raisons_WZW_{i}.png"))
+        pg.screenshot(path=str(O / f"4_raisons_WZW_{i}.png"))
     b.close()
