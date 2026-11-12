@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Flyer · Veillée de prière</title>
+<style>
+@font-face{font-family:Bebas;src:url(fonts/bebas-neue-latin-400-normal.woff2)}
+@font-face{font-family:Josefin;font-weight:300;src:url(fonts/josefin-sans-latin-300-normal.woff2)}
+@font-face{font-family:Josefin;font-weight:400;src:url(fonts/josefin-sans-latin-400-normal.woff2)}
+@font-face{font-family:Josefin;font-weight:600;src:url(fonts/josefin-sans-latin-600-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:500;src:url(fonts/montserrat-latin-500-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}
+#f{position:relative;width:1080px;height:1080px;overflow:hidden;font-family:Josefin,sans-serif;color:#fff;
+  background:#2a0606 url(assets/throne_sq.jpg) center/1080px 1080px no-repeat}
+.shade{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(35,4,4,.82) 0%,rgba(55,8,8,.5) 22%,rgba(55,8,8,.38) 48%,rgba(45,6,6,.7) 66%,rgba(30,4,4,.88) 80%,rgba(22,3,3,.95) 100%),
+  radial-gradient(ellipse 70% 55% at 50% 40%,rgba(255,150,40,.16),transparent 70%)}
+.abs{position:absolute;white-space:nowrap;line-height:1}
+.c{left:0;width:1080px;text-align:center}
+.gold{font-family:Bebas,Impact,sans-serif;background:linear-gradient(180deg,#ffe29a 0%,#ffb347 38%,#ff8a1a 72%,#e8560a 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 18px rgba(255,120,20,.45)) drop-shadow(0 2px 3px rgba(40,5,0,.6))}
+/* photo tab (same place as the QR tab of the model) */
+#tab{left:884px;top:0;width:158px;height:262px;border-radius:0 0 22px 22px;background:linear-gradient(180deg,#ffbf7a,#f19232);box-shadow:0 12px 30px rgba(0,0,0,.45)}
+#ph{left:896px;top:14px;width:134px;height:178px;border-radius:16px;background:url(assets/amos_pray.jpg) center/cover;box-shadow:inset 0 0 0 3px rgba(255,255,255,.9)}
+#tabname{left:884px;width:158px;top:204px;text-align:center;font-family:Montserrat,sans-serif;color:#3a0c00}
+.pill{height:62px;border-radius:31px;background:#fddcc4;text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+.soc{display:flex;gap:18px;align-items:center;justify-content:center}
+</style></head><body>
+<div id="f">
+  <div class="shade"></div>
+
+  <!-- logo ZONE 242 (blanc) à la place du nom du groupe -->
+  <div class="abs" style="left:476px;top:40px;width:128px;height:131px">
+    <img src="assets/zone_w_a.svg" style="position:absolute;left:0;top:0" width="128" height="131"><img src="assets/zone_w_b.svg" style="position:absolute;left:0;top:0" width="128" height="131">
+  </div>
+
+  <!-- photo de l'apôtre dans un rectangle arrondi (à la place du QR) -->
+  <div class="abs" id="tab"></div><div class="abs" id="ph"></div>
+  <div class="abs" id="tabname"><div style="font-size:13px;font-weight:600;letter-spacing:.06em">APÔTRE</div><div style="font-size:22px;font-weight:800;margin-top:4px;letter-spacing:.02em">AMOS ELITE</div></div>
+
+  <!-- titre -->
+  <div class="abs c gold" id="t1" style="top:300px;font-size:330px;letter-spacing:.005em">VEILLÉE</div>
+  <div class="abs c gold" id="t2" style="top:512px;font-size:262px;letter-spacing:.005em">DE PRIÈRE</div>
+
+  <div class="abs c" style="top:722px;font-size:36px;letter-spacing:.2em;text-shadow:0 3px 12px rgba(0,0,0,.85)"><span style="font-weight:300">THÈME :</span> <span style="font-weight:600;color:#ffcf7a">TRÔNE ET GLOIRE</span></div>
+
+  <div class="abs c" style="top:782px;font-family:Montserrat,sans-serif;font-size:20px;font-weight:700;color:#ffb36b;letter-spacing:.02em;text-shadow:0 2px 8px rgba(0,0,0,.7)">MATTHIEU 11 : 28</div>
+  <div class="abs c" style="top:812px;font-family:Montserrat,sans-serif;font-size:19px;font-weight:500;line-height:1.3;white-space:normal;left:150px;width:780px;text-shadow:0 2px 8px rgba(0,0,0,.75)">VENEZ À MOI, VOUS TOUS QUI ÊTES ACCABLÉS SOUS LE POIDS D'UN LOURD FARDEAU, ET JE VOUS DONNERAI DU REPOS.</div>
+
+  <!-- pastilles date / heure -->
+  <div class="abs pill" style="left:306px;top:892px;width:210px;padding-top:9px;box-sizing:border-box;font-family:Montserrat,sans-serif">
+    <div style="font-size:15px;font-weight:600;color:#e0501a;letter-spacing:.06em">VENDREDI</div>
+    <div style="font-size:21px;font-weight:600;color:#3a1608;margin-top:3px">13 NOV. 2026</div></div>
+  <div class="abs pill" style="left:564px;top:892px;width:210px;padding-top:9px;box-sizing:border-box;font-family:Montserrat,sans-serif">
+    <div style="font-size:14px;font-weight:700;color:#e0501a;letter-spacing:.06em">À PARTIR DE</div>
+    <div style="font-size:24px;font-weight:800;color:#c93a12;margin-top:2px">19H45</div></div>
+
+  <!-- pied de page : infos de la Zone -->
+  <div class="abs c" style="top:984px;font-family:Montserrat,sans-serif;font-size:21px;font-weight:700;letter-spacing:.07em;text-shadow:0 2px 8px rgba(0,0,0,.8)">ZONE 242 · SIKÈCODJI · RUE DE GOLF-FM, COTONOU</div>
+  <div class="abs c soc" style="top:1026px;font-family:Montserrat,sans-serif;font-size:21px;font-weight:700;text-shadow:0 2px 8px rgba(0,0,0,.8)">
+    <span style="display:inline-flex;align-items:center;gap:9px"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.35 2.3.55 3.6.55a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.6 21 3 13.4 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.55 3.6a1 1 0 0 1-.25 1z" fill="#ffb36b"/></svg>01 41 62 77 77</span>
+    <span style="opacity:.5">|</span>
+    <span style="display:inline-flex;align-items:center;gap:12px">
+      <svg width="16" height="18" viewBox="0 0 12 14"><path d="M8 0v9.2a3 3 0 1 1-3-3v2a1 1 0 1 0 1 1V0z M8 0c.2 1.6 1.4 2.8 3.2 3v2c-1.2 0-2.2-.4-3.2-1z" fill="#fff"/></svg>
+      <svg width="22" height="16" viewBox="0 0 15 11"><rect width="15" height="11" rx="3" fill="#fff"/><path d="M6 3l4 2.5L6 8z" fill="#3a0c00"/></svg>
+      <svg width="18" height="18" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="6" cy="6" r="2.2" fill="none" stroke="#fff" stroke-width="1.5"/></svg>
+      <svg width="11" height="20" viewBox="0 0 8 14"><path d="M5.2 14V7.7h2.1l.3-2.5H5.2V3.7c0-.7.2-1.2 1.2-1.2H7.7V.3C7.5.3 6.7.2 5.8.2 3.9.2 2.7 1.3 2.7 3.4v1.8H.6v2.5h2.1V14z" fill="#fff"/></svg>
+      ZONE 242</span>
+  </div>
+</div>
+<script>
+window.ready=(async()=>{
+  await Promise.all(['100px Bebas','300 20px Josefin','500 20px Montserrat','700 20px Montserrat','800 20px Montserrat'].map(f=>document.fonts.load(f)));await document.fonts.ready;
+  await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));
+  // fit each title line to the model's widths (~ 63% / 82% of the page)
+  for(const [id,w] of [['t1',480],['t2',640]]){const el=document.getElementById(id);el.style.display='inline-block';el.style.left='0';
+    let fs=parseFloat(el.style.fontSize);const cur=el.getBoundingClientRect().width;el.style.fontSize=(fs*w/cur).toFixed(1)+'px';el.style.display='';}
+})();
+</script></body></html>
