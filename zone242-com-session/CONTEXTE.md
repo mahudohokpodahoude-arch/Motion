@@ -56,6 +56,8 @@ Thème : **Restaurée · Ointe · Envoyée**. Slogan : « Les femmes prennent le
 6. Textes à corriger côté programme : « Mme Tossou / Dr Hestia » (slash), « etc… », « L'équipe du MD » (préciser).
 7. Idées vidéo à produire ensuite : save the date, teaser du thème, annonce officielle, spot Women's Night, compte à rebours J-7 à J-1, récap (voir le plan de com PDF).
 
+- **12 nov. :** affiche « Coming soon » publiée le 11 nov. ; plan de com refait à J-15 (calendrier jour par jour du 11 nov. au 30 nov., sans Women's Night ni atelier jeunes filles, règle « aucune captation de la table ronde »). Source : `livrables/scripts-sources/build_plan_com.py`.
+
 ## 6. Pièges techniques déjà rencontrés
 - Le dossier temporaire de session disparaît : tout livrable doit être copié dans le dépôt puis poussé.
 - `hyperframes lint` refuse les tweens GSAP sur `left`/`top` (utiliser `x`/`y`) et signale deux `fromTo` sur le même élément (mettre `immediateRender: false` sur le second).
