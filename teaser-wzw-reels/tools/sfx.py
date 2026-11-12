@@ -38,6 +38,14 @@ thud(7.7, .6); whoosh(7.6, .35, 800, 5000, .25)
 for at in (7.95, 8.15, 8.4, 8.9, 9.3): pluck(84 if at < 8.5 else 88, at, .18, 0, .08)
 thud(10.1, .7); pluck(84, 10.1, .3, 0, .14); pluck(91, 10.15, .2, .2, .14)
 whoosh(10.0, .35, 1500, 6500, .25)
+# ajouts : entrées de texte et d'éléments
+for at, g in [(0.5, .55), (1.1, .55)]: thud(at, g); whoosh(at - .1, .35, 500, 5000, .35)
+whoosh(1.4, .5, 300, 3500, .3); thud(1.5, .5); pluck(60, 1.5, .25, 0, .2)
+whoosh(3.3, .35, 2000, 9000, .4)                       # sortie de COMING SOON, flash
+for at in (5.3, 5.9, 6.5): whoosh(at - .08, .3, 800, 6000, .3)
+for at, m in [(7.95, 72), (8.15, 76)]: thud(at, .5); pluck(m, at, .3, 0, .15); whoosh(at - .1, .3, 600, 4500, .25)
+whoosh(8.8, .35, 700, 5500, .3); thud(8.9, .4); whoosh(9.2, .3, 700, 5000, .22)
+for i, m in enumerate([84, 88, 91, 96]): pluck(m, 10.55 + i * .1, .18, -.3 + .2 * i, .1)   # pulsation finale
 fade = np.minimum(t / .02, 1); L *= fade; R *= fade
 g = 10 ** (-3 / 20) / max(np.abs(L).max(), np.abs(R).max())
 out = (np.stack([L, R], 1) * g * 32767).astype("<i2")
