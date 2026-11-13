@@ -1,0 +1,64 @@
+<!doctype html><meta charset="utf-8"><title>OFFRANDE overlay</title>
+<style>
+@font-face{font-family:M;font-weight:800;src:url(assets/montserrat-latin-800-normal.woff2)}
+@font-face{font-family:M;font-weight:900;src:url(assets/montserrat-latin-900-normal.woff2)}
+*{margin:0;box-sizing:border-box}
+html,body{background:transparent}
+#stage{position:relative;width:1920px;height:1080px;background:transparent;overflow:hidden;font-family:M,sans-serif}
+#band{position:absolute;left:0;top:799px;width:1920px;height:281px}
+.row{isolation:isolate;position:absolute;left:0;width:1920px;height:140px;overflow:hidden}
+#r1{top:0;background:#FBB901}#r2{top:141px;background:#EA6903}
+.row .in{position:absolute;left:0;top:0;width:1920px;height:140px;display:flex;align-items:center}
+.row .lg{width:485px;display:flex;justify-content:center}
+.row .nm{flex:1;display:flex;justify-content:center}
+.row img{height:118px;mix-blend-mode:multiply}
+.row .sep{width:4px;height:84px;margin:0;background:currentColor;opacity:.85}
+.row .num{font-weight:800;font-size:84px;letter-spacing:1px;white-space:nowrap}
+#r1 .in{color:#0A2A6B}#r2 .in{color:#fff}
+.sheen{position:absolute;top:0;height:100%;width:260px;background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent)}
+#side{position:absolute;left:0;top:0;width:485px;height:1080px;background:linear-gradient(180deg,#fff 0%,#f1f1f1 100%);overflow:hidden}
+#side .c1{position:absolute;left:-210px;top:-120px;width:330px;height:1500px;border-radius:50%;border-left:70px solid #0A3A8C;transform:rotate(8deg)}
+#side .c2{position:absolute;left:-250px;top:-140px;width:330px;height:1500px;border-radius:50%;border-left:60px solid #FBB901;transform:rotate(8deg)}
+#side .c3{position:absolute;right:-300px;top:-100px;width:440px;height:1500px;border-radius:50%;border-right:40px solid #FBB901;transform:rotate(-6deg);opacity:.9}
+#title{position:absolute;left:0;top:330px;width:485px;padding:0 70px;text-align:center;font-weight:900;font-size:56px;color:#0A2A6B;letter-spacing:1px}
+#sub{position:absolute;left:0;top:425px;width:485px;text-align:center;font-weight:800;font-size:22px;letter-spacing:5px;color:#EA6903}
+#bar{position:absolute;left:160px;top:475px;width:165px;height:8px;background:#FBB901;border-radius:4px}
+</style>
+<div id="stage">
+ <div id="side"><svg width="485" height="1080" viewBox="0 0 485 1080" style="position:absolute;left:0;top:0">
+<path d="M0,0 L120,0 C60,260 150,640 70,1080 L0,1080Z" fill="#FBB901"/>
+<path d="M0,0 L70,0 C10,280 100,660 20,1080 L0,1080Z" fill="#0A3A8C"/>
+<path d="M485,0 L485,1080 L420,1080 C470,700 380,300 440,0Z" fill="#FBB901"/>
+<path d="M485,0 L485,1080 L455,1080 C500,700 420,300 470,0Z" fill="#0A3A8C"/></svg>
+  <div id="title">OFFRANDE</div><div id="bar"></div><div id="sub">MOBILE MONEY</div></div>
+ <div id="band">
+  <div class="row" id="r1"><div class="in"><div class="lg"><img src="assets/mtn.png"></div><div class="sep"></div><div class="nm"><div class="num">*880*41*010497*</div></div></div><div class="sheen"></div></div>
+  <div class="row" id="r2"><div class="in"><div class="lg"><img src="assets/moov.png" style="mix-blend-mode:normal;height:110px"></div><div class="sep"></div><div class="nm"><div class="num">*855*4*1*332602*</div></div></div><div class="sheen"></div></div>
+ </div>
+</div>
+<script>
+const $=s=>document.querySelector(s), cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3), ei=x=>cl(x)**3, seg=(t,a,b)=>cl((t-a)/(b-a));
+const band=$('#band'),side=$('#side'),rows=[$('#r1'),$('#r2')],title=$('#title'),sub=$('#sub'),bar=$('#bar');
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.decode())));
+window.render=t=>{
+  // band: enters from right 0.3-1.0, leaves to right 18.4-19.1 (as in the reference video)
+  const X=u=>(1-eo(seg(u,.3,1.0)))*1920+ei(seg(u,18.4,19.1))*1920;
+  const bx=X(t);
+  band.style.transform=`translateX(${bx}px)`;
+  band.style.filter=`blur(${Math.min(14,Math.abs(bx-X(t-.04))*.35)}px)`;
+  band.style.visibility=(t<.3||t>=19.1)?'hidden':'visible';
+  // row contents stagger in
+  rows.forEach((r,i)=>{const p=eo(seg(t,.8+i*.18,1.5+i*.18)),q=ei(seg(t,17.3+i*.1,17.7+i*.1));
+    const in_=r.querySelector('.in');in_.style.opacity=p*(1-q);in_.style.transform=`translateX(${(1-p)*120}px)`;in_.style.filter=`blur(${(1-p)*10+q*12}px)`;
+    const sh=r.querySelector('.sheen');const k=((t-2.5)%5)/1.4;sh.style.left=(485+k*1500-260)+'px';sh.style.opacity=(t>2.5&&k<1)?1:0;});
+  // sidebar: grows upward from band top 1.0-2.0, retracts downward 17.6-18.2
+  const up=eo(seg(t,1.0,2.0)), down=ei(seg(t,17.6,18.2));
+  const topCut=(1-up)*799 + down*799;               // px hidden from the top
+  side.style.clipPath=`inset(${topCut}px 0 0 0)`;
+  side.style.visibility=(t<1||t>=18.2)?'hidden':'visible';
+  [[title,1.8],[bar,2.1],[sub,2.3]].forEach(([el,s])=>{const p=eo(seg(t,s,s+.7)),q=ei(seg(t,17.3,17.7));
+    el.style.opacity=p*(1-q);el.style.transform=`scale(${.9+.1*p})`;el.style.filter=`blur(${(1-p)*12+q*12}px)`;});
+};
+render(0);
+</script>
