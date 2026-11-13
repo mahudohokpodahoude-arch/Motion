@@ -1,0 +1,77 @@
+<!doctype html>
+<html
+  lang="fr"
+  
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Générique — Je déclare</title>
+    <script src="gsap/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Montserrat"; font-weight: 700; src: url("assets/montserrat-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 800; src: url("assets/montserrat-latin-800-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 900; src: url("assets/montserrat-latin-900-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0b1140; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Montserrat", sans-serif;
+        background: radial-gradient(ellipse 120% 70% at 50% 46%, #1f6fe0 0%, #1740b8 32%, #0f1f78 62%, #080c34 100%); }
+      .abs { position: absolute; }
+      #glow { left: 90px; top: 600px; width: 900px; height: 900px; border-radius: 50%; background: radial-gradient(closest-side, rgba(70,190,255,.5), rgba(70,190,255,0)); }
+      #logo { left: 410px; top: 170px; width: 260px; }
+      #logo img { display: block; width: 100%; height: auto; filter: drop-shadow(0 6px 18px rgba(3,10,60,.5)); }
+      #je { left: 0; top: 800px; width: 1080px; text-align: center; font: 800 100px/1 "Montserrat"; letter-spacing: .16em; padding-left: .16em; color: #fff; text-shadow: 0 8px 26px rgba(2,6,40,.5); }
+      #dec { left: 0; top: 915px; width: 1080px; text-align: center; white-space: nowrap; font: 900 172px/1 "Montserrat"; letter-spacing: -.01em; color: #fff; text-shadow: 0 14px 40px rgba(2,6,40,.55); }
+      #dec span { display: inline-block; }
+      #bar { left: 150px; top: 1130px; width: 780px; height: 22px; border-radius: 11px; background: linear-gradient(90deg, #ff5a36, #ff8a4c); box-shadow: 0 8px 26px rgba(255,90,54,.55); transform-origin: 0 50%; }
+      .qm { font: 900 330px/1 "Montserrat"; color: #ff5a36; opacity: 0; text-shadow: 0 10px 30px rgba(2,6,40,.4); }
+      #qm1 { left: 150px; top: 755px; } #qm2 { right: 150px; top: 755px; }
+      #flash { inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.85), rgba(255,255,255,0) 58%); opacity: 0; }
+      #ring { left: 340px; top: 835px; width: 400px; height: 400px; border-radius: 50%; border: 6px solid rgba(255,255,255,.85); opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="3" data-width="1080" data-height="1920">
+      <div id="glow" class="abs"></div>
+      <div id="logo" class="abs"><img src="assets/logo_zone242.svg" alt="Zone 242" /></div>
+      <div id="ring" class="abs"></div>
+      <div id="qm1" class="qm abs">“</div><div id="qm2" class="qm abs">”</div>
+      <div id="je" class="abs">JE</div>
+      <div id="dec" class="abs"><span>D</span><span>É</span><span>C</span><span>L</span><span>A</span><span>R</span><span>E</span></div>
+      <div id="bar" class="abs"></div>
+      <div id="flash" class="abs"></div>
+      <audio id="snd" src="assets/sound.mp3" data-start="0" data-duration="3" data-track-index="1" data-volume="1"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      gsap.set("#glow", { scale: 0.5, opacity: 0, transformOrigin: "50% 50%" });
+      gsap.set("#logo", { y: -30, opacity: 0, transformOrigin: "50% 50%" });
+      gsap.set("#je", { x: -90, opacity: 0 });
+      gsap.set("#dec span", { scale: 2.2, opacity: 0, y: -40, transformOrigin: "50% 60%" });
+      gsap.set("#bar", { scaleX: 0 });
+      gsap.set(".qm", { scale: 0.4, opacity: 0, transformOrigin: "50% 50%" });
+      gsap.set("#ring", { scale: 0.6, opacity: 0, transformOrigin: "50% 50%" });
+
+      tl.to("#glow", { scale: 1, opacity: 1, duration: 1.0, ease: "power2.out" }, 0.05);
+      tl.to("#logo", { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 0.1);
+      // 0,3 s — « JE » glisse ; 0,55 s — « DÉCLARE » s'abat lettre après lettre (impact)
+      tl.to("#je", { x: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 0.3);
+      tl.to("#dec span", { scale: 1, opacity: 1, y: 0, duration: 0.3, ease: "power4.in", stagger: 0.035 }, 0.4);
+      tl.set("#ring", { opacity: 0.85, scale: 0.8 }, 0.62);
+      tl.to("#ring", { scale: 2.6, opacity: 0, duration: 0.7, ease: "power2.out" }, 0.62);
+      tl.fromTo("#root", { x: 0, y: 0 }, { keyframes: [{ x: -14, y: 10, duration: 0.04 }, { x: 12, y: -9, duration: 0.05 }, { x: -7, y: 5, duration: 0.06 }, { x: 0, y: 0, duration: 0.14 }], ease: "power1.out" }, 0.58);
+      // 0,85 s — la barre orange balaie
+      tl.to("#bar", { scaleX: 1, duration: 0.4, ease: "power3.inOut" }, 0.85);
+      // 1,2 s — guillemets
+      tl.to("#qm1", { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2.2)" }, 1.2);
+      tl.to("#qm2", { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2.2)" }, 1.32);
+      // 2,2 s — résolution : flash doux
+      tl.to("#flash", { opacity: 1, duration: 0.1, ease: "power2.out" }, 2.2);
+      tl.to("#flash", { opacity: 0, duration: 0.6, ease: "power2.in" }, 2.3);
+      tl.to("#dec", { scale: 1.03, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut", transformOrigin: "50% 50%" }, 2.2);
+      tl.to("#root", { opacity: 1, duration: 0.01 }, 3);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

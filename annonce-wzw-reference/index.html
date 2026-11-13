@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Annonce Week-end Zone Women — animation de référence</title>
+    <script src="gsap/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Bebas"; src: url("assets/bebas-neue-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Mont"; font-weight: 600; src: url("assets/montserrat-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Mont"; font-weight: 800; src: url("assets/montserrat-latin-800-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #111; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Bebas", sans-serif; color: #fff; background: #151515; }
+      .abs { position: absolute; }
+      .full { left: 0; top: 0; width: 1920px; height: 1080px; }
+      .lt { display: inline-block; }
+      /* fonds */
+      #red { background: linear-gradient(120deg, #ee1a02 0%, #f12e04 40%, #f5541a 80%, #fb7a2a 100%); opacity: 0; }
+      #redtxt { background: radial-gradient(ellipse at 40% 50%, #f12a05 0%, #d81503 60%, #b50d00 100%); opacity: 0; }
+      .sl { background: #ff7a33; opacity: .18; clip-path: polygon(0 0, 18% 0, 8% 100%, 0 100%); }
+      #gray { overflow: hidden; opacity: 0; }
+      #gray img { position: absolute; left: 0; top: -20px; height: 1120px; filter: grayscale(1) brightness(.5) blur(2px); }
+      #grayov { background: radial-gradient(ellipse at center, rgba(0,0,0,0) 30%, rgba(0,0,0,.7) 100%); opacity: 0; }
+      /* hook */
+      .hk { left: 0; width: 1920px; text-align: center; font-size: 190px; line-height: .86; letter-spacing: .01em; opacity: 0; }
+      #hk1 { top: 280px; color: transparent; -webkit-text-stroke: 3px #fff; }
+      #hk1b { top: 280px; color: #fff; }
+      #hk2 { top: 450px; color: #ff1a1a; } #hk3 { top: 620px; color: #fff; }
+      #hkline { left: 560px; top: 540px; width: 800px; height: 12px; background: #ff1a1a; transform-origin: 0 50%; }
+      .xm { font-family: "Mont"; font-weight: 800; font-size: 70px; opacity: 0; }
+      /* cartes */
+      .cut { opacity: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 40%, #f4410a 0%, #a21200 80%); }
+      .cut img { position: absolute; filter: saturate(1.2) contrast(1.08) brightness(.82); }
+      .cut .dk { left: 0; top: 0; width: 1920px; height: 1080px; background: rgba(40,0,0,.38); }
+      #we { left: 0; width: 1920px; top: 270px; text-align: center; font-family: "Mont"; font-weight: 800; font-size: 120px; letter-spacing: .02em; opacity: 0; }
+      #zw { left: 0; width: 1920px; top: 380px; text-align: center; font-size: 470px; line-height: .85; color: #f6efe3; opacity: 0;
+        text-shadow: 10px 10px 0 #7a1100, 20px 20px 0 #ff9a2a; }
+      .ttl { left: 0; width: 1920px; text-align: center; font-size: 220px; line-height: .86; color: #f6efe3; opacity: 0; text-shadow: 0 8px 30px rgba(60,0,0,.5); }
+      #t1 { top: 270px; } #t2 { top: 480px; }
+      .echo { left: 0; width: 1920px; text-align: center; font-size: 150px; line-height: .9; color: rgba(255,255,255,.28); opacity: 0; }
+      /* carrousel */
+      #slabA { left: 0; top: 830px; width: 1920px; height: 250px; background: #d41a05; box-shadow: 0 -10px 40px rgba(60,0,0,.35); opacity: 0; }
+      #slabB { left: 0; top: 0; width: 1920px; height: 1080px; background: #a30f00; clip-path: polygon(52% 1080px, 100% 560px, 100% 1080px); opacity: 0; }
+      #slabC { left: 0; top: 0; width: 1920px; height: 1080px; background: #e8300c; clip-path: polygon(0 780px, 24% 840px, 0 1080px); opacity: 0; }
+      #strip { left: 0; top: 0; width: 1920px; height: 1080px; }
+      .it { position: absolute; top: 0px; width: 700px; height: 1080px; opacity: 0; }
+      .it img { position: absolute; display: block; }
+      .it .nm { position: absolute; left: 640px; top: 230px; width: 520px; font-size: 62px; line-height: .95; letter-spacing: .02em; opacity: 0; text-shadow: 0 3px 14px rgba(60,0,0,.5); }
+      .it .nm small { display: block; font-family: "Mont"; font-weight: 800; font-size: 24px; letter-spacing: .1em; margin-top: 10px; color: #ffe0c8; }
+      /* texte cinétique */
+      .kt { left: 0; width: 1920px; text-align: center; }
+      #dt1 { top: 380px; font-size: 230px; line-height: 1; } #dt2 { top: 650px; font-size: 130px; line-height: 1; color: #ffe0c8; }
+      .ad { left: 0; width: 1920px; text-align: center; font-family: "Mont"; font-weight: 800; font-size: 96px; line-height: 1.12; }
+      #fr1 { top: 330px; font-size: 270px; line-height: 1; }
+      #fr2 { top: 640px; font-family: "Mont"; font-weight: 800; font-size: 56px; letter-spacing: .02em; }
+      #fr3 { top: 740px; font-family: "Mont"; font-weight: 600; font-size: 48px; color: #ffe0c8; }
+      /* ne manque pas */
+      #dm { opacity: 0; overflow: hidden; background: #0c0c0c; }
+      #dm .col { opacity: .55; filter: grayscale(1) blur(1px); }
+      #dm .col img { position: absolute; }
+      .dmt { position: absolute; font-size: 120px; white-space: nowrap; opacity: 0; color: #fff; text-shadow: 0 0 20px rgba(0,0,0,.6); }
+      #glitch { background: linear-gradient(90deg, rgba(255,0,60,.5), rgba(0,120,255,.5)); mix-blend-mode: screen; opacity: 0; }
+      /* final */
+      #fin { opacity: 0; overflow: hidden; background: #d41a05; }
+      #finbg { left: -300px; top: -400px; width: 2520px; height: 1900px; filter: blur(26px) brightness(.85); }
+      #finfly { left: 528px; top: 0; width: 864px; height: 1080px; box-shadow: 0 0 80px rgba(255,150,80,.5); }
+      #shine { left: 528px; top: 0; width: 864px; height: 1080px; overflow: hidden; opacity: 0; }
+      #shine div { position: absolute; top: -100px; left: 0; width: 220px; height: 1300px; background: linear-gradient(90deg, rgba(255,235,210,0), rgba(255,235,210,.7), rgba(255,235,210,0)); transform: skewX(-18deg); }
+      #flash { background: #fff; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="40.2" data-width="1920" data-height="1080">
+      <div id="gray" class="abs full"><img id="grayimg" src="assets/bande.jpg" alt="" /></div>
+      <div id="grayov" class="abs full"></div>
+      <!-- accroche -->
+      <div id="hk1" class="abs hk">FEMMES</div><div id="hk1b" class="abs hk">FEMMES</div>
+      <div id="hk2" class="abs hk">ÊTES-VOUS</div><div id="hk3" class="abs hk">PRÊTES ?</div><div id="hkline" class="abs"></div>
+      <div class="abs xm" style="left:150px;top:880px;color:#f6efe3" id="x1">✕</div><div class="abs xm" style="left:1700px;top:90px;color:#ff9a2a" id="x2">✕</div><div class="abs xm" style="left:1050px;top:60px;color:#f6efe3" id="x3">✕</div><div class="abs xm" style="left:300px;top:150px;color:#ff9a2a" id="x4">✕</div>
+      <!-- carte 1 et titre -->
+      <div id="cutA" class="abs full cut"><img id="cm" src="assets/photos/mary.png" alt="" /><div class="dk abs"></div></div>
+      <div id="we" class="abs">WEEK-END</div><div id="zw" class="abs">ZONE WOMEN</div>
+      <div id="cutB" class="abs full cut"><img id="cb1" src="assets/photos/hestia.png" alt="" /><div class="dk abs"></div></div>
+      <div id="cutC" class="abs full cut"><img src="assets/photos/jessie.png" alt="" /><div class="dk abs"></div></div>
+      <div id="cutD" class="abs full cut"><img src="assets/photos/pelagie.png" alt="" /><div class="dk abs"></div></div>
+      <div id="cutE" class="abs full cut"><img src="assets/photos/richmelle.png" alt="" /><div class="dk abs"></div></div>
+      <div id="ec1" class="abs echo" style="top:20px">LES FEMMES PRENNENT</div><div id="ec2" class="abs echo" style="top:160px">LES FEMMES PRENNENT</div><div id="ec3" class="abs echo" style="top:740px">LE CONTRÔLE DE LA ZONE</div><div id="ec4" class="abs echo" style="top:880px">LE CONTRÔLE DE LA ZONE</div>
+      <div id="t1" class="abs ttl">LES FEMMES PRENNENT</div><div id="t2" class="abs ttl">LE CONTRÔLE DE LA ZONE</div>
+      <!-- carrousel -->
+      <div id="red" class="abs full"></div><div class="abs full sl" id="sl1"></div>
+      <div id="strip" class="abs"></div>
+      <div id="slabB" class="abs"></div><div id="slabA" class="abs"></div><div id="slabC" class="abs"></div>
+      <!-- textes -->
+      <div id="redtxt" class="abs full"></div>
+      <div id="dt1" class="abs kt">27–29 NOVEMBRE 2026</div><div id="dt2" class="abs kt">VEN. 19H45</div>
+      <div id="ad" class="abs ad" style="top:300px"><div id="ad1">ZONE 242 – SIKÈCODJI,</div><div id="ad2">RUE DE GOLF FM,</div><div id="ad3">COTONOU</div></div>
+      <div id="fr1" class="abs kt">ENTRÉE GRATUITE</div><div id="fr2" class="abs kt">150 PLACES · INSCRIPTION OBLIGATOIRE</div><div id="fr3" class="abs kt">contact.zone242@gmail.com</div>
+      <!-- ne manque pas -->
+      <div id="dm" class="abs full"><div id="dmcol" class="abs full col"></div></div>
+      <div id="glitch" class="abs full"></div>
+      <!-- final -->
+      <div id="fin" class="abs full"><div id="finbg" class="abs" style="background:url(assets/flyer.jpg) center/cover"></div><img id="finfly" class="abs" src="assets/flyer.jpg" alt="" /><div class="abs" style="left:0;top:0;width:1920px;height:1080px;background:linear-gradient(90deg,rgba(190,20,0,.55),rgba(190,20,0,.1) 40%,rgba(190,20,0,.1) 60%,rgba(190,20,0,.55))"></div><div id="shine" class="abs"><div id="shband"></div></div></div>
+      <div id="flash" class="abs full"></div>
+      <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="40.2" data-track-index="1" data-volume="1"></audio>
+    </div>
+    <script>
+      const rnd = (i, s) => { const x = Math.sin(i * 127.1 + s * 311.7) * 43758.5453; return x - Math.floor(x); };
+      const split = (el) => { const t = el.textContent; el.textContent = ""; return [...t].map((ch) => { const s = document.createElement("span"); s.className = "lt"; s.textContent = ch === " " ? " " : ch; el.appendChild(s); return s; }); };
+      const B = 0.6, STEP = 600;
+      const tl = gsap.timeline({ paused: true });
+      const $ = (s) => document.querySelector(s);
+
+      // ---------- configuration des détourages : [hauteur affichée, haut de l'image], proportions largeur/hauteur
+      const CFG = { mary: [1690, 90], anne: [750, 90], huldah: [750, 90], manne: [1690, 90], veronica: [700, 140], hestia: [1590, 90], pelagie: [1590, 90], esperance: [1590, 90], jessie: [1590, 90], richmelle: [1590, 90], tossou: [640, 190] };
+      const ASP = { mary: 851 / 1259, anne: 960 / 1217, huldah: 988 / 1105, manne: 716 / 968, veronica: 1169 / 1289, hestia: 825 / 1208, pelagie: 551 / 1082, esperance: 591 / 1159, jessie: 662 / 1104, richmelle: 595 / 1124, tossou: 1130 / 1300 };
+      const placeCut = (img, id, mult, cx, top) => { const h = CFG[id][0] * mult, w = h * ASP[id]; img.style.height = h + "px"; img.style.left = (cx - w / 2) + "px"; img.style.top = top + "px"; };
+      placeCut($("#cm"), "mary", 1.15, 960, 30); placeCut($("#cb1"), "hestia", 1.15, 960, 30);
+      placeCut($("#cutC img"), "jessie", 1.2, 960, 30); placeCut($("#cutD img"), "pelagie", 1.2, 960, 30); placeCut($("#cutE img"), "richmelle", 1.2, 960, 30);
+      // ---------- carrousel : 10 intervenantes de 1,2 s, de 8,4 s à 20,4 s
+      const PEOPLE = [
+        ["mary", "PROPHÉTESSE", "MARY FAVOUR TONGSI", "INVITÉE D’HONNEUR"], ["anne", "PASTEURE", "ANNE-LAURE", ""], ["huldah", "LEADER", "HULDAH", ""],
+        ["manne", "SERVANTE", "MANNE", ""], ["veronica", "PASTEURE", "VERONICA", ""], ["hestia", "DR", "HESTIA", ""], ["pelagie", "PROPHÉTESSE", "PÉLAGIE", ""],
+        ["esperance", "PASTEURE", "ESPÉRANCE", ""], ["jessie", "ÉVANGÉLISTE", "JESSIE", ""], ["richmelle", "LEADER", "RICHMELLE", ""], ["tossou", "MADAME", "TOSSOU", ""]];
+      const T0S = [8.4, 9.6, 10.8, 12.0, 13.2, 14.4, 15.6, 16.8, 18.0, 19.2, 20.4];   // arrivée de chaque personne au centre
+      const strip = $("#strip"); const ITEMS = [];
+      PEOPLE.forEach(([id, a, b, c], i) => {
+        const d = document.createElement("div"); d.className = "it"; d.style.left = (960 - 350 + i * STEP) + "px";
+        const h = CFG[id][0], w = h * ASP[id];
+        d.innerHTML = `<img src="assets/photos/${id}.png" alt="" style="height:${h}px;left:${350 - w / 2}px;top:${CFG[id][1]}px"><div class="nm">${a}<br>${b}${c ? `<small>${c}</small>` : ""}</div>`; strip.appendChild(d); ITEMS.push(d);
+      });
+      // ---------- couche « ne manque pas » : collage gris
+      const dmcol = $("#dmcol");
+      PEOPLE.forEach(([id], i) => { const im = document.createElement("img"); const h = CFG[id][0] * .62, w = h * ASP[id]; im.src = `assets/photos/${id}.png`; im.style.height = h + "px"; im.style.left = (i * 270 - 120) + "px"; im.style.top = (i % 2 ? 330 : 180) + "px"; dmcol.appendChild(im); });
+      const DMT = []; [[170, 130, 120], [980, 80, 150], [1500, 260, 100], [300, 420, 190], [1200, 470, 120], [120, 760, 150], [760, 640, 90], [1450, 700, 170], [620, 160, 80], [1010, 830, 110], [40, 520, 90], [1640, 880, 130]].forEach(([x, y, s]) => {
+        const e = document.createElement("div"); e.className = "dmt"; e.style.left = x + "px"; e.style.top = y + "px"; e.style.fontSize = s + "px"; e.textContent = "NE MANQUE PAS"; $("#dm").appendChild(e); DMT.push(e); });
+      const big = document.createElement("div"); big.className = "dmt"; big.style.cssText = "left:0;width:1920px;text-align:center;top:330px;font-size:330px;"; big.textContent = "NE MANQUE PAS"; $("#dm").appendChild(big);
+
+      // ---------- états initiaux
+      gsap.set("#hkline", { scaleX: 0 }); gsap.set(".xm", { scale: 0, rotation: -40 });
+      gsap.set("#slabA", { y: 260 }); gsap.set("#slabB", { x: 400 }); gsap.set("#slabC", { x: -300 });
+      ITEMS.forEach((d, i) => gsap.set(d, { transformOrigin: "50% 830px", scale: .62, opacity: 0, filter: "grayscale(1) blur(7px) brightness(.85)" }));
+      gsap.set("#strip", { x: 0 });
+      gsap.set(["#cutA", "#cutB", "#cutC", "#cutD", "#cutE"], { opacity: 0 });
+      gsap.set("#finfly", { scale: .86, opacity: 0, transformOrigin: "50% 50%" });
+      const L1 = split($("#dt1")), L2 = split($("#dt2")), A1 = split($("#ad1")), A2 = split($("#ad2")), A3 = split($("#ad3")), F1 = split($("#fr1")), F2 = split($("#fr2")), F3 = split($("#fr3"));
+      [L1, L2, A1, A2, A3, F1, F2, F3].forEach((arr, k) => arr.forEach((s, i) => gsap.set(s, { opacity: 0, y: (rnd(i, k) - .5) * 160, x: (rnd(i, k + 9) - .5) * 120, rotation: (rnd(i, k + 3) - .5) * 240, scale: .2 })));
+
+      // ---------- 0 → 1,8 : accroche sur fond gris (ref : « LAGOS ARE YOU READY »)
+      tl.set("#gray", { opacity: 1 }, 0); tl.set("#grayov", { opacity: 1 }, 0);
+      tl.fromTo("#grayimg", { x: -300 }, { x: -1500, duration: 1.9, ease: "none" }, 0);
+      tl.fromTo("#hk1", { opacity: 0, scale: 1.15, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: .5, ease: "power3.out" }, 0.05);
+      tl.to("#hkline", { scaleX: 1, duration: .45, ease: "power2.out" }, 0.1); tl.to("#hkline", { opacity: 0, duration: .15 }, 0.65);
+      tl.set(["#hk1b", "#hk2", "#hk3"], { opacity: 1 }, 0.6); tl.set("#hk1", { opacity: 0 }, 0.6);
+      tl.from("#hk1b", { y: 90, duration: .3, ease: "power4.out" }, 0.6); tl.from("#hk2", { y: 90, duration: .3, ease: "power4.out" }, 0.8); tl.from("#hk3", { y: 90, duration: .3, ease: "power4.out" }, 1.0);
+      tl.fromTo("#hkline", { opacity: 1, scaleX: 0, y: 25 }, { scaleX: 1, duration: .25, ease: "power2.out", immediateRender: false }, 1.25);
+      ["#x1", "#x2", "#x3", "#x4"].forEach((x, i) => tl.to(x, { scale: 1, rotation: 0, duration: .3, ease: "back.out(2)" }, .15 + i * .3));
+      // ---------- 1,8 → 3,6 : carte « WEEK-END ZONE WOMEN »
+      tl.set(["#gray", "#grayov", "#hk1b", "#hk2", "#hk3", "#hkline", ".xm"], { opacity: 0 }, 1.8);
+      tl.set("#cutA", { opacity: 1 }, 1.8); tl.fromTo("#cutA img", { scale: 2.2, x: 120 }, { scale: 1.25, x: 0, duration: 1.8, ease: "power2.out" }, 1.8);
+      tl.set("#we", { opacity: 1 }, 1.8); tl.from("#we", { x: -700, duration: .5, ease: "power4.out" }, 1.8);
+      tl.set("#zw", { opacity: 1 }, 2.4); tl.fromTo("#zw", { scale: 3, x: 300 }, { scale: 1, x: 0, duration: .55, ease: "power4.out" }, 2.4);
+      // ---------- 3,6 → 8,4 : titre sur coupes rapides (ref : « PRAISE FEAST MANDATE »)
+      tl.set(["#cutA", "#we", "#zw"], { opacity: 0 }, 3.6);
+      [["#cutB", 3.6], ["#cutC", 4.8], ["#cutD", 6.0], ["#cutE", 7.2]].forEach(([c, t], i) => {
+        tl.set(c, { opacity: 1 }, t); if (i) tl.set(["#cutB", "#cutC", "#cutD", "#cutE"][i - 1], { opacity: 0 }, t);
+        tl.fromTo(c + " img", { scale: 1.5 + .2 * (i % 2), x: i % 2 ? -80 : 80 }, { scale: 1.2, x: 0, duration: 1.2, ease: "power1.out" }, t); });
+      tl.set(["#t1", "#t2"], { opacity: 1 }, 3.6); tl.from("#t1", { scale: 1.6, duration: .35, ease: "power4.out", transformOrigin: "50% 50%" }, 3.6); tl.from("#t2", { scale: 1.6, duration: .35, ease: "power4.out", transformOrigin: "50% 50%" }, 3.75);
+      ["#ec1", "#ec2", "#ec3", "#ec4"].forEach((e, i) => { tl.set(e, { opacity: 1 }, 3.6 + i * .06); tl.set(e, { opacity: 0 }, 4.3); });
+      tl.to(["#t1", "#t2"], { scale: 1.03, duration: .6, yoyo: true, repeat: 5, ease: "sine.inOut", transformOrigin: "50% 50%" }, 4.0);
+      // ---------- 8,4 → 20,4 : carrousel des intervenantes (ref : « FUNMI SAX / ELIJAH DANIEL… »)
+      tl.set(["#cutB", "#cutC", "#cutD", "#cutE", "#t1", "#t2"], { opacity: 0 }, 8.4);
+      tl.set("#red", { opacity: 1 }, 8.4); tl.set("#sl1", { opacity: 1 }, 8.4);
+      tl.to("#slabA", { y: 0, opacity: 1, duration: .45, ease: "power3.out" }, 8.4); tl.to("#slabB", { x: 0, opacity: 1, duration: .6, ease: "power3.out" }, 8.45); tl.to("#slabC", { x: 0, opacity: 1, duration: .6, ease: "power3.out" }, 8.45);
+      ITEMS.forEach((d, i) => {
+        const t = T0S[i], dur = 1.2;       // le sujet arrive au centre à t
+        tl.set(d, { opacity: 1 }, Math.max(8.4, t - 1.3));
+        if (i === 0) { tl.fromTo(d, { x: 700 }, { x: 0, scale: 1, filter: "grayscale(0) blur(0px) brightness(1)", duration: .5, ease: "power3.out" }, t - .1); tl.set(d, { opacity: 1 }, t - .1); }
+        else { tl.to(d, { scale: 1, filter: "grayscale(0) blur(0px) brightness(1)", duration: .5, ease: "power3.inOut" }, t - .1); }
+        tl.to(d.querySelector(".nm"), { opacity: 1, x: 0, duration: .3, ease: "power2.out", startAt: { x: 40 } }, t + .1);
+        if (i < 10) { tl.to(d, { scale: .62, filter: "grayscale(1) blur(7px) brightness(.85)", duration: .5, ease: "power3.inOut" }, t + dur - .1); tl.to(d.querySelector(".nm"), { opacity: 0, duration: .2 }, t + dur - .2); }
+        if (i >= 1) tl.to("#strip", { x: -i * STEP, duration: .5, ease: "power3.inOut" }, t - .1);
+      });
+      // ---------- 20,4 → 24,0 : date (ref : « OCTOBER 24TH 2026  2PM »)
+      tl.set(["#red", "#sl1", "#slabA", "#slabB", "#slabC", "#strip"], { opacity: 0 }, 21.6); tl.set("#redtxt", { opacity: 1 }, 21.6);
+      [[L1, 0], [L2, 1]].forEach(([arr, k]) => { tl.to(arr, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: .45, ease: "back.out(1.6)", stagger: .02 }, 21.6 + k * .3);
+        tl.to(arr, { x: (i) => (rnd(i, 21 + k) - .5) * 900, y: (i) => (rnd(i, 22 + k) - .5) * 700, rotation: (i) => (rnd(i, 23) - .5) * 500, scale: .2, opacity: 0, duration: .45, ease: "power3.in", stagger: .02 }, 24.0 + k * .1); });
+      tl.to("#dt1", { x: 8, duration: .08, yoyo: true, repeat: 7 }, 23.0); tl.to("#dt2", { x: -8, duration: .08, yoyo: true, repeat: 7 }, 23.1);
+      // ---------- 24,0 → 28,2 : adresse (lettres qui tournent)
+      [[A1, 0], [A2, 1], [A3, 2]].forEach(([arr, k]) => { tl.to(arr, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: .45, ease: "back.out(1.4)", stagger: .016 }, 24.6 + k * .3);
+        tl.to(arr, { x: (i) => (rnd(i, 31 + k) - .5) * 1000, y: (i) => -200 - rnd(i, 32 + k) * 500, rotation: (i) => (rnd(i, 33) - .5) * 720, scale: .1, opacity: 0, duration: .5, ease: "power3.in", stagger: .02 }, 27.55 + k * .1); });
+      // ---------- 28,2 → 32,4 : entrée gratuite (ref : « FREE ENTRY + site »)
+      [[F1, 0], [F2, 1], [F3, 2]].forEach(([arr, k]) => { tl.to(arr, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: .4, ease: "back.out(1.5)", stagger: .012 }, 28.2 + k * .25);
+        tl.to(arr, { x: (i) => (rnd(i, 41 + k) - .5) * 900, y: (i) => (rnd(i, 42 + k) - .5) * 600, rotation: (i) => (rnd(i, 43) - .5) * 600, scale: .1, opacity: 0, duration: .45, ease: "power3.in", stagger: .02 }, 31.75 + k * .1); });
+      // ---------- 32,4 → 35,4 : « NE MANQUE PAS » sur collage gris (ref : « DONT MISS »)
+      tl.set("#redtxt", { opacity: 0 }, 32.4); tl.set("#dm", { opacity: 1 }, 32.4);
+      tl.fromTo("#dmcol", { x: 0 }, { x: -420, duration: 3.0, ease: "none" }, 32.4);
+      DMT.forEach((e, i) => { tl.set(e, { opacity: 1 }, 32.4 + i * .17); tl.from(e, { scale: 1.6, duration: .25, ease: "power3.out" }, 32.4 + i * .17); });
+      tl.set(DMT, { opacity: 0 }, 34.55); tl.set(big, { opacity: 1 }, 34.55); tl.from(big, { scale: 1.5, duration: .3, ease: "power4.out", transformOrigin: "50% 50%" }, 34.55);
+      tl.to("#glitch", { opacity: .8, duration: .05, yoyo: true, repeat: 5 }, 34.9);
+      // ---------- 35,4 → 40,2 : le flyer
+      tl.set(["#dm", "#glitch"], { opacity: 0 }, 35.4); tl.set("#fin", { opacity: 1 }, 35.4);
+      tl.to("#finfly", { opacity: 1, scale: 1, duration: .6, ease: "power3.out" }, 35.4);
+      tl.fromTo("#finbg", { scale: 1.05 }, { scale: 1.15, duration: 4.8, ease: "none" }, 35.4);
+      tl.to("#finfly", { scale: 1.04, duration: 4.2, ease: "none" }, 36.0);
+      tl.set("#shine", { opacity: 1 }, 36.6); tl.fromTo("#shband", { x: -300 }, { x: 1100, duration: .9, ease: "power2.inOut" }, 36.6);
+      tl.to("#fin", { opacity: 0, duration: .8 }, 39.4);
+      // flashs de transition sur les temps forts
+      [[1.8, .5], [3.6, .7], [8.4, .6], [21.6, .5], [32.4, .35], [35.4, .6]].forEach(([t, o]) => { tl.set("#flash", { opacity: o }, t); tl.to("#flash", { opacity: 0, duration: .35, ease: "power2.out" }, t + .02); });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

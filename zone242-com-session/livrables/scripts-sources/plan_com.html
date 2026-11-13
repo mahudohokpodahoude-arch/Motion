@@ -1,0 +1,232 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Week-end Zone Women — Plan de communication et de design</title>
+<style>
+@font-face{font-family:M;font-weight:400;src:url(f/montserrat-latin-400-normal.woff2)}
+@font-face{font-family:M;font-weight:500;src:url(f/montserrat-latin-500-normal.woff2)}
+@font-face{font-family:M;font-weight:600;src:url(f/montserrat-latin-600-normal.woff2)}
+@font-face{font-family:M;font-weight:700;src:url(f/montserrat-latin-700-normal.woff2)}
+@font-face{font-family:M;font-weight:800;src:url(f/montserrat-latin-800-normal.woff2)}
+@font-face{font-family:M;font-weight:900;src:url(f/montserrat-latin-900-normal.woff2)}
+@page{size:A4;margin:0}
+:root{--navy:#151a3a;--blue:#1900cf;--cy:#1190dd;--or:#ff5a36;--cream:#f6f1e7;--g:#5a6078}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:M,sans-serif;font-size:9.6pt;line-height:1.45;color:var(--navy);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;padding:16mm 15mm 16mm;position:relative;page-break-after:always;overflow:hidden;background:#fff}
+.page:last-child{page-break-after:auto}
+.foot{position:absolute;left:15mm;right:15mm;bottom:8mm;display:flex;justify-content:space-between;font-size:7.2pt;color:var(--g);border-top:.3mm solid #dde;padding-top:2mm}
+h1{font-weight:900;font-size:20pt;line-height:1.1;margin-bottom:3mm;color:var(--blue)}
+h2{font-weight:800;font-size:12.2pt;margin:5mm 0 2mm;color:var(--navy);display:flex;align-items:center;gap:2.4mm}
+h2:before{content:"";width:3.2mm;height:3.2mm;background:var(--or);border-radius:.8mm;display:block;flex:none}
+h3{font-weight:800;font-size:10pt;margin:3mm 0 1mm;color:var(--blue)}
+p{margin-bottom:2mm}
+ul{margin:0 0 2mm 4.5mm} li{margin-bottom:1mm}
+b,strong{font-weight:800}
+.cover{background:linear-gradient(160deg,#1900cf 0%,#0f1f78 55%,#080c34 100%);color:#fff;padding:0}
+.cover .in{position:absolute;inset:0;padding:22mm 18mm}
+.cover .tag{display:inline-block;background:var(--or);color:#fff;font-weight:800;letter-spacing:.14em;font-size:8.4pt;padding:2.2mm 4mm;border-radius:1.5mm}
+.cover h1{color:#fff;font-size:40pt;line-height:1;margin:14mm 0 5mm;font-weight:900}
+.cover .sub{font-size:14pt;font-weight:700;line-height:1.35;max-width:150mm}
+.cover .three{display:flex;gap:3mm;margin-top:12mm}
+.cover .three span{background:rgba(255,255,255,.14);border:.3mm solid rgba(255,255,255,.5);border-radius:10mm;padding:2.5mm 5mm;font-weight:800;font-size:10.5pt}
+.cover .meta{position:absolute;left:18mm;right:18mm;bottom:18mm;font-size:9.5pt;font-weight:600;line-height:1.6}
+.cover .bar{position:absolute;left:0;right:0;bottom:0;height:7mm;background:var(--or)}
+.cover .dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.07) .5mm,transparent .6mm);background-size:5mm 5mm}
+.box{border-radius:2.5mm;padding:3.5mm 4.5mm;margin:2.5mm 0}
+.warn{background:#fff2ee;border-left:1.4mm solid var(--or)}
+.info{background:#eef4ff;border-left:1.4mm solid var(--blue)}
+.ok{background:#eaf6ef;border-left:1.4mm solid #1f9d55}
+table{width:100%;border-collapse:collapse;margin:2mm 0 3mm;font-size:8.4pt}
+th{background:var(--navy);color:#fff;text-align:left;padding:1.8mm 2.2mm;font-weight:800;font-size:8pt}
+td{padding:1.8mm 2.2mm;border-bottom:.25mm solid #dfe2ee;vertical-align:top}
+tr:nth-child(even) td{background:#f6f7fb}
+.p0{color:#fff;background:var(--or);border-radius:1mm;padding:.5mm 1.8mm;font-weight:800;font-size:7.6pt;white-space:nowrap}
+.p1{color:#fff;background:var(--blue);border-radius:1mm;padding:.5mm 1.8mm;font-weight:800;font-size:7.6pt;white-space:nowrap}
+.p2{color:#fff;background:var(--cy);border-radius:1mm;padding:.5mm 1.8mm;font-weight:800;font-size:7.6pt;white-space:nowrap}
+.p3{color:#fff;background:#7d839c;border-radius:1mm;padding:.5mm 1.8mm;font-weight:800;font-size:7.6pt;white-space:nowrap}
+.m{color:#1f9d55;font-weight:800}.t{color:#b3541e;font-weight:800}
+.cols{display:flex;gap:4mm}.cols>div{flex:1}
+.kpi{display:flex;gap:3mm;margin:2mm 0}.kpi div{flex:1;background:var(--cream);border-radius:2mm;padding:3mm;text-align:center}
+.kpi b{display:block;font-size:15pt;color:var(--blue);font-weight:900}
+.small{font-size:8pt;color:var(--g)}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin:2mm 0 2mm}
+.idea{background:#f6f7fb;border-radius:2.5mm;padding:3mm 3.4mm;border-top:1mm solid var(--blue);font-size:8.2pt;line-height:1.35;break-inside:avoid}
+.idea p{margin:0 0 1.1mm}
+.ih{display:flex;align-items:center;gap:2mm;margin-bottom:.8mm}.ih b{font-size:9.2pt;font-weight:800;color:var(--navy);line-height:1.2}
+.n{flex:none;width:6mm;height:6mm;border-radius:50%;background:var(--or);color:#fff;font-weight:900;font-size:8pt;display:flex;align-items:center;justify-content:center}
+.meta{font-size:7.6pt;color:var(--g);margin-bottom:1.4mm;font-weight:600}
+.need{color:var(--g)}
+.page h2{margin-top:3mm}.idea{padding:2.6mm 3.2mm}.box{padding:2.8mm 4mm;margin:2mm 0}table{margin:1.5mm 0 2mm}td,th{padding:1.4mm 2.2mm}
+
+.tight table{font-size:7.9pt}.tight td{padding:1mm 2mm}.tight th{padding:1.3mm 2mm}.tight h2{margin:3mm 0 1.4mm}.tight p{margin-bottom:1.4mm}.tight li{margin-bottom:.6mm}.tight h1{font-size:18pt;margin-bottom:2mm}
+.tight2 table{font-size:8pt}.tight2 td{padding:1.2mm 2mm}.tight2 .box{padding:2.2mm 3.6mm;margin:1.6mm 0}.tight2 .idea{font-size:7.9pt}.tight2 h2{margin:2.4mm 0 1.4mm}
+</style></head><body>
+<section class="page cover"><div class="dots"></div><div class="in">
+  <span class="tag">PLAN DE COMMUNICATION &amp; DESIGN</span>
+  <h1>WEEK-END<br>ZONE WOMEN</h1>
+  <div class="sub">« Les femmes prennent le contrôle de la Zone »<br>Du vendredi 27 au dimanche 29 novembre 2026 · Zone 242, Sikècodji</div>
+  <div class="three"><span>Restaurée</span><span>Ointe</span><span>Envoyée</span></div>
+  <div class="meta">Version mise à jour le 12 novembre 2026, à J-15 (affiche « Coming soon » publiée le 11 novembre)<br>Contenu : situation · stratégie · design · calendrier jour par jour · 22 idées de contenu · organisation et suivi</div>
+  <div class="bar"></div></div></section>
+<section class="page">
+<h1>1. Situation à J-15</h1>
+<p>Le week-end a <b>3 temps forts</b> : une soirée de lancement le vendredi avec la Prophétesse Mary Favour TONGSI, le <b>Women's Experience Day</b> le samedi (relaxation, 4 panels, la session « Belle et en bonne santé », la Zone Détente et une grande table ronde) et, le dimanche, le grand culte de clôture suivi de l'Agapè des Femmes. Les femmes tiennent l'accueil, la louange, l'animation et l'organisation. <b>Participation gratuite, 150 places, inscription obligatoire.</b></p>
+<div class="kpi"><div><b>J-15</b>avant le début</div><div><b>15</b>intervenantes</div><div><b>150</b>places, gratuit</div><div><b>22</b>idées de contenu</div></div>
+<h2>Reste à faire</h2>
+<table><tr><th>Élément</th><th>État</th></tr>
+<tr><td>Formulaire d'inscription (script prêt) et QR code</td><td><span class="t">À créer : bloque l'ouverture des inscriptions</span></td></tr>
+<tr><td>Affiche mère officielle</td><td><span class="t">Échéance 12 novembre</span></td></tr>
+<tr><td>Photos HD des intervenantes, noms de famille manquants</td><td><span class="t">À récupérer avant le 19 novembre</span></td></tr></table>
+</section>
+<section class="page tight">
+<h1>2. Stratégie de communication</h1>
+<h2>Objectifs</h2>
+<ul><li><b>Remplir les 150 places</b> : inscriptions et présence réelle, pour le samedi (panels, session santé, table ronde) comme pour l'Agapè du dimanche.</li>
+<li><b>Faire venir les invitées</b> : chaque participante invite une amie, une sœur, une collègue.</li>
+<li><b>Installer le thème</b> « Restaurée · Ointe · Envoyée » avant, pendant et après le week-end.</li></ul>
+<h2>Cibles</h2>
+<table><tr><th>Cible</th><th>Comment la toucher</th></tr>
+<tr><td><b>Les femmes de la Zone</b> (cœur de cible)</td><td>WhatsApp (statuts, groupes), annonces au culte, réseaux sociaux</td></tr>
+<tr><td><b>Leurs invitées</b> (amies, famille, collègues)</td><td>Visuels faciles à partager, message « invite une amie », vidéos courtes</td></tr>
+<tr><td><b>Les jeunes filles</b></td><td>TikTok, Instagram, stories, contenu court et direct</td></tr>
+<tr><td><b>Les hommes de la Zone</b> (relais)</td><td>Annonce explicite : relayer auprès des épouses, sœurs, amies</td></tr></table>
+<h2>Messages clés</h2>
+<ul><li><b>Message principal :</b> « Les femmes prennent le contrôle de la Zone ».</li>
+<li><b>Thème en 3 mots :</b> Restaurée (guérir le cœur, prendre soin de son corps) · Ointe (découvrir son appel, bâtir sa vie financière avec Dieu) · Envoyée (faire de sa maison une mission, repartir bénie et envoyée).</li>
+<li><b>Preuve :</b> « Pendant tout le week-end, les femmes tiennent l'accueil, la louange, l'animation et l'organisation. »</li>
+<li><b>Appel à l'action unique :</b> s'inscrire (gratuit, 150 places) et inviter une amie.</li></ul>
+<h2>Piliers de contenu</h2>
+<table><tr><th>Pilier</th><th>Exemples</th></tr>
+<tr><td><b>1. Annonce</b></td><td>Affiche, dates, lieu, « Coming soon », ouverture des inscriptions, compte à rebours</td></tr>
+<tr><td><b>2. Intervenantes</b></td><td>Affiches de biographie, affiches de session, « Qui est… ? »</td></tr>
+<tr><td><b>3. Programme</b></td><td>Carrousel du programme, vendredi, samedi heure par heure, dimanche et Agapè</td></tr>
+<tr><td><b>4. Thème et spirituel</b></td><td>Citations, rubrique « Je déclare », « L'essentiel à retenir du Message »</td></tr>
+<tr><td><b>5. Expérience</b></td><td>Zone Détente, Agapè des Femmes, coulisses de l'équipe des femmes</td></tr>
+<tr><td><b>6. Preuve sociale</b></td><td>Témoignages, photos, récap (hors table ronde)</td></tr></table>
+<h2>Canaux</h2>
+<table><tr><th>Canal</th><th>Rôle</th><th>Formats</th></tr>
+<tr><td>WhatsApp</td><td>Diffusion de proximité, inscriptions</td><td>Statuts 9:16, affiche, messages courts</td></tr>
+<tr><td>Facebook</td><td>Annonce, programme, direct</td><td>4:5, 1:1, 16:9, textes d'accompagnement</td></tr>
+<tr><td>Instagram</td><td>Image de marque, intervenantes</td><td>Carrousels 1:1 et 4:5, reels et stories 9:16</td></tr>
+<tr><td>TikTok</td><td>Jeunes filles, invitation virale</td><td>Vidéos courtes 9:16</td></tr>
+<tr><td>YouTube</td><td>Annonce longue, replays (hors table ronde)</td><td>16:9, miniatures</td></tr>
+<tr><td>Au culte</td><td>Annonce à l'assemblée</td><td>Écran 16:9, vidéo d'annonce</td></tr></table>
+</section>
+<section class="page tight">
+<h1>3. Design : livrables et échéances</h1>
+<p>Les échéances sont celles du Google Sheet de suivi (33 créations) et permettent de tenir le calendrier de la section 4. « À fournir » = élément attendu de l'équipe.</p>
+<table><tr><th>Priorité</th><th>Livrable</th><th>Échéance</th><th>Détail et à fournir</th></tr>
+<tr><td><span class="p0">P0</span></td><td><b>Affiche « Coming soon »</b></td><td><span class="m">Fait · 11 nov.</span></td><td>Publiée.</td></tr>
+<tr><td><span class="p0">P0</span></td><td><b>Affiche mère officielle</b></td><td>Jeu 12 nov.</td><td>Titre, thème, slogan, dates, lieu, Prophétesse, inscription. <span class="t">À fournir :</span> photo HD de la Prophétesse, QR code.</td></tr>
+<tr><td><span class="p0">P0</span></td><td><b>Teaser vidéo du thème</b></td><td>Jeu 12 nov.</td><td>Motion, dans le style des génériques déjà faits.</td></tr>
+<tr><td><span class="p1">P1</span></td><td><b>A5 recto-verso</b> (face : photos ; arrière : informations)</td><td>Lun 16 nov.</td><td>Programme final, QR code. <span class="t">À fournir :</span> photos HD.</td></tr>
+<tr><td><span class="p1">P1</span></td><td><b>12 affiches de biographie</b> des panélistes</td><td>Jeu 19 nov.</td><td><span class="t">À fournir :</span> 12 photos HD, titres exacts, biographies (Dr Hestia déjà reçue).</td></tr>
+<tr><td><span class="p1">P1</span></td><td><b>9 affiches des jours et de l'Agapè</b> : vendredi, 6 sessions du samedi, dimanche, Agapè</td><td>Ven 20 nov.</td><td>Textes détaillés dans le Sheet. Vendredi et dimanche : uniquement la photo de la Prophétesse.</td></tr>
+<tr><td><span class="p2">P2</span></td><td><b>Décomptes J-5 à Jour J</b> (6 stories)</td><td>Ven 20 nov.</td><td>Publication du dimanche 22 au vendredi 27 novembre.</td></tr>
+<tr><td><span class="p2">P2</span></td><td><b>Supports physiques</b> : bâche, kakémono, panneaux, badges</td><td>Ven 20 nov. (envoi imprimeur lun. 23)</td><td><span class="t">À fournir :</span> dimensions, délais de l'imprimeur, QR code.</td></tr>
+<tr><td><span class="p2">P2</span></td><td><b>Habillage reels et stories</b> Jour 1, 2, 3</td><td>Mar 24 nov.</td><td>Cadre, bandeau, transitions, logo WZW.</td></tr>
+<tr><td><span class="p3">P3</span></td><td><b>Après l'événement</b> : citations, remerciement, habillage du récap</td><td>Mer 2 déc.</td><td>Citations notées pendant les panels (hors table ronde).</td></tr></table>
+</section>
+<section class="page tight">
+<h1>4. Calendrier de communication</h1>
+<table><tr><th>Phase</th><th>Dates</th><th>Objectif et contenus</th></tr>
+<tr><td><b>Teasing</b></td><td>Mer 11 → jeu 12 nov.</td><td>« Coming soon » publié, teaser du thème.</td></tr>
+<tr><td><b>Lancement</b></td><td>Ven 13 → sam 21 nov.</td><td>Affiche officielle, ouverture des inscriptions, programme, thème en 3 mots, une session et ses intervenantes par jour.</td></tr>
+<tr><td><b>Compte à rebours</b></td><td>Dim 22 → jeu 26 nov.</td><td>Décomptes J-5 à J-1, places restantes, Zone Détente, infos pratiques.</td></tr>
+<tr><td><b>Direct</b></td><td>Ven 27 → dim 29 nov.</td><td>Direct (hors table ronde), citations en temps réel, photos, ambiance.</td></tr>
+<tr><td><b>Après</b></td><td>Dès lun 30 nov.</td><td>Récap, remerciements, témoignages, extraits des panels.</td></tr></table>
+<h2>Jour par jour (1/2)</h2>
+<table><tr><th>Date</th><th>Publication</th><th>Canal / format</th></tr><tr><td><b>Mer 11</b></td><td><b>Affiche « Coming soon »</b></td><td><span class=m>Fait</span> · WhatsApp, Facebook, Instagram</td></tr><tr><td><b>Jeu 12</b></td><td>Teaser vidéo du thème · story-sondage « Qui sera là ? »</td><td>Reels, TikTok, statuts, stories</td></tr><tr><td><b>Ven 13</b></td><td><b>Révélation : affiche officielle et ouverture des inscriptions</b> (lien + QR). Annonce dans tous les groupes WhatsApp</td><td>Tous canaux, dès que le lien est prêt</td></tr><tr><td><b>Sam 14</b></td><td>Carrousel du programme complet (8 diapos, 1080×1080)</td><td>Instagram, Facebook ; affiche en statut</td></tr><tr><td><b>Dim 15</b></td><td>Annonce à l'assemblée · relais de l'affiche par les hommes · rappel du lien</td><td>Culte, WhatsApp</td></tr><tr><td><b>Lun 16</b></td><td>Série « 3 mots » 1/3 : <b>Restaurée</b> · rappel « 150 places, gratuit »</td><td>Post 4:5 + story</td></tr><tr><td><b>Mar 17</b></td><td>Série « 3 mots » 2/3 : <b>Ointe</b> · coulisses de l'équipe des femmes</td><td>Post 4:5 + story, stories tournées</td></tr><tr><td><b>Mer 18</b></td><td>Série « 3 mots » 3/3 : <b>Envoyée</b> · vidéo d'annonce officielle</td><td>Post + reel 9:16 et 16:9</td></tr><tr><td><b>Jeu 19</b></td><td><b>Panel 1</b> · Guérir des traumatismes émotionnels : affiche de session + 4 affiches de biographie</td><td>Carrousel + stories</td></tr><tr><td><b>Ven 20</b></td><td><b>Belle et en bonne santé</b> (Dr Sylvie, Dr Majolaine) et <b>Panel 2</b> · Me voici, envoie-moi !</td><td>Cartes + reel</td></tr><tr><td><b>Sam 21</b></td><td><b>Panel 3</b> · Femme, foi et finances et <b>Panel 4</b> · Ma maison, ma mission</td><td>Cartes + reel</td></tr><tr><td><b>Dim 22</b></td><td><b>J-5</b> · décompte · <b>Grande table ronde</b> (sans captation) · rappel de l'Agapè</td><td>Stories, statut</td></tr></table>
+<div class="box info"><b>Rythme :</b> 1 publication par jour dans le feed et 3 à 5 stories pendant le lancement. La date d'ouverture des inscriptions (ven. 13) dépend de la création du formulaire : si le lien n'est pas prêt, décaler la révélation sans toucher à la suite.</div>
+</section>
+<section class="page tight">
+<h1>4. Calendrier de communication (suite)</h1>
+<h2>Jour par jour (2/2)</h2>
+<table><tr><th>Date</th><th>Publication</th><th>Canal / format</th></tr><tr><td><b>Lun 23</b></td><td><b>J-4</b> · décompte · <b>Zone Détente</b> (samedi 13h00-14h00) · places restantes</td><td>Carrousel, stories</td></tr><tr><td><b>Mar 24</b></td><td><b>J-3</b> · décompte · affiche du vendredi et du dimanche (Prophétesse Mary) · habillage prêt</td><td>Affiches, stories</td></tr><tr><td><b>Mer 25</b></td><td><b>J-2</b> · décompte · citation du thème + programme · « invite une amie »</td><td>Carte de citation, stories</td></tr><tr><td><b>Jeu 26</b></td><td><b>J-1</b> · décompte · plan d'accès, horaires, ce qu'il faut savoir</td><td>Stories, WhatsApp</td></tr><tr><td><b>Ven 27</b></td><td><b>Jour J</b> · soirée de lancement à 19h45 (direct possible)</td><td>Direct, stories</td></tr><tr><td><b>Sam 28</b></td><td><b>Jour 2</b> · citations par panel, photos, ambiance. <b>Aucune captation de la table ronde</b></td><td>Stories, reels</td></tr><tr><td><b>Dim 29</b></td><td><b>Jour 3</b> · culte de clôture 8h45, Agapè des Femmes 11h30, remerciements</td><td>Direct, post</td></tr><tr><td><b>Lun 30 →</b></td><td>Récap vidéo et photos, témoignages, un extrait de panel par semaine (hors table ronde)</td><td>Tous canaux</td></tr></table>
+<h2>Règles de publication</h2>
+<ul><li><b>Inscription :</b> chaque publication reprend « Inscription obligatoire · 150 places · participation gratuite » et le QR code, une fois le lien ouvert.</li>
+<li><b>Table ronde :</b> pas de direct ni de vidéo (règle du programme). Pas de photo ni de citation de ce temps, sauf accord de l'équipe d'animation.</li>
+<li><b>Intervenantes :</b> une publication par session, avec les affiches de biographie correspondantes. Pélagie (panels 1, 3, 4) et Hestia (panels 2, 4) ont une seule affiche de biographie, reprise à chaque session.</li>
+<li><b>Hashtags :</b> #ZoneWoman #Restaurée #Ointe #Envoyée.</li>
+<li><b>Horaires :</b> écrits « 9h00 ».</li></ul>
+<h2>Contenus déjà disponibles</h2>
+<table><tr><th>Contenu</th><th>Usage</th></tr>
+<tr><td>Carrousel du programme (8 diapos, 1080×1080)</td><td>Publication du 14 novembre, puis rappel avant le 27</td></tr>
+<tr><td>Génériques « Je déclare » et « L'essentiel à retenir du Message »</td><td>Rubriques spirituelles (idées 8 et 21)</td></tr>
+<tr><td>Logo animé WZW (5 s, 2D et 3D)</td><td>Ouverture et clôture des vidéos</td></tr>
+<tr><td>Présentation motion de Dr Hestia (modèle)</td><td>Modèle pour les présentations des autres intervenantes</td></tr>
+<tr><td>En-tête et script du formulaire</td><td>Création du formulaire d'inscription</td></tr></table>
+</section>
+<section class="page"><h1>5. Idées de contenu vidéo</h1><p>22 idées, organisées par moment. Pour chacune : l'<b>accroche</b>, le <b>déroulé</b>, le <b>format</b> et ce qu'<b>il faut</b>. <span class="m">Motion</span> : réalisable sans tournage, avec sound design, dans la charte des génériques déjà faits. <span class="t">À tourner</span> : images filmées par l'équipe, ensuite montées et habillées. <b>Aucune idée ne filme la table ronde.</b></p>
+<h2>A. Teasing et lancement (12 au 18 novembre)</h2><div class="grid">
+<div class="idea"><div class="ih"><span class="n">1</span><b>« Restaurée, pour moi c'est… »</b></div><div class="meta"><span class="t">À tourner</span> · 9:16 · 25–30 s</div><p><b>Accroche :</b> Une question posée à 8 femmes de la Zone : « Restaurée, pour toi, c'est quoi ? »</p><p><b>Déroulé :</b> Carte-titre · 5 à 8 réponses de 4 s · chute : « Week-end Zone Women, 27–29 novembre »</p><p class="need"><b>Il faut :</b> Téléphone, bonne lumière, 8 volontaires</p></div>
+<div class="idea"><div class="ih"><span class="n">2</span><b>« Ointe » en 15 secondes</b></div><div class="meta"><span class="t">À tourner</span> · 9:16 · 15 s</div><p><b>Accroche :</b> « Ointe, ça veut dire quoi ? » : une pasteure répond en une phrase.</p><p><b>Déroulé :</b> Question à l'écran · la réponse · carte du thème et dates</p><p class="need"><b>Il faut :</b> Une pasteure, texte validé par les responsables</p></div>
+<div class="idea"><div class="ih"><span class="n">3</span><b>« Elle tient la Zone »</b></div><div class="meta"><span class="t">Tourné + motion</span> · 9:16 · 20 s</div><p><b>Accroche :</b> Portraits de femmes à leur poste : « Elle tient l'accueil… la louange… l'animation… l'organisation ».</p><p><b>Déroulé :</b> 4 portraits de 4 s · chute : « Les femmes prennent le contrôle de la Zone » · date</p><p class="need"><b>Il faut :</b> 4 photos ou courts plans, avec accord des femmes</p></div>
+<div class="idea"><div class="ih"><span class="n">4</span><b>« Mesdames, la Zone est à vous »</b></div><div class="meta"><span class="t">À tourner</span> · 9:16 · 15 s</div><p><b>Accroche :</b> Des hommes de la Zone, une phrase chacun, pour soutenir et relayer.</p><p><b>Déroulé :</b> 3 à 4 hommes, 4 s chacun · « …et on vous attend le 27 novembre »</p><p class="need"><b>Il faut :</b> Quelques volontaires, téléphone</p></div>
+<div class="idea"><div class="ih"><span class="n">5</span><b>Annonce officielle</b></div><div class="meta"><span class="m">Motion</span> · 16:9 + 9:16 · 20–30 s</div><p><b>Accroche :</b> « Les femmes prennent le contrôle de la Zone. »</p><p><b>Déroulé :</b> Vendredi → samedi → dimanche, un temps fort par plan · thème · appel à s'inscrire gratuitement</p><p class="need"><b>Il faut :</b> Affiche validée, lien d'inscription</p></div>
+<div class="idea"><div class="ih"><span class="n">6</span><b>Présentation d'intervenante (×15)</b></div><div class="meta"><span class="m">Motion</span> · 9:16 · 6–8 s</div><p><b>Accroche :</b> Une carte animée par intervenante.</p><p><b>Déroulé :</b> Photo et nom · titre et session · thème de sa session en une phrase</p><p class="need"><b>Il faut :</b> 15 photos HD, titres exacts (modèle : présentation de Dr Hestia)</p></div>
+</div></section>
+<section class="page"><h2>B. Lancement (suite)</h2><div class="grid">
+<div class="idea"><div class="ih"><span class="n">7</span><b>« Un panel, une question »</b></div><div class="meta"><span class="m">Motion</span> · 9:16 · 10 s × 6</div><p><b>Accroche :</b> Chaque session démarre par une question qui interpelle (propositions à valider plus loin dans cette section).</p><p><b>Déroulé :</b> Question à l'écran · titre de la session · heure et intervenantes</p><p class="need"><b>Il faut :</b> Textes validés</p></div>
+<div class="idea"><div class="ih"><span class="n">8</span><b>« Je déclare » spécial femmes</b></div><div class="meta"><span class="m">Motion</span> · 9:16 · 8–10 s × 3</div><p><b>Accroche :</b> Trois déclarations à reprendre et partager : « Je suis restaurée. Je suis ointe. Je suis envoyée. »</p><p><b>Déroulé :</b> Générique « Je déclare » de 3 s · la déclaration en grand · un court verset ou une phrase</p><p class="need"><b>Il faut :</b> Déclarations et références validées par les pasteurs</p></div>
+<div class="idea"><div class="ih"><span class="n">9</span><b>Le programme en 30 secondes</b></div><div class="meta"><span class="m">Motion</span> · 9:16 · 20–30 s</div><p><b>Accroche :</b> Le samedi, heure par heure, sans rien oublier.</p><p><b>Déroulé :</b> Défilé animé : 9h00 accueil → relaxation → panels → « Belle et en bonne santé » → table ronde 17h15 · dimanche : culte 8h45 et Agapè 11h30</p><p class="need"><b>Il faut :</b> Programme final</p></div>
+<div class="idea"><div class="ih"><span class="n">10</span><b>3 raisons de venir</b></div><div class="meta"><span class="m">Motion</span> · 9:16 · 10–15 s</div><p><b>Accroche :</b> Un week-end gratuit, 150 places, ouvert à toutes les femmes.</p><p><b>Déroulé :</b> Une raison par plan : s'y ressourcer · apprendre · être envoyée · « Inscription obligatoire »</p><p class="need"><b>Il faut :</b> Lien d'inscription</p></div>
+</div>
+<h2>C. Compte à rebours (22 au 26 novembre)</h2><div class="grid">
+<div class="idea"><div class="ih"><span class="n">11</span><b>« 7 jours, 7 femmes »</b></div><div class="meta"><span class="t">À tourner</span> · 9:16 · 5 s par jour</div><p><b>Accroche :</b> Chaque jour, une femme dit « Ce que j'attends du week-end ».</p><p><b>Déroulé :</b> Carte « J-7 » (puis J-6… J-1) · 5 s de la femme · « 27 novembre, Zone 242 »</p><p class="need"><b>Il faut :</b> 7 volontaires, téléphone (démarrer le 20 novembre)</p></div>
+<div class="idea"><div class="ih"><span class="n">12</span><b>Défi « Invite une amie »</b></div><div class="meta"><span class="t">À tourner</span> · 9:16 · 15 s</div><p><b>Accroche :</b> « Qui tu invites ? » : une femme appelle ou écrit à une amie, face caméra.</p><p><b>Déroulé :</b> Le message envoyé · la réaction · « Viens, on y va ensemble » · modèle de story, hashtag #ZoneWoman</p><p class="need"><b>Il faut :</b> Quelques volontaires, un modèle de story</p></div>
+<div class="idea"><div class="ih"><span class="n">13</span><b>Zone Détente, visite en avant-première</b></div><div class="meta"><span class="t">À tourner</span> · 9:16 · 10 s</div><p><b>Accroche :</b> Salon de thé, massages, beauté et bien-être, coin photo.</p><p><b>Déroulé :</b> Quatre espaces, un plan par espace · « Samedi 28 novembre, de 13h00 à 14h00 »</p><p class="need"><b>Il faut :</b> Quelques plans de l'espace, ou version illustrée</p></div>
+<div class="idea"><div class="ih"><span class="n">14</span><b>J-1 : tout ce qu'il faut savoir</b></div><div class="meta"><span class="m">Motion</span> · 9:16 · 10–15 s</div><p><b>Accroche :</b> Où, quand, comment venir : la veille, on lève les derniers doutes.</p><p><b>Déroulé :</b> Plan d'accès · horaires des 3 jours · rappel d'inscription</p><p class="need"><b>Il faut :</b> Adresse précise, plan, contact</p></div>
+</div>
+<h2>Accroches de session à valider (idée 7)</h2>
+<table><tr><th>Session</th><th>Question d'accroche proposée</th></tr>
+<tr><td>Panel 1 · Guérir des traumatismes émotionnels</td><td>« Tu souris, mais tu portes encore ça ? »</td></tr>
+<tr><td>Belle et en bonne santé</td><td>« Prendre soin du temple : par où commencer ? »</td></tr>
+<tr><td>Panel 2 · Me voici, envoie-moi !</td><td>« Et si ton appel avait déjà un nom ? »</td></tr>
+<tr><td>Panel 3 · Femme, foi et finances</td><td>« La foi et l'argent : on en parle enfin ? »</td></tr>
+<tr><td>Panel 4 · Ma maison, ma mission</td><td>« Et si ta maison était ta première mission ? »</td></tr>
+<tr><td>Grande table ronde</td><td>« De quoi ne parle-t-on jamais ? »</td></tr></table>
+</section>
+<section class="page tight2"><h2>D. Pendant le week-end (27 au 29 novembre)</h2><div class="grid">
+<div class="idea"><div class="ih"><span class="n">15</span><b>« Samedi en 60 secondes »</b></div><div class="meta"><span class="t">À tourner</span> · 9:16 · 45–60 s</div><p><b>Accroche :</b> Toute la journée en accéléré, de l'accueil à la fin de la table ronde.</p><p><b>Déroulé :</b> Plans de 3 à 5 s à chaque grande étape, horloge à l'écran · table ronde représentée par la salle vide ou le titre · publié le soir même</p><p class="need"><b>Il faut :</b> Une personne qui filme, un montage rapide</p></div>
+<div class="idea"><div class="ih"><span class="n">16</span><b>« Une phrase, un panel »</b></div><div class="meta"><span class="m">Motion</span> · 9:16 · 6 s</div><p><b>Accroche :</b> La phrase qui a marqué, publiée dans l'heure.</p><p><b>Déroulé :</b> Citation en grand · nom et titre · panel · logo</p><p class="need"><b>Il faut :</b> Une personne note les phrases pendant les panels (pas la table ronde)</p></div>
+<div class="idea"><div class="ih"><span class="n">17</span><b>« Ce que je retiens »</b></div><div class="meta"><span class="t">À tourner</span> · 9:16 · 8 s × 10</div><p><b>Accroche :</b> Micro-trottoir : « Qu'est-ce que tu retiens de cette journée ? »</p><p><b>Déroulé :</b> Une phrase par participante · compilé samedi soir ou dimanche matin</p><p class="need"><b>Il faut :</b> Un micro, de la lumière, l'accord des participantes</p></div>
+<div class="idea"><div class="ih"><span class="n">18</span><b>Kit du direct</b></div><div class="meta"><span class="m">Motion</span> · 16:9 · boucle</div><p><b>Accroche :</b> Un habillage cohérent pour le direct.</p><p><b>Déroulé :</b> Écran d'attente avec compte à rebours · bandeaux de noms et titres · transitions</p><p class="need"><b>Il faut :</b> Liste des intervenantes par session</p></div>
+</div>
+<h2>E. Après (dès le 30 novembre)</h2><div class="grid">
+<div class="idea"><div class="ih"><span class="n">19</span><b>Récap du week-end</b></div><div class="meta"><span class="t">À tourner</span> · 9:16 + 16:9 · 15 s et 60 s</div><p><b>Accroche :</b> Les meilleurs moments, avec le thème en fil rouge.</p><p><b>Déroulé :</b> Restaurée → Ointe → Envoyée : un chapitre par jour · musique · « Merci »</p><p class="need"><b>Il faut :</b> Images des 3 jours (hors table ronde)</p></div>
+<div class="idea"><div class="ih"><span class="n">20</span><b>« Ce qui a été restauré en moi »</b></div><div class="meta"><span class="t">À tourner</span> · 9:16 · 10–20 s</div><p><b>Accroche :</b> Des témoignages courts : la meilleure preuve pour la prochaine édition.</p><p><b>Déroulé :</b> Une femme, une phrase, un prénom · sous-titres</p><p class="need"><b>Il faut :</b> Accord des participantes</p></div>
+<div class="idea"><div class="ih"><span class="n">21</span><b>Extraits de panels et « L'essentiel à retenir du Message »</b></div><div class="meta"><span class="m">Motion</span> · 9:16 · 30–60 s</div><p><b>Accroche :</b> Une série hebdomadaire d'extraits sous-titrés, plus le résumé du message du vendredi et du dimanche.</p><p><b>Déroulé :</b> Générique de 3 s · extrait sous-titré ou 3 points clés · appel à voir le replay</p><p class="need"><b>Il faut :</b> Enregistrements des panels et du culte, accord des intervenantes (jamais la table ronde)</p></div>
+<div class="idea"><div class="ih"><span class="n">22</span><b>Remerciements</b></div><div class="meta"><span class="m">Motion</span> · 9:16 · 8–10 s</div><p><b>Accroche :</b> Merci à l'équipe, aux intervenantes, aux participantes.</p><p><b>Déroulé :</b> Les mots du thème · « Merci » · rendez-vous à la prochaine édition</p><p class="need"><b>Il faut :</b> Noms à citer (ou formule générale)</p></div>
+</div>
+<div class="box ok"><b>Si le temps manque</b>, par ordre : <b>5</b> (annonce officielle), <b>1</b> (« Restaurée, pour moi c'est… »), <b>10</b> (3 raisons de venir), <b>11</b> (« 7 jours, 7 femmes »), <b>15</b> (« Samedi en 60 secondes ») et <b>19</b> (récap). Ces six idées couvrent tout le cycle : avant, pendant et après.</div>
+<div class="box warn"><b>Sensibilité :</b> les idées 1, 7 et 20 touchent à des sujets personnels. Demander l'accord de la personne filmée et laisser le choix de rester anonyme (texte à l'écran sans visage).</div>
+</section>
+<section class="page">
+<h1>6. Organisation, suivi et risques</h1>
+<h2>Rôles à nommer</h2>
+<table><tr><th>Rôle</th><th>Responsabilité</th></tr>
+<tr><td><b>Responsable de la com</b></td><td>Valide les visuels et les textes (« bon pour publication »), tient le calendrier.</td></tr>
+<tr><td><b>Design et vidéo</b></td><td>Produit les visuels, vidéos et le sound design, selon les priorités de la section 3.</td></tr>
+<tr><td><b>Community manager</b></td><td>Publie, répond aux messages, relance les inscriptions, anime les stories.</td></tr>
+<tr><td><b>Référente inscriptions</b></td><td>Tient la liste (150 places), confirme les inscrites par WhatsApp, suit la liste d'attente.</td></tr>
+<tr><td><b>Référente intervenantes</b></td><td>Récupère photos HD, titres exacts, noms de famille et accords de diffusion.</td></tr>
+<tr><td><b>Équipe tournage</b></td><td>Stories, témoignages, récap pendant le week-end, sauf la table ronde.</td></tr></table>
+<h2>Suivi (indicateurs)</h2>
+<table><tr><th>Indicateur</th><th>Objectif</th><th>Comment le mesurer</th></tr>
+<tr><td>Inscrites</td><td>150 (complet)</td><td>Liste d'inscription (formulaire), suivie chaque jour dès l'ouverture</td></tr>
+<tr><td>Présence le samedi</td><td>À fixer avec l'équipe</td><td>Comptage à l'accueil par session</td></tr>
+<tr><td>Présence à l'Agapè</td><td>À fixer</td><td>Comptage à l'accueil, dimanche</td></tr>
+<tr><td>Portée et partages de l'affiche</td><td>À fixer</td><td>Statistiques Facebook, Instagram, TikTok, vues des statuts</td></tr>
+<tr><td>Vues des vidéos clés</td><td>À fixer</td><td>Vidéos 1, 2, 4, 8 et 21</td></tr>
+<tr><td>Invitées venues « par une amie »</td><td>À fixer</td><td>Question posée à l'inscription : « Qui t'a invitée ? »</td></tr></table>
+<h2>Risques et parades</h2>
+<table><tr><th>Risque</th><th>Parade</th></tr>
+<tr><td>Formulaire non prêt : inscriptions non ouvertes</td><td>Créer le formulaire dès cette semaine (script prêt), annoncer un seul lien et un seul QR code.</td></tr>
+<tr><td>Photos HD des intervenantes en retard</td><td>Date butoir le 16 novembre ; en secours, cartes avec monogramme ou illustration.</td></tr>
+<tr><td>Programme modifié après publication</td><td>Figer le programme avant le 16 novembre ; toute modification passe par une personne.</td></tr>
+<tr><td>Délais d'impression (bâche, kakémono, badges)</td><td>Envoyer à l'imprimeur au plus tard le lundi 23 novembre.</td></tr>
+<tr><td>Captation de la table ronde</td><td>Rappeler la règle à l'équipe tournage et au direct ; couper le direct pendant 17h15-18h15.</td></tr>
+<tr><td>Trop d'informations par visuel</td><td>Affiche = essentiel ; programme = document séparé, en deux niveaux.</td></tr>
+<tr><td>Fatigue de l'équipe sur le week-end</td><td>Programmer à l'avance les publications du week-end, garder une personne dédiée au direct.</td></tr></table>
+</section>
+</body></html>

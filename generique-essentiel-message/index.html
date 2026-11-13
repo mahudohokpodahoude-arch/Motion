@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Générique — L’essentiel à retenir du Message</title>
+    <script src="gsap/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Anton"; font-weight: 400; src: url("assets/anton-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 800; src: url("assets/montserrat-latin-800-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 900; src: url("assets/montserrat-latin-900-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #1900cf; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #f4efe3; font-family: "Montserrat", sans-serif; }
+      .abs { position: absolute; }
+      #dots { inset: 0; background-image: radial-gradient(circle, rgba(25,0,207,.13) 3.4px, transparent 3.9px); background-size: 30px 30px; }
+      #dots2 { inset: 0; background: radial-gradient(ellipse 80% 55% at 50% 50%, rgba(244,239,227,0), rgba(244,239,227,.0) 40%, rgba(255,90,54,.10) 100%); }
+      #wipe { inset: 0; background: #1900cf; }
+      .strip { left: -200px; width: 1480px; height: 120px; background: #1900cf; overflow: hidden; display: flex; align-items: center; }
+      .strip .run { display: flex; white-space: nowrap; font: 400 78px/1 "Anton"; letter-spacing: .04em; color: #f4efe3; }
+      .strip .run b { color: #ff5a36; font-weight: 400; margin: 0 26px; }
+      #s1 { top: 150px; transform: rotate(-5deg); }
+      #s2 { top: 1660px; transform: rotate(4deg); }
+      .ln { left: 0; width: 1080px; text-align: center; white-space: nowrap; font-family: "Anton"; text-transform: uppercase; line-height: 1; color: #14143c; }
+      #l1 { top: 530px; font-size: 215px; }
+      #l1 span { display: inline-block; transform-origin: 50% 80%; }
+      #l2 { top: 770px; display: flex; justify-content: center; }
+      #l2 .box { background: #1900cf; color: #f4efe3; font-size: 168px; padding: 14px 46px 22px; border-radius: 6px; box-shadow: 14px 14px 0 #14143c; }
+      #l3 { top: 1005px; font-size: 168px; }
+      #l3 .hl { position: relative; display: inline-block; padding: 0 30px; }
+      #l3 .hl i { position: absolute; left: 0; top: 14px; right: 0; bottom: 6px; background: #ff5a36; transform-origin: 0 50%; z-index: 0; }
+      #l3 .hl em { position: relative; z-index: 1; font-style: normal; }
+      #sq { left: 190px; top: 1215px; width: 700px; height: 60px; overflow: visible; }
+      #sticker { left: 830px; top: 318px; width: 190px; height: 190px; }
+      #logo { left: 415px; top: 1345px; width: 250px; }
+      #logo img { display: block; width: 100%; height: auto; }
+      .star { width: 84px; height: 84px; }
+      #flash { inset: 0; background: #fff; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="3" data-width="1080" data-height="1920">
+      <div id="dots" class="abs"></div><div id="dots2" class="abs"></div>
+
+      <div id="s1" class="strip abs"><div class="run" id="run1"></div></div>
+      <div id="s2" class="strip abs"><div class="run" id="run2"></div></div>
+
+      <div id="sticker" class="abs">
+        <svg viewBox="0 0 100 100" width="190" height="190">
+          <polygon id="burst" fill="#ff5a36" points="50,2 58,16 74,8 76,25 93,26 87,42 99,54 85,63 90,80 73,80 69,96 54,87 42,99 36,84 19,90 21,73 5,66 15,52 3,40 20,35 17,18 34,22"/>
+          <path d="M28 52 L44 68 L74 34" fill="none" stroke="#14143c" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div id="l1" class="ln abs"><span>L</span><span>’</span><span>E</span><span>S</span><span>S</span><span>E</span><span>N</span><span>T</span><span>I</span><span>E</span><span>L</span></div>
+      <div id="l2" class="ln abs"><div class="box">À RETENIR</div></div>
+      <div id="l3" class="ln abs"><span class="hl"><i></i><em>DU MESSAGE</em></span></div>
+
+      <svg id="sq" class="abs" viewBox="0 0 700 60"><path id="sqp" pathLength="1" d="M6 34 Q 40 4 74 34 T 142 34 T 210 34 T 278 34 T 346 34 T 414 34 T 482 34 T 550 34 T 618 34 T 694 34" fill="none" stroke="#1900cf" stroke-width="14" stroke-linecap="round"/></svg>
+
+      <svg class="star abs" id="st1" viewBox="0 0 100 100" style="left:90px;top:420px"><path d="M50 0 C54 34 66 46 100 50 C66 54 54 66 50 100 C46 66 34 54 0 50 C34 46 46 34 50 0Z" fill="#ff5a36"/></svg>
+      <svg class="star abs" id="st2" viewBox="0 0 100 100" style="left:900px;top:1090px;width:110px;height:110px"><path d="M50 0 C54 34 66 46 100 50 C66 54 54 66 50 100 C46 66 34 54 0 50 C34 46 46 34 50 0Z" fill="#1900cf"/></svg>
+      <svg class="star abs" id="st3" viewBox="0 0 100 100" style="left:70px;top:1170px;width:64px;height:64px"><path d="M50 0 C54 34 66 46 100 50 C66 54 54 66 50 100 C46 66 34 54 0 50 C34 46 46 34 50 0Z" fill="#14143c"/></svg>
+
+      <div id="logo" class="abs"><img src="assets/logo_couleur.svg" alt="Zone 242" /></div>
+      <div id="wipe" class="abs"></div>
+      <div id="flash" class="abs"></div>
+      <audio id="snd" src="assets/sound.mp3" data-start="0" data-duration="3" data-track-index="1" data-volume="1"></audio>
+    </div>
+    <script>
+      // bandes défilantes : le motif est répété pour couvrir la largeur
+      const unit = '<span>ZONE 242</span><b>✦</b>';
+      document.getElementById("run1").innerHTML = unit.repeat(18);
+      document.getElementById("run2").innerHTML = unit.repeat(18);
+
+      const tl = gsap.timeline({ paused: true });
+      // états de départ
+      gsap.set("#l1 span", { yPercent: 130, rotate: -14, opacity: 0, scaleY: 1.4 });
+      gsap.set("#l2 .box", { xPercent: -140, rotate: -6, opacity: 0 });
+      gsap.set("#l3 .hl i", { scaleX: 0 });
+      gsap.set("#l3 em", { opacity: 0, y: 60 });
+      gsap.set("#sqp", { strokeDasharray: 1, strokeDashoffset: 1 });
+      gsap.set("#sticker", { scale: 0, rotate: -90, transformOrigin: "50% 50%" });
+      gsap.set(".star", { scale: 0, rotate: -60, transformOrigin: "50% 50%" });
+      gsap.set("#logo", { scale: 0, rotate: 8, transformOrigin: "50% 50%" });
+      gsap.set("#s1", { xPercent: -45 }); gsap.set("#s2", { xPercent: 45 });
+
+      // 0,00 s — le rideau bleu s'ouvre en cercle
+      tl.fromTo("#wipe", { clipPath: "circle(150% at 50% 50%)" }, { clipPath: "circle(0% at 50% 50%)", duration: 0.34, ease: "power3.inOut" }, 0);
+      // bandes : entrent en glissant puis défilent jusqu'à la fin
+      tl.to("#s1", { xPercent: 0, duration: 0.35, ease: "power3.out" }, 0.08);
+      tl.to("#s2", { xPercent: 0, duration: 0.35, ease: "power3.out" }, 0.12);
+      tl.to("#run1", { x: -520, duration: 3, ease: "none" }, 0);
+      tl.fromTo("#run2", { x: -520 }, { x: 0, duration: 3, ease: "none" }, 0);
+
+      // 0,25 s — « L'ESSENTIEL » : lettres qui claquent en place
+      tl.to("#l1 span", { yPercent: 0, rotate: 0, opacity: 1, scaleY: 1, duration: 0.28, ease: "back.out(2.4)", stagger: 0.018 }, 0.25);
+      tl.fromTo("#root", { x: 0, y: 0 }, { keyframes: [{ x: -10, y: 8, duration: 0.04 }, { x: 8, y: -6, duration: 0.05 }, { x: 0, y: 0, duration: 0.1 }], ease: "power1.out" }, 0.27);
+      // 0,625 s — « À RETENIR » : bloc qui s'abat avec rebond
+      tl.to("#l2 .box", { xPercent: 0, rotate: -2.5, opacity: 1, duration: 0.34, ease: "back.out(1.9)" }, 0.6);
+      tl.to("#sticker", { scale: 1, rotate: 12, duration: 0.45, ease: "back.out(2.4)" }, 0.66);
+      tl.to("#st1", { scale: 1, rotate: 0, duration: 0.4, ease: "back.out(2.6)" }, 0.72);
+      // 1,0 s — « DU MESSAGE » : le surligneur balaie puis le texte monte
+      tl.to("#l3 .hl i", { scaleX: 1, duration: 0.3, ease: "power3.inOut" }, 0.96);
+      tl.to("#l3 em", { opacity: 1, y: 0, duration: 0.3, ease: "back.out(2)" }, 1.02);
+      tl.fromTo("#root", { x: 0, y: 0 }, { keyframes: [{ x: 8, y: -7, duration: 0.04 }, { x: -6, y: 5, duration: 0.05 }, { x: 0, y: 0, duration: 0.1 }], ease: "power1.out", immediateRender: false }, 1.0);
+      // 1,375 s — le trait ondulé se dessine, les étoiles éclatent
+      tl.to("#sqp", { strokeDashoffset: 0, duration: 0.38, ease: "power2.inOut" }, 1.375);
+      tl.to("#st2", { scale: 1, rotate: 0, duration: 0.4, ease: "back.out(2.6)" }, 1.4);
+      tl.to("#st3", { scale: 1, rotate: 0, duration: 0.4, ease: "back.out(2.6)" }, 1.48);
+      // 1,75 s — le logo
+      tl.to("#logo", { scale: 1, rotate: -3, duration: 0.42, ease: "back.out(2.2)" }, 1.75);
+      // 2,125 s — accord final : flash éclair + tout pulse
+      tl.to("#flash", { opacity: 0.8, duration: 0.05, ease: "power2.out" }, 2.125);
+      tl.to("#flash", { opacity: 0, duration: 0.22, ease: "power2.in" }, 2.175);
+      tl.to(["#l1", "#l2", "#l3"], { scale: 1.035, duration: 0.18, yoyo: true, repeat: 1, ease: "sine.inOut", transformOrigin: "50% 50%" }, 2.125);
+      tl.to("#sticker", { rotate: -8, duration: 0.5, ease: "sine.inOut" }, 2.125);
+      tl.to("#logo", { rotate: 3, duration: 0.5, ease: "sine.inOut" }, 2.2);
+      tl.to("#root", { opacity: 1, duration: 0.01 }, 3);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
