@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Joyeux anniversaire Apôtre Amos Elite</title>
+<style>
+@font-face{font-family:Mont;font-weight:500;src:url(fonts/montserrat-latin-500-normal.woff2)}
+@font-face{font-family:Mont;font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2)}
+@font-face{font-family:Mont;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2)}
+@font-face{font-family:Mont;font-weight:900;src:url(fonts/montserrat-latin-900-normal.woff2)}
+html,body{margin:0;background:#000;height:100%}
+#stage{display:block;margin:0 auto}
+</style></head>
+<body><canvas id="stage" width="1080" height="1920"></canvas>
+<script>
+/* =====================================================================
+   FILM D'ANNIVERSAIRE — Apôtre Amos Elite · Communauté de la zone 242
+   Vertical 1080x1920 · 50 s · tout est calculé par render(t)
+   Prévisualisation : ouvrir ce fichier dans un navigateur (boucle),
+   ?t=12.5 pour figer une image.
+   ===================================================================== */
+const CONFIG = {
+  DUR: 50,
+  date: '14 NOVEMBRE',
+  prenomTitre: 'APÔTRE',
+  nom: 'AMOS ELITE',
+  lignesPere: ['Notre père.', 'Notre guide.', ["L'Apôtre de la", 'zone 242.']],
+  merciMots: ['amour', 'foi', 'exemple', 'lumière'],
+  bulles: [
+    ['Joyeux anniversaire Papa\u00A0!', 200], ['Merci, Père\u00A0!', 160], ['Que Dieu vous bénisse', 190],
+    ['Nous vous aimons', 150], ['Longue vie, Apôtre\u00A0!', 150], ['Joyeux anniversaire\u00A0!', 185], ['Zone 242 avec vous', 175],
+  ],
+};
+
+const W = 1080, H = 1920;
+const cv = document.getElementById('stage'), ctx = cv.getContext('2d');
+const RENDER = /[?&]render=1/.test(location.search);
+if (!RENDER) { cv.style.height = '100vh'; cv.style.width = 'auto'; }
+
+const C = { NIGHT:'#0B0733', DEEP:'#07041F', BLUE:'#1900CF', BLUE_M:'#3B2BE6', BLUE_L:'#6F64F2', BLUE_XL:'#A9A2FF',
+  ORANGE:'#FF5A36', GOLD:'#FFC15E', PEACH:'#FFD3C7', PAPER:'#F7F5F1', WHITE:'#FFFFFF', INK:'#14122B', MUTE:'#5D5B76' };
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, d) => clamp((t - a) / d);
+const easeOut = (x) => 1 - Math.pow(1 - x, 4);
+const easeIO = (x) => (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const back = (x, s = 1.7) => { x = clamp(x); return 1 + (s + 1) * Math.pow(x - 1, 3) + s * Math.pow(x - 1, 2); };
+const win = (t, a, b, fi = .5, fo = .5) => clamp((t - a) / fi) * clamp((b - t) / fo);
+const rgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const rgba = (h, a) => `rgba(${rgb(h).join(',')},${a})`;
+function rng(seed) { return () => { seed |= 0; seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+
+function glow(x, y, r, hex, a) {
+  if (a <= .002 || r <= 0) return;
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, rgba(hex, a)); g.addColorStop(.45, rgba(hex, a * .4)); g.addColorStop(1, rgba(hex, 0));
+  ctx.fillStyle = g; ctx.fillRect(x - r, y - r, 2 * r, 2 * r);
+}
+function txt(s, x, y, o = {}) {
+  const { size = 80, w = 800, col = '#fff', a = 1, ls = 0, align = 'center', scale = 1, dy = 0 } = o;
+  if (a <= .003) return;
+  ctx.save(); ctx.globalAlpha *= a;
+  ctx.font = `${w} ${size}px Mont`; ctx.letterSpacing = ls + 'px'; ctx.textAlign = align; ctx.textBaseline = 'alphabetic';
+  const tw = ctx.measureText(s).width;
+  ctx.translate(x + (align === 'center' ? ls / 2 : 0), y + dy); if (scale !== 1) ctx.scale(scale, scale);
+  ctx.fillStyle = typeof col === 'function' ? col(tw) : col;
+  ctx.fillText(s, 0, 0); ctx.restore();
+}
+const fitSize = (s, w, maxW, size, ls = 0) => { ctx.font = `${w} ${size}px Mont`; ctx.letterSpacing = ls + 'px'; const m = ctx.measureText(s).width; return m > maxW ? size * maxW / m : size; };
+const sunGrad = (tw) => { const g = ctx.createLinearGradient(-tw / 2, 0, tw / 2, 0); g.addColorStop(0, C.ORANGE); g.addColorStop(1, C.GOLD); return g; };
+// apparition d'un texte : monte et se révèle
+const rise = (t, t0, d = .9) => { const k = easeOut(prog(t, t0, d)); return { a: k, dy: (1 - k) * 56 }; };
+function wrap(s, size, w, maxW) {
+  ctx.font = `${w} ${size}px Mont`; ctx.letterSpacing = '0px';
+  const words = s.split(' '), lines = []; let cur = '';
+  for (const wd of words) { const tst = cur ? cur + ' ' + wd : wd; if (ctx.measureText(tst).width > maxW && cur) { lines.push(cur); cur = wd; } else cur = tst; }
+  if (cur) lines.push(cur); return lines;
+}
+
+/* ---------- images (logo + photos éventuelles) ---------- */
+const logo = new Image(); logo.src = 'assets/logo.png';
+const photos = (window.PHOTOS || []).slice(0, 7).map((src) => { const im = new Image(); im.src = src; return im; });
+window.ready = Promise.all([
+  document.fonts.load('500 40px Mont'), document.fonts.load('700 40px Mont'), document.fonts.load('800 40px Mont'), document.fonts.load('900 40px Mont'),
+  ...[logo, ...photos].map((im) => im.decode().catch(() => {})),
+]);
+
+/* ---------- décor : lumière qui se lève + particules dorées ---------- */
+const P = (() => { const R = rng(242); return Array.from({ length: 90 }, () => ({ x: R() * W, s: 30 + R() * 90, o: R() * 3000, r: 2 + R() * 5, ph: R() * 6.28, d: (R() - .5) * 60 })); })();
+function drawNight(t) {
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, C.DEEP); g.addColorStop(.6, C.NIGHT); g.addColorStop(1, '#1B1260');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const k = easeOut(prog(t, 0, 5)), blue = win(t, 33.5, 41.5, 1.5, 1);
+  const sx = W / 2, sy = H + 100 - k * 420, r = 380 + 900 * k + 40 * Math.sin(t * 1.3);
+  ctx.save(); ctx.globalCompositeOperation = 'lighter';
+  glow(sx, sy + 140, r * .85, C.ORANGE, .36 * k + .06);
+  glow(sx, sy + 180, r * .45, C.GOLD, .28 * k);
+  glow(W / 2, 520, 700, C.BLUE_M, .22 * blue + .06);
+  // rayons très doux
+  for (let i = 0; i < 7; i++) {
+    const a = -Math.PI / 2 + (i - 3) * .17 + Math.sin(t * .35 + i) * .03, len = 2600, wd = .028;
+    const gr = ctx.createLinearGradient(sx, sy, sx + Math.cos(a) * len, sy + Math.sin(a) * len);
+    gr.addColorStop(0, rgba(C.GOLD, .05 * k)); gr.addColorStop(1, rgba(C.GOLD, 0));
+    ctx.fillStyle = gr; ctx.beginPath(); ctx.moveTo(sx, sy);
+    ctx.lineTo(sx + Math.cos(a - wd) * len, sy + Math.sin(a - wd) * len); ctx.lineTo(sx + Math.cos(a + wd) * len, sy + Math.sin(a + wd) * len);
+    ctx.closePath(); ctx.fill();
+  }
+  const pa = win(t, .3, 42, 1.5, 1.2);
+  for (const p of P) {
+    const y = H + 40 - ((t * p.s + p.o) % (H + 120)), x = p.x + Math.sin(t * .6 + p.ph) * p.d, tw = .5 + .5 * Math.sin(t * 3 + p.ph);
+    glow(x, y, p.r * 5, C.GOLD, pa * (.22 + .5 * tw)); ctx.fillStyle = rgba('#FFFFFF', pa * (.4 + .4 * tw)); ctx.beginPath(); ctx.arc(x, y, p.r * .7, 0, 7); ctx.fill();
+  }
+  ctx.restore();
+}
+
+/* ---------- scènes ---------- */
+function sceneA(t) { // 0 – 4.6 : l'aube, la date
+  const a = win(t, .2, 4.6, 1.2, .8); if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= a;
+  const r1 = rise(t, 1.0), r2 = rise(t, 2.3);
+  txt(CONFIG.date, W / 2, 940, { size: 46, w: 700, col: C.GOLD, ls: 16, a: r1.a, dy: r1.dy });
+  const L = 220 * easeOut(prog(t, 1.4, 1.2)); ctx.fillStyle = C.ORANGE; ctx.fillRect(W / 2 - L / 2, 975, L, 5);
+  txt("ce jour est le vôtre", W / 2, 1060, { size: 48, w: 500, col: C.PEACH, a: r2.a, dy: r2.dy });
+  ctx.restore();
+}
+function sceneB(t) { // 4.4 – 10.6 : Joyeux anniversaire, Apôtre Amos Elite
+  const a = win(t, 4.4, 10.6, .1, .8); if (a <= 0) return;
+  const out = easeIO(prog(t, 9.9, .7));
+  ctx.save(); ctx.globalAlpha *= a; ctx.translate(0, -out * 120);
+  const s1 = fitSize('ANNIVERSAIRE', 800, 900, 112), r1 = rise(t, 4.6), r2 = rise(t, 5.2);
+  txt('JOYEUX', W / 2, 700, { size: s1, w: 800, a: r1.a, dy: r1.dy });
+  txt('ANNIVERSAIRE', W / 2, 700 + s1 * 1.05, { size: s1, w: 800, a: r2.a, dy: r2.dy });
+  const r3 = rise(t, 6.4), r4 = rise(t, 7.1, 1.1), s2 = fitSize(CONFIG.nom, 900, 900, 150);
+  txt(CONFIG.prenomTitre, W / 2, 1020, { size: 44, w: 700, col: C.GOLD, ls: 18, a: r3.a, dy: r3.dy });
+  txt(CONFIG.nom, W / 2, 1020 + s2 * 1.05, { size: s2, w: 900, col: sunGrad, a: r4.a, dy: r4.dy });
+  const L = 700 * easeOut(prog(t, 7.6, 1.4)); ctx.fillStyle = rgba(C.GOLD, .7); ctx.fillRect(W / 2 - L / 2, 1020 + s2 * 1.05 + 50, L, 3);
+  ctx.restore();
+}
+function sceneC1(t) { // 10.6 – 19.8 : père, guide, apôtre
+  const a = win(t, 10.4, 19.8, .4, .9); if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= a;
+  const T0 = [10.7, 12.9, 15.1];
+  let r = rise(t, T0[0]); txt(CONFIG.lignesPere[0], W / 2, 700, { size: 108, w: 800, a: r.a, dy: r.dy });
+  const l1 = 160 * easeOut(prog(t, T0[0] + .5, .9)); ctx.fillStyle = C.ORANGE; ctx.fillRect(W / 2 - l1 / 2, 735, l1, 5);
+  r = rise(t, T0[1]); txt(CONFIG.lignesPere[1], W / 2, 940, { size: 108, w: 800, a: r.a, dy: r.dy });
+  const l2 = 160 * easeOut(prog(t, T0[1] + .5, .9)); ctx.fillStyle = C.ORANGE; ctx.fillRect(W / 2 - l2 / 2, 975, l2, 5);
+  r = rise(t, T0[2], 1.1); const L3 = CONFIG.lignesPere[2];
+  txt(L3[0], W / 2, 1180, { size: 96, w: 700, col: C.PEACH, a: r.a, dy: r.dy });
+  txt(L3[1], W / 2, 1310, { size: 150, w: 900, col: sunGrad, a: r.a, dy: r.dy });
+  ctx.restore();
+}
+function sceneC2(t) { // 20 – 34 : « Merci pour votre … » ou photos
+  const T0 = 20, T1 = 34, a = win(t, T0 - .3, T1, .5, .8); if (a <= 0) return;
+  const words = CONFIG.merciMots, N = words.length;
+  if (!photos.length) {
+    ctx.save(); ctx.globalAlpha *= a;
+    const r = rise(t, T0 + .1, 1.0);
+    txt('MERCI', W / 2, 820, { size: fitSize('MERCI', 900, 900, 250, 8), w: 900, ls: 8, a: r.a, dy: r.dy });
+    const r2 = rise(t, T0 + .8); txt('pour votre', W / 2, 960, { size: 58, w: 500, col: C.PEACH, a: r2.a, dy: r2.dy });
+    const per = (T1 - T0 - .6) / N;
+    for (let i = 0; i < N; i++) {
+      const s = T0 + 1.2 + i * per, e = s + per, k = easeOut(prog(t, s, .9)), ex = easeIO(prog(t, e - .55, .5));
+      const al = k * (1 - ex); if (al <= 0) continue;
+      txt(words[i] + '.', W / 2, 1150, { size: fitSize(words[i] + '.', 900, 900, 170), w: 900, col: sunGrad, a: al, dy: (1 - k) * 70 - ex * 50 });
+    }
+    ctx.restore(); return;
+  }
+  // mode photos : cadre doré, léger travelling, légende qui change
+  ctx.save(); ctx.globalAlpha *= a;
+  const per = (T1 - T0) / photos.length, fw = 900, fh = 1180, fx = (W - fw) / 2, fy = 330;
+  txt(CONFIG.nom, W / 2, 210, { size: 40, w: 800, col: C.GOLD, ls: 14, a: .95 });
+  for (let i = 0; i < photos.length; i++) {
+    const s = T0 + i * per, e = s + per, last = i === photos.length - 1;
+    const kin = easeOut(prog(t, s, .9)), kout = last ? 0 : easeIO(prog(t, e - .5, .5)), al = kin * (1 - kout);
+    if (al <= 0.003) continue;
+    const im = photos[i], u = clamp((t - s) / (per + .5)), z = 1 + .08 * u;
+    ctx.save(); ctx.globalAlpha *= al; ctx.translate(0, (1 - kin) * 200 - kout * 60);
+    ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = 60; ctx.shadowOffsetY = 24;
+    ctx.fillStyle = '#000'; ctx.beginPath(); ctx.roundRect(fx, fy, fw, fh, 40); ctx.fill(); ctx.shadowColor = 'transparent';
+    ctx.save(); ctx.beginPath(); ctx.roundRect(fx, fy, fw, fh, 40); ctx.clip();
+    const sc = Math.max(fw / im.naturalWidth, fh / im.naturalHeight) * z, dw = im.naturalWidth * sc, dh = im.naturalHeight * sc;
+    ctx.drawImage(im, fx + (fw - dw) / 2, fy + (fh - dh) / 2 - 10 * u, dw, dh); ctx.restore();
+    ctx.lineWidth = 6; ctx.strokeStyle = rgba(C.GOLD, .9); ctx.beginPath(); ctx.roundRect(fx, fy, fw, fh, 40); ctx.stroke();
+    ctx.restore();
+    ctx.save(); ctx.globalAlpha *= al;
+    txt('MERCI POUR VOTRE ' + words[i % N].toUpperCase(), W / 2, fy + fh + 130, { size: fitSize('MERCI POUR VOTRE LUMIÈRE', 800, 900, 52, 4), w: 800, ls: 4, col: '#fff' });
+    ctx.restore();
+  }
+  ctx.restore();
+}
+function sceneD(t) { // 34 – 41.8 : les voix de la zone
+  const a = win(t, 33.9, 41.8, .5, .9); if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= a;
+  const r = rise(t, 34.1); txt('La zone 242 vous dit :', W / 2, 250, { size: 54, w: 700, col: C.PEACH, a: r.a, dy: r.dy });
+  const pos = [[300, 600], [810, 560], [545, 930], [200, 1090], [880, 1000], [320, 1350], [790, 1330]];
+  const cols = [[C.BLUE, '#fff'], [C.ORANGE, '#fff'], ['#FFFFFF', C.BLUE], [C.BLUE_L, '#fff'], [C.GOLD, C.INK], [C.ORANGE, '#fff'], [C.BLUE, '#fff']];
+  CONFIG.bulles.forEach(([msg, rad], i) => {
+    const k = back(prog(t, 34.8 + i * .62, .55)); if (k <= 0) return;
+    const x = pos[i][0] + Math.sin(t * .9 + i * 1.7) * 14, y = pos[i][1] + Math.sin(t * 1.1 + i) * 16, rr = rad * k;
+    ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.35)'; ctx.shadowBlur = 40; ctx.shadowOffsetY = 14;
+    ctx.fillStyle = cols[i][0]; ctx.beginPath(); ctx.arc(x, y, rr, 0, 7); ctx.fill(); ctx.restore();
+    const size = Math.min(rad * .235, 52), lines = wrap(msg, size, 800, rad * 1.5);
+    lines.forEach((ln, j) => txt(ln, x, y + size * .35 + (j - (lines.length - 1) / 2) * size * 1.18, { size, w: 800, col: cols[i][1], a: clamp(k * 1.2 - .2), scale: k }));
+  });
+  ctx.restore();
+}
+
+// confettis (déterministes)
+const CF = (() => { const R = rng(7); const col = [C.BLUE, C.ORANGE, C.GOLD, C.BLUE_L, '#FF8A6B'];
+  return Array.from({ length: 90 }, () => { const an = -Math.PI / 2 + (R() - .5) * 1.7, sp = 600 + R() * 1100; return { vx: Math.cos(an) * sp, vy: Math.sin(an) * sp, w: 14 + R() * 18, h: 8 + R() * 10, rot: R() * 6, vr: (R() - .5) * 12, c: col[(R() * col.length) | 0], ox: (R() - .5) * 200 }; }); })();
+function confetti(t, t0) {
+  const tau = t - t0; if (tau < 0 || tau > 5) return;
+  for (const p of CF) {
+    const x = W / 2 + p.ox + p.vx * tau * .8, y = 1000 + p.vy * tau + 900 * tau * tau * .5;
+    if (y > H + 60) continue; ctx.save(); ctx.globalAlpha = clamp((5 - tau) / 1.5); ctx.translate(x, y); ctx.rotate(p.rot + p.vr * tau);
+    ctx.scale(1, Math.cos(p.vr * tau * 1.5)); ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+  }
+}
+function sceneE(t) { // 41 – 50 : la lumière envahit l'écran, le logo, le vœu
+  const fl = easeIO(prog(t, 41.0, 1.3)); if (fl <= 0) return;
+  const R = fl * 1750;
+  ctx.save(); ctx.beginPath(); ctx.arc(W / 2, 960, R, 0, 7); ctx.clip();
+  const bg = ctx.createRadialGradient(W / 2, 760, 100, W / 2, 900, 1300); bg.addColorStop(0, '#FFFFFF'); bg.addColorStop(1, C.PAPER);
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+  ctx.globalAlpha = .55; glow(W / 2, H, 900, C.PEACH, .5); ctx.globalAlpha = 1;
+  ctx.restore();
+  if (fl < 1) { ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.strokeStyle = rgba(C.GOLD, .55 * (1 - fl)); ctx.lineWidth = 26; ctx.beginPath(); ctx.arc(W / 2, 960, R, 0, 7); ctx.stroke(); ctx.restore(); }
+  confetti(t, 42.2);
+  const k = back(prog(t, 42.5, .8));
+  if (k > 0 && logo.complete) { const lw = 520, lh = lw * logo.naturalHeight / logo.naturalWidth; ctx.save(); ctx.globalAlpha = clamp(k * 1.3); ctx.translate(W / 2, 620); ctx.scale(k, k); ctx.drawImage(logo, -lw / 2, -lh / 2, lw, lh); ctx.restore(); }
+  let r = rise(t, 43.4); txt('JOYEUX ANNIVERSAIRE', W / 2, 1120, { size: fitSize('JOYEUX ANNIVERSAIRE', 800, 920, 72, 3), w: 800, col: C.BLUE, ls: 3, a: r.a, dy: r.dy });
+  r = rise(t, 44.0, 1.1); txt('Apôtre Amos Elite', W / 2, 1260, { size: fitSize('Apôtre Amos Elite', 900, 920, 118), w: 900, col: C.ORANGE, a: r.a, dy: r.dy });
+  const L = 600 * easeOut(prog(t, 44.8, 1.2)); ctx.fillStyle = C.BLUE; ctx.fillRect(W / 2 - L / 2, 1310, L, 4);
+  r = rise(t, 45.6); txt('Avec tout notre amour,', W / 2, 1430, { size: 46, w: 500, col: C.MUTE, a: r.a, dy: r.dy });
+  r = rise(t, 46.3); txt('la communauté de la zone 242', W / 2, 1500, { size: 50, w: 800, col: C.INK, a: r.a, dy: r.dy });
+  r = rise(t, 47.0); txt(CONFIG.date, W / 2, 1680, { size: 32, w: 700, col: C.BLUE, ls: 14, a: r.a * .85, dy: r.dy });
+}
+
+function render(t) {
+  ctx.clearRect(0, 0, W, H); ctx.globalAlpha = 1;
+  drawNight(t); sceneA(t); sceneB(t); sceneC1(t); sceneC2(t); sceneD(t); sceneE(t);
+  const fi = 1 - clamp(t / .6), fo = clamp((t - (CONFIG.DUR - .9)) / .9);   // fondu d'entrée / sortie
+  if (fi > 0 || fo > 0) { ctx.fillStyle = `rgba(${fo > 0 ? '247,245,241' : '0,0,0'},${Math.max(fi, fo)})`; ctx.fillRect(0, 0, W, H); }
+}
+window.render = render; window.DUR = CONFIG.DUR;
+if (!RENDER) {
+  window.ready.then(() => {
+    const q = /[?&]t=([\d.]+)/.exec(location.search);
+    if (q) return render(+q[1]);
+    const t0 = performance.now(); (function loop() { render(((performance.now() - t0) / 1000) % CONFIG.DUR); requestAnimationFrame(loop); })();
+  });
+}
+</script></body></html>
