@@ -31,7 +31,7 @@
       .xm { font-family: "Mont"; font-weight: 800; font-size: 70px; opacity: 0; }
       /* cartes */
       .cut { opacity: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 40%, #f4410a 0%, #a21200 80%); }
-      .cut img { position: absolute; left: 460px; top: -60px; height: 1260px; filter: saturate(1.25) contrast(1.1) brightness(.78); }
+      .cut img { position: absolute; filter: saturate(1.2) contrast(1.08) brightness(.82); }
       .cut .dk { left: 0; top: 0; width: 1920px; height: 1080px; background: rgba(40,0,0,.38); }
       #we { left: 0; width: 1920px; top: 270px; text-align: center; font-family: "Mont"; font-weight: 800; font-size: 120px; letter-spacing: .02em; opacity: 0; }
       #zw { left: 0; width: 1920px; top: 380px; text-align: center; font-size: 470px; line-height: .85; color: #f6efe3; opacity: 0;
@@ -40,12 +40,12 @@
       #t1 { top: 270px; } #t2 { top: 480px; }
       .echo { left: 0; width: 1920px; text-align: center; font-size: 150px; line-height: .9; color: rgba(255,255,255,.28); opacity: 0; }
       /* carrousel */
-      #slabA { left: 0; top: 840px; width: 1920px; height: 240px; background: #d41a05; box-shadow: 0 -10px 40px rgba(60,0,0,.35); opacity: 0; }
+      #slabA { left: 0; top: 830px; width: 1920px; height: 250px; background: #d41a05; box-shadow: 0 -10px 40px rgba(60,0,0,.35); opacity: 0; }
       #slabB { left: 0; top: 0; width: 1920px; height: 1080px; background: #a30f00; clip-path: polygon(52% 1080px, 100% 560px, 100% 1080px); opacity: 0; }
       #slabC { left: 0; top: 0; width: 1920px; height: 1080px; background: #e8300c; clip-path: polygon(0 780px, 24% 840px, 0 1080px); opacity: 0; }
       #strip { left: 0; top: 0; width: 1920px; height: 1080px; }
-      .it { position: absolute; top: 0px; width: 700px; height: 840px; display: flex; justify-content: center; align-items: flex-end; opacity: 0; }
-      .it img { height: 830px; display: block; }
+      .it { position: absolute; top: 0px; width: 700px; height: 1080px; opacity: 0; }
+      .it img { position: absolute; display: block; }
       .it .nm { position: absolute; left: 640px; top: 230px; width: 520px; font-size: 62px; line-height: .95; letter-spacing: .02em; opacity: 0; text-shadow: 0 3px 14px rgba(60,0,0,.5); }
       .it .nm small { display: block; font-family: "Mont"; font-weight: 800; font-size: 24px; letter-spacing: .1em; margin-top: 10px; color: #ffe0c8; }
       /* texte cinétique */
@@ -58,7 +58,7 @@
       /* ne manque pas */
       #dm { opacity: 0; overflow: hidden; background: #0c0c0c; }
       #dm .col { opacity: .55; filter: grayscale(1) blur(1px); }
-      #dm .col img { position: absolute; height: 640px; }
+      #dm .col img { position: absolute; }
       .dmt { position: absolute; font-size: 120px; white-space: nowrap; opacity: 0; color: #fff; text-shadow: 0 0 20px rgba(0,0,0,.6); }
       #glitch { background: linear-gradient(90deg, rgba(255,0,60,.5), rgba(0,120,255,.5)); mix-blend-mode: screen; opacity: 0; }
       /* final */
@@ -79,18 +79,18 @@
       <div id="hk2" class="abs hk">ÊTES-VOUS</div><div id="hk3" class="abs hk">PRÊTES ?</div><div id="hkline" class="abs"></div>
       <div class="abs xm" style="left:150px;top:880px;color:#f6efe3" id="x1">✕</div><div class="abs xm" style="left:1700px;top:90px;color:#ff9a2a" id="x2">✕</div><div class="abs xm" style="left:1050px;top:60px;color:#f6efe3" id="x3">✕</div><div class="abs xm" style="left:300px;top:150px;color:#ff9a2a" id="x4">✕</div>
       <!-- carte 1 et titre -->
-      <div id="cutA" class="abs full cut"><img src="assets/mary.png" alt="" /><div class="dk abs"></div></div>
+      <div id="cutA" class="abs full cut"><img id="cm" src="assets/photos/mary.png" alt="" /><div class="dk abs"></div></div>
       <div id="we" class="abs">WEEK-END</div><div id="zw" class="abs">ZONE WOMEN</div>
-      <div id="cutB" class="abs full cut"><img id="cb1" src="assets/hestia.png" alt="" /><div class="dk abs"></div></div>
-      <div id="cutC" class="abs full cut"><img src="assets/jessie.png" alt="" /><div class="dk abs"></div></div>
-      <div id="cutD" class="abs full cut"><img src="assets/pelagie.png" alt="" /><div class="dk abs"></div></div>
-      <div id="cutE" class="abs full cut"><img src="assets/richmelle.png" alt="" /><div class="dk abs"></div></div>
+      <div id="cutB" class="abs full cut"><img id="cb1" src="assets/photos/hestia.png" alt="" /><div class="dk abs"></div></div>
+      <div id="cutC" class="abs full cut"><img src="assets/photos/jessie.png" alt="" /><div class="dk abs"></div></div>
+      <div id="cutD" class="abs full cut"><img src="assets/photos/pelagie.png" alt="" /><div class="dk abs"></div></div>
+      <div id="cutE" class="abs full cut"><img src="assets/photos/richmelle.png" alt="" /><div class="dk abs"></div></div>
       <div id="ec1" class="abs echo" style="top:20px">LES FEMMES PRENNENT</div><div id="ec2" class="abs echo" style="top:160px">LES FEMMES PRENNENT</div><div id="ec3" class="abs echo" style="top:740px">LE CONTRÔLE DE LA ZONE</div><div id="ec4" class="abs echo" style="top:880px">LE CONTRÔLE DE LA ZONE</div>
       <div id="t1" class="abs ttl">LES FEMMES PRENNENT</div><div id="t2" class="abs ttl">LE CONTRÔLE DE LA ZONE</div>
       <!-- carrousel -->
       <div id="red" class="abs full"></div><div class="abs full sl" id="sl1"></div>
-      <div id="slabB" class="abs"></div><div id="slabA" class="abs"></div><div id="slabC" class="abs"></div>
       <div id="strip" class="abs"></div>
+      <div id="slabB" class="abs"></div><div id="slabA" class="abs"></div><div id="slabC" class="abs"></div>
       <!-- textes -->
       <div id="redtxt" class="abs full"></div>
       <div id="dt1" class="abs kt">27–29 NOVEMBRE 2026</div><div id="dt2" class="abs kt">VEN. 19H45</div>
@@ -111,19 +111,27 @@
       const tl = gsap.timeline({ paused: true });
       const $ = (s) => document.querySelector(s);
 
-      // ---------- carrousel : 10 personnes, 1,2 s chacune, de 8,4 s à 20,4 s
+      // ---------- configuration des détourages : [hauteur affichée, haut de l'image], proportions largeur/hauteur
+      const CFG = { mary: [1690, 90], anne: [750, 90], huldah: [750, 90], manne: [1690, 90], veronica: [700, 140], hestia: [1590, 90], pelagie: [1590, 90], jessie: [1590, 90], richmelle: [1590, 90] };
+      const ASP = { mary: 851 / 1259, anne: 960 / 1217, huldah: 988 / 1105, manne: 716 / 968, veronica: 1169 / 1289, hestia: 825 / 1208, pelagie: 551 / 1082, jessie: 662 / 1104, richmelle: 595 / 1124 };
+      const placeCut = (img, id, mult, cx, top) => { const h = CFG[id][0] * mult, w = h * ASP[id]; img.style.height = h + "px"; img.style.left = (cx - w / 2) + "px"; img.style.top = top + "px"; };
+      placeCut($("#cm"), "mary", 1.15, 960, 30); placeCut($("#cb1"), "hestia", 1.15, 960, 30);
+      placeCut($("#cutC img"), "jessie", 1.2, 960, 30); placeCut($("#cutD img"), "pelagie", 1.2, 960, 30); placeCut($("#cutE img"), "richmelle", 1.2, 960, 30);
+      // ---------- carrousel : Mary 2,4 s puis 8 intervenantes de 1,2 s, de 8,4 s à 20,4 s
       const PEOPLE = [
         ["mary", "PROPHÉTESSE", "MARY FAVOUR TONGSI", "INVITÉE D’HONNEUR"], ["anne", "PASTEURE", "ANNE-LAURE", ""], ["huldah", "LEADER", "HULDAH", ""],
         ["manne", "PROPHÉTESSE", "MANNE", ""], ["veronica", "PASTEURE", "VERONICA", ""], ["hestia", "DR", "HESTIA", ""], ["pelagie", "PROPHÉTESSE", "PÉLAGIE", ""],
-        ["esperance", "PASTEURE", "ESPÉRANCE", ""], ["jessie", "ÉVANGÉLISTE", "JESSIE", ""], ["richmelle", "LEADER", "RICHMELLE", ""]];
+        ["jessie", "ÉVANGÉLISTE", "JESSIE", ""], ["richmelle", "LEADER", "RICHMELLE", ""]];
+      const T0S = [8.4, 10.8, 12.0, 13.2, 14.4, 15.6, 16.8, 18.0, 19.2];   // arrivée de chaque personne au centre
       const strip = $("#strip"); const ITEMS = [];
       PEOPLE.forEach(([id, a, b, c], i) => {
         const d = document.createElement("div"); d.className = "it"; d.style.left = (960 - 350 + i * STEP) + "px";
-        d.innerHTML = `<img src="assets/${id}.png" alt=""><div class="nm">${a}<br>${b}${c ? `<small>${c}</small>` : ""}</div>`; strip.appendChild(d); ITEMS.push(d);
+        const h = CFG[id][0], w = h * ASP[id];
+        d.innerHTML = `<img src="assets/photos/${id}.png" alt="" style="height:${h}px;left:${350 - w / 2}px;top:${CFG[id][1]}px"><div class="nm">${a}<br>${b}${c ? `<small>${c}</small>` : ""}</div>`; strip.appendChild(d); ITEMS.push(d);
       });
       // ---------- couche « ne manque pas » : collage gris
       const dmcol = $("#dmcol");
-      PEOPLE.forEach(([id], i) => { const im = document.createElement("img"); im.src = `assets/${id}.png`; im.style.left = (-60 + i * 205) + "px"; im.style.top = (i % 2 ? 380 : 40) + "px"; dmcol.appendChild(im); });
+      PEOPLE.forEach(([id], i) => { const im = document.createElement("img"); const h = CFG[id][0] * .62, w = h * ASP[id]; im.src = `assets/photos/${id}.png`; im.style.height = h + "px"; im.style.left = (i * 270 - 120) + "px"; im.style.top = (i % 2 ? 330 : 180) + "px"; dmcol.appendChild(im); });
       const DMT = []; [[170, 130, 120], [980, 80, 150], [1500, 260, 100], [300, 420, 190], [1200, 470, 120], [120, 760, 150], [760, 640, 90], [1450, 700, 170], [620, 160, 80], [1010, 830, 110], [40, 520, 90], [1640, 880, 130]].forEach(([x, y, s]) => {
         const e = document.createElement("div"); e.className = "dmt"; e.style.left = x + "px"; e.style.top = y + "px"; e.style.fontSize = s + "px"; e.textContent = "NE MANQUE PAS"; $("#dm").appendChild(e); DMT.push(e); });
       const big = document.createElement("div"); big.className = "dmt"; big.style.cssText = "left:0;width:1920px;text-align:center;top:330px;font-size:330px;"; big.textContent = "NE MANQUE PAS"; $("#dm").appendChild(big);
@@ -131,7 +139,7 @@
       // ---------- états initiaux
       gsap.set("#hkline", { scaleX: 0 }); gsap.set(".xm", { scale: 0, rotation: -40 });
       gsap.set("#slabA", { y: 260 }); gsap.set("#slabB", { x: 400 }); gsap.set("#slabC", { x: -300 });
-      ITEMS.forEach((d, i) => gsap.set(d, { transformOrigin: "50% 100%", scale: .62, opacity: 0, filter: "grayscale(1) blur(7px) brightness(.85)" }));
+      ITEMS.forEach((d, i) => gsap.set(d, { transformOrigin: "50% 830px", scale: .62, opacity: 0, filter: "grayscale(1) blur(7px) brightness(.85)" }));
       gsap.set("#strip", { x: 0 });
       gsap.set(["#cutA", "#cutB", "#cutC", "#cutD", "#cutE"], { opacity: 0 });
       gsap.set("#finfly", { scale: .86, opacity: 0, transformOrigin: "50% 50%" });
@@ -165,12 +173,12 @@
       tl.set("#red", { opacity: 1 }, 8.4); tl.set("#sl1", { opacity: 1 }, 8.4);
       tl.to("#slabA", { y: 0, opacity: 1, duration: .45, ease: "power3.out" }, 8.4); tl.to("#slabB", { x: 0, opacity: 1, duration: .6, ease: "power3.out" }, 8.45); tl.to("#slabC", { x: 0, opacity: 1, duration: .6, ease: "power3.out" }, 8.45);
       ITEMS.forEach((d, i) => {
-        const t = 8.4 + i * 1.2;                            // le sujet arrive au centre à t
-        tl.set(d, { opacity: 1 }, Math.max(8.4, t - 1.2 - .01));
+        const t = T0S[i], dur = i === 0 ? 2.4 : 1.2;       // le sujet arrive au centre à t
+        tl.set(d, { opacity: 1 }, Math.max(8.4, t - 1.3));
         if (i === 0) { tl.fromTo(d, { x: 700 }, { x: 0, scale: 1, filter: "grayscale(0) blur(0px) brightness(1)", duration: .5, ease: "power3.out" }, t - .1); tl.set(d, { opacity: 1 }, t - .1); }
         else { tl.to(d, { scale: 1, filter: "grayscale(0) blur(0px) brightness(1)", duration: .5, ease: "power3.inOut" }, t - .1); }
         tl.to(d.querySelector(".nm"), { opacity: 1, x: 0, duration: .3, ease: "power2.out", startAt: { x: 40 } }, t + .1);
-        if (i < 9) { tl.to(d, { scale: .62, filter: "grayscale(1) blur(7px) brightness(.85)", duration: .5, ease: "power3.inOut" }, t + 1.1); tl.to(d.querySelector(".nm"), { opacity: 0, duration: .2 }, t + 1.0); }
+        if (i < 8) { tl.to(d, { scale: .62, filter: "grayscale(1) blur(7px) brightness(.85)", duration: .5, ease: "power3.inOut" }, t + dur - .1); tl.to(d.querySelector(".nm"), { opacity: 0, duration: .2 }, t + dur - .2); }
         if (i >= 1) tl.to("#strip", { x: -i * STEP, duration: .5, ease: "power3.inOut" }, t - .1);
       });
       // ---------- 20,4 → 24,0 : date (ref : « OCTOBER 24TH 2026  2PM »)
