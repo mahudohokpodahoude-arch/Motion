@@ -1,5 +1,4 @@
-<!doctype html>
-<html lang="fr"><head><meta charset="utf-8"><title>Flyer · Mini veillée · Trône et Gloire</title>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Flyer · Mini veillée · Trône et Gloire</title>
 <style>
 @font-face{font-family:Bebas;src:url(fonts/bebas-neue-latin-400-normal.woff2)}
 @font-face{font-family:Poppins;font-weight:400;src:url(fonts/poppins-latin-400-normal.woff2)}
@@ -7,148 +6,92 @@
 @font-face{font-family:Poppins;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2)}
 @font-face{font-family:Poppins;font-weight:700;src:url(fonts/poppins-latin-700-normal.woff2)}
 @font-face{font-family:Poppins;font-weight:800;src:url(fonts/poppins-latin-800-normal.woff2)}
-@font-face{font-family:Montserrat;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}
-@font-face{font-family:Montserrat;font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2)}
-:root{--or:#f26522;--or2:#ff8a3d}
+:root{--o1:#ff7d36;--o2:#f0501b;--or:#ee5a24}
 html,body{margin:0;background:#000}
-#f{position:relative;width:1080px;height:1080px;overflow:hidden;font-family:Poppins,sans-serif;color:#fff;background:#0b4f66}
-#bg{position:absolute;left:0;top:0}
-.abs{position:absolute;white-space:nowrap;line-height:1}
-.bebas{font-family:Bebas,Impact,sans-serif;font-weight:400}
-.ora{background:linear-gradient(180deg,var(--or2),var(--or) 55%,#e04e12);box-shadow:0 8px 20px rgba(60,20,0,.4)}
-.shadow{text-shadow:0 4px 18px rgba(0,40,60,.45)}
+#f{position:relative;width:1080px;height:1080px;overflow:hidden;font-family:Poppins,sans-serif;color:#fff;background:#0b4f66 url(assets/stage3d.png) 0 0/1080px 1080px no-repeat}
+#shade{position:absolute;inset:0;background:radial-gradient(ellipse 330px 360px at 545px 420px,rgba(3,62,86,.62) 0%,rgba(3,62,86,.5) 55%,rgba(3,62,86,0) 100%),radial-gradient(ellipse 80% 60% at 50% 48%,rgba(0,30,45,0) 55%,rgba(0,30,45,.35) 100%),linear-gradient(180deg,rgba(0,30,45,.28) 0%,rgba(0,0,0,0) 22%)}
+#m{position:absolute;left:77px;top:0;width:735px;height:858px;transform:scale(1.25874);transform-origin:0 0}
+.a{position:absolute;white-space:nowrap;line-height:1}
+.bebas{font-family:Bebas,Impact,sans-serif}
+.ora{background:linear-gradient(180deg,var(--o1),var(--o2));box-shadow:0 0 14px rgba(255,120,40,.55),0 4px 10px rgba(60,20,0,.35)}
+.ts{text-shadow:0 3px 12px rgba(0,45,65,.75)}
+.wh{background:#fff;box-shadow:0 4px 14px rgba(40,20,0,.35)}
 </style></head><body>
-<div id="f">
-  <canvas id="bg" width="1080" height="1080"></canvas>
+<div id="f"><div id="shade"></div>
+<div id="m">
 
-  <!-- logos -->
-  <div class="abs" style="left:0;width:1080px;top:20px;display:flex;justify-content:center;align-items:center;gap:30px">
-    <div style="position:relative;width:88px;height:90px"><img src="assets/zone_w_a.svg" style="position:absolute;left:0;top:0" width="88" height="90"><img src="assets/zone_w_b.svg" style="position:absolute;left:0;top:0" width="88" height="90"></div>
-    <div style="width:3px;height:84px;background:rgba(255,255,255,.75)"></div>
-    <img src="assets/milmo_white.svg" width="248" height="65">
-  </div>
+  <!-- en-tête : logo ZONE 242 | MILMO -->
+  <div class="a" style="left:259px;top:6px;width:54px;height:70px"><img src="assets/zone_w_a.svg" style="position:absolute;left:0;top:0" width="54" height="55"><img src="assets/zone_w_b.svg" style="position:absolute;left:0;top:0" width="54" height="55"></div>
+  <div class="a" style="left:326px;top:16px;width:2px;height:60px;background:rgba(255,255,255,.85)"></div>
+  <div class="a ts" style="left:341px;top:15px;font-weight:800;font-size:15.4px;line-height:17.2px;letter-spacing:.01em">MISSION<br>INTERNATIONALE<br>LUMIÈRE<br>DU MONDE</div>
 
   <!-- badge MINI VEILLÉE -->
-  <div class="abs" style="left:62px;top:128px;width:314px;height:108px;border:3px solid rgba(255,255,255,.92);border-radius:22px;background:rgba(6,70,88,.5);box-sizing:border-box">
-    <div class="abs ora bebas" style="left:12px;top:12px;width:96px;height:80px;border-radius:14px;font-size:60px;line-height:84px;text-align:center;letter-spacing:.02em">MINI</div>
-    <div class="abs" style="left:122px;top:34px;font-weight:800;font-size:42px;letter-spacing:.01em">VEILLÉE</div>
-  </div>
+  <div class="a" style="left:10px;top:80px;width:218px;height:86px;border:2px solid rgba(255,255,255,.92);border-radius:16px;box-sizing:border-box;background:rgba(5,70,90,.28)"></div>
+  <div class="a ora bebas" style="left:20px;top:90px;width:56px;height:66px;border-radius:10px;font-size:36px;line-height:68px;text-align:center;letter-spacing:.02em">MINI</div>
+  <div class="a" style="left:88px;top:90px;font-weight:700;font-size:15px;color:#ff8a45">Ce vendredi</div>
+  <div class="a" style="left:88px;top:109px;font-weight:800;font-size:25px;letter-spacing:.005em">VEILLÉE</div>
+  <div class="a" style="left:89px;top:138px;font-weight:700;font-size:13.5px;letter-spacing:.04em">À LA ZONE 242</div>
+
+  <!-- rond (comme J1) -->
+  <div class="a" style="left:581px;top:157px;width:104px;height:104px;border-radius:50%;background:#fff;box-shadow:0 6px 16px rgba(0,40,60,.35);text-align:center">
+    <div style="font-weight:700;font-size:13px;color:var(--or);margin-top:22px;letter-spacing:.1em">VEN.</div>
+    <div class="bebas" style="font-size:56px;color:var(--or);margin-top:2px">13</div></div>
 
   <!-- titre -->
-  <div class="abs bebas shadow" id="th" style="left:394px;top:240px;font-size:60px;letter-spacing:.07em">THÈME :</div>
-  <div class="abs bebas shadow" id="t1" style="left:386px;top:273px;font-size:270px;letter-spacing:.005em">TRÔNE</div>
-  <div class="abs bebas shadow" id="t2" style="left:398px;top:494px;font-size:64px;letter-spacing:.06em">ET</div>
-  <div class="abs bebas" id="t3" style="left:394px;top:538px;font-size:178px;letter-spacing:.01em;background:linear-gradient(180deg,#fff3b8 0%,#ffd45a 45%,#f2a31a 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 5px 14px rgba(70,30,0,.45))">GLOIRE</div>
+  <div class="a bebas ts" style="left:237px;top:176px;font-size:60px;letter-spacing:.06em">THÈME :</div>
+  <div class="a bebas ts" id="t1" style="left:232px;top:218px;font-size:132px;-webkit-text-stroke:2.4px #fff;letter-spacing:.005em">TRÔNE</div>
+  <div class="a bebas ts" id="t3" style="left:226px;top:358px;font-size:117px;letter-spacing:.01em">GLOIRE</div>
+  <div class="a bebas ts" style="left:240px;top:327px;font-size:36px;letter-spacing:.1em">ET</div>
+  <svg class="a" style="left:486px;top:318px;filter:drop-shadow(0 4px 10px rgba(0,50,70,.6));transform:rotate(-8deg)" width="122" height="104" viewBox="0 0 100 84"><path d="M6 66 L0 14 Q10 30 24 40 Q36 24 50 4 Q64 24 76 40 Q90 30 100 14 L94 66 Z" fill="#fff"/><rect x="5" y="68" width="90" height="13" rx="5" fill="#fff"/><circle cx="50" cy="52" r="5" fill="#ee5a24"/><circle cx="25" cy="52" r="3.6" fill="#ee5a24"/><circle cx="75" cy="52" r="3.6" fill="#ee5a24"/></svg>
 
-  <!-- date / heure (boîte blanche) -->
-  <div class="abs" style="left:92px;top:662px;width:292px;height:150px;border-radius:26px;background:#fff;box-shadow:0 10px 26px rgba(40,20,0,.35)">
-    <div class="abs" style="left:20px;top:22px;font-weight:700;font-size:29px;color:var(--or)">Vendredi</div>
-    <div class="abs" style="left:20px;top:62px;font-weight:800;font-size:70px;color:var(--or);letter-spacing:-.02em">13</div>
-    <div class="abs" style="left:96px;top:74px;font-weight:700;font-size:22px;color:var(--or)">NOV.</div>
-    <div class="abs" style="left:96px;top:100px;font-weight:600;font-size:19px;color:#c9531a">2026</div>
-    <div class="abs" style="left:166px;top:22px;width:2px;height:106px;background:var(--or)"></div>
-    <svg class="abs" style="left:206px;top:30px" width="30" height="30" viewBox="0 0 26 26"><circle cx="13" cy="13" r="10.5" fill="none" stroke="#f26522" stroke-width="3"/><path d="M13 7v6.5l4.5 2.5" stroke="#f26522" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-    <div class="abs" style="left:176px;top:76px;font-weight:800;font-size:35px;color:var(--or);letter-spacing:-.01em">19H45</div>
-  </div>
+  <!-- verset -->
+  <div class="a wh" style="left:262px;top:469px;width:184px;height:21px;border-radius:5px;text-align:center;font-weight:700;font-size:11.5px;line-height:21px;color:var(--or);letter-spacing:.02em">HÉBREUX 4 : 16</div>
+  <div class="a ts" style="left:0;width:735px;text-align:center;top:495px;font-weight:400;font-size:14.2px;padding-left:20px;box-sizing:border-box">approchons-nous avec assurance du trône de la grâce</div>
 
-  <!-- blocs orange : la Zone / lieu -->
-  <div class="abs ora" style="left:110px;top:828px;width:116px;height:136px;border-radius:14px;text-align:center">
-    <div class="bebas" style="font-size:54px;margin-top:14px;letter-spacing:.04em">ZONE</div>
-    <div class="bebas" style="font-size:96px;margin-top:-2px;letter-spacing:.02em">242</div>
-  </div>
-  <div class="abs" style="left:240px;top:826px;font-weight:700;font-size:26px;letter-spacing:.08em;border-bottom:3px solid #fff;padding-bottom:4px">LIEU</div>
-  <div class="abs ora" style="left:240px;top:874px;width:146px;height:90px;border-radius:14px;text-align:center">
-    <div class="bebas" style="font-size:46px;line-height:90px;letter-spacing:.03em">SIKÈCODJI</div>
-  </div>
-  <div class="abs" style="left:104px;top:976px;width:282px;height:40px;border-radius:12px;background:#fff;box-shadow:0 6px 16px rgba(40,20,0,.35);text-align:center">
-    <div style="font-weight:700;font-size:19px;color:var(--or);line-height:40px">Rue de Golf-FM, Cotonou</div>
-  </div>
+  <!-- boîte date / heure -->
+  <div class="a wh" style="left:20px;top:531px;width:216px;height:108px;border-radius:14px"></div>
+  <div class="a" style="left:31px;top:543px;font-weight:700;font-size:21.5px;color:var(--or)">Vendredi</div>
+  <div class="a" style="left:31px;top:573px;font-weight:800;font-size:46px;color:var(--or);letter-spacing:-.03em">13</div>
+  <div class="a" style="left:88px;top:580px;font-weight:700;font-size:17px;color:var(--or)">nov.</div>
+  <div class="a" style="left:88px;top:600px;font-weight:600;font-size:12px;color:#c9531a">2026</div>
+  <div class="a" style="left:142px;top:545px;width:2px;height:82px;background:var(--or)"></div>
+  <svg class="a" style="left:158px;top:546px" width="19" height="19" viewBox="0 0 26 26"><circle cx="13" cy="13" r="10.5" fill="none" stroke="#ee5a24" stroke-width="3.2"/><path d="M13 7v6.5l4.5 2.5" stroke="#ee5a24" stroke-width="3.2" fill="none" stroke-linecap="round"/></svg>
+  <div class="a" style="left:152px;top:573px;font-weight:800;font-size:24px;color:var(--or);letter-spacing:-.01em">19H45</div>
+  <div class="a" style="left:154px;top:604px;font-weight:600;font-size:9.5px;color:#c9531a;letter-spacing:.06em">À PARTIR DE</div>
 
-  <!-- couronne + reflet -->
-  <svg class="abs" style="left:398px;top:772px" width="276" height="260" viewBox="0 0 280 262">
-    <defs>
-      <linearGradient id="g" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#a86d10"/><stop offset=".16" stop-color="#f1cf5e"/><stop offset=".4" stop-color="#fff2b0"/><stop offset=".6" stop-color="#e0a82a"/><stop offset=".85" stop-color="#f3d36a"/><stop offset="1" stop-color="#9c620c"/></linearGradient>
-      <linearGradient id="gv" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".32"/><stop offset="1" stop-color="#3a1d00" stop-opacity=".28"/></linearGradient>
-      <radialGradient id="ruby"><stop offset="0" stop-color="#ff8c8c"/><stop offset=".55" stop-color="#d4141e"/><stop offset="1" stop-color="#790510"/></radialGradient>
-      <linearGradient id="fade" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="172" y2="262"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-      <mask id="m" maskUnits="userSpaceOnUse" x="0" y="172" width="280" height="90"><rect x="0" y="172" width="280" height="90" fill="url(#fade)"/></mask>
-      <g id="crown">
-        <path d="M14 152 L6 16 C20 80 40 116 72 116 C104 116 118 76 128 40 L140 2 L152 40 C162 76 176 116 208 116 C240 116 260 80 274 16 L266 152 Z" fill="url(#g)"/>
-        <path d="M14 152 L6 16 C20 80 40 116 72 116 C104 116 118 76 128 40 L140 2 L152 40 C162 76 176 116 208 116 C240 116 260 80 274 16 L266 152 Z" fill="url(#gv)"/>
-        <path d="M40 112 C52 124 90 124 106 100 M240 112 C228 124 190 124 174 100" stroke="#8a5a0e" stroke-width="3" fill="none" opacity=".55"/>
-        <circle cx="6" cy="12" r="7" fill="url(#g)"/><circle cx="274" cy="12" r="7" fill="url(#g)"/>
-        <circle cx="140" cy="8" r="8" fill="url(#g)"/><path d="M140 -6v10M135 -1h10" stroke="#fff3b0" stroke-width="3" stroke-linecap="round"/>
-        <rect x="8" y="130" width="264" height="42" rx="10" fill="url(#g)"/><rect x="8" y="130" width="264" height="42" rx="10" fill="url(#gv)"/>
-        <rect x="8" y="130" width="264" height="5" rx="2.5" fill="#fff8d0" opacity=".75"/><rect x="8" y="166" width="264" height="5" rx="2.5" fill="#7a4a08" opacity=".35"/>
-        <circle cx="140" cy="44" r="7" fill="url(#ruby)"/>
-        <circle cx="42" cy="151" r="8" fill="url(#ruby)"/><circle cx="91" cy="151" r="8" fill="url(#ruby)"/><circle cx="140" cy="151" r="8" fill="url(#ruby)"/><circle cx="189" cy="151" r="8" fill="url(#ruby)"/><circle cx="238" cy="151" r="8" fill="url(#ruby)"/>
-      </g>
-    </defs>
-    <g mask="url(#m)"><use href="#crown" transform="translate(0,344) scale(1,-1)"/></g>
-    <use href="#crown"/>
-  </svg>
+  <!-- bloc orange date -->
+  <div class="a ora" style="left:32px;top:655px;width:80px;height:128px;border-radius:7px;text-align:center">
+    <div style="font-weight:700;font-size:12px;margin-top:11px;letter-spacing:.14em">VEN.</div>
+    <div class="bebas" style="font-size:96px;margin-top:14px;line-height:.9">13</div>
+    </div>
+  <div class="a ts" style="left:32px;top:790px;width:80px;text-align:center;font-weight:700;font-size:13px;letter-spacing:.01em">NOVEMBRE</div>
+
+  <!-- lieu -->
+  <div class="a ts" style="left:124px;top:650px;font-weight:700;font-size:21px;letter-spacing:.03em">LIEU</div>
+  <div class="a" style="left:124px;top:676px;width:50px;height:2px;background:rgba(255,255,255,.9)"></div>
+  <div class="a ora" style="left:124px;top:683px;width:104px;height:100px;border-radius:7px;text-align:center">
+    <div style="font-weight:600;font-size:15px;margin-top:17px;letter-spacing:.04em">ZONE 242</div>
+    <div style="font-weight:600;font-size:15px;margin-top:11px;letter-spacing:.02em">SIKÈCODJI</div>
+    <div style="font-weight:600;font-size:15px;margin-top:11px;letter-spacing:.04em">COTONOU</div></div>
+
+  <!-- adresse -->
+  <div class="a wh" style="left:28px;top:815px;width:190px;height:33px;border-radius:9px;text-align:center;font-weight:700;font-size:11.4px;line-height:14px;color:var(--or);padding-top:3px;box-sizing:border-box">Rue de Golf-FM,<br>Sikècodji · Cotonou</div>
 
   <!-- photo de l'apôtre -->
-  <div class="abs" id="ph" style="left:776px;top:648px;width:196px;height:292px;border-radius:26px;background:url(assets/amos_tall.jpg) center top/cover;box-shadow:0 0 0 4px rgba(255,255,255,.8),0 14px 34px rgba(30,15,0,.5)"></div>
-  <div class="abs ora" style="left:776px;top:952px;width:196px;height:62px;border-radius:20px;text-align:center">
-    <div style="font-weight:600;font-size:15px;letter-spacing:.14em;margin-top:9px">APÔTRE</div>
-    <div style="font-weight:800;font-size:25px;margin-top:3px;letter-spacing:.01em">AMOS ELITE</div>
-  </div>
+  <div class="a" style="left:560px;top:520px;width:146px;height:250px;border-radius:15px;background:url(assets/amos_tall.jpg) center top/cover;box-shadow:0 0 0 2.4px rgba(255,255,255,.85),0 8px 22px rgba(30,15,0,.5)"></div>
+  <div class="a ts" style="left:560px;width:146px;top:772px;text-align:center;font-weight:700;font-size:13.5px;letter-spacing:.12em">APÔTRE</div>
+  <div class="a ora" style="left:560px;top:790px;width:146px;height:23px;border-radius:5px;text-align:center;font-weight:700;font-size:13px;line-height:23px;letter-spacing:.01em">Amos <span style="font-weight:800">ELITE</span></div>
 
-  <!-- pied de page de la Zone -->
-  <div class="abs" style="left:0;top:1022px;width:1080px;height:58px;background:linear-gradient(180deg,rgba(40,20,5,.82),rgba(25,10,0,.95))"></div>
-  <div class="abs" style="left:0;width:1080px;top:1029px;text-align:center;font-family:Montserrat,sans-serif;font-weight:700;font-size:16px;letter-spacing:.08em">ZONE 242 · SIKÈCODJI · RUE DE GOLF-FM, COTONOU</div>
-  <div class="abs" style="left:0;width:1080px;top:1052px;display:flex;justify-content:center;align-items:center;gap:16px;font-family:Montserrat,sans-serif;font-weight:700;font-size:16px">
-    <span style="display:inline-flex;align-items:center;gap:7px"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.35 2.3.55 3.6.55a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.6 21 3 13.4 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.55 3.6a1 1 0 0 1-.25 1z" fill="#ffb36b"/></svg>01 41 62 77 77</span>
-    <span style="opacity:.5">|</span>
-    <svg width="13" height="15" viewBox="0 0 12 14"><path d="M8 0v9.2a3 3 0 1 1-3-3v2a1 1 0 1 0 1 1V0z M8 0c.2 1.6 1.4 2.8 3.2 3v2c-1.2 0-2.2-.4-3.2-1z" fill="#fff"/></svg>
-    <svg width="19" height="14" viewBox="0 0 15 11"><rect width="15" height="11" rx="3" fill="#fff"/><path d="M6 3l4 2.5L6 8z" fill="#3a1c00"/></svg>
-    <svg width="15" height="15" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="6" cy="6" r="2.2" fill="none" stroke="#fff" stroke-width="1.5"/></svg>
-    <svg width="9" height="16" viewBox="0 0 8 14"><path d="M5.2 14V7.7h2.1l.3-2.5H5.2V3.7c0-.7.2-1.2 1.2-1.2H7.7V.3C7.5.3 6.7.2 5.8.2 3.9.2 2.7 1.3 2.7 3.4v1.8H.6v2.5h2.1V14z" fill="#fff"/></svg>
-    <span>ZONE 242</span>
+  <!-- pied de page (comme « Mission M.E.R.A.C ») : réseaux + Zone 242 + téléphone -->
+  <div class="a" style="left:560px;width:146px;top:822px;display:flex;justify-content:center;align-items:center;gap:7px">
+    <svg width="11" height="13" viewBox="0 0 12 14"><path d="M8 0v9.2a3 3 0 1 1-3-3v2a1 1 0 1 0 1 1V0z M8 0c.2 1.6 1.4 2.8 3.2 3v2c-1.2 0-2.2-.4-3.2-1z" fill="#fff"/></svg>
+    <svg width="13" height="13" viewBox="0 0 12 12"><circle cx="6" cy="6" r="6" fill="#fff"/><path d="M6.7 10.5V6.6h1.2l.2-1.4H6.7v-.8c0-.4.1-.7.7-.7h.8V2.5C8 2.5 7.600 2.400 7.100 2.400 6 2.400 5.300 3 5.300 4.200v1H4.100v1.400h1.200v3.900z" fill="#0b4f66"/></svg>
+    <svg width="15" height="11" viewBox="0 0 15 11"><rect width="15" height="11" rx="3" fill="#fff"/><path d="M6 3l4 2.5L6 8z" fill="#0b4f66"/></svg>
+    <svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="6" cy="6" r="2.2" fill="none" stroke="#fff" stroke-width="1.5"/></svg>
   </div>
-</div>
+  <div class="a ts" style="left:560px;width:146px;top:838px;text-align:center;font-weight:700;font-size:11.5px;letter-spacing:.04em">ZONE 242 · 01 41 62 77 77</div>
+</div></div>
 <script>
-// ---------- procedural stage: sky, curtains, golden floor ----------
-const cv=document.getElementById('bg'),c=cv.getContext('2d');
-const rnd=(()=>{let s=9;return()=>(s=(s*16807)%2147483647)/2147483647})();
-function curtain(flip){
-  c.save(); if(flip){c.translate(1080,0);c.scale(-1,1);}
-  const path=new Path2D(); path.moveTo(-30,-30);path.lineTo(300,-30);path.bezierCurveTo(272,110,214,250,200,380);path.bezierCurveTo(190,470,150,560,142,720);path.lineTo(-30,720);path.closePath();
-  c.fillStyle='#0d6677';c.fill(path);c.save();c.clip(path);
-  for(let x=-30;x<310;x+=5){const a=Math.sin(x*.075)+.6*Math.sin(x*.19+1.3);
-    c.fillStyle=`rgba(0,25,40,${Math.max(0,a)*.17})`;c.fillRect(x,-30,5,780);
-    c.fillStyle=`rgba(190,245,240,${Math.max(0,-a)*.10})`;c.fillRect(x,-30,5,780);}
-  let g=c.createLinearGradient(0,330,0,640);g.addColorStop(0,'rgba(166,106,44,0)');g.addColorStop(1,'rgba(168,108,46,.9)');c.fillStyle=g;c.fillRect(-30,330,360,420);
-  g=c.createLinearGradient(0,-30,0,200);g.addColorStop(0,'rgba(0,20,35,.45)');g.addColorStop(1,'rgba(0,20,35,0)');c.fillStyle=g;c.fillRect(-30,-30,360,230);
-  c.restore();
-  c.save();c.strokeStyle='rgba(215,250,245,.55)';c.lineWidth=3;c.shadowColor='rgba(255,255,255,.6)';c.shadowBlur=8;c.beginPath();c.moveTo(300,-30);c.bezierCurveTo(272,110,214,250,200,380);c.bezierCurveTo(190,470,150,560,142,720);c.stroke();c.restore();
-  // tie-back cord
-  c.strokeStyle='#d9a24a';c.lineWidth=5;c.beginPath();c.moveTo(150,520);c.quadraticCurveTo(175,560,160,640);c.stroke();
-  c.fillStyle='#e8b95a';c.beginPath();c.ellipse(158,650,9,18,0,0,7);c.fill();
-  c.restore();
-}
-function stage(){
-  let g=c.createLinearGradient(0,0,0,700);
-  g.addColorStop(0,'#0a4a62');g.addColorStop(.22,'#17808f');g.addColorStop(.42,'#4cb0b4');g.addColorStop(.58,'#b7d3c3');g.addColorStop(.7,'#e6cf9f');g.addColorStop(1,'#d9b27a');
-  c.fillStyle=g;c.fillRect(0,0,1080,700);
-  // clouds
-  c.filter='blur(34px)';
-  for(let i=0;i<22;i++){const x=200+rnd()*680,y=210+rnd()*400,rx=70+rnd()*150,ry=26+rnd()*50;c.fillStyle=`rgba(255,244,222,${.1+rnd()*.17})`;c.beginPath();c.ellipse(x,y,rx,ry,0,0,7);c.fill();}
-  c.filter='none';
-  g=c.createRadialGradient(540,650,0,540,650,420);g.addColorStop(0,'rgba(255,238,205,.75)');g.addColorStop(1,'rgba(255,238,205,0)');c.fillStyle=g;c.fillRect(0,230,1080,520);
-  // golden floor
-  g=c.createLinearGradient(0,680,0,1080);g.addColorStop(0,'#d9b27a');g.addColorStop(.3,'#c08c4c');g.addColorStop(.7,'#8d5a26');g.addColorStop(1,'#4a2a0d');c.fillStyle=g;c.fillRect(0,680,1080,400);
-  for(let y=700;y<1080;y+=7){c.fillStyle=`rgba(255,225,170,${.03+rnd()*.06})`;c.fillRect(120+rnd()*100,y,500+rnd()*400,1.4);}
-  g=c.createRadialGradient(540,985,0,540,985,330);g.addColorStop(0,'rgba(255,236,190,.65)');g.addColorStop(1,'rgba(255,236,190,0)');c.fillStyle=g;c.fillRect(0,700,1080,380);
-  curtain(false);curtain(true);
-  g=c.createRadialGradient(540,540,420,540,540,820);g.addColorStop(0,'rgba(0,25,40,0)');g.addColorStop(1,'rgba(0,25,40,.38)');c.fillStyle=g;c.fillRect(0,0,1080,1080);
-  const id=c.getImageData(0,0,1080,1080),d=id.data;for(let i=0;i<d.length;i+=4){const n=(rnd()-.5)*9;d[i]+=n;d[i+1]+=n;d[i+2]+=n;}c.putImageData(id,0,0);
-}
-stage();
-window.ready=(async()=>{
-  await Promise.all(['100px Bebas','500 20px Poppins','700 20px Poppins','800 20px Poppins','700 20px Montserrat'].map(f=>document.fonts.load(f)));await document.fonts.ready;
-  await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));
-  await new Promise(r=>{const i=new Image();i.onload=r;i.onerror=r;i.src='assets/amos_tall.jpg'});
-})();
+window.ready=(async()=>{await Promise.all(['100px Bebas','400 20px Poppins','500 20px Poppins','600 20px Poppins','700 20px Poppins','800 20px Poppins'].map(f=>document.fonts.load(f)));await document.fonts.ready;
+  await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));await new Promise(r=>{const i=new Image();i.onload=r;i.onerror=r;i.src='assets/amos_tall.jpg'});})();
 </script></body></html>
