@@ -1,10 +1,11 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Flyer final</title>
 <style>
 @font-face{font-family:Poppins;font-weight:700;font-style:italic;src:url(fonts/poppins-latin-700-italic.woff2)}
+@font-face{font-family:Poppins;font-weight:800;src:url(fonts/poppins-latin-800-normal.woff2)}
 @font-face{font-family:Montserrat;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}
 @font-face{font-family:Montserrat;font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2)}
 html,body{margin:0;background:#000}
-#f{position:relative;width:1254px;height:1254px;overflow:hidden;background:url(base_clean.png) 0 0/1254px 1254px no-repeat;color:#fff}
+#f{position:relative;width:1254px;height:1254px;overflow:hidden;background:url(base_clean2.png) 0 0/1254px 1254px no-repeat;color:#fff}
 .a{position:absolute;white-space:nowrap;line-height:1}
 #band{left:0;top:1128px;width:1254px;height:126px;background:linear-gradient(180deg,rgba(8,14,32,0) 0%,rgba(8,14,32,.62) 38%,rgba(6,10,26,.9) 100%)}
 .nm{font-family:Poppins,sans-serif;font-style:italic;font-weight:700;text-shadow:0 3px 14px rgba(0,0,0,.75),0 1px 3px rgba(0,0,0,.6)}
@@ -12,6 +13,7 @@ html,body{margin:0;background:#000}
 </style></head><body>
 <div id="f">
   <div class="a" id="band"></div>
+  <div class="a" id="d13" style="left:212px;width:142px;text-align:center;top:893px;font-family:Poppins,sans-serif;font-weight:800;font-size:105px;letter-spacing:-.045em;color:#ed4812">13</div>
   <!-- nom de l'apôtre sous sa photo, sans fond -->
   <div class="a nm" style="left:690px;width:540px;text-align:center;top:1066px;font-size:31px;color:#ffe08a">Avec</div>
   <div class="a nm" style="left:670px;width:580px;text-align:center;top:1100px;font-size:50px">Apôtre Amos Elite</div>
@@ -27,5 +29,5 @@ html,body{margin:0;background:#000}
     <span>ZONE 242</span>
   </div>
 </div>
-<script>window.ready=(async()=>{await Promise.all(['italic 700 20px Poppins','600 20px Montserrat','700 20px Montserrat'].map(f=>document.fonts.load(f)));await document.fonts.ready;await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));await new Promise(r=>{const i=new Image();i.onload=r;i.src='base_clean.png'})})();</script>
+<script>window.ready=(async()=>{await Promise.all(['italic 700 20px Poppins','800 20px Poppins','600 20px Montserrat','700 20px Montserrat'].map(f=>document.fonts.load(f)));await document.fonts.ready;await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));await new Promise(r=>{const i=new Image();i.onload=r;i.src='base_clean2.png'})})();</script>
 </body></html>
