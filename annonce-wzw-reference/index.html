@@ -112,17 +112,17 @@
       const $ = (s) => document.querySelector(s);
 
       // ---------- configuration des détourages : [hauteur affichée, haut de l'image], proportions largeur/hauteur
-      const CFG = { mary: [1690, 90], anne: [750, 90], huldah: [750, 90], manne: [1690, 90], veronica: [700, 140], hestia: [1590, 90], pelagie: [1590, 90], jessie: [1590, 90], richmelle: [1590, 90] };
-      const ASP = { mary: 851 / 1259, anne: 960 / 1217, huldah: 988 / 1105, manne: 716 / 968, veronica: 1169 / 1289, hestia: 825 / 1208, pelagie: 551 / 1082, jessie: 662 / 1104, richmelle: 595 / 1124 };
+      const CFG = { mary: [1690, 90], anne: [750, 90], huldah: [750, 90], manne: [1690, 90], veronica: [700, 140], hestia: [1590, 90], pelagie: [1590, 90], esperance: [1590, 90], jessie: [1590, 90], richmelle: [1590, 90] };
+      const ASP = { mary: 851 / 1259, anne: 960 / 1217, huldah: 988 / 1105, manne: 716 / 968, veronica: 1169 / 1289, hestia: 825 / 1208, pelagie: 551 / 1082, esperance: 591 / 1159, jessie: 662 / 1104, richmelle: 595 / 1124 };
       const placeCut = (img, id, mult, cx, top) => { const h = CFG[id][0] * mult, w = h * ASP[id]; img.style.height = h + "px"; img.style.left = (cx - w / 2) + "px"; img.style.top = top + "px"; };
       placeCut($("#cm"), "mary", 1.15, 960, 30); placeCut($("#cb1"), "hestia", 1.15, 960, 30);
       placeCut($("#cutC img"), "jessie", 1.2, 960, 30); placeCut($("#cutD img"), "pelagie", 1.2, 960, 30); placeCut($("#cutE img"), "richmelle", 1.2, 960, 30);
-      // ---------- carrousel : Mary 2,4 s puis 8 intervenantes de 1,2 s, de 8,4 s à 20,4 s
+      // ---------- carrousel : 10 intervenantes de 1,2 s, de 8,4 s à 20,4 s
       const PEOPLE = [
         ["mary", "PROPHÉTESSE", "MARY FAVOUR TONGSI", "INVITÉE D’HONNEUR"], ["anne", "PASTEURE", "ANNE-LAURE", ""], ["huldah", "LEADER", "HULDAH", ""],
         ["manne", "PROPHÉTESSE", "MANNE", ""], ["veronica", "PASTEURE", "VERONICA", ""], ["hestia", "DR", "HESTIA", ""], ["pelagie", "PROPHÉTESSE", "PÉLAGIE", ""],
-        ["jessie", "ÉVANGÉLISTE", "JESSIE", ""], ["richmelle", "LEADER", "RICHMELLE", ""]];
-      const T0S = [8.4, 10.8, 12.0, 13.2, 14.4, 15.6, 16.8, 18.0, 19.2];   // arrivée de chaque personne au centre
+        ["esperance", "PASTEURE", "ESPÉRANCE", ""], ["jessie", "ÉVANGÉLISTE", "JESSIE", ""], ["richmelle", "LEADER", "RICHMELLE", ""]];
+      const T0S = [8.4, 9.6, 10.8, 12.0, 13.2, 14.4, 15.6, 16.8, 18.0, 19.2];   // arrivée de chaque personne au centre
       const strip = $("#strip"); const ITEMS = [];
       PEOPLE.forEach(([id, a, b, c], i) => {
         const d = document.createElement("div"); d.className = "it"; d.style.left = (960 - 350 + i * STEP) + "px";
@@ -173,12 +173,12 @@
       tl.set("#red", { opacity: 1 }, 8.4); tl.set("#sl1", { opacity: 1 }, 8.4);
       tl.to("#slabA", { y: 0, opacity: 1, duration: .45, ease: "power3.out" }, 8.4); tl.to("#slabB", { x: 0, opacity: 1, duration: .6, ease: "power3.out" }, 8.45); tl.to("#slabC", { x: 0, opacity: 1, duration: .6, ease: "power3.out" }, 8.45);
       ITEMS.forEach((d, i) => {
-        const t = T0S[i], dur = i === 0 ? 2.4 : 1.2;       // le sujet arrive au centre à t
+        const t = T0S[i], dur = 1.2;       // le sujet arrive au centre à t
         tl.set(d, { opacity: 1 }, Math.max(8.4, t - 1.3));
         if (i === 0) { tl.fromTo(d, { x: 700 }, { x: 0, scale: 1, filter: "grayscale(0) blur(0px) brightness(1)", duration: .5, ease: "power3.out" }, t - .1); tl.set(d, { opacity: 1 }, t - .1); }
         else { tl.to(d, { scale: 1, filter: "grayscale(0) blur(0px) brightness(1)", duration: .5, ease: "power3.inOut" }, t - .1); }
         tl.to(d.querySelector(".nm"), { opacity: 1, x: 0, duration: .3, ease: "power2.out", startAt: { x: 40 } }, t + .1);
-        if (i < 8) { tl.to(d, { scale: .62, filter: "grayscale(1) blur(7px) brightness(.85)", duration: .5, ease: "power3.inOut" }, t + dur - .1); tl.to(d.querySelector(".nm"), { opacity: 0, duration: .2 }, t + dur - .2); }
+        if (i < 9) { tl.to(d, { scale: .62, filter: "grayscale(1) blur(7px) brightness(.85)", duration: .5, ease: "power3.inOut" }, t + dur - .1); tl.to(d.querySelector(".nm"), { opacity: 0, duration: .2 }, t + dur - .2); }
         if (i >= 1) tl.to("#strip", { x: -i * STEP, duration: .5, ease: "power3.inOut" }, t - .1);
       });
       // ---------- 20,4 → 24,0 : date (ref : « OCTOBER 24TH 2026  2PM »)
