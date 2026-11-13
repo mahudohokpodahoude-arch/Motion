@@ -1,0 +1,31 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Flyer final</title>
+<style>
+@font-face{font-family:Poppins;font-weight:700;font-style:italic;src:url(fonts/poppins-latin-700-italic.woff2)}
+@font-face{font-family:Montserrat;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2)}
+html,body{margin:0;background:#000}
+#f{position:relative;width:1254px;height:1254px;overflow:hidden;background:url(base_clean.png) 0 0/1254px 1254px no-repeat;color:#fff}
+.a{position:absolute;white-space:nowrap;line-height:1}
+#band{left:0;top:1128px;width:1254px;height:126px;background:linear-gradient(180deg,rgba(8,14,32,0) 0%,rgba(8,14,32,.62) 38%,rgba(6,10,26,.9) 100%)}
+.nm{font-family:Poppins,sans-serif;font-style:italic;font-weight:700;text-shadow:0 3px 14px rgba(0,0,0,.75),0 1px 3px rgba(0,0,0,.6)}
+.ft{font-family:Montserrat,sans-serif;font-weight:700;text-shadow:0 2px 8px rgba(0,0,0,.7)}
+</style></head><body>
+<div id="f">
+  <div class="a" id="band"></div>
+  <!-- nom de l'apôtre sous sa photo, sans fond -->
+  <div class="a nm" style="left:690px;width:540px;text-align:center;top:1066px;font-size:31px;color:#ffe08a">Avec</div>
+  <div class="a nm" style="left:670px;width:580px;text-align:center;top:1100px;font-size:50px">Apôtre Amos Elite</div>
+  <!-- pied de page de la Zone -->
+  <div class="a ft" style="left:0;width:1254px;text-align:center;top:1184px;font-size:23px;letter-spacing:.08em">ZONE 242 · SIKÈCODJI · RUE DE GOLF-FM, COTONOU</div>
+  <div class="a ft" style="left:0;width:1254px;top:1218px;display:flex;justify-content:center;align-items:center;gap:22px;font-size:22px">
+    <span style="display:inline-flex;align-items:center;gap:9px"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.35 2.3.55 3.6.55a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.6 21 3 13.4 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.55 3.6a1 1 0 0 1-.25 1z" fill="#ffb36b"/></svg>01 41 62 77 77</span>
+    <span style="opacity:.55">|</span>
+    <svg width="17" height="20" viewBox="0 0 12 14"><path d="M8 0v9.2a3 3 0 1 1-3-3v2a1 1 0 1 0 1 1V0z M8 0c.2 1.6 1.4 2.8 3.2 3v2c-1.2 0-2.2-.4-3.2-1z" fill="#fff"/></svg>
+    <svg width="26" height="19" viewBox="0 0 15 11"><rect width="15" height="11" rx="3" fill="#fff"/><path d="M6 3l4 2.5L6 8z" fill="#08102a"/></svg>
+    <svg width="20" height="20" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="6" cy="6" r="2.2" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="9" cy="3" r=".8" fill="#fff"/></svg>
+    <svg width="12" height="22" viewBox="0 0 8 14"><path d="M5.2 14V7.7h2.1l.3-2.5H5.2V3.7c0-.7.2-1.2 1.2-1.2H7.7V.3C7.5.3 6.7.2 5.8.2 3.9.2 2.7 1.3 2.7 3.4v1.8H.6v2.5h2.1V14z" fill="#fff"/></svg>
+    <span>ZONE 242</span>
+  </div>
+</div>
+<script>window.ready=(async()=>{await Promise.all(['italic 700 20px Poppins','600 20px Montserrat','700 20px Montserrat'].map(f=>document.fonts.load(f)));await document.fonts.ready;await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));await new Promise(r=>{const i=new Image();i.onload=r;i.src='base_clean.png'})})();</script>
+</body></html>
