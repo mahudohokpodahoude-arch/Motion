@@ -37,13 +37,13 @@ thud(3.6, 1.0); whoosh(3.5, .3, 2000, 9000, .4); pluck(72, 3.6, .3); pluck(79, 3
 for at in (4.8, 6.0, 7.2): whoosh(at - .1, .3, 800, 6500, .3); thud(at, .5)
 # ---- 8,4 → 20,4 : carrousel, un coup léger à chaque personne
 whoosh(8.2, .4, 500, 7000, .4); thud(8.4, .9)
-for i in range(10):
+for i in range(11):
     t = 8.4 + i * 1.2
     if i: whoosh(t - .15, .35, 700, 6000, .28)
     thud(t, .35 if i else .0); pluck(72 + (i % 5) * 2, t + .05, .22, -.3 + .06 * i, .1)
 # ---- 20,4 → 32,4 : textes cinétiques
-for t in (20.4, 24.0, 28.2): whoosh(t - .1, .4, 600, 7000, .35); thud(t, .6); [pluck(79 + j * 2, t + .05 * j, .15, 0, .08) for j in range(3)]
-for t in (23.4, 27.5, 31.7): whoosh(t, .5, 3000, 9000, .35)
+for t in (21.6, 24.6, 28.2): whoosh(t - .1, .4, 600, 7000, .35); thud(t, .6); [pluck(79 + j * 2, t + .05 * j, .15, 0, .08) for j in range(3)]
+for t in (24.0, 27.5, 31.7): whoosh(t, .5, 3000, 9000, .35)
 # ---- 32,4 → 35,4 : NE MANQUE PAS
 for i in range(12): tick(32.4 + i * .17, .45, 3000)
 for i in range(6): thud(32.4 + i * .6, .4)
