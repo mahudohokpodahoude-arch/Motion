@@ -1,0 +1,22 @@
+<!doctype html><meta charset="utf-8"><title>Bande offrande</title>
+<style>
+@font-face{font-family:M;font-weight:800;src:url(assets/montserrat-latin-800-normal.woff2)}
+@font-face{font-family:M;font-weight:900;src:url(assets/montserrat-latin-900-normal.woff2)}
+*{margin:0;box-sizing:border-box}
+html,body{background:transparent}
+#stage{position:relative;width:1920px;height:1080px;background:transparent;overflow:hidden;font-family:M,sans-serif}
+#bar{position:absolute;left:0;top:950px;width:1920px;height:130px;display:flex}
+.c{isolation:isolate;display:flex;align-items:center;justify-content:center;height:130px}
+#t{width:300px;background:#0A2A6B;color:#fff;font-weight:900;font-size:42px;letter-spacing:2px;border-top:8px solid #FBB901}
+#m{width:810px;background:#FBB901;color:#0A2A6B}
+#o{width:810px;background:#EA6903;color:#fff}
+.c img{height:96px;margin-right:34px}
+.c .s{width:4px;height:70px;background:currentColor;opacity:.85;margin-right:34px}
+.c .n{font-weight:800;font-size:52px;white-space:nowrap}
+</style>
+<div id="stage"><div id="bar">
+ <div class="c" id="t">OFFRANDE</div>
+ <div class="c" id="m"><img src="assets/mtn.png"><div class="s"></div><div class="n">*880*41*010497*</div></div>
+ <div class="c" id="o"><img src="assets/moov.png" style="height:92px"><div class="s"></div><div class="n">*855*4*1*332602*</div></div>
+</div></div>
+<script>window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.decode())));window.render=()=>{}</script>
