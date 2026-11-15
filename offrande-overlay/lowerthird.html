@@ -1,0 +1,41 @@
+<!doctype html><meta charset="utf-8"><title>Lower third</title>
+<style>
+@font-face{font-family:M;font-weight:800;src:url(assets/montserrat-latin-800-normal.woff2)}
+@font-face{font-family:M;font-weight:900;src:url(assets/montserrat-latin-900-normal.woff2)}
+*{margin:0;box-sizing:border-box}
+html,body{background:transparent}
+#stage{position:relative;width:1920px;height:1080px;background:transparent;overflow:hidden;font-family:M,sans-serif}
+#lt{position:absolute;left:110px;top:790px;width:900px;height:200px}
+#stripe{position:absolute;left:0;top:0;width:18px;height:200px;background:linear-gradient(180deg,#FBB901 0 55%,#0A3A8C 55%);transform-origin:bottom}
+#name{position:absolute;left:18px;top:0;width:780px;height:118px;background:#FBB901;overflow:hidden}
+#name span{position:absolute;left:44px;top:0;line-height:118px;font-weight:900;font-size:68px;color:#0A2A6B;white-space:nowrap}
+#role{position:absolute;left:18px;top:118px;width:470px;height:70px;background:#0A2A6B;overflow:hidden}
+#role span{position:absolute;left:44px;top:0;line-height:70px;font-weight:800;font-size:38px;letter-spacing:4px;color:#fff;white-space:nowrap}
+#tip{position:absolute;left:488px;top:118px;width:0;height:0;border-top:70px solid #EA6903;border-right:34px solid transparent}
+.sheen{position:absolute;top:0;height:100%;width:140px;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent)}
+</style>
+<div id="stage"><div id="lt">
+ <div id="stripe"></div>
+ <div id="name"><span id="n">Amos Elite</span><div class="sheen" id="sh"></div></div>
+ <div id="role"><span id="r">APÔTRE</span></div><div id="tip"></div>
+</div></div>
+<script>
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),eo=x=>1-Math.pow(1-cl(x),3),ei=x=>cl(x)**3,seg=(t,a,b)=>cl((t-a)/(b-a));
+const $=s=>document.querySelector(s);
+window.ready=document.fonts.ready;
+window.render=t=>{
+  const sIn=eo(seg(t,.2,.8)),sOut=ei(seg(t,6.9,7.4));
+  $('#stripe').style.transform=`scaleY(${sIn*(1-sOut)})`;
+  const nIn=eo(seg(t,.45,1.15)),nOut=ei(seg(t,6.5,7.2));
+  $('#name').style.clipPath=`inset(0 ${(1-nIn)*100+nOut*0}% 0 ${nOut*100}%)`;
+  const tn=eo(seg(t,.9,1.5)),tno=ei(seg(t,6.3,6.8));
+  $('#n').style.opacity=tn*(1-tno);$('#n').style.transform=`translateX(${(1-tn)*-60}px)`;$('#n').style.filter=`blur(${(1-tn)*10+tno*8}px)`;
+  const rIn=eo(seg(t,.85,1.5)),rOut=ei(seg(t,6.6,7.2));
+  $('#role').style.clipPath=`inset(0 ${(1-rIn)*100}% 0 ${rOut*100}%)`;
+  $('#tip').style.opacity=rIn*(1-rOut);
+  const tr=eo(seg(t,1.3,1.9)),tro=ei(seg(t,6.3,6.8));
+  $('#r').style.opacity=tr*(1-tro);$('#r').style.transform=`translateX(${(1-tr)*-40}px)`;$('#r').style.filter=`blur(${(1-tr)*8+tro*8}px)`;
+  const k=(t-2.2)/1.2;$('#sh').style.left=(k*(780+140)-140)+'px';$('#sh').style.opacity=(k>0&&k<1)?1:0;
+};
+render(0);
+</script>

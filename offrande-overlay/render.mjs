@@ -30,7 +30,7 @@ if (args[0] === '--stills') {
 } else {
   const out = args[0] ?? path.join(here, 'OFFRANDE_overlay.mov');
   const fps = Number(args[1] ?? 25);
-  const DUR = 20;
+  const DUR = Number(process.env.DUR ?? 20);
   const base = out.replace(/\.[^.]+$/, '');
   const ff = spawn('ffmpeg', ['-y', '-f', 'image2pipe', '-framerate', String(fps), '-i', '-',
     '-map', '0:v', '-c:v', 'prores_ks', '-profile:v', '4444', '-pix_fmt', 'yuva444p10le', '-vendor', 'apl0', base + '.mov',
