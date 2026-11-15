@@ -1,0 +1,46 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Miniature · Le mystère du Garant</title>
+<style>
+@font-face{font-family:Cinzel;font-weight:600;src:url(fonts/cinzel-latin-600-normal.woff2)}
+@font-face{font-family:Cinzel;font-weight:800;src:url(fonts/cinzel-latin-800-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}
+#t{position:relative;width:1920px;height:1080px;overflow:hidden;background:#1a0d05;color:#fff}
+#bg{position:absolute;left:0;top:-106px;width:1920px;height:2560px}
+.a{position:absolute;white-space:nowrap;line-height:1}
+#shade{position:absolute;inset:0;background:
+  radial-gradient(ellipse 60% 70% at 62% 40%,rgba(0,0,0,0) 40%,rgba(10,4,0,.55) 100%),
+  linear-gradient(90deg,rgba(10,4,0,.55) 0%,rgba(10,4,0,0) 38%),
+  linear-gradient(180deg,rgba(10,4,0,0) 52%,rgba(10,4,0,.62) 100%)}
+.gold{background:linear-gradient(180deg,#fff3c4 0%,#f6cf6a 32%,#d9a032 62%,#a8701a 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 6px 10px rgba(30,10,0,.75)) drop-shadow(0 0 24px rgba(255,170,60,.45))}
+#amos{left:-24px;top:81px;width:768px;height:999px;filter:drop-shadow(0 0 26px rgba(255,185,90,.55)) drop-shadow(10px 8px 22px rgba(0,0,0,.6))}
+</style></head><body>
+<div id="t">
+  <img id="bg" src="assets/plate_big.jpg">
+  <div id="shade"></div>
+
+  <!-- logo ZONE 242 -->
+  <div class="a" style="left:700px;top:470px;width:1220px;height:560px;background:radial-gradient(ellipse 52% 50% at 52% 48%,rgba(14,5,0,.62) 0%,rgba(14,5,0,.38) 55%,rgba(14,5,0,0) 100%)"></div>
+  <div class="a" style="right:60px;top:44px;width:132px;height:135px"><img src="assets/zone_w_a.svg" width="132" height="135" style="position:absolute;left:0;top:0"><img src="assets/zone_w_b.svg" width="132" height="135" style="position:absolute;left:0;top:0"></div>
+
+  <!-- apôtre -->
+  <img class="a" id="amos" src="assets/amos_cut2.png">
+  <div class="a" style="left:130px;top:1000px;width:440px;height:62px;border-radius:12px;background:#2b1fd0;box-shadow:0 8px 22px rgba(0,0,20,.55);text-align:center;font-family:Montserrat;font-weight:800;font-size:36px;line-height:62px;letter-spacing:.03em">APÔTRE AMOS</div>
+
+  <!-- titre -->
+  <div class="a" id="l1" style="left:760px;width:1100px;text-align:center;top:582px;font-family:Cinzel;font-weight:800;font-size:50px;letter-spacing:.32em;color:#fff;text-shadow:0 3px 8px rgba(20,8,0,.95),0 0 22px rgba(20,8,0,.8),0 0 40px rgba(255,170,60,.35)">LE MYSTÈRE DU</div>
+  <div class="a gold" id="l2" style="left:760px;width:1100px;text-align:center;top:634px;font-family:Cinzel;font-weight:800;font-size:250px;letter-spacing:.01em">GARANT</div>
+
+  <!-- infos -->
+  <div class="a" style="left:760px;width:1100px;text-align:center;top:890px;font-family:Montserrat;font-weight:700;font-size:30px;letter-spacing:.24em;color:#f3c75e;text-shadow:0 3px 10px rgba(0,0,0,.8)">CULTE DE CÉLÉBRATION</div>
+  <div class="a" style="left:830px;top:934px;width:960px;height:90px;border-radius:16px;background:linear-gradient(180deg,#ff6a57,#f04c3c);box-shadow:0 10px 28px rgba(0,0,0,.5),0 0 22px rgba(255,90,70,.45);text-align:center;font-family:Montserrat;font-weight:800;font-size:46px;line-height:90px;letter-spacing:.01em">DIMANCHE 15 NOVEMBRE · 8H45</div>
+  <div class="a" style="left:760px;width:1100px;text-align:center;top:1038px;font-family:Montserrat;font-weight:700;font-size:25px;letter-spacing:.14em;text-shadow:0 3px 10px rgba(0,0,0,.85)">LA ZONE 242 · SIKÈCODJI · COTONOU</div>
+</div>
+<script>
+// fit the big title to the available width
+window.ready=(async()=>{await Promise.all(['600 20px Cinzel','800 20px Cinzel','700 20px Montserrat','800 20px Montserrat'].map(f=>document.fonts.load(f)));await document.fonts.ready;
+ await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));
+ const l=document.getElementById('l2');l.style.display='inline-block';l.style.width='auto';const w=l.getBoundingClientRect().width;const fs=parseFloat(l.style.fontSize);
+ l.style.fontSize=(fs*1040/w).toFixed(1)+'px';l.style.display='';l.style.width='1100px';})();
+</script></body></html>
