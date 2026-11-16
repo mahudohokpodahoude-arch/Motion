@@ -112,11 +112,11 @@
       const $ = (s) => document.querySelector(s);
 
       // ---------- configuration des détourages : [hauteur affichée, haut de l'image], proportions largeur/hauteur
-      const CFG = { mary: [1690, 90], anne: [750, 90], huldah: [750, 90], manne: [1690, 90], veronica: [700, 140], hestia: [1590, 90], pelagie: [1590, 90], esperance: [1590, 90], jessie: [1590, 90], richmelle: [1590, 90], tossou: [640, 190] };
-      const ASP = { mary: 851 / 1259, anne: 960 / 1217, huldah: 988 / 1105, manne: 716 / 968, veronica: 1169 / 1289, hestia: 825 / 1208, pelagie: 551 / 1082, esperance: 591 / 1159, jessie: 662 / 1104, richmelle: 595 / 1124, tossou: 1130 / 1300 };
+      const CFG = { mary: [1690, 90], anne: [750, 90], huldah: [750, 90], manne: [1690, 90], veronica: [700, 140], hestia: [1590, 90], pelagie: [1590, 90], esperance: [1590, 90], jessie: [760, 70], richmelle: [1590, 90], tossou: [640, 190] };
+      const ASP = { mary: 851 / 1259, anne: 960 / 1217, huldah: 988 / 1105, manne: 716 / 968, veronica: 1169 / 1289, hestia: 825 / 1208, pelagie: 551 / 1082, esperance: 591 / 1159, jessie: 419 / 520, richmelle: 595 / 1124, tossou: 960 / 1065 };
       const placeCut = (img, id, mult, cx, top) => { const h = CFG[id][0] * mult, w = h * ASP[id]; img.style.height = h + "px"; img.style.left = (cx - w / 2) + "px"; img.style.top = top + "px"; };
       placeCut($("#cm"), "mary", 1.15, 960, 30); placeCut($("#cb1"), "hestia", 1.15, 960, 30);
-      placeCut($("#cutC img"), "jessie", 1.2, 960, 30); placeCut($("#cutD img"), "pelagie", 1.2, 960, 30); placeCut($("#cutE img"), "richmelle", 1.2, 960, 30);
+      placeCut($("#cutC img"), "jessie", 2.51, 960, 30); placeCut($("#cutD img"), "pelagie", 1.2, 960, 30); placeCut($("#cutE img"), "richmelle", 1.2, 960, 30);
       // ---------- carrousel : 10 intervenantes de 1,2 s, de 8,4 s à 20,4 s
       const PEOPLE = [
         ["mary", "PROPHÉTESSE", "MARY FAVOUR TONGSI", "INVITÉE D’HONNEUR"], ["anne", "PASTEURE", "ANNE-LAURE", ""], ["huldah", "LEADER", "HULDAH", ""],
