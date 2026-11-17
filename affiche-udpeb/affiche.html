@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>UDPEB – Affiche roll-up 85 x 200 cm</title>
+<style>
+@font-face{font-family:"Mont";font-weight:400;src:url(assets/fonts/montserrat-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Mont";font-weight:500;src:url(assets/fonts/montserrat-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Mont";font-weight:600;src:url(assets/fonts/montserrat-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Mont";font-weight:700;src:url(assets/fonts/montserrat-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Mont";font-weight:800;src:url(assets/fonts/montserrat-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Mont";font-weight:900;src:url(assets/fonts/montserrat-latin-900-normal.woff2) format("woff2")}
+
+:root{
+  --green:#349931;
+  --green-title:#3f9b2d;
+  --green-border:#45a244;
+  --red:#ec1d31;
+  --yellow:#f5b014;
+  --ink:#0b0b0b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1700px;height:4000px;background:#fff}
+body{font-family:"Mont",sans-serif;color:var(--ink)}
+.stage{position:relative;width:1700px;height:4000px;overflow:hidden;
+  background:linear-gradient(180deg,
+    #c3e3e8 0%,#e3f2f1 4%,#f3faf5 9%,#f8fcf8 20%,#f6fbf6 46%,#ecf7ee 58%,#cfe8cd 65%,#93cb94 70%,#55ae55 74%,#349931 78%,#349931 94%,#2f9230 100%)}
+.blob{position:absolute;border-radius:50%}
+.bar{position:absolute}
+
+/* ---------- Title ---------- */
+.title{position:absolute;left:92px;top:96px;width:1516px}
+.title .l1{font-weight:900;font-size:150px;line-height:1;letter-spacing:-.045em;color:var(--ink)}
+.title .l2{margin-top:96px;font-weight:900;font-size:112px;line-height:1.08;letter-spacing:-.04em;
+  background:linear-gradient(180deg,#4fa933 0%,#2f8c28 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.badge{position:absolute;left:1290px;top:56px;width:322px;height:322px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff 0%,#fff 70%,#f3faf4 100%);
+  box-shadow:0 20px 50px rgba(30,100,40,.25),0 0 0 8px rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center}
+.badge img{width:250px;height:auto;display:block}
+
+/* ---------- Section heading ---------- */
+.h2{position:absolute;left:92px;top:985px;font-weight:900;font-size:112px;line-height:1;letter-spacing:-.04em}
+.h2 b{font-weight:900;background:linear-gradient(180deg,#4fa933,#2f8c28);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---------- Pills ---------- */
+.pill{position:absolute;left:92px;height:306px;border-radius:153px;
+  background:linear-gradient(100deg,#fff 0%,#fff 72%,rgba(255,255,255,.86) 100%);
+  border:7px solid var(--green-border);
+  box-shadow:0 22px 44px rgba(20,90,30,.20);
+  display:flex;align-items:center;padding:0 80px 0 74px;gap:52px;transform-origin:left center}
+.pill svg{flex:0 0 150px;width:150px;height:150px}
+.pill .t{display:flex;flex-direction:column;justify-content:center}
+.pill .a{font-weight:500;font-size:54px;line-height:1.05;letter-spacing:-.035em;color:#161616;white-space:nowrap}
+.pill .b{font-weight:900;font-size:68px;line-height:1.02;letter-spacing:-.05em;color:#0b0b0b;white-space:nowrap}
+#p1{top:1170px;transform:rotate(-4.5deg)}
+#p2{top:1536px;transform:rotate(-2.4deg)}
+#p3{top:1902px;transform:rotate(-.6deg)}
+#p4{top:2268px;transform:rotate(1.6deg)}
+
+/* ---------- Woman ---------- */
+.woman{position:absolute;left:650px;top:1880px;width:1103px;height:1565px;
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 93%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 93%,transparent 100%)}
+.woman img{width:100%;height:100%;display:block}
+.floor-fade{position:absolute;left:0;top:3000px;width:1700px;height:500px;
+  background:linear-gradient(180deg,rgba(52,153,49,0) 0%,rgba(52,153,49,.55) 45%,rgba(52,153,49,.95) 100%)}
+
+/* ---------- Caption (Nos valeurs) ---------- */
+.cap{position:absolute;left:92px;top:3312px;width:760px;color:#fff}
+.cap .k{font-weight:800;font-size:84px;line-height:1.08;letter-spacing:-.03em}
+.cap .k i{font-style:normal;font-weight:500}
+.cap ul{list-style:none;margin-top:22px}
+.cap li{display:flex;align-items:center;gap:22px;font-weight:600;font-size:52px;line-height:1.45;letter-spacing:-.02em}
+.cap li:before{content:"";flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:var(--yellow)}
+
+/* ---------- CTA ---------- */
+.cta{position:absolute;left:900px;top:3396px;width:740px;transform:rotate(-1.8deg);transform-origin:left bottom}
+.cta .tab{position:relative;height:118px;background:var(--red);border-radius:22px 22px 0 0;
+  color:#fff;font-weight:800;font-size:68px;letter-spacing:-.03em;display:flex;align-items:center;padding-left:56px;
+  clip-path:polygon(0 0,100% 0,100% 100%,0 100%);box-shadow:0 10px 24px rgba(120,0,10,.25)}
+.cta .tab svg{position:absolute;right:30px;top:14px;width:90px;height:90px}
+.cta .card{margin-top:-6px;background:#fff;border-radius:0 0 40px 40px;padding:34px 50px 40px 50px;display:flex;align-items:center;gap:36px;
+  box-shadow:0 28px 50px rgba(0,60,10,.30)}
+.cta .card svg{flex:0 0 108px;width:108px;height:108px}
+.cta .card div{font-weight:500;font-size:52px;line-height:1.08;letter-spacing:-.035em}
+.cta .card div b{font-weight:900;display:block;font-size:60px;letter-spacing:-.045em}
+
+/* ---------- Footer ---------- */
+.rule{position:absolute;left:92px;top:3792px;width:1516px;height:3px;background:rgba(255,255,255,.9)}
+.f1{position:absolute;left:92px;top:3850px;height:100px;padding:0 52px;background:#fff;border-radius:52px;
+  display:flex;align-items:center;font-weight:800;font-size:33px;letter-spacing:-.02em;color:#111;white-space:nowrap}
+.f2{position:absolute;left:1340px;top:3850px;height:100px;width:268px;border:4px solid #fff;border-radius:52px;
+  display:flex;align-items:center;justify-content:center;gap:22px;color:#fff;font-weight:800;font-size:48px;letter-spacing:.02em}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+  <!-- ===== Background: blurred bright office + green floor ===== -->
+  <div class="blob" style="left:-260px;top:300px;width:620px;height:2500px;border-radius:300px;background:linear-gradient(90deg,rgba(80,160,190,.55),rgba(120,190,200,.25) 70%,rgba(255,255,255,0));filter:blur(70px)"></div>
+  <div class="blob" style="left:-100px;top:-120px;width:1900px;height:520px;border-radius:50%;background:linear-gradient(90deg,rgba(90,175,205,.70),rgba(190,225,232,.55) 40%,rgba(120,195,215,.65));filter:blur(80px)"></div>
+  <div class="blob" style="left:1150px;top:380px;width:760px;height:1100px;background:radial-gradient(closest-side,rgba(196,225,170,.65),rgba(210,235,190,.25) 70%,transparent);filter:blur(60px)"></div>
+  <div class="blob" style="left:1250px;top:1500px;width:640px;height:900px;background:radial-gradient(closest-side,rgba(170,215,170,.55),transparent);filter:blur(70px)"></div>
+  <div class="bar" style="left:360px;top:420px;width:150px;height:2100px;background:linear-gradient(180deg,rgba(150,205,215,.35),rgba(150,205,215,.05));filter:blur(40px)"></div>
+  <div class="bar" style="left:820px;top:380px;width:220px;height:1700px;background:linear-gradient(180deg,rgba(190,230,215,.45),rgba(190,230,215,0));filter:blur(50px)"></div>
+  <div class="blob" style="left:-300px;top:2540px;width:1400px;height:420px;background:radial-gradient(closest-side,rgba(215,240,215,.9),transparent);filter:blur(50px)"></div>
+  <div class="blob" style="left:700px;top:2700px;width:1300px;height:380px;background:radial-gradient(closest-side,rgba(225,245,225,.8),transparent);filter:blur(50px)"></div>
+
+  <!-- ===== Title ===== -->
+  <div class="title">
+    <div class="l1">Notre Mission</div>
+    <div class="l2">Structurer, valoriser<br>et faire rayonner les<br>métiers de l’événementiel<br>au Bénin.</div>
+  </div>
+  <div class="badge"><img src="assets/logo-udpeb.png" alt="UDPEB"></div>
+
+  <!-- ===== Nos Actions ===== -->
+  <div class="h2">Nos <b>Actions</b></div>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#58b43c"/><stop offset="1" stop-color="#2c8d2e"/></linearGradient>
+    </defs>
+  </svg>
+
+  <div class="pill" id="p1" style="width:1218px">
+    <svg viewBox="0 0 64 64"><g fill="url(#g)"><circle cx="32" cy="20" r="9"/><path d="M14 50c0-9 8-15 18-15s18 6 18 15v3H14z"/><circle cx="12" cy="26" r="6.5"/><path d="M0 48c0-7 5-11 12-11 2 0 4 .4 5.600 1.100C13 41 10.500 45 10.500 50v3H0z"/><circle cx="52" cy="26" r="6.5"/><path d="M64 48c0-7-5-11-12-11-2 0-4 .4-5.600 1.100C51 41 53.500 45 53.500 50v3H64z"/></g></svg>
+    <div class="t"><span class="a">Partager les actualités</span><span class="b">du secteur événementiel</span><span class="b">au Bénin</span></div>
+  </div>
+
+  <div class="pill" id="p2" style="width:1120px">
+    <svg viewBox="0 0 64 64"><g fill="url(#g)"><rect x="6" y="38" width="11" height="18" rx="2"/><rect x="22" y="28" width="11" height="28" rx="2"/><rect x="38" y="18" width="11" height="38" rx="2"/><path d="M8 24 26 10l8 8 16-14 2 3.500L35 25l-8-8-15 12z"/><path d="M42 4h16v16z"/></g></svg>
+    <div class="t"><span class="a">Renforcer les compétences</span><span class="b">de nos membres</span></div>
+  </div>
+
+  <div class="pill" id="p3" style="width:1000px">
+    <svg viewBox="0 0 64 64"><g fill="url(#g)"><path d="M32 4C21 4 13 12 13 22c0 7 3.500 11 7 15 2 2.400 3 4.500 3 7h18c0-2.500 1-4.600 3-7 3.500-4 7-8 7-15C51 12 43 4 32 4z"/><rect x="23" y="47" width="18" height="5" rx="2.500"/><rect x="26" y="54" width="12" height="5" rx="2.500"/></g><path d="M26 25l6 6 6-6M32 31v12" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="t"><span class="a">Développer le réseau</span><span class="b">professionnel</span></div>
+  </div>
+
+  <div class="pill" id="p4" style="width:930px">
+    <svg viewBox="0 0 64 64"><g fill="url(#g)"><path d="M18 6h28v18c0 9-6 15-14 15s-14-6-14-15z"/><path d="M18 10H6c0 12 4 19 13 21l1-5c-5-1.500-8-5.500-8.500-11H18zM46 10h12c0 12-4 19-13 21l-1-5c5-1.500 8-5.500 8.500-11H46z"/><rect x="28" y="38" width="8" height="10"/><rect x="18" y="48" width="28" height="9" rx="3"/></g><path d="M32 12l3 6.500 7 .8-5.200 4.700 1.500 7L32 27.500l-6.300 3.500 1.500-7L22 19.300l7-.8z" fill="#fff"/></svg>
+    <div class="t"><span class="a">Promouvoir l’excellence</span><span class="b">dans nos métiers</span></div>
+  </div>
+
+  <!-- ===== Woman ===== -->
+  <div class="woman"><img src="assets/femme-detouree.png" alt=""></div>
+
+  <!-- ===== Nos valeurs ===== -->
+  <div class="cap">
+    <div class="k">Nos Valeurs</div>
+    <ul>
+      <li>Professionnalisme</li>
+      <li>Innovation</li>
+      <li>Solidarité</li>
+      <li>Excellence</li>
+    </ul>
+  </div>
+
+  <!-- ===== CTA ===== -->
+  <div class="cta">
+    <div class="tab">Ensemble,
+      <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="190 100" stroke-linecap="round" transform="rotate(-100 50 50)"/><path d="M42 36l30 16-13 3 8 15-6 3-8-15-9 9z" fill="#fff"/></svg>
+    </div>
+    <div class="card">
+      <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="url(#g)"/><path d="M32 14l5.400 11 12 1.700-8.700 8.500 2.100 12L32 41.500 21.200 47.200l2.100-12-8.700-8.500 12-1.700z" fill="#fff"/></svg>
+      <div>faisons grandir<b>l’événementiel au Bénin !</b></div>
+    </div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <div class="rule"></div>
+  <div class="f1">Union des Designers et Planificateurs d’Événements du Bénin</div>
+  <div class="f2">UDPEB</div>
+</div>
+</body>
+</html>
