@@ -112,8 +112,8 @@
       const $ = (s) => document.querySelector(s);
 
       // ---------- configuration des détourages : [hauteur affichée, haut de l'image], proportions largeur/hauteur
-      const CFG = { mary: [1690, 90], anne: [750, 90], huldah: [750, 90], manne: [1690, 90], veronica: [700, 140], hestia: [1590, 90], pelagie: [1590, 90], esperance: [1590, 90], jessie: [760, 70], sylvie: [760, 70], marjolaine: [640, 190], richmelle: [1590, 90], tossou: [640, 190] };
-      const ASP = { mary: 851 / 1259, anne: 960 / 1217, huldah: 988 / 1105, manne: 716 / 968, veronica: 1169 / 1289, hestia: 825 / 1208, pelagie: 551 / 1082, esperance: 591 / 1159, jessie: 419 / 520, sylvie: 896 / 1142, marjolaine: 353 / 391, richmelle: 595 / 1124, tossou: 960 / 1065 };
+      const CFG = { mary: [1690, 90], anne: [750, 90], huldah: [750, 90], manne: [1690, 90], veronica: [700, 140], hestia: [1590, 90], pelagie: [1590, 90], esperance: [1590, 90], jessie: [760, 70], sylvie: [760, 70], marjolaine: [640, 190], roukiyatou: [700, 130], richmelle: [1590, 90], tossou: [640, 190] };
+      const ASP = { mary: 851 / 1259, anne: 960 / 1217, huldah: 988 / 1105, manne: 716 / 968, veronica: 1169 / 1289, hestia: 825 / 1208, pelagie: 551 / 1082, esperance: 591 / 1159, jessie: 419 / 520, sylvie: 896 / 1142, marjolaine: 353 / 391, roukiyatou: 383 / 521, richmelle: 595 / 1124, tossou: 960 / 1065 };
       const placeCut = (img, id, mult, cx, top) => { const h = CFG[id][0] * mult, w = h * ASP[id]; img.style.height = h + "px"; img.style.left = (cx - w / 2) + "px"; img.style.top = top + "px"; };
       placeCut($("#cm"), "mary", 1.15, 960, 30); placeCut($("#cb1"), "hestia", 1.15, 960, 30);
       placeCut($("#cutC img"), "jessie", 2.51, 960, 30); placeCut($("#cutD img"), "pelagie", 1.2, 960, 30); placeCut($("#cutE img"), "richmelle", 1.2, 960, 30);
@@ -121,8 +121,8 @@
       const PEOPLE = [
         ["mary", "PROPHÉTESSE", "MARY FAVOUR TONGSI", "INVITÉE D’HONNEUR"], ["anne", "PASTEURE", "ANNE-LAURE", ""], ["huldah", "LEADER", "HULDAH", ""],
         ["manne", "SERVANTE", "MANNE", ""], ["veronica", "PASTEURE", "VERONICA", ""], ["hestia", "DR", "HESTIA", ""], ["pelagie", "PROPHÉTESSE", "PÉLAGIE", ""],
-        ["esperance", "PASTEURE", "ESPÉRANCE", ""], ["jessie", "ÉVANGÉLISTE", "JESSIE", ""], ["richmelle", "LEADER", "RICHMELLE", ""], ["tossou", "MADAME", "TOSSOU", ""], ["sylvie", "DR", "SYLVIE", ""], ["marjolaine", "DR", "MARJOLAINE", ""]];
-      const T0S = Array.from({ length: 13 }, (_, i) => +(8.4 + i * 1.2).toFixed(2));   // arrivée de chaque personne au centre
+        ["esperance", "PASTEURE", "ESPÉRANCE", ""], ["jessie", "ÉVANGÉLISTE", "JESSIE", ""], ["richmelle", "LEADER", "RICHMELLE", ""], ["tossou", "MADAME", "TOSSOU", ""], ["sylvie", "DR", "SYLVIE", ""], ["marjolaine", "DR", "MARJOLAINE", ""], ["roukiyatou", "SERVANTE", "ROUKIYATOU PIWO", ""]];
+      const T0S = Array.from({ length: 14 }, (_, i) => +(8.4 + i * 1.2).toFixed(2));   // arrivée de chaque personne au centre
       const strip = $("#strip"); const ITEMS = [];
       PEOPLE.forEach(([id, a, b, c], i) => {
         const d = document.createElement("div"); d.className = "it"; d.style.left = (960 - 350 + i * STEP) + "px";
@@ -182,15 +182,15 @@
         if (i >= 1) tl.to("#strip", { x: -i * STEP, duration: .5, ease: "power3.inOut" }, t - .1);
       });
       // ---------- 20,4 → 24,0 : date (ref : « OCTOBER 24TH 2026  2PM »)
-      tl.set(["#red", "#sl1", "#slabA", "#slabB", "#slabC", "#strip"], { opacity: 0 }, 24.0); tl.set("#redtxt", { opacity: 1 }, 24.0);
-      [[L1, 0], [L2, 1]].forEach(([arr, k]) => { tl.to(arr, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: .45, ease: "back.out(1.6)", stagger: .02 }, 24.0 + k * .3);
-        tl.to(arr, { x: (i) => (rnd(i, 21 + k) - .5) * 900, y: (i) => (rnd(i, 22 + k) - .5) * 700, rotation: (i) => (rnd(i, 23) - .5) * 500, scale: .2, opacity: 0, duration: .45, ease: "power3.in", stagger: .02 }, 25.8 + k * .1); });
-      tl.to("#dt1", { x: 8, duration: .08, yoyo: true, repeat: 5 }, 25.0); tl.to("#dt2", { x: -8, duration: .08, yoyo: true, repeat: 5 }, 25.1);
+      tl.set(["#red", "#sl1", "#slabA", "#slabB", "#slabC", "#strip"], { opacity: 0 }, 25.2); tl.set("#redtxt", { opacity: 1 }, 25.2);
+      [[L1, 0], [L2, 1]].forEach(([arr, k]) => { tl.to(arr, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: .45, ease: "back.out(1.6)", stagger: .02 }, 25.2 + k * .3);
+        tl.to(arr, { x: (i) => (rnd(i, 21 + k) - .5) * 900, y: (i) => (rnd(i, 22 + k) - .5) * 700, rotation: (i) => (rnd(i, 23) - .5) * 500, scale: .2, opacity: 0, duration: .45, ease: "power3.in", stagger: .02 }, 27.0 + k * .1); });
+      tl.to("#dt1", { x: 8, duration: .08, yoyo: true, repeat: 5 }, 26.2); tl.to("#dt2", { x: -8, duration: .08, yoyo: true, repeat: 5 }, 26.3);
       // ---------- 24,0 → 28,2 : adresse (lettres qui tournent)
-      [[A1, 0], [A2, 1], [A3, 2]].forEach(([arr, k]) => { tl.to(arr, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: .45, ease: "back.out(1.4)", stagger: .016 }, 26.4 + k * .3);
-        tl.to(arr, { x: (i) => (rnd(i, 31 + k) - .5) * 1000, y: (i) => -200 - rnd(i, 32 + k) * 500, rotation: (i) => (rnd(i, 33) - .5) * 720, scale: .1, opacity: 0, duration: .5, ease: "power3.in", stagger: .02 }, 28.75 + k * .1); });
+      [[A1, 0], [A2, 1], [A3, 2]].forEach(([arr, k]) => { tl.to(arr, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: .45, ease: "back.out(1.4)", stagger: .016 }, 27.6 + k * .3);
+        tl.to(arr, { x: (i) => (rnd(i, 31 + k) - .5) * 1000, y: (i) => -200 - rnd(i, 32 + k) * 500, rotation: (i) => (rnd(i, 33) - .5) * 720, scale: .1, opacity: 0, duration: .5, ease: "power3.in", stagger: .02 }, 29.3 + k * .1); });
       // ---------- 28,2 → 32,4 : entrée gratuite (ref : « FREE ENTRY + site »)
-      [[F1, 0], [F2, 1], [F3, 2]].forEach(([arr, k]) => { tl.to(arr, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: .4, ease: "back.out(1.5)", stagger: .012 }, 29.4 + k * .25);
+      [[F1, 0], [F2, 1], [F3, 2]].forEach(([arr, k]) => { tl.to(arr, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: .4, ease: "back.out(1.5)", stagger: .012 }, 30.0 + k * .25);
         tl.to(arr, { x: (i) => (rnd(i, 41 + k) - .5) * 900, y: (i) => (rnd(i, 42 + k) - .5) * 600, rotation: (i) => (rnd(i, 43) - .5) * 600, scale: .1, opacity: 0, duration: .45, ease: "power3.in", stagger: .02 }, 31.75 + k * .1); });
       // ---------- 32,4 → 35,4 : « NE MANQUE PAS » sur collage gris (ref : « DONT MISS »)
       tl.set("#redtxt", { opacity: 0 }, 32.4); tl.set("#dm", { opacity: 1 }, 32.4);
@@ -206,7 +206,7 @@
       tl.set("#shine", { opacity: 1 }, 36.6); tl.fromTo("#shband", { x: -300 }, { x: 1100, duration: .9, ease: "power2.inOut" }, 36.6);
       tl.to("#fin", { opacity: 0, duration: .8 }, 39.2);
       // flashs de transition sur les temps forts
-      [[1.8, .5], [3.6, .7], [8.4, .6], [24.0, .5], [32.4, .35], [35.4, .6]].forEach(([t, o]) => { tl.set("#flash", { opacity: o }, t); tl.to("#flash", { opacity: 0, duration: .35, ease: "power2.out" }, t + .02); });
+      [[1.8, .5], [3.6, .7], [8.4, .6], [25.2, .5], [32.4, .35], [35.4, .6]].forEach(([t, o]) => { tl.set("#flash", { opacity: o }, t); tl.to("#flash", { opacity: 0, duration: .35, ease: "power2.out" }, t + .02); });
       window.__timelines = window.__timelines || {};
       window.__timelines["main"] = tl;
     </script>

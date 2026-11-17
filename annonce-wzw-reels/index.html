@@ -56,8 +56,8 @@
       #glitch { background: linear-gradient(90deg, rgba(255,0,60,.5), rgba(0,120,255,.5)); mix-blend-mode: screen; opacity: 0; }
       #fin { opacity: 0; overflow: hidden; background: #d41a05; }
       #finbg { left: -300px; top: -300px; width: 1680px; height: 2520px; filter: blur(26px) brightness(.85); }
-      #finfly { left: 0; top: 285px; width: 1080px; height: 1350px; box-shadow: 0 0 80px rgba(255,150,80,.5); }
-      #shine { left: 0; top: 285px; width: 1080px; height: 1350px; overflow: hidden; opacity: 0; }
+      #finfly { left: 0; top: 0; width: 1080px; height: 1920px; }
+      #shine { left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; opacity: 0; }
       #shine div { position: absolute; top: -100px; left: 0; width: 220px; height: 1600px; background: linear-gradient(90deg, rgba(255,235,210,0), rgba(255,235,210,.7), rgba(255,235,210,0)); transform: skewX(-18deg); }
       #flash { background: #fff; opacity: 0; }
     </style>
@@ -87,7 +87,7 @@
       <div id="fr1a" class="abs kt">ENTRÉE</div><div id="fr1b" class="abs kt">GRATUITE</div><div id="fr2a" class="abs kt">150 PLACES</div><div id="fr2b" class="abs kt">INSCRIPTION OBLIGATOIRE</div><div id="fr3" class="abs kt">contact.zone242@gmail.com</div>
       <div id="dm" class="abs full"><div id="dmcol" class="abs full col"></div></div>
       <div id="glitch" class="abs full"></div>
-      <div id="fin" class="abs full"><div id="finbg" class="abs" style="background:url(assets/flyer.jpg) center/cover"></div><div class="abs" style="left:0;top:0;width:1080px;height:1920px;background:linear-gradient(180deg,rgba(190,20,0,.55),rgba(190,20,0,.1) 40%,rgba(190,20,0,.1) 60%,rgba(190,20,0,.55))"></div><img id="finfly" class="abs" src="assets/flyer.jpg" alt="" /><div id="shine" class="abs"><div id="shband"></div></div></div>
+      <div id="fin" class="abs full"><div id="finbg" class="abs" style="background:url(assets/flyer_916.jpg) center/cover"></div><div class="abs" style="left:0;top:0;width:1080px;height:1920px;background:linear-gradient(180deg,rgba(190,20,0,.55),rgba(190,20,0,.1) 40%,rgba(190,20,0,.1) 60%,rgba(190,20,0,.55))"></div><img id="finfly" class="abs" src="assets/flyer_916.jpg" alt="" /><div id="shine" class="abs"><div id="shband"></div></div></div>
       <div id="flash" class="abs full"></div>
       <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="40.0" data-track-index="1" data-volume="1"></audio>
     </div>
@@ -97,16 +97,16 @@
       const STEP = 700, YS = 1400, K = 1.5;
       const tl = gsap.timeline({ paused: true });
       const $ = (s) => document.querySelector(s);
-      const CFG = { mary: [1690, 90], anne: [750, 90], huldah: [750, 90], manne: [1690, 90], veronica: [700, 140], hestia: [1590, 90], pelagie: [1590, 90], esperance: [1590, 90], jessie: [760, 70], sylvie: [760, 70], marjolaine: [640, 190], richmelle: [1590, 90], tossou: [640, 190] };
-      const ASP = { mary: 851 / 1259, anne: 960 / 1217, huldah: 988 / 1105, manne: 716 / 968, veronica: 1169 / 1289, hestia: 825 / 1208, pelagie: 551 / 1082, esperance: 591 / 1159, jessie: 419 / 520, sylvie: 896 / 1142, marjolaine: 353 / 391, richmelle: 595 / 1124, tossou: 960 / 1065 };
+      const CFG = { mary: [1690, 90], anne: [750, 90], huldah: [750, 90], manne: [1690, 90], veronica: [700, 140], hestia: [1590, 90], pelagie: [1590, 90], esperance: [1590, 90], jessie: [760, 70], sylvie: [760, 70], marjolaine: [640, 190], roukiyatou: [700, 130], richmelle: [1590, 90], tossou: [640, 190] };
+      const ASP = { mary: 851 / 1259, anne: 960 / 1217, huldah: 988 / 1105, manne: 716 / 968, veronica: 1169 / 1289, hestia: 825 / 1208, pelagie: 551 / 1082, esperance: 591 / 1159, jessie: 419 / 520, sylvie: 896 / 1142, marjolaine: 353 / 391, roukiyatou: 383 / 521, richmelle: 595 / 1124, tossou: 960 / 1065 };
       const placeCut = (img, id, mult, cx, top) => { const h = CFG[id][0] * mult, w = h * ASP[id]; img.style.height = h + "px"; img.style.left = (cx - w / 2) + "px"; img.style.top = top + "px"; };
       placeCut($("#cm"), "mary", 1.3, 540, 150); placeCut($("#cb1"), "hestia", 1.3, 540, 150);
       placeCut($("#cutC img"), "jessie", 2.824, 540, 150); placeCut($("#cutD img"), "pelagie", 1.35, 540, 150); placeCut($("#cutE img"), "richmelle", 1.35, 540, 150);
       const PEOPLE = [
         ["mary", "PROPHÉTESSE", "MARY FAVOUR TONGSI", "INVITÉE D’HONNEUR"], ["anne", "PASTEURE", "ANNE-LAURE", ""], ["huldah", "LEADER", "HULDAH", ""],
         ["manne", "SERVANTE", "MANNE", ""], ["veronica", "PASTEURE", "VERONICA", ""], ["hestia", "DR", "HESTIA", ""], ["pelagie", "PROPHÉTESSE", "PÉLAGIE", ""],
-        ["esperance", "PASTEURE", "ESPÉRANCE", ""], ["jessie", "ÉVANGÉLISTE", "JESSIE", ""], ["richmelle", "LEADER", "RICHMELLE", ""], ["tossou", "MADAME", "TOSSOU", ""], ["sylvie", "DR", "SYLVIE", ""], ["marjolaine", "DR", "MARJOLAINE", ""]];
-      const T0S = Array.from({ length: 13 }, (_, i) => +(8.4 + i * 1.2).toFixed(2));
+        ["esperance", "PASTEURE", "ESPÉRANCE", ""], ["jessie", "ÉVANGÉLISTE", "JESSIE", ""], ["richmelle", "LEADER", "RICHMELLE", ""], ["tossou", "MADAME", "TOSSOU", ""], ["sylvie", "DR", "SYLVIE", ""], ["marjolaine", "DR", "MARJOLAINE", ""], ["roukiyatou", "SERVANTE", "ROUKIYATOU PIWO", ""]];
+      const T0S = Array.from({ length: 14 }, (_, i) => +(8.4 + i * 1.2).toFixed(2));
       const strip = $("#strip"); const ITEMS = [], NAMES = [];
       PEOPLE.forEach(([id, a, b, c], i) => {
         const d = document.createElement("div"); d.className = "it"; d.style.left = (i * STEP) + "px";
@@ -168,15 +168,15 @@
         if (i >= 1) tl.to("#strip", { x: -i * STEP, duration: .5, ease: "power3.inOut" }, t - .1);
       });
       // 20,4 → 24,0 : date
-      tl.set(["#red", "#sl1", "#slabA", "#slabB", "#slabC", "#strip", "#names"], { opacity: 0 }, 24.0); tl.set("#redtxt", { opacity: 1 }, 24.0);
-      IN(L1, 24.0, .04); IN(L1b, 24.3, .02); IN(L2, 24.6, .02);
-      OUT(L1, 25.8, 0); OUT(L1b, 25.9, 1); OUT(L2, 26.0, 2);
-      tl.to("#dt1", { x: 8, duration: .08, yoyo: true, repeat: 5 }, 25.0); tl.to("#dt2", { x: -8, duration: .08, yoyo: true, repeat: 5 }, 25.1);
+      tl.set(["#red", "#sl1", "#slabA", "#slabB", "#slabC", "#strip", "#names"], { opacity: 0 }, 25.2); tl.set("#redtxt", { opacity: 1 }, 25.2);
+      IN(L1, 25.2, .04); IN(L1b, 25.5, .02); IN(L2, 25.8, .02);
+      OUT(L1, 27.0, 0); OUT(L1b, 27.1, 1); OUT(L2, 27.2, 2);
+      tl.to("#dt1", { x: 8, duration: .08, yoyo: true, repeat: 5 }, 26.2); tl.to("#dt2", { x: -8, duration: .08, yoyo: true, repeat: 5 }, 26.3);
       // 24,0 → 28,2 : adresse
-      [[A1, 0], [A2, 1], [A3, 2], [A4, 3]].forEach(([arr, k]) => { IN(arr, 26.4 + k * .25, .02, .45);
-        tl.to(arr, { x: (i) => (rnd(i, 31 + k) - .5) * 1000, y: (i) => -200 - rnd(i, 32 + k) * 600, rotation: (i) => (rnd(i, 33) - .5) * 720, scale: .1, opacity: 0, duration: .5, ease: "power3.in", stagger: .02 }, 28.75 + k * .08); });
+      [[A1, 0], [A2, 1], [A3, 2], [A4, 3]].forEach(([arr, k]) => { IN(arr, 27.6 + k * .25, .02, .45);
+        tl.to(arr, { x: (i) => (rnd(i, 31 + k) - .5) * 1000, y: (i) => -200 - rnd(i, 32 + k) * 600, rotation: (i) => (rnd(i, 33) - .5) * 720, scale: .1, opacity: 0, duration: .5, ease: "power3.in", stagger: .02 }, 29.3 + k * .08); });
       // 28,2 → 32,4 : entrée gratuite
-      [[F1a, 0], [F1b, 1], [F2a, 2], [F2b, 3], [F3, 4]].forEach(([arr, k]) => { IN(arr, 29.4 + k * .2, .015, .4); OUT(arr, 31.75 + k * .07, 41 + k); });
+      [[F1a, 0], [F1b, 1], [F2a, 2], [F2b, 3], [F3, 4]].forEach(([arr, k]) => { IN(arr, 30.0 + k * .2, .015, .4); OUT(arr, 31.75 + k * .07, 41 + k); });
       // 32,4 → 35,4 : ne manque pas
       tl.set("#redtxt", { opacity: 0 }, 32.4); tl.set("#dm", { opacity: 1 }, 32.4);
       tl.fromTo("#dmcol", { x: 0 }, { x: -500, duration: 3.0, ease: "none" }, 32.4);
@@ -187,10 +187,10 @@
       tl.set(["#dm", "#glitch"], { opacity: 0 }, 35.4); tl.set("#fin", { opacity: 1 }, 35.4);
       tl.to("#finfly", { opacity: 1, scale: 1, duration: .6, ease: "power3.out" }, 35.4);
       tl.fromTo("#finbg", { scale: 1.05 }, { scale: 1.15, duration: 4.8, ease: "none" }, 35.4);
-      tl.to("#finfly", { scale: 1.04, duration: 4.2, ease: "none" }, 36.0);
+      tl.to("#finfly", { scale: 1.02, duration: 4.2, ease: "none" }, 36.0);
       tl.set("#shine", { opacity: 1 }, 36.6); tl.fromTo("#shband", { x: -300 }, { x: 1300, duration: .9, ease: "power2.inOut" }, 36.6);
       tl.to("#fin", { opacity: 0, duration: .8 }, 39.2);
-      [[1.8, .5], [3.6, .7], [8.4, .6], [24.0, .5], [32.4, .35], [35.4, .6]].forEach(([t, o]) => { tl.set("#flash", { opacity: o }, t); tl.to("#flash", { opacity: 0, duration: .35, ease: "power2.out" }, t + .02); });
+      [[1.8, .5], [3.6, .7], [8.4, .6], [25.2, .5], [32.4, .35], [35.4, .6]].forEach(([t, o]) => { tl.set("#flash", { opacity: o }, t); tl.to("#flash", { opacity: 0, duration: .35, ease: "power2.out" }, t + .02); });
       window.__timelines = window.__timelines || {};
       window.__timelines["main"] = tl;
     </script>
