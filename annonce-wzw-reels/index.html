@@ -63,7 +63,7 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="40.2" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="main" data-start="0" data-duration="40.0" data-width="1080" data-height="1920">
       <div id="gray" class="abs full"><img id="grayimg" src="assets/bande.jpg" alt="" /></div>
       <div id="grayov" class="abs full"></div>
       <div id="hk1" class="abs hk">FEMMES</div><div id="hk1b" class="abs hk">FEMMES</div>
@@ -89,7 +89,7 @@
       <div id="glitch" class="abs full"></div>
       <div id="fin" class="abs full"><div id="finbg" class="abs" style="background:url(assets/flyer.jpg) center/cover"></div><div class="abs" style="left:0;top:0;width:1080px;height:1920px;background:linear-gradient(180deg,rgba(190,20,0,.55),rgba(190,20,0,.1) 40%,rgba(190,20,0,.1) 60%,rgba(190,20,0,.55))"></div><img id="finfly" class="abs" src="assets/flyer.jpg" alt="" /><div id="shine" class="abs"><div id="shband"></div></div></div>
       <div id="flash" class="abs full"></div>
-      <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="40.2" data-track-index="1" data-volume="1"></audio>
+      <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="40.0" data-track-index="1" data-volume="1"></audio>
     </div>
     <script>
       const rnd = (i, s) => { const x = Math.sin(i * 127.1 + s * 311.7) * 43758.5453; return x - Math.floor(x); };
@@ -97,16 +97,16 @@
       const STEP = 700, YS = 1400, K = 1.5;
       const tl = gsap.timeline({ paused: true });
       const $ = (s) => document.querySelector(s);
-      const CFG = { mary: [1690, 90], anne: [750, 90], huldah: [750, 90], manne: [1690, 90], veronica: [700, 140], hestia: [1590, 90], pelagie: [1590, 90], esperance: [1590, 90], jessie: [760, 70], richmelle: [1590, 90], tossou: [640, 190] };
-      const ASP = { mary: 851 / 1259, anne: 960 / 1217, huldah: 988 / 1105, manne: 716 / 968, veronica: 1169 / 1289, hestia: 825 / 1208, pelagie: 551 / 1082, esperance: 591 / 1159, jessie: 419 / 520, richmelle: 595 / 1124, tossou: 960 / 1065 };
+      const CFG = { mary: [1690, 90], anne: [750, 90], huldah: [750, 90], manne: [1690, 90], veronica: [700, 140], hestia: [1590, 90], pelagie: [1590, 90], esperance: [1590, 90], jessie: [760, 70], sylvie: [760, 70], marjolaine: [640, 190], richmelle: [1590, 90], tossou: [640, 190] };
+      const ASP = { mary: 851 / 1259, anne: 960 / 1217, huldah: 988 / 1105, manne: 716 / 968, veronica: 1169 / 1289, hestia: 825 / 1208, pelagie: 551 / 1082, esperance: 591 / 1159, jessie: 419 / 520, sylvie: 896 / 1142, marjolaine: 353 / 391, richmelle: 595 / 1124, tossou: 960 / 1065 };
       const placeCut = (img, id, mult, cx, top) => { const h = CFG[id][0] * mult, w = h * ASP[id]; img.style.height = h + "px"; img.style.left = (cx - w / 2) + "px"; img.style.top = top + "px"; };
       placeCut($("#cm"), "mary", 1.3, 540, 150); placeCut($("#cb1"), "hestia", 1.3, 540, 150);
       placeCut($("#cutC img"), "jessie", 2.824, 540, 150); placeCut($("#cutD img"), "pelagie", 1.35, 540, 150); placeCut($("#cutE img"), "richmelle", 1.35, 540, 150);
       const PEOPLE = [
         ["mary", "PROPHÉTESSE", "MARY FAVOUR TONGSI", "INVITÉE D’HONNEUR"], ["anne", "PASTEURE", "ANNE-LAURE", ""], ["huldah", "LEADER", "HULDAH", ""],
         ["manne", "SERVANTE", "MANNE", ""], ["veronica", "PASTEURE", "VERONICA", ""], ["hestia", "DR", "HESTIA", ""], ["pelagie", "PROPHÉTESSE", "PÉLAGIE", ""],
-        ["esperance", "PASTEURE", "ESPÉRANCE", ""], ["jessie", "ÉVANGÉLISTE", "JESSIE", ""], ["richmelle", "LEADER", "RICHMELLE", ""], ["tossou", "MADAME", "TOSSOU", ""]];
-      const T0S = [8.4, 9.6, 10.8, 12.0, 13.2, 14.4, 15.6, 16.8, 18.0, 19.2, 20.4];
+        ["esperance", "PASTEURE", "ESPÉRANCE", ""], ["jessie", "ÉVANGÉLISTE", "JESSIE", ""], ["richmelle", "LEADER", "RICHMELLE", ""], ["tossou", "MADAME", "TOSSOU", ""], ["sylvie", "DR", "SYLVIE", ""], ["marjolaine", "DR", "MARJOLAINE", ""]];
+      const T0S = Array.from({ length: 13 }, (_, i) => +(8.4 + i * 1.2).toFixed(2));
       const strip = $("#strip"); const ITEMS = [], NAMES = [];
       PEOPLE.forEach(([id, a, b, c], i) => {
         const d = document.createElement("div"); d.className = "it"; d.style.left = (i * STEP) + "px";
@@ -164,19 +164,19 @@
         if (i === 0) { tl.fromTo(d, { x: 700 }, { x: 0, scale: 1, filter: "grayscale(0) blur(0px) brightness(1)", duration: .5, ease: "power3.out" }, t - .1); tl.set(d, { opacity: 1 }, t - .1); }
         else { tl.to(d, { scale: 1, filter: "grayscale(0) blur(0px) brightness(1)", duration: .5, ease: "power3.inOut" }, t - .1); }
         tl.to(NAMES[i], { opacity: 1, y: 0, duration: .3, ease: "power2.out", startAt: { y: 40 } }, t + .1);
-        if (i < 10) { tl.to(d, { scale: .5, filter: "grayscale(1) blur(8px) brightness(.85)", duration: .5, ease: "power3.inOut" }, t + dur - .1); tl.to(NAMES[i], { opacity: 0, duration: .2 }, t + dur - .2); }
+        if (i < PEOPLE.length - 1) { tl.to(d, { scale: .5, filter: "grayscale(1) blur(8px) brightness(.85)", duration: .5, ease: "power3.inOut" }, t + dur - .1); tl.to(NAMES[i], { opacity: 0, duration: .2 }, t + dur - .2); }
         if (i >= 1) tl.to("#strip", { x: -i * STEP, duration: .5, ease: "power3.inOut" }, t - .1);
       });
       // 20,4 → 24,0 : date
-      tl.set(["#red", "#sl1", "#slabA", "#slabB", "#slabC", "#strip", "#names"], { opacity: 0 }, 21.6); tl.set("#redtxt", { opacity: 1 }, 21.6);
-      IN(L1, 21.6, .04); IN(L1b, 21.9, .02); IN(L2, 22.2, .02);
-      OUT(L1, 24.0, 0); OUT(L1b, 24.1, 1); OUT(L2, 24.2, 2);
-      tl.to("#dt1", { x: 8, duration: .08, yoyo: true, repeat: 7 }, 23.0); tl.to("#dt2", { x: -8, duration: .08, yoyo: true, repeat: 7 }, 23.1);
+      tl.set(["#red", "#sl1", "#slabA", "#slabB", "#slabC", "#strip", "#names"], { opacity: 0 }, 24.0); tl.set("#redtxt", { opacity: 1 }, 24.0);
+      IN(L1, 24.0, .04); IN(L1b, 24.3, .02); IN(L2, 24.6, .02);
+      OUT(L1, 25.8, 0); OUT(L1b, 25.9, 1); OUT(L2, 26.0, 2);
+      tl.to("#dt1", { x: 8, duration: .08, yoyo: true, repeat: 5 }, 25.0); tl.to("#dt2", { x: -8, duration: .08, yoyo: true, repeat: 5 }, 25.1);
       // 24,0 → 28,2 : adresse
-      [[A1, 0], [A2, 1], [A3, 2], [A4, 3]].forEach(([arr, k]) => { IN(arr, 24.6 + k * .25, .02, .45);
-        tl.to(arr, { x: (i) => (rnd(i, 31 + k) - .5) * 1000, y: (i) => -200 - rnd(i, 32 + k) * 600, rotation: (i) => (rnd(i, 33) - .5) * 720, scale: .1, opacity: 0, duration: .5, ease: "power3.in", stagger: .02 }, 27.55 + k * .08); });
+      [[A1, 0], [A2, 1], [A3, 2], [A4, 3]].forEach(([arr, k]) => { IN(arr, 26.4 + k * .25, .02, .45);
+        tl.to(arr, { x: (i) => (rnd(i, 31 + k) - .5) * 1000, y: (i) => -200 - rnd(i, 32 + k) * 600, rotation: (i) => (rnd(i, 33) - .5) * 720, scale: .1, opacity: 0, duration: .5, ease: "power3.in", stagger: .02 }, 28.75 + k * .08); });
       // 28,2 → 32,4 : entrée gratuite
-      [[F1a, 0], [F1b, 1], [F2a, 2], [F2b, 3], [F3, 4]].forEach(([arr, k]) => { IN(arr, 28.2 + k * .2, .015, .4); OUT(arr, 31.75 + k * .07, 41 + k); });
+      [[F1a, 0], [F1b, 1], [F2a, 2], [F2b, 3], [F3, 4]].forEach(([arr, k]) => { IN(arr, 29.4 + k * .2, .015, .4); OUT(arr, 31.75 + k * .07, 41 + k); });
       // 32,4 → 35,4 : ne manque pas
       tl.set("#redtxt", { opacity: 0 }, 32.4); tl.set("#dm", { opacity: 1 }, 32.4);
       tl.fromTo("#dmcol", { x: 0 }, { x: -500, duration: 3.0, ease: "none" }, 32.4);
@@ -189,8 +189,8 @@
       tl.fromTo("#finbg", { scale: 1.05 }, { scale: 1.15, duration: 4.8, ease: "none" }, 35.4);
       tl.to("#finfly", { scale: 1.04, duration: 4.2, ease: "none" }, 36.0);
       tl.set("#shine", { opacity: 1 }, 36.6); tl.fromTo("#shband", { x: -300 }, { x: 1300, duration: .9, ease: "power2.inOut" }, 36.6);
-      tl.to("#fin", { opacity: 0, duration: .8 }, 39.4);
-      [[1.8, .5], [3.6, .7], [8.4, .6], [21.6, .5], [32.4, .35], [35.4, .6]].forEach(([t, o]) => { tl.set("#flash", { opacity: o }, t); tl.to("#flash", { opacity: 0, duration: .35, ease: "power2.out" }, t + .02); });
+      tl.to("#fin", { opacity: 0, duration: .8 }, 39.2);
+      [[1.8, .5], [3.6, .7], [8.4, .6], [24.0, .5], [32.4, .35], [35.4, .6]].forEach(([t, o]) => { tl.set("#flash", { opacity: o }, t); tl.to("#flash", { opacity: 0, duration: .35, ease: "power2.out" }, t + .02); });
       window.__timelines = window.__timelines || {};
       window.__timelines["main"] = tl;
     </script>
