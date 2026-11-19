@@ -31,7 +31,7 @@ P.append("""<h1>Planning de publication</h1>
 <tr><td><b>Lun 23</b></td><td><b>12h30</b> Bio : Dr Sylvie<br><b>16h00</b> Bio : Dr Marjolaine</td><td><b>7h30</b> Story J-4<br><b>18h00</b> <b>Contenu 1</b> : « Et si ce week-end… » (script en bas)<br><b>20h00</b> Zone Détente</td></tr>
 <tr><td><b>Mar 24</b></td><td><b>12h30</b> Bio : Servante Manne<br><b>16h00</b> Bio : Leader Richmelle<br><b>18h00</b> Affiche de la Prophétesse Mary</td><td><b>7h30</b> Story J-3<br><b>10h00</b> <b>Contenu 4</b> : « Une femme de foi… » (script en bas)<br><b>20h00</b> <b>Vidéo de la Prophétesse Mary : elle annonce sa venue</b></td></tr>
 <tr><td><b>Mer 25</b></td><td><b>12h30</b> Bio : Dr Hestia<br><b>16h00</b> Bio : Pasteure Espérance<br><b>18h00</b> Citation du thème</td><td><b>7h30</b> Story J-2<br><b>20h00</b> <b>Vidéo de Pasteure Delmica</b> (déjà reçue)</td></tr>
-<tr><td><b>Jeu 26</b></td><td><b>12h30</b> Bio : Leader Huldah<br><b>16h00</b> Bio : Madame Tossou</td><td><b>7h30</b> Story J-1<br><b>18h00</b> Programme en 30 s<br><b>20h00</b> J-1 : tout ce qu'il faut savoir (plan d'accès)</td></tr>
+<tr><td><b>Jeu 26</b></td><td><b>12h30</b> Bio : Leader Huldah<br><b>16h00</b> Bio : Madame Tossou</td><td><b>7h30</b> Story J-1<br><b>10h00</b> <b>Contenu 5</b> : « Tu es inscrite ? » (script en bas)<br><b>18h00</b> Programme en 30 s<br><b>20h00</b> J-1 : tout ce qu'il faut savoir (plan d'accès)</td></tr>
 <tr><td><b>Ven 27</b></td><td><b>9h00</b> Bios : Servante Roukiyatou PIWO, Pasteure Murielle, Imalia</td><td><b>7h30</b> Story Jour J · <b>18h00</b> Rappel de la soirée · <b>19h45</b> Soirée de lancement (direct possible) · Kit du direct</td></tr>
 <tr><td><b>Sam 28</b></td><td>Citations par panel, dans l'heure qui suit chacun : <b>11h30</b>, <b>14h45</b>, <b>15h45</b>, <b>17h00</b> (jamais la table ronde)</td><td><b>20h00</b> « Samedi en 60 secondes » · « Une phrase, un panel »</td></tr>
 <tr><td><b>Dim 29</b></td><td>Culte de clôture 8h45 · Agapè des Femmes 11h30 · photos</td><td><b>10h00</b> « Ce que je retiens » · <b>16h00</b> Remerciements</td></tr>
@@ -64,6 +64,13 @@ P.append("""<div class="scr"><h3>Contenu 4 · « Une femme de foi… »</h3><div
 <p>Il est temps de te lever, de grandir et de prendre ta place !</p>
 <p>Le WEEK-END ZONE WOMEN t'attend du 27 au 29 novembre 2026.</p>
 <p>Les inscriptions sont ouvertes. Retrouve le lien en commentaire. »</p></div>""")
+P.append("""<div class="scr"><h3>Contenu 5 · « Tu es inscrite ? » (sketch)</h3><div class="m">Jeu 26 · 10h00 (date et heure proposées, à confirmer) · vidéo tournée avec 2 femmes et une voix off · lien d'inscription en commentaire</div>
+<p><b>Femme 1 :</b> « Tu es inscrite pour le WEEK-END ZONE WOMEN ? »</p>
+<p><b>Femme 2 :</b> « Pas encore, je vais le faire après… »</p>
+<p><b>Femme 1 :</b> « Après quand ? Quand toutes les places seront prises ? »</p>
+<p><b>Femme 2 :</b> « Ah non ! Attends, je m'inscris maintenant ! »</p>
+<p><b>Voix off :</b> « Le WEEK-END ZONE WOMEN, du 27 au 29 novembre 2026. Les places sont limitées. Le lien d'inscription est en commentaire. »</p></div>""")
+
 
 
 
