@@ -29,9 +29,9 @@ for t, tt in ME:
     while k < t - .18: key(k); k += .07 + rng.uniform(0, .05)
     sent(t)
 for t in HER: recv(t)
-whoosh(25.4, .6, .5)
+whoosh(25.2, .6, .5)
 for k, f in enumerate((523, 659, 784, 1047)):
-    n = int(SR * 1.2); x = np.arange(n) / SR; put((np.sin(2 * np.pi * f * x) + .2 * np.sin(2 * np.pi * 2 * f * x)) * env(n, .003, .35) * .3, 25.9 + k * .09, 0)
+    n = int(SR * 1.2); x = np.arange(n) / SR; put((np.sin(2 * np.pi * f * x) + .2 * np.sin(2 * np.pi * 2 * f * x)) * env(n, .003, .35) * .3, 25.7 + k * .09, 0)
 g = 10 ** (-3 / 20) / max(np.abs(L).max(), np.abs(R).max())
 out = (np.stack([L, R], 1) * g * 32767).astype("<i2")
 with wave.open(sys.argv[1], "wb") as w_:
