@@ -13,6 +13,7 @@ table{width:100%;border-collapse:collapse;margin:6px 0 10px}th{background:#10143
 td{padding:8px 10px;border-bottom:1px solid #cfd0e0;vertical-align:top;font-size:14px}tr:nth-child(even) td{background:#f4f4fa}
 td b{font-weight:800}
 .ok{color:#0a8f4d;font-weight:800}.tb{color:#c2410c;font-weight:800}
+.scr{border:1px solid #cfd0e0;border-radius:8px;padding:12px 16px;margin:8px 0;page-break-inside:avoid}.scr h3{margin:0 0 2px;font-size:16px;font-weight:800;color:#10143a}.scr .m{color:#444;font-size:13px;margin-bottom:8px}.scr p{margin:0 0 9px;font-size:15px;line-height:1.55}.sch{font-size:20px;font-weight:800;color:#1900cf;margin:18px 0 4px}
 .note{background:#fff4ec;border-left:6px solid #ff5a36;padding:9px 13px;margin:9px 0;font-size:13.5px;line-height:1.5}
 tr{page-break-inside:avoid}
 """
@@ -27,7 +28,7 @@ P.append("""<h1>Planning de publication</h1>
 <tr><td><b>Ven 20</b></td><td>—</td><td><b>16h00</b> Vidéo motion qui présente les panélistes<br><b>20h00</b> Vidéo tournée <b>Restaurée</b><br><span class="tb">À tourner :</span> vidéo de la Prophétesse Mary (avant lundi)</td></tr>
 <tr><td><b>Sam 21</b></td><td><b>12h30</b> Bio : <b>Pasteure Veronica</b><br><b>16h00</b> Bio : Pasteure Anne-Laure</td><td><b>20h00</b> Vidéo tournée <b>Ointe</b></td></tr>
 <tr><td><b>Dim 22</b></td><td><b>12h30</b> Bio : Évangéliste Jessie Vanessa<br><b>16h00</b> Bio : Prophétesse Pélagie<br>Annonce à l'assemblée (au culte)</td><td><b>7h30</b> Story J-5<br><b>20h00</b> Vidéo tournée <b>Envoyée</b></td></tr>
-<tr><td><b>Lun 23</b></td><td><b>12h30</b> Bio : Dr Sylvie<br><b>16h00</b> Bio : Dr Marjolaine</td><td><b>7h30</b> Story J-4<br><b>20h00</b> Zone Détente</td></tr>
+<tr><td><b>Lun 23</b></td><td><b>12h30</b> Bio : Dr Sylvie<br><b>16h00</b> Bio : Dr Marjolaine</td><td><b>7h30</b> Story J-4<br><b>18h00</b> <b>Contenu 1</b> : « Et si ce week-end… » (script en bas)<br><b>20h00</b> Zone Détente</td></tr>
 <tr><td><b>Mar 24</b></td><td><b>12h30</b> Bio : Servante Manne<br><b>16h00</b> Bio : Leader Richmelle<br><b>18h00</b> Affiche de la Prophétesse Mary</td><td><b>7h30</b> Story J-3<br><b>20h00</b> <b>Vidéo de la Prophétesse Mary : elle annonce sa venue</b></td></tr>
 <tr><td><b>Mer 25</b></td><td><b>12h30</b> Bio : Dr Hestia<br><b>16h00</b> Bio : Pasteure Espérance<br><b>18h00</b> Citation du thème</td><td><b>7h30</b> Story J-2<br><b>20h00</b> <b>Vidéo de Pasteure Delmica</b> (déjà reçue)</td></tr>
 <tr><td><b>Jeu 26</b></td><td><b>12h30</b> Bio : Leader Huldah<br><b>16h00</b> Bio : Madame Tossou</td><td><b>7h30</b> Story J-1<br><b>18h00</b> Programme en 30 s<br><b>20h00</b> J-1 : tout ce qu'il faut savoir (plan d'accès)</td></tr>
@@ -35,6 +36,14 @@ P.append("""<h1>Planning de publication</h1>
 <tr><td><b>Sam 28</b></td><td>Citations par panel, dans l'heure qui suit chacun : <b>11h30</b>, <b>14h45</b>, <b>15h45</b>, <b>17h00</b> (jamais la table ronde)</td><td><b>20h00</b> « Samedi en 60 secondes » · « Une phrase, un panel »</td></tr>
 <tr><td><b>Dim 29</b></td><td>Culte de clôture 8h45 · Agapè des Femmes 11h30 · photos</td><td><b>10h00</b> « Ce que je retiens » · <b>16h00</b> Remerciements</td></tr>
 <tr><td><b>Lun 30 →</b></td><td>Témoignages, un extrait de panel par semaine</td><td><b>16h00</b> Récap du week-end · <b>20h00</b> « Ce qui a été restauré en moi »</td></tr></table>""")
+P.append("""<div class="sch">Scripts</div>
+<div class="scr"><h3>Contenu 1 · « Et si ce week-end… »</h3><div class="m">Lun 23 · 18h00 (date et heure proposées, à confirmer) · lien d'inscription en commentaire</div>
+<p>« Et si ce week-end était justement le moment qu'il te fallait ?</p>
+<p>Et si tu prenais quelques jours pour te recentrer, grandir et vivre quelque chose de spécial ?</p>
+<p>Du 27 au 29 novembre, nous avons rendez-vous pour le WEEK-END ZONE WOMEN !</p>
+<p>Ne reste pas en dehors de cette expérience.</p>
+<p>Les inscriptions sont ouvertes, mais attention, les places sont limitées !</p>
+<p>Retrouve le lien d'inscription en commentaire. On t'attend ! »</p></div>""")
 html = f"<!doctype html><meta charset=utf-8><style>{CSS}</style>" + "".join(P)
 f = H / "planning_scripts.html"; f.write_text(html)
 from playwright.sync_api import sync_playwright
