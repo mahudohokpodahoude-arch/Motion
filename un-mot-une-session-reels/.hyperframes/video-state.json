@@ -1,7 +1,7 @@
 {
   "version": 1,
   "historyId": "061c0701-164e-46d5-96e4-2e6479cdd9ee",
-  "currentRevision": "27494f25-e4d5-47f9-aabd-a9f846f50a75",
+  "currentRevision": "1721ede8-cf53-4a6c-ab81-70640e07d36e",
   "pendingChanges": false,
   "files": {
     "assets/bebas-neue-latin-400-normal.woff2": {
@@ -25,8 +25,8 @@
       "content": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/ba/ba826fb84c2e961578adf3a08b5778b87905d4443445d1d56d84f9f157d5ea4b"
     },
     "assets/musique.mp3": {
-      "hash": "f067fd573d35bebe9a754187ef7b13fa56ef34904188dc25a4e410073d865eec",
-      "content": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/f0/f067fd573d35bebe9a754187ef7b13fa56ef34904188dc25a4e410073d865eec"
+      "hash": "bda74f70194db5ee8850ad3d38f0438926019e4ac743a170e0594fbe581eaf97",
+      "content": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/bd/bda74f70194db5ee8850ad3d38f0438926019e4ac743a170e0594fbe581eaf97"
     },
     "gsap/README.md": {
       "hash": "36224e521bdd9b79dc74ef262effc1a636d960b9be918bc2412ed69f9eee27b0",
@@ -57,8 +57,16 @@
       "content": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/90/90409623771ab306b13b2a4f5b6f2997179227d6c5eb323410fcfa5d62d87e00"
     },
     "assets/musique.wav": {
-      "hash": "b541cbd22df8d839548c28544534f202eb36114cbe702411525af551cec8eca7",
-      "content": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/b5/b541cbd22df8d839548c28544534f202eb36114cbe702411525af551cec8eca7"
+      "hash": "ce3c58e9ecb86435b541f09240193f397dba10e01a9ebad07b54af8fcf8d803a",
+      "content": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/ce/ce3c58e9ecb86435b541f09240193f397dba10e01a9ebad07b54af8fcf8d803a"
+    },
+    "assets/musique_v1_synth.mp3": {
+      "hash": "f067fd573d35bebe9a754187ef7b13fa56ef34904188dc25a4e410073d865eec",
+      "content": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/f0/f067fd573d35bebe9a754187ef7b13fa56ef34904188dc25a4e410073d865eec"
+    },
+    "tools/musique_afro_gospel.py": {
+      "hash": "888a2bfa7c52d83f6947cf67dedb08fc84bf5d0a78d05da5a9949f1f03a65ef2",
+      "content": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/88/888a2bfa7c52d83f6947cf67dedb08fc84bf5d0a78d05da5a9949f1f03a65ef2"
     }
   },
   "revisions": {
@@ -104,6 +112,33 @@
         "index.html": {
           "before": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/cf/cf9b9b8a92fb11a52fd89affe964763193a473a12b8d60bf7dd33d2f12a0903c",
           "after": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/23/237f12cf0a1cd3c138701d418473eed69091af5c0720b8281a5c77f2de86ea68"
+        }
+      }
+    },
+    "1721ede8-cf53-4a6c-ab81-70640e07d36e": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1795099102118,
+      "endedAt": 1795099102138,
+      "files": {
+        "assets/musique_v1_synth.mp3": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/f0/f067fd573d35bebe9a754187ef7b13fa56ef34904188dc25a4e410073d865eec"
+        },
+        "assets/musique.mp3": {
+          "before": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/f0/f067fd573d35bebe9a754187ef7b13fa56ef34904188dc25a4e410073d865eec",
+          "after": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/bd/bda74f70194db5ee8850ad3d38f0438926019e4ac743a170e0594fbe581eaf97"
+        },
+        "assets/musique.wav": {
+          "before": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/b5/b541cbd22df8d839548c28544534f202eb36114cbe702411525af551cec8eca7",
+          "after": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/ce/ce3c58e9ecb86435b541f09240193f397dba10e01a9ebad07b54af8fcf8d803a"
+        },
+        "tools/musique_afro_gospel.py": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/061c0701-164e-46d5-96e4-2e6479cdd9ee/blobs/88/888a2bfa7c52d83f6947cf67dedb08fc84bf5d0a78d05da5a9949f1f03a65ef2"
         }
       }
     }
@@ -450,13 +485,14 @@
   },
   "renders": {
     "latest": {
-      "id": "fd419409-85d8-4088-a184-5cc780549fc5",
-      "completedAt": 1795098821694,
+      "id": "1ade7533-62da-41ea-9f4b-604afb7617c9",
+      "completedAt": 1795099215830,
       "output": "/home/user/Motion/un-mot-une-session-reels/un-mot-une-session-36s-1080x1920.mp4",
       "status": "completed",
-      "revision": "27494f25-e4d5-47f9-aabd-a9f846f50a75"
+      "revision": "1721ede8-cf53-4a6c-ab81-70640e07d36e"
     },
     "retainedRevisions": [
+      "1721ede8-cf53-4a6c-ab81-70640e07d36e",
       "27494f25-e4d5-47f9-aabd-a9f846f50a75"
     ]
   },
