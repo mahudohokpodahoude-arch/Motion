@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Matériels à louer</title>
+<style>
+@font-face{font-family:"Mont";font-weight:400;src:url(fonts/montserrat-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Mont";font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Mont";font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Mont";font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2) format("woff2")}
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Mont",sans-serif;color:#17211a;width:210mm;height:297mm;padding:20mm 18mm;position:relative}
+.bar{position:absolute;left:0;top:0;width:210mm;height:9mm;background:#2f8f2f}
+h1{font-size:30pt;font-weight:800;letter-spacing:-.03em;margin-top:6mm}
+h1 span{color:#2f8f2f}
+.sub{margin-top:3mm;font-size:10.5pt;color:#5a665d}
+table{width:100%;border-collapse:collapse;margin-top:12mm;font-size:11pt}
+th{text-align:left;font-weight:700;font-size:8.5pt;letter-spacing:.08em;text-transform:uppercase;color:#5a665d;padding:0 4mm 3mm;border-bottom:2px solid #17211a}
+th.r,td.r{text-align:right}
+td{padding:5mm 4mm;border-bottom:1px solid #dfe6e0;vertical-align:middle}
+td.n{width:10mm;color:#8a968d;font-weight:600}
+td b{font-weight:700}
+td small{display:block;margin-top:1mm;font-size:8.5pt;color:#6b776e}
+.tbc{color:#c0392b;font-weight:700;font-size:10pt}
+tr.sub td{border-bottom:none;padding-top:7mm;font-weight:600;color:#5a665d}
+.total{margin-top:3mm;background:#2f8f2f;color:#fff;border-radius:3mm;padding:6mm 6mm;display:flex;justify-content:space-between;align-items:center}
+.total .l{font-size:12pt;font-weight:700}
+.total .l small{display:block;font-weight:400;font-size:8.5pt;opacity:.9;margin-top:1mm}
+.total .v{font-size:24pt;font-weight:800;letter-spacing:-.02em}
+.note{margin-top:9mm;border-left:3px solid #c0392b;padding:2mm 5mm;font-size:9.5pt;line-height:1.5;color:#3a463d;background:#fbf3f2}
+.foot{position:absolute;left:18mm;right:18mm;bottom:14mm;font-size:8pt;color:#8a968d;border-top:1px solid #dfe6e0;padding-top:3mm}
+</style></head><body>
+<div class="bar"></div>
+<h1>Matériels <span>à louer</span></h1>
+<div class="sub">Récapitulatif des locations avec les prix – montants en francs CFA (F)</div>
+
+<table>
+<thead><tr><th>N°</th><th>Matériel</th><th class="r">Qté</th><th class="r">Prix unitaire</th><th class="r">Montant</th></tr></thead>
+<tbody>
+<tr><td class="n">1</td><td><b>XDCAM</b><small>Pour le live</small></td><td class="r">1</td><td class="r">20 000 F</td><td class="r"><b>20 000 F</b></td></tr>
+<tr><td class="n">2</td><td><b>Flash Cobra</b></td><td class="r">1</td><td class="r">5 000 F</td><td class="r"><b>5 000 F</b></td></tr>
+<tr><td class="n">3</td><td><b>Objectif 24-70</b></td><td class="r">1</td><td class="r">5 000 F</td><td class="r"><b>5 000 F</b></td></tr>
+<tr><td class="n">4</td><td><b>Caméra pour photo</b></td><td class="r">1</td><td class="r">15 000 F</td><td class="r"><b>15 000 F</b></td></tr>
+<tr><td class="n">5</td><td><b>Téléphones</b><small>Besoin de 2 téléphones en plus</small></td><td class="r">2</td><td class="r tbc">À confirmer</td><td class="r tbc">À confirmer</td></tr>
+</tbody></table>
+
+<div class="total"><div class="l">TOTAL<small>Hors téléphones (prix non communiqué)</small></div><div class="v">45 000 F</div></div>
+
+<div class="note"><b>Point en attente :</b> le prix de location des 2 téléphones n'est pas encore connu. Le total sera de <b>45 000 F + (2 × prix d'un téléphone)</b> dès que ce prix est confirmé.</div>
+
+<div class="foot">Document de travail – les prix sont ceux communiqués, à confirmer auprès du loueur.</div>
+</body></html>
