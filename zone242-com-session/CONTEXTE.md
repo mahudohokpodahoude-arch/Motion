@@ -64,3 +64,58 @@ Thème : **Restaurée · Ointe · Envoyée**. Slogan : « Les femmes prennent le
 - Bebas Neue n'a que des capitales : pour un « h » minuscule dans les horaires, utiliser Montserrat.
 - Détourage : modèles ONNX (ISNet) à retélécharger depuis les versions de `danielgatis/rembg` sur GitHub ; matting fin avec `pymatting`.
 - Les photos d'origine envoyées par l'utilisateur ne sont pas dans le dépôt (seulement les copies redimensionnées utilisées) : les redemander si besoin.
+
+---
+
+## 7. Mise à jour du 19 novembre 2026 (J-8) · à lire en premier dans une nouvelle fenêtre
+
+### 7.1 Règles et choix validés par l'utilisateur
+- Écrire en français, direct, structuré, une idée à la fois ; ne rien inventer (prix, liens, noms) ; dire clairement ce qui n'a pas été vérifié (musique non écoutée, etc.).
+- Orthographes imposées : **Pasteure Veronica** (l'utilisateur a écrit « Pasteur Véronica » une fois : à reconfirmer), **Jessie Vanessa**, **Servante Manne** (pas « Prophétesse »), **Pasteure Anne-Laure**, **Week-end Zone Women**, **Dr Sylvie**, **Dr Marjolaine**, **Servante Roukiyatou PIWO**, « Madame Tossou ». Prophétesse **Mary TONGSI** (invitée d'honneur, écrit « INVITÉE » comme sur l'affiche). Horaires « 9h00 ».
+- Pas de PR sans demande. Branche : `claude/heygen-hyperframes-skill-daqjej`. Pas de bandes rouges ni de notes en bas des PDF de planning. PDF lisibles : paysage, police Montserrat 14 px.
+- Il faut **varier le style des contenus** : l'utilisateur ne veut pas que tout se ressemble.
+
+### 7.2 Planning de publication (PDF : `livrables/documents/Planning_publication_WZW.pdf`, source `livrables/scripts-sources/build_planning_scripts.py`)
+- Jeu 19 : carrousel « 4 raisons » à 16h (publié). Ven 20 : vidéo motion des panélistes à 16h ; vidéo de la Prophétesse Mary à tourner.
+- Dès sam 21 : 2 bios par jour (12h30 et 16h00), en commençant par Pasteure Veronica. Ordre : 21 Veronica + Anne-Laure ; 22 Hestia + Pélagie ; 23 Sylvie + Marjolaine ; 24 Manne + Richmelle ; 25 Jessie + Espérance ; 26 Huldah + Tossou ; 27 matin Roukiyatou, Murielle, Imalia.
+- Contenus d'inscription 1 à 6 (scripts fournis par l'utilisateur, sous le tableau du PDF) : 2 sam 21 18h ; 3 dim 22 18h ; 1 lun 23 18h ; 4 mar 24 10h ; 6 mer 25 10h ; 5 jeu 26 10h. Vidéo Mary (mar 24 20h) et vidéo de Pasteure Delmica (mer 25 20h, orthographe à confirmer).
+- Décomptes J-5 à J-1 en stories à 7h30. Les vidéos tournées « Restaurée / Ointe / Envoyée » ont été retirées du planning.
+- Heures proposées par l'assistant sauf vendredi 16h et 20h (à corriger avec les statistiques de la page).
+
+### 7.3 Vidéos et visuels produits (tous poussés)
+| Livrable | Dossier / fichier |
+|---|---|
+| Annonce 40 s, 14 intervenantes, 16:9 et 9:16 (fin 9:16 = affiche story) | `annonce-wzw-reference/`, `annonce-wzw-reels/` |
+| Profil 1080 + couverture Facebook | `zone242-com-session/livrables/reseaux-sociaux/` |
+| Carrousel « 4 raisons » carré épuré (6 diapos) | `livrables/carrousels/4_Raisons_WZW_carre_0*.png` |
+| « Un mot, une session » 36,4 s, style Vibe motion (cartes blanches, légende mot à mot, fond de l'affiche), musique Deborah Lukalu | `un-mot-une-session-vibe-reels/` (anciennes versions : `un-mot-une-session-reels/`) |
+| « Le week-end en chiffres » 24 s (grands chiffres, aplats, bande défilante, scène Prophétesse Mary) | `week-end-en-chiffres-reels/` |
+| « Invite une amie » conversation de messagerie, finances (Panel 3) | `invite-une-amie-reels/` |
+| « Invite une amie » conversation, blessures (Panel 1), musique « BOBO » de Sam BHLU à partir de 0:46 | `invite-une-amie-blessures-reels/` |
+| PDF d'idées de vidéos (cartes, puis texte continu) | `livrables/documents/Idees_videos_simples_WZW.pdf`, `Idees_videos_texte_WZW.pdf` |
+
+### 7.4 Légendes proposées (à copier)
+- **Carrousel « 4 raisons »** et **« Le week-end en chiffres »** : voir les textes ci-dessous, avec le lien https://milmo-zone242.vercel.app/wzw.html#programme (à vérifier : mène-t-il à l'inscription ?). Instagram : lien dans la bio.
+- « En chiffres » : « 3 jours. 6 sessions. 14 intervenantes. 150 places. Du vendredi 27 au dimanche 29 novembre 2026, rendez-vous au WEEK-END ZONE WOMEN, à Zone 242 – Sikècodji (rue de Golf FM, Cotonou). Soirée de lancement vendredi 19h45 avec la Prophétesse Mary TONGSI ; panels, « Belle et en bonne santé » et grande table ronde samedi ; culte de clôture dimanche 8h45 puis Agapè 11h30. Gratuit, inscription obligatoire. #ZoneWoman #Restaurée #Ointe #Envoyée »
+- Le chiffre **14 intervenantes** n'est pas confirmé (Murielle et Imalia animent la table ronde).
+
+### 7.5 Musique : ce qu'il faut savoir
+- Morceau d'origine « Rejoice » **perdu** (non rechargeable). Morceaux fournis ensuite : Deborah Lukalu « Restauré · Trust in the Storm » (extrait à partir de 19,1 s ou 87 s) ; Sam BHLU « BOBO » (104 bpm, grille de temps : 0,24 s + k × 0,5767 s). Droits d'auteur à vérifier avant publication.
+- La reconnaissance de la parole est **inaccessible** (téléchargement Hugging Face bloqué) : l'emplacement de « Voici mon bobo / Jésus guéris mon bobo » vient du choix de l'utilisateur (extrait 2 = 0:46).
+- Musiques synthétisées de secours dans chaque projet (`tools/musique*.py`) : l'utilisateur les a refusées.
+
+### 7.6 Reste à faire / questions ouvertes
+1. Graphie « Pasteure Veronica » ; ordre des bios ; rôle de Roukiyatou (absente du programme) ; noms de famille (Sylvie, Marjolaine, Tossou, Murielle, Imalia) ; orthographe « Delmica ».
+2. Contenu de la vidéo de la Prophétesse Mary et qui la tourne.
+3. Lien d'inscription réel + QR code ; formulaire Google (script prêt).
+4. Affiche officielle à jour avec les 14 intervenantes (l'affiche story actuelle en montre 11).
+5. Quel passage exact de « BOBO » sur le reste des vidéos ; appliquer ou non cette musique aux autres vidéos.
+6. Présentations de panélistes en motion (style photo plein cadre) : à produire.
+7. Légendes Facebook : annonce 40 s, « un mot, une session », conversations (finances et blessures).
+
+### 7.7 Pièges techniques ajoutés
+- `rm -rf` / `rm` avec variable shell est bloqué par la sécurité : utiliser des chemins littéraux.
+- `fromTo` GSAP rend l'état de départ immédiatement : mettre `immediateRender: false` pour les flashs et éléments qui ne doivent pas être visibles au début.
+- `hyperframes lint` refuse les polices système (ex. Noto Color Emoji) citées dans `font-family` ; les emojis s'affichent quand même au rendu local.
+- Scratchpad vidé à chaque reprise : polices, logos et lockup se retrouvent dans `teaser-wzw-reels/assets/` (lockup_masque.png, polices) et `presentation-dr-hestia/assets/logos_alpha.png` ; modèle ISNet à retélécharger depuis GitHub (rembg v0.0.0).
+- « /reverse-motion » n'existe pas comme commande : analyser la vidéo de référence image par image (`ffmpeg`).
