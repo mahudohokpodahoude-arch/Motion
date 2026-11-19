@@ -29,7 +29,7 @@ P.append("""<h1>Planning de publication</h1>
 <tr><td><b>Sam 21</b></td><td><b>12h30</b> Bio : <b>Pasteure Veronica</b><br><b>16h00</b> Bio : Pasteure Anne-Laure</td><td><b>18h00</b> <b>Contenu 2</b> : « Pourquoi venir… ? » (script en bas)<br><b>20h00</b> Vidéo tournée <b>Ointe</b></td></tr>
 <tr><td><b>Dim 22</b></td><td><b>12h30</b> Bio : Évangéliste Jessie Vanessa<br><b>16h00</b> Bio : Prophétesse Pélagie<br>Annonce à l'assemblée (au culte)</td><td><b>7h30</b> Story J-5<br><b>18h00</b> <b>Contenu 3</b> : « Coucou ! » (script en bas)<br><b>20h00</b> Vidéo tournée <b>Envoyée</b></td></tr>
 <tr><td><b>Lun 23</b></td><td><b>12h30</b> Bio : Dr Sylvie<br><b>16h00</b> Bio : Dr Marjolaine</td><td><b>7h30</b> Story J-4<br><b>18h00</b> <b>Contenu 1</b> : « Et si ce week-end… » (script en bas)<br><b>20h00</b> Zone Détente</td></tr>
-<tr><td><b>Mar 24</b></td><td><b>12h30</b> Bio : Servante Manne<br><b>16h00</b> Bio : Leader Richmelle<br><b>18h00</b> Affiche de la Prophétesse Mary</td><td><b>7h30</b> Story J-3<br><b>20h00</b> <b>Vidéo de la Prophétesse Mary : elle annonce sa venue</b></td></tr>
+<tr><td><b>Mar 24</b></td><td><b>12h30</b> Bio : Servante Manne<br><b>16h00</b> Bio : Leader Richmelle<br><b>18h00</b> Affiche de la Prophétesse Mary</td><td><b>7h30</b> Story J-3<br><b>10h00</b> <b>Contenu 4</b> : « Une femme de foi… » (script en bas)<br><b>20h00</b> <b>Vidéo de la Prophétesse Mary : elle annonce sa venue</b></td></tr>
 <tr><td><b>Mer 25</b></td><td><b>12h30</b> Bio : Dr Hestia<br><b>16h00</b> Bio : Pasteure Espérance<br><b>18h00</b> Citation du thème</td><td><b>7h30</b> Story J-2<br><b>20h00</b> <b>Vidéo de Pasteure Delmica</b> (déjà reçue)</td></tr>
 <tr><td><b>Jeu 26</b></td><td><b>12h30</b> Bio : Leader Huldah<br><b>16h00</b> Bio : Madame Tossou</td><td><b>7h30</b> Story J-1<br><b>18h00</b> Programme en 30 s<br><b>20h00</b> J-1 : tout ce qu'il faut savoir (plan d'accès)</td></tr>
 <tr><td><b>Ven 27</b></td><td><b>9h00</b> Bios : Servante Roukiyatou PIWO, Pasteure Murielle, Imalia</td><td><b>7h30</b> Story Jour J · <b>18h00</b> Rappel de la soirée · <b>19h45</b> Soirée de lancement (direct possible) · Kit du direct</td></tr>
@@ -58,6 +58,13 @@ P.append("""<div class="scr"><h3>Contenu 3 · « Coucou ! » : à envoyer à une
 <p>Alors, envoie cette vidéo à ta sœur, ton amie, ta collègue, à toutes les femmes que tu aimerais voir vivre ce moment avec toi !</p>
 <p>Et surtout, inscris-toi dès maintenant.</p>
 <p>Le lien est en commentaire ! »</p></div>""")
+P.append("""<div class="scr"><h3>Contenu 4 · « Une femme de foi… »</h3><div class="m">Mar 24 · 10h00 (date et heure proposées, à confirmer) · vidéo ou visuel · lien d'inscription en commentaire</div>
+<p>« Une femme de foi.<br>Une femme d'influence.<br>Une femme consciente de sa destinée.</p>
+<p>Tu n'as pas été créée pour vivre sans vision, sans impact et sans direction.</p>
+<p>Il est temps de te lever, de grandir et de prendre ta place !</p>
+<p>Le WEEK-END ZONE WOMEN t'attend du 27 au 29 novembre 2026.</p>
+<p>Les inscriptions sont ouvertes. Retrouve le lien en commentaire. »</p></div>""")
+
 
 
 html = f"<!doctype html><meta charset=utf-8><style>{CSS}</style>" + "".join(P)
