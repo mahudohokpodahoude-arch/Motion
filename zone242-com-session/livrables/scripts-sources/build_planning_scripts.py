@@ -21,22 +21,22 @@ def sc(title, meta, rows):
     return f'<div class="sc"><h3>{title}</h3><div class="m">{meta}</div><table>{t}</table></div>'
 P = []
 P.append("""<h1>Planning de publication</h1>
-<div class="sub">Week-end Zone Women · 27–29 novembre 2026 · mis à jour le jeudi 19 novembre (J-8). Les scripts des vidéos seront ajoutés dans un second temps.</div>
-<table><tr><th style="width:90px">Date</th><th style="width:34%">Feed : carrousels et affiches</th><th>Vidéos</th></tr>
-<tr><td><b>Jeu 19</b></td><td>Carrousel « 4 raisons d'être au Week-end Zone Women » · 16h00 · <span class="ok">publié</span></td><td><span class="tb">Tournage aujourd'hui :</span> Restaurée, Ointe, Envoyée</td></tr>
-<tr><td><b>Ven 20</b></td><td>—</td><td>Vidéo motion qui présente les panélistes (annonce, 40 s) · <b>Vidéo tournée Restaurée</b><br><span class="tb">À tourner :</span> vidéo de la Prophétesse Mary (avant lundi)</td></tr>
-<tr><td><b>Sam 21</b></td><td>Bios : <b>Pasteure Veronica</b> + Pasteure Anne-Laure</td><td>Vidéo tournée <b>Ointe</b></td></tr>
-<tr><td><b>Dim 22</b></td><td>Bios : Évangéliste Jessie Vanessa + Prophétesse Pélagie · annonce à l'assemblée</td><td>Vidéo tournée <b>Envoyée</b> · décompte J-5</td></tr>
-<tr><td><b>Lun 23</b></td><td>Bios : Dr Sylvie + Dr Marjolaine</td><td>Vidéo tournée <b>Envoyée</b> (suite) · Zone Détente · décompte J-4</td></tr>
-<tr><td><b>Mar 24</b></td><td>Bios : Servante Manne + Leader Richmelle · affiche de la Prophétesse Mary</td><td><b>Vidéo de la Prophétesse Mary : elle annonce sa venue</b> · vidéo tournée <b>Envoyée</b> (suite) · décompte J-3</td></tr>
-<tr><td><b>Mer 25</b></td><td>Bios : Dr Hestia + Pasteure Espérance · citation du thème</td><td><b>Vidéo de Pasteure Delmica</b> (déjà envoyée) · décompte J-2</td></tr>
-<tr><td><b>Jeu 26</b></td><td>Bios : Leader Huldah + Madame Tossou · plan d'accès</td><td>Programme en 30 s · J-1 : tout ce qu'il faut savoir · décompte J-1</td></tr>
-<tr><td><b>Ven 27</b></td><td>Matin : Servante Roukiyatou PIWO, Pasteure Murielle, Imalia · soirée de lancement 19h45</td><td>Kit du direct · décompte Jour J</td></tr>
-<tr><td><b>Sam 28</b></td><td>Citations par panel, photos (jamais la table ronde)</td><td>« Samedi en 60 secondes » · « Une phrase, un panel » · « Ce que je retiens »</td></tr>
-<tr><td><b>Dim 29</b></td><td>Culte de clôture 8h45 · Agapè des Femmes 11h30</td><td>« Ce que je retiens » (suite) · Remerciements</td></tr>
-<tr><td><b>Lun 30 →</b></td><td>Récap, témoignages, un extrait de panel par semaine</td><td>Récap du week-end · « Ce qui a été restauré en moi » · Extraits de panels</td></tr></table>
-<div class="note"><b>Vidéos optionnelles</b> (si l'équipe a le temps, à glisser dans les jours moins chargés) : « Je suis restaurée / ointe / envoyée » (motion), « Elle tient la Zone », « Mesdames, la Zone est à vous », « Invite une amie », « Un panel, une question ».</div>
-<div class="note"><b>À confirmer :</b> l'ordre des bios après Veronica ; le nombre de vidéos Envoyée (3 tournées ?) et leurs dates après dimanche ; le contenu de la vidéo de la Prophétesse Mary et qui la tourne ; l'orthographe de « Pasteure Delmica » ; le rôle de Servante Roukiyatou PIWO (absente du programme) ; les noms de famille de Dr Sylvie, Dr Marjolaine, Mme Tossou, Murielle et Imalia ; les textes des bios à recevoir la veille de chaque publication.</div>""")
+<div class="sub">Week-end Zone Women · 27–29 novembre 2026 · mis à jour le jeudi 19 novembre (J-8) · heures de Cotonou. Les scripts des vidéos seront ajoutés dans un second temps.</div>
+<table><tr><th style="width:90px">Date</th><th style="width:36%">Feed : carrousels, affiches, bios</th><th>Vidéos et stories</th></tr>
+<tr><td><b>Jeu 19</b></td><td><b>16h00</b> Carrousel « 4 raisons d'être au Week-end Zone Women » · <span class="ok">publié</span></td><td><span class="tb">Tournage aujourd'hui :</span> Restaurée, Ointe, Envoyée</td></tr>
+<tr><td><b>Ven 20</b></td><td>—</td><td><b>16h00</b> Vidéo motion qui présente les panélistes<br><b>20h00</b> Vidéo tournée <b>Restaurée</b><br><span class="tb">À tourner :</span> vidéo de la Prophétesse Mary (avant lundi)</td></tr>
+<tr><td><b>Sam 21</b></td><td><b>12h30</b> Bio : <b>Pasteure Veronica</b><br><b>16h00</b> Bio : Pasteure Anne-Laure</td><td><b>20h00</b> Vidéo tournée <b>Ointe</b></td></tr>
+<tr><td><b>Dim 22</b></td><td><b>12h30</b> Bio : Évangéliste Jessie Vanessa<br><b>16h00</b> Bio : Prophétesse Pélagie<br>Annonce à l'assemblée (au culte)</td><td><b>7h30</b> Story J-5<br><b>20h00</b> Vidéo tournée <b>Envoyée</b></td></tr>
+<tr><td><b>Lun 23</b></td><td><b>12h30</b> Bio : Dr Sylvie<br><b>16h00</b> Bio : Dr Marjolaine</td><td><b>7h30</b> Story J-4<br><b>20h00</b> Zone Détente</td></tr>
+<tr><td><b>Mar 24</b></td><td><b>12h30</b> Bio : Servante Manne<br><b>16h00</b> Bio : Leader Richmelle<br><b>18h00</b> Affiche de la Prophétesse Mary</td><td><b>7h30</b> Story J-3<br><b>20h00</b> <b>Vidéo de la Prophétesse Mary : elle annonce sa venue</b></td></tr>
+<tr><td><b>Mer 25</b></td><td><b>12h30</b> Bio : Dr Hestia<br><b>16h00</b> Bio : Pasteure Espérance<br><b>18h00</b> Citation du thème</td><td><b>7h30</b> Story J-2<br><b>20h00</b> <b>Vidéo de Pasteure Delmica</b> (déjà reçue)</td></tr>
+<tr><td><b>Jeu 26</b></td><td><b>12h30</b> Bio : Leader Huldah<br><b>16h00</b> Bio : Madame Tossou</td><td><b>7h30</b> Story J-1<br><b>18h00</b> Programme en 30 s<br><b>20h00</b> J-1 : tout ce qu'il faut savoir (plan d'accès)</td></tr>
+<tr><td><b>Ven 27</b></td><td><b>9h00</b> Bios : Servante Roukiyatou PIWO, Pasteure Murielle, Imalia</td><td><b>7h30</b> Story Jour J · <b>18h00</b> Rappel de la soirée · <b>19h45</b> Soirée de lancement (direct possible) · Kit du direct</td></tr>
+<tr><td><b>Sam 28</b></td><td>Citations par panel, dans l'heure qui suit chacun : <b>11h30</b>, <b>14h45</b>, <b>15h45</b>, <b>17h00</b> (jamais la table ronde)</td><td><b>20h00</b> « Samedi en 60 secondes » · « Une phrase, un panel »</td></tr>
+<tr><td><b>Dim 29</b></td><td>Culte de clôture 8h45 · Agapè des Femmes 11h30 · photos</td><td><b>10h00</b> « Ce que je retiens » · <b>16h00</b> Remerciements</td></tr>
+<tr><td><b>Lun 30 →</b></td><td>Témoignages, un extrait de panel par semaine</td><td><b>16h00</b> Récap du week-end · <b>20h00</b> « Ce qui a été restauré en moi »</td></tr></table>
+<div class="note"><b>Heures :</b> 16h00 et 20h00 du vendredi 20 sont les vôtres. Toutes les autres sont ma proposition (12h30 et 16h00 pour les bios, 20h00 pour la vidéo du jour, 7h30 pour les stories). À corriger avec les statistiques de la page : onglet « Audience ».</div>
+<div class="note"><b>À confirmer :</b> l'ordre des bios après Veronica ; l'orthographe « Pasteure Veronica » ; le contenu de la vidéo de la Prophétesse Mary et qui la tourne ; l'orthographe de « Pasteure Delmica » ; le rôle de Servante Roukiyatou PIWO (absente du programme) ; les noms de famille de Dr Sylvie, Dr Marjolaine, Mme Tossou, Murielle et Imalia ; les textes des bios, à recevoir la veille de chaque publication.</div>""")
 html = f"<!doctype html><meta charset=utf-8><style>{CSS}</style>" + "".join(P)
 f = H / "planning_scripts.html"; f.write_text(html)
 from playwright.sync_api import sync_playwright
