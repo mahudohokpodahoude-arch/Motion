@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Le week-end en chiffres · Week-end Zone Women</title>
+    <script src="gsap/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Bebas"; src: url("assets/bebas-neue-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Mont"; font-weight: 600; src: url("assets/montserrat-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Mont"; font-weight: 800; src: url("assets/montserrat-latin-800-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #ee1a02; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Mont", sans-serif; color: #121212;
+        background: linear-gradient(160deg, #ee1a02 0%, #f12e04 36%, #f5541a 72%, #fb7a2a 100%); }
+      .abs { position: absolute; }
+      .sh { inset: 0; } .s1 { background: #ff7a33; opacity: .18; clip-path: polygon(0 0, 22% 0, 8% 100%, 0 100%); } .s2 { background: #b80f00; opacity: .20; clip-path: polygon(38% 0, 52% 0, 34% 100%, 20% 100%); } .s3 { background: #ff9a4a; opacity: .16; clip-path: polygon(70% 0, 84% 0, 66% 100%, 52% 100%); } .s4 { background: #c01200; opacity: .18; clip-path: polygon(90% 0, 100% 0, 100% 100%, 76% 100%); }
+      #glow { left: 90px; top: 520px; width: 900px; height: 900px; background: radial-gradient(closest-side, rgba(255,190,140,.55), rgba(255,190,140,0)); }
+      .star { width: 18px; height: 18px; background: rgba(255,255,255,.7); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+      .star.o { background: #ffd9bf; opacity: .9; }
+      #scenes { position: absolute; inset: 0; transform: translateY(70px); }
+      .sc { inset: 0; opacity: 0; }
+      .pill { left: 50%; transform-origin: 50% 50%; display: flex; align-items: center; gap: 14px; white-space: nowrap; border-radius: 16px; font-weight: 800; letter-spacing: .01em; }
+      .pill.k { top: 300px; background: #121212; color: #fff; font-size: 38px; padding: 18px 34px; box-shadow: 0 10px 24px rgba(0,0,0,.22); }
+      .pill.k svg { width: 38px; height: 38px; stroke: #f5541a; }
+      .card { left: 90px; width: 900px; top: 450px; height: 560px; background: #fff; border-radius: 40px; box-shadow: 0 30px 60px rgba(110,10,0,.35), 0 4px 10px rgba(110,10,0,.15);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; transform-origin: 50% 50%; }
+      .card .n { font-family: "Bebas", sans-serif; font-size: 400px; line-height: .8; color: #121212; letter-spacing: .01em; margin-top: 40px; }
+      .card .u { font-weight: 800; font-size: 60px; letter-spacing: .12em; color: #f5541a; margin-top: 18px; }
+      .card .w { font-family: "Bebas", sans-serif; line-height: .88; text-align: center; color: #121212; font-size: 330px; }
+      .card .w small { display: block; font-family: "Mont", sans-serif; font-weight: 800; font-size: 56px; letter-spacing: .12em; color: #f5541a; margin-top: 20px; line-height: 1; }
+      .ico { width: 170px; height: 170px; border-radius: 50%; background: #fff; box-shadow: 0 18px 40px rgba(0,0,0,.18), 0 3px 8px rgba(0,0,0,.08); display: flex; align-items: center; justify-content: center; left: 790px; top: 380px; transform-origin: 50% 50%; }
+      .ico svg { width: 84px; height: 84px; stroke: #0260a6; }
+      .pill.h { top: 975px; background: #0260a6; color: #fff; font-size: 50px; padding: 20px 42px; border-radius: 18px; box-shadow: 0 14px 30px rgba(2,50,100,.4); }
+      .pill.h svg { width: 46px; height: 46px; stroke: #fff; }
+      .cap { left: 110px; width: 860px; top: 1160px; text-align: center; font-size: 50px; line-height: 1.32; font-weight: 600; color: #fff; text-shadow: 0 3px 14px rgba(110,10,0,.3); }
+      .cap span { color: rgba(255,255,255,.5); }
+      #foot { left: 0; width: 1080px; top: 1520px; text-align: center; }
+      #lock { display: block; margin: 0 auto; width: 200px; filter: drop-shadow(0 0 12px rgba(255,255,255,.45)); }
+      #inf { margin-top: 14px; font-size: 26px; font-weight: 800; letter-spacing: .12em; color: #ffe3cf; }
+      .pill.c { top: 1735px; background: #121212; color: #fff; font-size: 34px; padding: 16px 32px; opacity: 0; }
+      .pill.c svg { width: 34px; height: 34px; stroke: #f5541a; }
+      svg { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20.6" data-width="1080" data-height="1920">
+      <div class="sh abs s1"></div><div class="sh abs s2"></div><div class="sh abs s3"></div><div class="sh abs s4"></div><div id="glow" class="abs"></div>
+      <div id="stars"></div>
+      <div id="scenes"></div>
+      <div id="foot" class="abs"><img id="lock" src="assets/lockup.png" alt="" /><div id="inf">27–29 NOVEMBRE · GRATUIT · 150 PLACES</div></div>
+      <div class="pill c abs" id="cta"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>Inscription : lien en bio</div>
+      <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="20.6" data-track-index="1" data-volume="1"></audio>
+    </div>
+    <script>
+      const $ = (s) => document.querySelector(s);
+      const IC = {
+        cal: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+        list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+        mic: '<path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/>',
+        users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+        pin: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+        clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+      };
+      const svg = (n) => `<svg viewBox="0 0 24 24">${IC[n]}</svg>`;
+      const S = [
+        { n: 3, u: "JOURS", ic: "cal", k: "Durée", h: "Ven. 27 → dim. 29", cap: "Du vendredi 27 au dimanche 29 *novembre.*" },
+        { n: 6, u: "SESSIONS", ic: "list", k: "Programme", h: "Samedi · dès 9h00", cap: "Panels, santé et grande *table ronde.*" },
+        { n: 14, u: "INTERVENANTES", ic: "mic", k: "Invitées", h: "Invitée d'honneur : Mary", cap: "Des femmes qui *prennent la parole.*" },
+        { n: 150, u: "PLACES", ic: "users", k: "Participation", h: "Gratuit", cap: "Inscription *obligatoire.*" },
+        { fin: true, ic: "pin", k: "Rendez-vous", h: "Zone 242 · Sikècodji", cap: "Rue de *Golf FM,* Cotonou." },
+      ];
+      const T = [0.04, 4.0, 8.64, 13.5, 17.9], END = 20.6;
+      const stars = $("#stars"); [[60, 210, 0], [980, 260, 1], [150, 640, 0], [930, 760, 0], [90, 1010, 1], [1000, 1080, 0], [200, 1480, 0], [880, 1450, 1], [520, 190, 0], [40, 1700, 0], [1010, 1700, 0], [540, 1840, 0]]
+        .forEach(([x, y, o], i) => stars.insertAdjacentHTML("beforeend", `<div class="star abs${o ? " o" : ""}" style="left:${x}px;top:${y}px;width:${14 + (i % 3) * 5}px;height:${14 + (i % 3) * 5}px"></div>`));
+      const sc = $("#scenes"); const E = [];
+      S.forEach((c, i) => {
+        let key = false; const spans = [];
+        c.cap.split(" ").forEach((x) => { let k = key; if (x.startsWith("*")) { key = true; k = true; x = x.slice(1); } if (x.endsWith("*")) { key = false; k = true; x = x.slice(0, -1); } spans.push(`<span data-k="${k ? 1 : 0}">${x}</span>`); });
+        const inner = c.fin ? `<div class="w">27–29<small>NOVEMBRE 2026</small></div>` : `<div class="n">0</div><div class="u">${c.u}</div>`;
+        sc.insertAdjacentHTML("beforeend", `<div class="sc abs" id="sc${i}">
+          <div class="pill k abs">${svg("cal")}${c.k}</div>
+          <div class="card abs">${inner}</div>
+          <div class="ico abs">${svg(c.ic)}</div>
+          <div class="pill h abs">${svg(c.fin ? "pin" : "clock")}${c.h}</div>
+          <div class="cap abs">${spans.join(" ")}</div></div>`);
+        const e = $("#sc" + i);
+        E.push({ e, k: e.querySelector(".pill.k"), card: e.querySelector(".card"), n: e.querySelector(".n"), ico: e.querySelector(".ico"), h: e.querySelector(".pill.h"), words: [...e.querySelectorAll(".cap span")] });
+      });
+      const tl = gsap.timeline({ paused: true });
+      gsap.set([".pill.k", ".pill.h"], { xPercent: -50 }); gsap.set(".pill.c", { xPercent: -50 });
+      gsap.set([".pill.k", ".pill.h", ".card", ".ico", ".cap"], { opacity: 0 });
+      document.querySelectorAll(".star").forEach((s, i) => { tl.fromTo(s, { opacity: .25, scale: .8 }, { opacity: 1, scale: 1.2, duration: .9, ease: "sine.inOut", yoyo: true, repeat: 22 }, (i % 5) * .17); });
+      S.forEach((c, i) => {
+        const s = T[i], d = (T[i + 1] || END) - T[i], e = E[i];
+        tl.set(e.e, { opacity: 1 }, s - .05 < 0 ? 0 : s - .05);
+        tl.fromTo(e.k, { opacity: 0, y: -30, scale: .7, rotation: -5 }, { opacity: 1, y: 0, scale: 1, rotation: 0, duration: .45, ease: "back.out(2)" }, s + .2);
+        tl.fromTo(e.card, { opacity: 0, y: 90, scale: .86, rotation: 3 }, { opacity: 1, y: 0, scale: 1, rotation: 0, duration: .6, ease: "back.out(1.6)" }, s + .4);
+        tl.fromTo(e.ico, { opacity: 0, scale: .2, rotation: -40 }, { opacity: 1, scale: 1, rotation: 0, duration: .55, ease: "back.out(2.4)" }, s + .85);
+        tl.fromTo(e.h, { opacity: 0, y: 40, scale: .8, rotation: 3 }, { opacity: 1, y: 0, scale: 1, rotation: 0, duration: .5, ease: "back.out(2)" }, s + 1.25);
+        if (e.n) { const o = { v: 0 }; tl.to(o, { v: c.n, duration: 1.5, ease: "power2.out", onUpdate: () => { e.n.textContent = Math.round(o.v); } }, s + .55);
+          tl.fromTo(e.n, { scale: 1.12 }, { scale: 1, duration: .4, ease: "back.out(2)" }, s + 2.0); }
+        tl.fromTo(e.e.querySelector(".cap"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .35, ease: "power2.out" }, s + 1.4);
+        e.words.forEach((w, j) => {
+          const t = s + 1.75 + j * Math.min(.3, Math.max(.16, (d - 2.9) / e.words.length));
+          tl.to(w, { color: "#ffffff", duration: .15, ease: "none" }, t);
+          if (w.dataset.k === "1") tl.set(w, { fontWeight: 800 }, t);
+        });
+        tl.to(e.card, { y: -10, duration: Math.max(.8, (d - 1.2) / 2), ease: "sine.inOut", yoyo: true, repeat: 1 }, s + 1.2);
+        if (i < S.length - 1) tl.to([e.k, e.card, e.ico, e.h, e.e.querySelector(".cap")], { opacity: 0, scale: .94, y: 20, duration: .28, ease: "power2.in", stagger: .02 }, s + d - .38);
+        else tl.to([e.k, e.card, e.ico, e.h, e.e.querySelector(".cap")], { opacity: 0, duration: .5, ease: "power2.in" }, END - .6);
+      });
+      tl.fromTo("#cta", { opacity: 0, y: 40, scale: .8 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: "back.out(2)" }, T[4] + 1.0);
+      tl.to("#cta", { opacity: 0, duration: .4 }, END - .5);
+      tl.fromTo("#foot", { opacity: 0 }, { opacity: 1, duration: .5 }, .3);
+      tl.to("#foot", { opacity: 0, duration: .5 }, END - .55);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
