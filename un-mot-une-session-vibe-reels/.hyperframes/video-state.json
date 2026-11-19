@@ -1,7 +1,7 @@
 {
   "version": 1,
   "historyId": "76d81f32-654d-48e8-a574-023b074b3ec7",
-  "currentRevision": "fffc65ad-b3b6-49f5-a838-5336cc50b6ed",
+  "currentRevision": "de1b33a5-3606-4847-8571-4d57a92e27d7",
   "pendingChanges": false,
   "files": {
     "assets/bebas-neue-latin-400-normal.woff2": {
@@ -21,8 +21,8 @@
       "content": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/ba/ba826fb84c2e961578adf3a08b5778b87905d4443445d1d56d84f9f157d5ea4b"
     },
     "assets/musique.mp3": {
-      "hash": "bda74f70194db5ee8850ad3d38f0438926019e4ac743a170e0594fbe581eaf97",
-      "content": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/bd/bda74f70194db5ee8850ad3d38f0438926019e4ac743a170e0594fbe581eaf97"
+      "hash": "57bdce94644a47ec9593924724314608fdfea891c30c52086933705e054e95c4",
+      "content": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/57/57bdce94644a47ec9593924724314608fdfea891c30c52086933705e054e95c4"
     },
     "gsap/README.md": {
       "hash": "36224e521bdd9b79dc74ef262effc1a636d960b9be918bc2412ed69f9eee27b0",
@@ -37,8 +37,8 @@
       "content": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/ad/ad5dadeef78a520800a9e5cdd27a92ff5ac37f11b6a07f611b6b52b9f8c79a17"
     },
     "index.html": {
-      "hash": "17831ebc4f3c0841dc650f98b5b21a0420237c21ab59496c73625c12d0f1db5c",
-      "content": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/17/17831ebc4f3c0841dc650f98b5b21a0420237c21ab59496c73625c12d0f1db5c"
+      "hash": "96d89fcd2e989af81a6d7781c630ba590644f892975f91999d1c0a537a85d5c0",
+      "content": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/96/96d89fcd2e989af81a6d7781c630ba590644f892975f91999d1c0a537a85d5c0"
     },
     "meta.json": {
       "hash": "2363143e8dd19d14934c4b9ef655e0da1732d3521004abae4b357a90e8d9b1dc",
@@ -47,6 +47,18 @@
     "package.json": {
       "hash": "ea3702e2aba42041504d75a2bf7149dcc739d47c20da4b8ad3ff7f13a8806ad3",
       "content": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/ea/ea3702e2aba42041504d75a2bf7149dcc739d47c20da4b8ad3ff7f13a8806ad3"
+    },
+    "assets/lockup.png": {
+      "hash": "e677b4807317881de8e20ecb6df28cd359e72b08bf8e876427546a2b50829871",
+      "content": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/e6/e677b4807317881de8e20ecb6df28cd359e72b08bf8e876427546a2b50829871"
+    },
+    "assets/musique_afro_gospel_v1.mp3": {
+      "hash": "bda74f70194db5ee8850ad3d38f0438926019e4ac743a170e0594fbe581eaf97",
+      "content": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/bd/bda74f70194db5ee8850ad3d38f0438926019e4ac743a170e0594fbe581eaf97"
+    },
+    "tools/musique_adoration.py": {
+      "hash": "6cac5b8ec536a6bb4434119bd106d7fcae680a328a62ca1cb679fb4319b3bb74",
+      "content": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/6c/6cac5b8ec536a6bb4434119bd106d7fcae680a328a62ca1cb679fb4319b3bb74"
     }
   },
   "revisions": {
@@ -64,6 +76,37 @@
           "after": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/17/17831ebc4f3c0841dc650f98b5b21a0420237c21ab59496c73625c12d0f1db5c"
         }
       }
+    },
+    "de1b33a5-3606-4847-8571-4d57a92e27d7": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1795102390970,
+      "endedAt": 1795102390993,
+      "files": {
+        "assets/lockup.png": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/e6/e677b4807317881de8e20ecb6df28cd359e72b08bf8e876427546a2b50829871"
+        },
+        "assets/musique_afro_gospel_v1.mp3": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/bd/bda74f70194db5ee8850ad3d38f0438926019e4ac743a170e0594fbe581eaf97"
+        },
+        "assets/musique.mp3": {
+          "before": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/bd/bda74f70194db5ee8850ad3d38f0438926019e4ac743a170e0594fbe581eaf97",
+          "after": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/57/57bdce94644a47ec9593924724314608fdfea891c30c52086933705e054e95c4"
+        },
+        "index.html": {
+          "before": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/17/17831ebc4f3c0841dc650f98b5b21a0420237c21ab59496c73625c12d0f1db5c",
+          "after": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/96/96d89fcd2e989af81a6d7781c630ba590644f892975f91999d1c0a537a85d5c0"
+        },
+        "tools/musique_adoration.py": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/76d81f32-654d-48e8-a574-023b074b3ec7/blobs/6c/6cac5b8ec536a6bb4434119bd106d7fcae680a328a62ca1cb679fb4319b3bb74"
+        }
+      }
     }
   },
   "checks": {
@@ -73,10 +116,133 @@
   },
   "snapshots": {
     "latest": {
-      "revision": null,
-      "id": "32473699-c7ee-4684-91da-ff3105a95224-11"
+      "revision": "de1b33a5-3606-4847-8571-4d57a92e27d7",
+      "id": "65e75395-05c8-4535-b473-064da96520b4-5"
     },
-    "revisions": {},
+    "revisions": {
+      "de1b33a5-3606-4847-8571-4d57a92e27d7": [
+        {
+          "scope": "full",
+          "id": "65e75395-05c8-4535-b473-064da96520b4-0",
+          "image": "/tmp/snapW/frame-00-at-2.8s.png",
+          "time": 2.8,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1795102397599,
+          "contentHash": "ffc2819e4d038b1a40855274b3616700a036e9bfdbb894f9cfa071df444df63e",
+          "revision": "de1b33a5-3606-4847-8571-4d57a92e27d7",
+          "inputFingerprint": "c29d66db23612427e91f93ea2b3504389d1f0261bdbf35680443c8c5b0659d0a",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "65e75395-05c8-4535-b473-064da96520b4-1",
+          "image": "/tmp/snapW/frame-01-at-8.6s.png",
+          "time": 8.6,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1795102397601,
+          "contentHash": "91ef37922a9bc510f362787cefb1ca228b807900d9b6bbbba387aecca2b85805",
+          "revision": "de1b33a5-3606-4847-8571-4d57a92e27d7",
+          "inputFingerprint": "c29d66db23612427e91f93ea2b3504389d1f0261bdbf35680443c8c5b0659d0a",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "65e75395-05c8-4535-b473-064da96520b4-2",
+          "image": "/tmp/snapW/frame-02-at-16.5s.png",
+          "time": 16.5,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1795102397601,
+          "contentHash": "e1297a827a35aa80a16a070e4407c8fc0282e626fc997db17e5b2f92b195ab85",
+          "revision": "de1b33a5-3606-4847-8571-4d57a92e27d7",
+          "inputFingerprint": "c29d66db23612427e91f93ea2b3504389d1f0261bdbf35680443c8c5b0659d0a",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "65e75395-05c8-4535-b473-064da96520b4-3",
+          "image": "/tmp/snapW/frame-03-at-26.8s.png",
+          "time": 26.8,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1795102397601,
+          "contentHash": "369d760abc53ae2e3c616b349826da36de87256f26b2034754056bca88dcd75a",
+          "revision": "de1b33a5-3606-4847-8571-4d57a92e27d7",
+          "inputFingerprint": "c29d66db23612427e91f93ea2b3504389d1f0261bdbf35680443c8c5b0659d0a",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "65e75395-05c8-4535-b473-064da96520b4-4",
+          "image": "/tmp/snapW/frame-04-at-34.5s.png",
+          "time": 34.5,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1795102397601,
+          "contentHash": "81500b56fa4409933290e52d0e43680e5bf7710532f9a5d62d1fe9fac86080ce",
+          "revision": "de1b33a5-3606-4847-8571-4d57a92e27d7",
+          "inputFingerprint": "c29d66db23612427e91f93ea2b3504389d1f0261bdbf35680443c8c5b0659d0a",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "65e75395-05c8-4535-b473-064da96520b4-5",
+          "image": "/tmp/snapW/frame-05-at-35.75s.png",
+          "time": 35.75,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1795102397601,
+          "contentHash": "1c715a9b9eeaad2b6ab0afe91839175d9fe29c5d6ff8b226308e1d7a7486db36",
+          "revision": "de1b33a5-3606-4847-8571-4d57a92e27d7",
+          "inputFingerprint": "c29d66db23612427e91f93ea2b3504389d1f0261bdbf35680443c8c5b0659d0a",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
     "unversioned": [
       {
         "scope": "full",
@@ -322,13 +488,14 @@
   },
   "renders": {
     "latest": {
-      "id": "449418ef-2486-4653-a3e8-0d11a58a9a06",
-      "completedAt": 1795099450421,
+      "id": "4ba7f3c6-491d-4ed8-99e6-9a26bdfeaf47",
+      "completedAt": 1795102523230,
       "output": "/home/user/Motion/un-mot-une-session-vibe-reels/un-mot-une-session-vibe-36s-1080x1920.mp4",
       "status": "completed",
-      "revision": "fffc65ad-b3b6-49f5-a838-5336cc50b6ed"
+      "revision": "de1b33a5-3606-4847-8571-4d57a92e27d7"
     },
     "retainedRevisions": [
+      "de1b33a5-3606-4847-8571-4d57a92e27d7",
       "fffc65ad-b3b6-49f5-a838-5336cc50b6ed"
     ]
   },
