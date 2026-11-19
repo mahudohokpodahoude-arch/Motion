@@ -1,6 +1,6 @@
 # Sons de messagerie : envoi, réception, frappe au clavier, entrée de l'écran final. 29,6 s. Synthèse pure, sans échantillon.
 import numpy as np, wave, sys
-SR, DUR = 44100, 29.6
+SR, DUR = 44100, 30.0
 N = int(SR * DUR); rng = np.random.default_rng(7); L = np.zeros(N); R = np.zeros(N)
 def put(sig, at, pan=0.0, g=1.0):
     i = int(round(at * SR))
@@ -29,9 +29,9 @@ for t, tt in ME:
     while k < t - .18: key(k); k += .07 + rng.uniform(0, .05)
     sent(t)
 for t in HER: recv(t)
-whoosh(26.0, .6, .5)
+whoosh(25.4, .6, .5)
 for k, f in enumerate((523, 659, 784, 1047)):
-    n = int(SR * 1.2); x = np.arange(n) / SR; put((np.sin(2 * np.pi * f * x) + .2 * np.sin(2 * np.pi * 2 * f * x)) * env(n, .003, .35) * .3, 26.5 + k * .09, 0)
+    n = int(SR * 1.2); x = np.arange(n) / SR; put((np.sin(2 * np.pi * f * x) + .2 * np.sin(2 * np.pi * 2 * f * x)) * env(n, .003, .35) * .3, 25.9 + k * .09, 0)
 g = 10 ** (-3 / 20) / max(np.abs(L).max(), np.abs(R).max())
 out = (np.stack([L, R], 1) * g * 32767).astype("<i2")
 with wave.open(sys.argv[1], "wb") as w_:

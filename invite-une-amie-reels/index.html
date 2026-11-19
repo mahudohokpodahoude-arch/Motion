@@ -42,7 +42,7 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="29.6" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1080" data-height="1920">
       <div id="wall" class="abs"></div>
       <div id="clip" class="abs"><div id="chat" class="abs"></div></div>
             <div id="hd" class="abs">
@@ -54,11 +54,11 @@
       <div id="cp" class="abs"><div id="in" class="abs"><span class="ph">Message</span></div><div id="sd" class="abs"><svg viewBox="0 0 24 24"><path d="M2 21 23 12 2 3v7l15 2-15 2z"/></svg></div></div>
       <div id="end" class="abs"></div>
       <div id="flash" class="abs"></div>
-      <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="29.6" data-track-index="1" data-volume="1"></audio>
+      <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="30" data-track-index="1" data-volume="1"></audio>
     </div>
     <script>
       const $ = (s) => document.querySelector(s);
-      const END = 29.6, TEND = 26.2;
+      const END = 30, TEND = 25.6;
       // [qui, instant d'apparition, instant de début de frappe, lignes, heure]
       const M = [
         ["me", 2.0, 1.1, ["Nadège, j'en ai marre 😩", "Mon salaire est fini avant", "la fin du mois."], "14:32"],
@@ -103,22 +103,11 @@
       tl.set($("#m6").querySelector(".ft svg"), { stroke: "#53bdeb" }, 24.0);
       // écran final
       const endEl = $("#end");
-      endEl.innerHTML = `
-        <div class="abs" style="left:0;top:0;width:1080px;height:1920px;background:#ff7a33;opacity:.18;clip-path:polygon(0 0,22% 0,8% 100%,0 100%)"></div>
-        <div class="abs" style="left:0;top:0;width:1080px;height:1920px;background:#b80f00;opacity:.2;clip-path:polygon(38% 0,52% 0,34% 100%,20% 100%)"></div>
-        <div id="e1" class="abs" style="left:50%;top:300px;background:#121212;color:#fff;font-weight:800;font-size:36px;letter-spacing:.08em;padding:18px 34px;border-radius:14px;white-space:nowrap;transform:translateX(-50%) rotate(-3deg)">FEMME, FOI ET FINANCES · SAMEDI 15H00</div>
-        <div id="e2" class="abs" style="left:0;width:1080px;top:430px;text-align:center;font-family:Bebas,sans-serif;font-size:330px;line-height:.86;color:#fff;text-shadow:12px 12px 0 #0a2b4a;letter-spacing:.01em"><div>INVITE</div><div>UNE AMIE</div></div>
-        <img id="e3" class="abs" src="assets/lockup.png" style="left:290px;top:1080px;width:500px;filter:drop-shadow(0 0 18px rgba(255,255,255,.5))" alt="">
-        <div id="e4" class="abs" style="left:0;width:1080px;top:1400px;text-align:center;font-weight:800;font-size:40px;letter-spacing:.12em;line-height:1.4;color:#ffe3cf">27–29 NOVEMBRE · ZONE 242<br>SIKÈCODJI · GRATUIT · 150 PLACES</div>
-        <div id="e5" class="abs" style="left:50%;top:1550px;background:#fff;color:#d8300a;font-weight:800;font-size:42px;letter-spacing:.06em;padding:22px 44px;border-radius:16px;white-space:nowrap;transform:translateX(-50%)">INSCRIPTION : LIEN EN BIO</div>`;
+      endEl.innerHTML = `<img id="e0" class="abs" src="assets/affiche_story.jpg" style="left:0;top:0;width:1080px;height:1920px" alt="">`;
       tl.fromTo("#end", { y: 1920 }, { y: 0, duration: .55, ease: "power4.out" }, TEND);
-      tl.fromTo("#flash", { opacity: .3 }, { opacity: 0, duration: .3, ease: "power2.out", immediateRender: false }, TEND + .2);
-      tl.fromTo("#e1", { scale: 0, rotation: -14 }, { scale: 1, rotation: -3, duration: .5, ease: "back.out(2.2)" }, TEND + .5);
-      tl.fromTo("#e2 div", { x: -300, opacity: 0 }, { x: 0, opacity: 1, duration: .5, ease: "power4.out", stagger: .15 }, TEND + .7);
-      tl.fromTo("#e3", { scale: .8, opacity: 0 }, { scale: 1, opacity: 1, duration: .5, ease: "back.out(1.8)" }, TEND + 1.3);
-      tl.fromTo("#e4", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .45, ease: "power3.out" }, TEND + 1.6);
-      tl.fromTo("#e5", { scale: 0 }, { scale: 1, duration: .5, ease: "back.out(2.4)" }, TEND + 2.0);
-            window.__timelines = window.__timelines || {};
+      tl.fromTo("#flash", { opacity: .35 }, { opacity: 0, duration: .3, ease: "power2.out", immediateRender: false }, TEND + .2);
+      tl.fromTo("#e0", { scale: 1.06 }, { scale: 1, duration: END - TEND, ease: "sine.out" }, TEND);
+      window.__timelines = window.__timelines || {};
       window.__timelines["main"] = tl;
     </script>
   </body>
