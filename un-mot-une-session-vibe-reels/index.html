@@ -43,13 +43,13 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="36" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="main" data-start="0" data-duration="36.4" data-width="1080" data-height="1920">
       <div class="sh abs s1"></div><div class="sh abs s2"></div><div class="sh abs s3"></div><div class="sh abs s4"></div><div id="glow" class="abs"></div>
       <div id="stars"></div>
       <div id="scenes"></div>
       <div id="foot" class="abs"><img id="lock" src="assets/lockup.png" alt="" /><div id="inf">27–29 NOVEMBRE · GRATUIT · 150 PLACES</div></div>
       <div class="pill c abs" id="cta"><svg viewBox="0 0 24 24" stroke="#f5541a"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>Inscription : lien en bio</div>
-      <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="36" data-track-index="1" data-volume="1"></audio>
+      <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="36.4" data-track-index="1" data-volume="1"></audio>
     </div>
     <script>
       const $ = (s) => document.querySelector(s);
@@ -92,13 +92,15 @@
         const e = $("#sc" + i);
         E.push({ e, k: e.querySelector(".pill.k"), card: e.querySelector(".card"), ico: e.querySelector(".ico"), h: e.querySelector(".pill.h"), words: [...e.querySelectorAll(".cap span")] });
       });
+      // changements de carte calés sur les attaques du morceau (Deborah Lukalu · extrait à partir de 19,1 s)
+      const T = [0.04, 6.44, 11.73, 17.47, 24.08, 30.25], END = 36.4;
       const tl = gsap.timeline({ paused: true });
       gsap.set([".pill.k", ".pill.h"], { xPercent: -50 }); gsap.set(".pill.c", { xPercent: -50 });
       gsap.set([".pill.k", ".pill.h", ".card", ".ico"], { opacity: 0 }); gsap.set(".cap", { opacity: 0 });
       // étoiles : scintillement permanent
       document.querySelectorAll(".star").forEach((s, i) => { tl.fromTo(s, { opacity: .25, scale: .8 }, { opacity: 1, scale: 1.2, duration: .9, ease: "sine.inOut", yoyo: true, repeat: 39 }, (i % 5) * .17); });
       S.forEach((c, i) => {
-        const s = i * 6, e = E[i];
+        const s = T[i], d = (T[i + 1] || END) - T[i], e = E[i];
         tl.set(e.e, { opacity: 1 }, s - .05 < 0 ? 0 : s - .05);
         // entrées : pastille noire, carte, icône, heure
         tl.fromTo(e.k, { opacity: 0, y: -30, scale: .7, rotation: -5 }, { opacity: 1, y: 0, scale: 1, rotation: 0, duration: .45, ease: "back.out(2)" }, s + .2);
@@ -108,7 +110,7 @@
         tl.fromTo(e.e.querySelector(".cap"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .35, ease: "power2.out" }, s + 1.5);
         // légende : mot à mot
         e.words.forEach((w, j) => {
-          const t = s + 1.9 + j * .3;
+          const t = s + 1.9 + j * Math.min(.3, Math.max(.18, (d - 3.2) / e.words.length));
           tl.to(w, { color: "#ffffff", duration: .15, ease: "none" }, t);
           if (w.dataset.k === "1") tl.set(w, { fontWeight: 800 }, t);
         });
@@ -116,13 +118,13 @@
         tl.to(e.card, { y: -10, duration: 1.6, ease: "sine.inOut", yoyo: true, repeat: 1 }, s + 1.2);
         tl.to(e.ico, { rotation: 8, duration: .8, ease: "sine.inOut", yoyo: true, repeat: 3 }, s + 1.6);
         // sortie
-        tl.to([e.k, e.card, e.ico, e.h, e.e.querySelector(".cap")], { opacity: 0, scale: .94, y: 20, duration: .28, ease: "power2.in", stagger: .02 }, s + 5.62);
-        tl.set(e.e, { opacity: 0 }, s + 6);
+        tl.to([e.k, e.card, e.ico, e.h, e.e.querySelector(".cap")], { opacity: 0, scale: .94, y: 20, duration: .28, ease: "power2.in", stagger: .02 }, s + d - .38);
+        tl.set(e.e, { opacity: 0 }, s + d);
       });
-      tl.fromTo("#cta", { opacity: 0, y: 40, scale: .8 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: "back.out(2)" }, 30 + 3.2);
-      tl.to("#cta", { opacity: 0, duration: .4 }, 35.5);
+      tl.fromTo("#cta", { opacity: 0, y: 40, scale: .8 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: "back.out(2)" }, T[5] + 3.2);
+      tl.to("#cta", { opacity: 0, duration: .4 }, END - .5);
       tl.fromTo("#foot", { opacity: 0 }, { opacity: 1, duration: .5 }, .3);
-      tl.to("#foot", { opacity: 0, duration: .5 }, 35.45);
+      tl.to("#foot", { opacity: 0, duration: .5 }, END - .55);
       window.__timelines = window.__timelines || {};
       window.__timelines["main"] = tl;
     </script>
