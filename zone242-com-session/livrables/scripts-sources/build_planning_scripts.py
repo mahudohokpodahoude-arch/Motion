@@ -26,7 +26,7 @@ P.append("""<h1>Planning de publication</h1>
 <table><tr><th style="width:90px">Date</th><th style="width:36%">Feed : carrousels, affiches, bios</th><th>Vidéos et stories</th></tr>
 <tr><td><b>Jeu 19</b></td><td><b>16h00</b> Carrousel « 4 raisons d'être au Week-end Zone Women » · <span class="ok">publié</span></td><td><span class="tb">Tournage aujourd'hui :</span> Restaurée, Ointe, Envoyée</td></tr>
 <tr><td><b>Ven 20</b></td><td>—</td><td><b>16h00</b> Vidéo motion qui présente les panélistes<br><b>20h00</b> Vidéo tournée <b>Restaurée</b><br><span class="tb">À tourner :</span> vidéo de la Prophétesse Mary (avant lundi)</td></tr>
-<tr><td><b>Sam 21</b></td><td><b>12h30</b> Bio : <b>Pasteure Veronica</b><br><b>16h00</b> Bio : Pasteure Anne-Laure</td><td><b>20h00</b> Vidéo tournée <b>Ointe</b></td></tr>
+<tr><td><b>Sam 21</b></td><td><b>12h30</b> Bio : <b>Pasteure Veronica</b><br><b>16h00</b> Bio : Pasteure Anne-Laure</td><td><b>18h00</b> <b>Contenu 2</b> : « Pourquoi venir… ? » (script en bas)<br><b>20h00</b> Vidéo tournée <b>Ointe</b></td></tr>
 <tr><td><b>Dim 22</b></td><td><b>12h30</b> Bio : Évangéliste Jessie Vanessa<br><b>16h00</b> Bio : Prophétesse Pélagie<br>Annonce à l'assemblée (au culte)</td><td><b>7h30</b> Story J-5<br><b>20h00</b> Vidéo tournée <b>Envoyée</b></td></tr>
 <tr><td><b>Lun 23</b></td><td><b>12h30</b> Bio : Dr Sylvie<br><b>16h00</b> Bio : Dr Marjolaine</td><td><b>7h30</b> Story J-4<br><b>18h00</b> <b>Contenu 1</b> : « Et si ce week-end… » (script en bas)<br><b>20h00</b> Zone Détente</td></tr>
 <tr><td><b>Mar 24</b></td><td><b>12h30</b> Bio : Servante Manne<br><b>16h00</b> Bio : Leader Richmelle<br><b>18h00</b> Affiche de la Prophétesse Mary</td><td><b>7h30</b> Story J-3<br><b>20h00</b> <b>Vidéo de la Prophétesse Mary : elle annonce sa venue</b></td></tr>
@@ -44,6 +44,14 @@ P.append("""<div class="sch">Scripts</div>
 <p>Ne reste pas en dehors de cette expérience.</p>
 <p>Les inscriptions sont ouvertes, mais attention, les places sont limitées !</p>
 <p>Retrouve le lien d'inscription en commentaire. On t'attend ! »</p></div>""")
+P.append("""<div class="scr"><h3>Contenu 2 · « Pourquoi venir au WEEK-END ZONE WOMEN ? »</h3><div class="m">Sam 21 · 18h00 (date et heure proposées, à confirmer) · vidéo tournée avec 3 femmes et une voix off · lien d'inscription en commentaire</div>
+<p><b>Femme 1 :</b> « Pourquoi venir au WEEK-END ZONE WOMEN ? »</p>
+<p><b>Femme 2 :</b> « Parce que tu as besoin de prendre du temps pour toi et ta croissance. »</p>
+<p><b>Femme 3 :</b> « Parce que tu fais partie d'une génération de femmes appelées à impacter ! »</p>
+<p><b>Femme 1 :</b> « Alors, qu'est-ce que tu attends ? »</p>
+<p><b>Toutes :</b> « Rendez-vous du 27 au 29 novembre ! »</p>
+<p><b>Voix off :</b> « Inscris-toi dès maintenant. Lien en commentaire. »</p></div>""")
+
 html = f"<!doctype html><meta charset=utf-8><style>{CSS}</style>" + "".join(P)
 f = H / "planning_scripts.html"; f.write_text(html)
 from playwright.sync_api import sync_playwright
