@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Logo animé — Week-end Zone Women (WZW)</title>
+    <script src="gsap/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #ee1a02; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: linear-gradient(115deg, #ee1a02 0%, #f12e04 38%, #f5541a 72%, #fb7a2a 100%); }
+      .abs { position: absolute; }
+      .sh { inset: 0; }
+      .s1 { background: #ff7a33; opacity: .22; clip-path: polygon(0 0, 16% 0, 6% 100%, 0 100%); }
+      .s2 { background: #b80f00; opacity: .22; clip-path: polygon(28% 0, 40% 0, 24% 100%, 12% 100%); }
+      .s3 { background: #ff9a4a; opacity: .18; clip-path: polygon(60% 0, 72% 0, 58% 100%, 46% 100%); }
+      .s4 { background: #c01200; opacity: .20; clip-path: polygon(86% 0, 100% 0, 100% 100%, 74% 100%); }
+      #halo { left: 260px; top: 110px; width: 1400px; height: 860px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,190,140,.85), rgba(255,190,140,0)); }
+      #lock { left: 278px; top: 190px; width: 1664px; height: 806px; transform-origin: 0 0;
+        filter: drop-shadow(0 0 4px rgba(255,255,255,.2)) drop-shadow(0 0 10px rgba(255,255,255,0)); }
+      .pc { position: absolute; display: block; }
+      .wd { position: absolute; overflow: hidden; }
+      #shine { left: 278px; top: 190px; width: 1664px; height: 806px; transform-origin: 0 0;
+        -webkit-mask-image: url(assets/lockup_masque.png); mask-image: url(assets/lockup_masque.png); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; overflow: hidden; }
+      #band { position: absolute; top: -100px; left: 0; width: 260px; height: 1000px; background: linear-gradient(90deg, rgba(255,235,210,0), rgba(255,235,210,.95), rgba(255,235,210,0)); transform: skewX(-20deg); }
+      .ring { border-radius: 50%; border: 6px solid rgba(255,255,255,.9); opacity: 0; width: 300px; height: 300px; margin: -150px 0 0 -150px; }
+      .sp { width: 70px; height: 70px; margin: -35px 0 0 -35px; opacity: 0; }
+      #flash { inset: 0; background: #fff; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="5" data-width="1920" data-height="1080">
+      <div class="sh abs s1"></div><div class="sh abs s2"></div><div class="sh abs s3"></div><div class="sh abs s4"></div>
+      <div id="halo" class="abs"></div>
+      <div id="rings">
+        <div class="ring abs" id="r1" style="left:560px;top:430px"></div>
+        <div class="ring abs" id="r2" style="left:960px;top:420px"></div>
+        <div class="ring abs" id="r3" style="left:1360px;top:430px"></div>
+        <div class="ring abs" id="r4" style="left:960px;top:500px"></div>
+      </div>
+      <div id="lock" class="abs">
+        <img id="W1" class="pc" src="assets/W1.png" style="left:50px;top:1px;width:609px;height:619px" alt=""><img id="Z" class="pc" src="assets/Z.png" style="left:669px;top:0px;width:312px;height:559px" alt=""><img id="W2" class="pc" src="assets/W2.png" style="left:1005px;top:1px;width:604px;height:615px" alt="">
+        <div class="wd" id="wWEEKEND" style="left:64px;top:595px;width:605px;height:179px"><img src="assets/WEEKEND.png" style="width:100%;height:100%" alt=""></div><div class="wd" id="wZONE" style="left:724px;top:603px;width:347px;height:121px"><img src="assets/ZONE.png" style="width:100%;height:100%" alt=""></div><div class="wd" id="wWOMEN" style="left:1119px;top:612px;width:489px;height:165px"><img src="assets/WOMEN.png" style="width:100%;height:100%" alt=""></div>
+      </div>
+      <div id="shine" class="abs"><div id="band"></div></div>
+      <div id="stars">
+        <svg class="sp abs" id="sp0" viewBox="0 0 100 100" style="left:300px;top:220px"><path d="M50 0 C54 34 66 46 100 50 C66 54 54 66 50 100 C46 66 34 54 0 50 C34 46 46 34 50 0Z" fill="#fff"/></svg><svg class="sp abs" id="sp1" viewBox="0 0 100 100" style="left:1640px;top:250px"><path d="M50 0 C54 34 66 46 100 50 C66 54 54 66 50 100 C46 66 34 54 0 50 C34 46 46 34 50 0Z" fill="#fff"/></svg><svg class="sp abs" id="sp2" viewBox="0 0 100 100" style="left:500px;top:880px"><path d="M50 0 C54 34 66 46 100 50 C66 54 54 66 50 100 C46 66 34 54 0 50 C34 46 46 34 50 0Z" fill="#fff"/></svg><svg class="sp abs" id="sp3" viewBox="0 0 100 100" style="left:1480px;top:860px"><path d="M50 0 C54 34 66 46 100 50 C66 54 54 66 50 100 C46 66 34 54 0 50 C34 46 46 34 50 0Z" fill="#fff"/></svg><svg class="sp abs" id="sp4" viewBox="0 0 100 100" style="left:960px;top:150px"><path d="M50 0 C54 34 66 46 100 50 C66 54 54 66 50 100 C46 66 34 54 0 50 C34 46 46 34 50 0Z" fill="#fff"/></svg><svg class="sp abs" id="sp5" viewBox="0 0 100 100" style="left:150px;top:560px"><path d="M50 0 C54 34 66 46 100 50 C66 54 54 66 50 100 C46 66 34 54 0 50 C34 46 46 34 50 0Z" fill="#fff"/></svg><svg class="sp abs" id="sp6" viewBox="0 0 100 100" style="left:1790px;top:600px"><path d="M50 0 C54 34 66 46 100 50 C66 54 54 66 50 100 C46 66 34 54 0 50 C34 46 46 34 50 0Z" fill="#fff"/></svg><svg class="sp abs" id="sp7" viewBox="0 0 100 100" style="left:1100px;top:900px"><path d="M50 0 C54 34 66 46 100 50 C66 54 54 66 50 100 C46 66 34 54 0 50 C34 46 46 34 50 0Z" fill="#fff"/></svg>
+      </div>
+      <div id="flash" class="abs"></div>
+      <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="5" data-track-index="1" data-volume="1"></audio>
+    </div>
+    <script>
+      // 120 bpm : un temps = 0,5 s. W 0,5 · Z 1,0 · W 1,5 · allumage 2,0 · mots 2,0 / 2,5 / 3,0 · reflet 3,5 · accord final 4,0
+      const tl = gsap.timeline({ paused: true });
+      gsap.set(".sh.s1", { xPercent: -110 }); gsap.set(".sh.s2", { xPercent: -60, yPercent: -10 }); gsap.set(".sh.s3", { xPercent: 70 }); gsap.set(".sh.s4", { xPercent: 110 });
+      gsap.set("#halo", { scale: .3, opacity: 0, transformOrigin: "50% 50%" });
+      gsap.set("#W1", { x: -1500, skewX: -28, opacity: 0 });
+      gsap.set("#Z", { scale: 0, rotate: -120, opacity: 0, transformOrigin: "50% 50%" });
+      gsap.set("#W2", { x: 1500, skewX: 28, opacity: 0 });
+      gsap.set(".wd", { clipPath: "inset(0 0 100% 0)" });
+      gsap.set(".wd img", { yPercent: 80 });
+      gsap.set(".ring", { scale: .2, opacity: 0 });
+      gsap.set(".sp", { scale: 0, rotate: -60, opacity: 0 });
+      gsap.set("#band", { x: -500 });
+      gsap.set(["#lock", "#shine"], { scale: .82, transformOrigin: "0 0" });
+
+      // fond : les bandes glissent en place (0 → 0,6 s), halo qui s'allume
+      tl.to(".sh.s1", { xPercent: 0, duration: .9, ease: "power3.out" }, 0).to(".sh.s2", { xPercent: 0, yPercent: 0, duration: 1, ease: "power3.out" }, 0.05)
+        .to(".sh.s3", { xPercent: 0, duration: 1, ease: "power3.out" }, 0.1).to(".sh.s4", { xPercent: 0, duration: .9, ease: "power3.out" }, 0.1);
+      tl.to("#halo", { scale: 1, opacity: .6, duration: 1.4, ease: "power2.out" }, 0.2);
+      // 0,5 s — premier W
+      tl.to("#W1", { x: 0, skewX: 0, opacity: 1, duration: .42, ease: "expo.out" }, 0.38);
+      // 1,0 s — le Z tourne et claque
+      tl.to("#Z", { scale: 1, rotate: 0, opacity: 1, duration: .5, ease: "back.out(1.7)" }, 0.88);
+      // 1,5 s — second W
+      tl.to("#W2", { x: 0, skewX: 0, opacity: 1, duration: .42, ease: "expo.out" }, 1.38);
+      // ondes de choc et secousses sur chaque impact
+      [["#r1", .5], ["#r2", 1.0], ["#r3", 1.5]].forEach(([id, at]) => {
+        tl.fromTo(id, { scale: .2, opacity: .9 }, { scale: 3.2, opacity: 0, duration: .7, ease: "power2.out", immediateRender: false }, at);
+        tl.fromTo("#root", { x: 0, y: 0 }, { keyframes: [{ x: -10, y: 8, duration: .04 }, { x: 9, y: -6, duration: .05 }, { x: -5, y: 3, duration: .06 }, { x: 0, y: 0, duration: .12 }], ease: "power1.out", immediateRender: false }, at);
+      });
+      // montée de lumière avant l'allumage
+      tl.to("#lock", { filter: "drop-shadow(0 0 18px rgba(255,255,255,.55)) drop-shadow(0 0 40px rgba(255,255,255,.2))", duration: .5, ease: "power2.in" }, 1.5);
+      // 2,0 s — allumage : flash, onde, étoiles, lueur maximale
+      tl.to("#flash", { opacity: .55, duration: .05, ease: "power2.out" }, 2.0).to("#flash", { opacity: 0, duration: .4, ease: "power2.in" }, 2.05);
+      tl.to("#lock", { filter: "drop-shadow(0 0 26px rgba(255,255,255,.9)) drop-shadow(0 0 70px rgba(255,255,255,.5))", duration: .2, ease: "power2.out" }, 2.0);
+      tl.to("#lock", { filter: "drop-shadow(0 0 14px rgba(255,255,255,.55)) drop-shadow(0 0 36px rgba(255,255,255,.28))", duration: .6, ease: "power2.inOut" }, 2.3);
+      tl.fromTo("#r4", { scale: .2, opacity: .95 }, { scale: 6.5, opacity: 0, duration: 1, ease: "power2.out", immediateRender: false }, 2.0);
+      tl.fromTo("#root", { x: 0, y: 0 }, { keyframes: [{ x: -12, y: 9, duration: .04 }, { x: 10, y: -8, duration: .05 }, { x: -6, y: 4, duration: .06 }, { x: 0, y: 0, duration: .14 }], ease: "power1.out", immediateRender: false }, 2.0);
+      tl.to("#halo", { scale: 1.15, opacity: .85, duration: .5, ease: "power2.out" }, 2.0);
+      for (let i = 0; i < 8; i++) {
+        const at = 2.0 + (i % 4) * .08 + Math.floor(i / 4) * .35;
+        tl.to("#sp" + i, { scale: .6 + (i % 3) * .35, rotate: 0, opacity: 1, duration: .35, ease: "back.out(2.4)" }, at);
+        tl.to("#sp" + i, { scale: 0, opacity: 0, rotate: 60, duration: .5, ease: "power2.in" }, at + 1.1);
+      }
+      // mots du script : 2,0 · 2,5 · 3,0
+      [["#wWEEKEND", 2.0], ["#wZONE", 2.5], ["#wWOMEN", 3.0]].forEach(([id, at]) => {
+        tl.to(id, { clipPath: "inset(0 0 0% 0)", duration: .12, ease: "none" }, at);
+        tl.to(id + " img", { yPercent: 0, duration: .4, ease: "back.out(1.8)" }, at);
+      });
+      // 3,5 s — reflet qui traverse le logo
+      tl.to("#band", { x: 2300, duration: .8, ease: "power2.inOut" }, 3.5);
+      // 4,0 s — accord final : pulsation, puis le logo respire jusqu'à la fin
+      tl.to("#flash", { opacity: .4, duration: .05 }, 4.0).to("#flash", { opacity: 0, duration: .4 }, 4.05);
+      tl.to("#lock", { scale: .845, duration: .45, yoyo: true, repeat: 1, ease: "sine.inOut" }, 4.0);
+      tl.to("#shine", { scale: .845, duration: .45, yoyo: true, repeat: 1, ease: "sine.inOut" }, 4.0);
+      tl.to("#root", { opacity: 1, duration: .01 }, 5);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

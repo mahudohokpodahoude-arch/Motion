@@ -1,0 +1,17 @@
+{
+  "name": "zone242-motion-3d",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes hyperframes@0.8.166 preview",
+    "check": "npx --yes hyperframes@0.8.166 check",
+    "render": "npx --yes hyperframes@0.8.166 render",
+    "publish": "npx --yes hyperframes@0.8.166 publish"
+  },
+  "devDependencies": {
+    "@fontsource/ibm-plex-mono": "^5.2.7",
+    "@fontsource/montserrat": "^5.2.8",
+    "gsap": "^3.14.2",
+    "three": "^0.181.2"
+  }
+}
