@@ -1,4 +1,4 @@
-# Plan de communication et de design · Week-end Zone Women · mis à jour le 12 novembre 2026 (J-15)
+# Plan de communication et de design · Week-end Zone Women · mis à jour le 19 novembre 2026 (J-8)
 import pathlib, re
 H = pathlib.Path(__file__).resolve().parent
 old = (H / "plan_com_base.html").read_text()  # version précédente : source des styles et de l'annexe
@@ -16,18 +16,18 @@ S.append('''<section class="page cover"><div class="dots"></div><div class="in">
   <h1>WEEK-END<br>ZONE WOMEN</h1>
   <div class="sub">« Les femmes prennent le contrôle de la Zone »<br>Du vendredi 27 au dimanche 29 novembre 2026 · Zone 242, Sikècodji</div>
   <div class="three"><span>Restaurée</span><span>Ointe</span><span>Envoyée</span></div>
-  <div class="meta">Version mise à jour le 12 novembre 2026, à J-15 (affiche « Coming soon » publiée le 11 novembre)<br>Contenu : situation · stratégie · design · calendrier jour par jour · 22 idées de contenu · organisation et suivi</div>
+  <div class="meta">Version mise à jour le 19 novembre 2026, à J-8 (carrousel « 4 raisons » publié aujourd'hui à 16h)<br>Contenu : situation · stratégie · design · calendrier jour par jour · 22 idées de contenu · organisation et suivi</div>
   <div class="bar"></div></div></section>''')
 # ---------- 2 situation
 S.append(f'''<section class="page">
-<h1>1. Situation à J-15</h1>
+<h1>1. Situation à J-8</h1>
 <p>Le week-end a <b>3 temps forts</b> : une soirée de lancement le vendredi avec la Prophétesse Mary Favour TONGSI, le <b>Women's Experience Day</b> le samedi (relaxation, 4 panels, la session « Belle et en bonne santé », la Zone Détente et une grande table ronde) et, le dimanche, le grand culte de clôture suivi de l'Agapè des Femmes. Les femmes tiennent l'accueil, la louange, l'animation et l'organisation. <b>Participation gratuite, 150 places, inscription obligatoire.</b></p>
-<div class="kpi"><div><b>J-15</b>avant le début</div><div><b>15</b>intervenantes</div><div><b>150</b>places, gratuit</div><div><b>22</b>idées de contenu</div></div>
+<div class="kpi"><div><b>J-8</b>avant le début</div><div><b>15</b>intervenantes</div><div><b>150</b>places, gratuit</div><div><b>22</b>idées de contenu</div></div>
 <h2>Reste à faire</h2>
 <table><tr><th>Élément</th><th>État</th></tr>
-<tr><td>Formulaire d'inscription (script prêt) et QR code</td><td><span class="t">À créer : bloque l'ouverture des inscriptions</span></td></tr>
-<tr><td>Affiche mère officielle</td><td><span class="t">Échéance 12 novembre</span></td></tr>
-<tr><td>Photos HD des intervenantes, noms de famille manquants</td><td><span class="t">À récupérer avant le 19 novembre</span></td></tr></table>
+<tr><td>Lien d'inscription</td><td><span class="m">Fourni</span> : milmo-zone242.vercel.app/wzw.html#programme. <span class="t">À vérifier :</span> le lien ouvre bien le formulaire. QR code à créer.</td></tr>
+<tr><td>Biographies et photos HD des panélistes (affiches de biographie)</td><td><span class="t">À recevoir avant chaque publication</span> : Veronica et Anne-Laure avant le vendredi 20 à midi</td></tr>
+<tr><td>Noms de famille : Dr Sylvie, Dr Marjolaine, Mme Tossou, Servante Roukiyatou, Murielle, Imalia</td><td><span class="t">À confirmer</span></td></tr></table>
 {foot(2)}</section>''')
 # ---------- 3 stratégie
 S.append(f'''<section class="page tight">
@@ -69,13 +69,14 @@ S.append(f'''<section class="page tight">
 <h1>3. Design : livrables et échéances</h1>
 <p>Les échéances sont celles du Google Sheet de suivi (33 créations) et permettent de tenir le calendrier de la section 4. « À fournir » = élément attendu de l'équipe.</p>
 <table><tr><th>Priorité</th><th>Livrable</th><th>Échéance</th><th>Détail et à fournir</th></tr>
+<tr><td><span class="p0">P0</span></td><td><b>Carrousel « 4 raisons » (carré) et vidéo motion d'annonce (14 intervenantes, 9:16 et 16:9)</b></td><td><span class="m">Fait · 19 nov.</span></td><td>Carrousel publié jeu. 19 à 16h ; vidéo prévue ven. 20.</td></tr>
 <tr><td><span class="p0">P0</span></td><td><b>Affiche « Coming soon »</b></td><td><span class="m">Fait · 11 nov.</span></td><td>Publiée.</td></tr>
 <tr><td><span class="p0">P0</span></td><td><b>Affiche mère officielle</b></td><td>Jeu 12 nov.</td><td>Titre, thème, slogan, dates, lieu, Prophétesse, inscription. <span class="t">À fournir :</span> photo HD de la Prophétesse, QR code.</td></tr>
 <tr><td><span class="p0">P0</span></td><td><b>Teaser vidéo du thème</b></td><td>Jeu 12 nov.</td><td>Motion, dans le style des génériques déjà faits.</td></tr>
 <tr><td><span class="p1">P1</span></td><td><b>A5 recto-verso</b> (face : photos ; arrière : informations)</td><td>Lun 16 nov.</td><td>Programme final, QR code. <span class="t">À fournir :</span> photos HD.</td></tr>
-<tr><td><span class="p1">P1</span></td><td><b>12 affiches de biographie</b> des panélistes</td><td>Jeu 19 nov.</td><td><span class="t">À fournir :</span> 12 photos HD, titres exacts, biographies (Dr Hestia déjà reçue).</td></tr>
+<tr><td><span class="p1">P1</span></td><td><b>12 affiches de biographie</b> des panélistes (2 par jour, de Veronica et Anne-Laure le sam. 21 à Huldah et Tossou le jeu. 26)</td><td>Chaque affiche prête la veille de sa publication (1res : ven. 20 midi)</td><td><span class="t">À fournir :</span> biographies et titres exacts, à l'avance. Photos HD reçues pour 13 panélistes ; manquent Murielle et Imalia.</td></tr>
 <tr><td><span class="p1">P1</span></td><td><b>9 affiches des jours et de l'Agapè</b> : vendredi, 6 sessions du samedi, dimanche, Agapè</td><td>Ven 20 nov.</td><td>Textes détaillés dans le Sheet. Vendredi et dimanche : uniquement la photo de la Prophétesse.</td></tr>
-<tr><td><span class="p2">P2</span></td><td><b>Décomptes J-5 à Jour J</b> (6 stories)</td><td>Ven 20 nov.</td><td>Publication du dimanche 22 au vendredi 27 novembre.</td></tr>
+<tr><td><span class="p2">P2</span></td><td><b>Décomptes J-5 à Jour J</b> (6 stories)</td><td>Sam 21 nov.</td><td>Publication du dimanche 22 au vendredi 27 novembre.</td></tr>
 <tr><td><span class="p2">P2</span></td><td><b>Supports physiques</b> : bâche, kakémono, panneaux, badges</td><td>Ven 20 nov. (envoi imprimeur lun. 23)</td><td><span class="t">À fournir :</span> dimensions, délais de l'imprimeur, QR code.</td></tr>
 <tr><td><span class="p2">P2</span></td><td><b>Habillage reels et stories</b> Jour 1, 2, 3</td><td>Mar 24 nov.</td><td>Cadre, bandeau, transitions, logo WZW.</td></tr>
 <tr><td><span class="p3">P3</span></td><td><b>Après l'événement</b> : citations, remerciement, habillage du récap</td><td>Mer 2 déc.</td><td>Citations notées pendant les panels (hors table ronde).</td></tr></table>
@@ -83,24 +84,18 @@ S.append(f'''<section class="page tight">
 # ---------- 5 calendrier (2 pages)
 rows = [
  ("Mer 11","<b>Affiche « Coming soon »</b>","<span class=m>Fait</span> · WhatsApp, Facebook, Instagram"),
- ("Jeu 12","Teaser vidéo du thème · story-sondage « Qui sera là ? »","Reels, TikTok, statuts, stories"),
- ("Ven 13","<b>Révélation : affiche officielle et ouverture des inscriptions</b> (lien + QR). Annonce dans tous les groupes WhatsApp","Tous canaux, dès que le lien est prêt"),
- ("Sam 14","Carrousel du programme complet (8 diapos, 1080×1080)","Instagram, Facebook ; affiche en statut"),
- ("Dim 15","Annonce à l'assemblée · relais de l'affiche par les hommes · rappel du lien","Culte, WhatsApp"),
- ("Lun 16","Série « 3 mots » 1/3 : <b>Restaurée</b> · rappel « 150 places, gratuit »","Post 4:5 + story"),
- ("Mar 17","Série « 3 mots » 2/3 : <b>Ointe</b> · coulisses de l'équipe des femmes","Post 4:5 + story, stories tournées"),
- ("Mer 18","Série « 3 mots » 3/3 : <b>Envoyée</b> · vidéo d'annonce officielle","Post + reel 9:16 et 16:9"),
- ("Jeu 19","<b>Panel 1</b> · Guérir des traumatismes émotionnels : affiche de session + 4 affiches de biographie","Carrousel + stories"),
- ("Ven 20","<b>Belle et en bonne santé</b> (Dr Sylvie, Dr Majolaine) et <b>Panel 2</b> · Me voici, envoie-moi !","Cartes + reel"),
- ("Sam 21","<b>Panel 3</b> · Femme, foi et finances et <b>Panel 4</b> · Ma maison, ma mission","Cartes + reel"),
- ("Dim 22","<b>J-5</b> · décompte · <b>Grande table ronde</b> (sans captation) · rappel de l'Agapè","Stories, statut"),
+ ("Jeu 12 → mer 18","Teaser, révélation de l'affiche officielle, carrousel du programme, série « 3 mots » : <span class=t>statut à confirmer par l'équipe</span>","Voir le suivi de l'équipe"),
+ ("Jeu 19","<b>Carrousel « 4 raisons d'être au Week-end Zone Women »</b> (6 diapos, 1080×1080, lien d'inscription en légende) · <b>16h00</b>","<span class=m>Publié aujourd'hui</span> · Facebook, Instagram"),
+ ("Ven 20","<b>Vidéo motion d'annonce qui présente les panélistes</b> (40 s, 14 intervenantes) · légende avec le lien d'inscription. Annonce du « programme des biographies » : « Dès demain, deux panélistes par jour »","Reels 9:16, version 16:9 ; statuts WhatsApp"),
+ ("Sam 21","<b>Biographies 1/6</b> : Pasteure Veronica + Pasteure Anne-Laure JEUNE NOZIER","2 affiches (feed), 2 stories"),
+ ("Dim 22","<b>Biographies 2/6</b> : Évangéliste Jessie Vanessa + Prophétesse Pélagie MANTANVI · <b>J-5</b> (story) · annonce à l'assemblée, relais par les hommes","2 affiches, story J-5, culte"),
 ]
 rows2 = [
- ("Lun 23","<b>J-4</b> · décompte · <b>Zone Détente</b> (samedi 13h00-14h00) · places restantes","Carrousel, stories"),
- ("Mar 24","<b>J-3</b> · décompte · affiche du vendredi et du dimanche (Prophétesse Mary) · habillage prêt","Affiches, stories"),
- ("Mer 25","<b>J-2</b> · décompte · citation du thème + programme · « invite une amie »","Carte de citation, stories"),
- ("Jeu 26","<b>J-1</b> · décompte · plan d'accès, horaires, ce qu'il faut savoir","Stories, WhatsApp"),
- ("Ven 27","<b>Jour J</b> · soirée de lancement à 19h45 (direct possible)","Direct, stories"),
+ ("Lun 23","<b>Biographies 3/6</b> : Dr Sylvie + Dr Marjolaine (session « Belle et en bonne santé ») · <b>J-4</b> (story) · Zone Détente en story","2 affiches, stories"),
+ ("Mar 24","<b>Biographies 4/6</b> : Prophétesse Manne + Leader Richmelle OUSSA · <b>J-3</b> (story) · affiche vendredi et dimanche (Prophétesse Mary)","2 affiches, affiche Mary, story"),
+ ("Mer 25","<b>Biographies 5/6</b> : Dr Hestia DAOUDOU + Pasteure Espérance HOUEWATONOU · <b>J-2</b> (story) · citation du thème, « invite une amie »","2 affiches, citation, story"),
+ ("Jeu 26","<b>Biographies 6/6</b> : Leader Huldah OROUNLA + Madame Tossou · <b>J-1</b> (story) · plan d'accès, horaires, ce qu'il faut savoir","2 affiches, stories, WhatsApp"),
+ ("Ven 27","<b>Jour J</b> · matin : Servante Roukiyatou PIWO et les animatrices de la table ronde, Pasteure Murielle et Imalia (<span class=t>rôle de Roukiyatou à confirmer</span>) · soirée de lancement 19h45 (direct possible)","Affiches, direct, stories"),
  ("Sam 28","<b>Jour 2</b> · citations par panel, photos, ambiance. <b>Aucune captation de la table ronde</b>","Stories, reels"),
  ("Dim 29","<b>Jour 3</b> · culte de clôture 8h45, Agapè des Femmes 11h30, remerciements","Direct, post"),
  ("Lun 30 →","Récap vidéo et photos, témoignages, un extrait de panel par semaine (hors table ronde)","Tous canaux"),
@@ -109,23 +104,23 @@ def tr(r): return f"<tr><td><b>{r[0]}</b></td><td>{r[1]}</td><td>{r[2]}</td></tr
 S.append(f'''<section class="page tight">
 <h1>4. Calendrier de communication</h1>
 <table><tr><th>Phase</th><th>Dates</th><th>Objectif et contenus</th></tr>
-<tr><td><b>Teasing</b></td><td>Mer 11 → jeu 12 nov.</td><td>« Coming soon » publié, teaser du thème.</td></tr>
-<tr><td><b>Lancement</b></td><td>Ven 13 → sam 21 nov.</td><td>Affiche officielle, ouverture des inscriptions, programme, thème en 3 mots, une session et ses intervenantes par jour.</td></tr>
-<tr><td><b>Compte à rebours</b></td><td>Dim 22 → jeu 26 nov.</td><td>Décomptes J-5 à J-1, places restantes, Zone Détente, infos pratiques.</td></tr>
+<tr><td><b>Teasing et lancement</b></td><td>Mer 11 → mer 18 nov.</td><td>« Coming soon », affiche officielle, programme, thème (statuts à confirmer par l'équipe).</td></tr>
+<tr><td><b>Annonce des intervenantes</b></td><td>Jeu 19 → ven 20 nov.</td><td>Carrousel « 4 raisons » (jeu. 16h), vidéo motion qui présente les panélistes (ven.).</td></tr>
+<tr><td><b>Biographies et compte à rebours</b></td><td>Sam 21 → jeu 26 nov.</td><td>Deux biographies par jour (12 panélistes, à partir de Pasteure Veronica) ; décomptes J-5 à J-1 en stories ; infos pratiques.</td></tr>
 <tr><td><b>Direct</b></td><td>Ven 27 → dim 29 nov.</td><td>Direct (hors table ronde), citations en temps réel, photos, ambiance.</td></tr>
 <tr><td><b>Après</b></td><td>Dès lun 30 nov.</td><td>Récap, remerciements, témoignages, extraits des panels.</td></tr></table>
 <h2>Jour par jour (1/2)</h2>
 <table><tr><th>Date</th><th>Publication</th><th>Canal / format</th></tr>{"".join(tr(r) for r in rows)}</table>
-<div class="box info"><b>Rythme :</b> 1 publication par jour dans le feed et 3 à 5 stories pendant le lancement. La date d'ouverture des inscriptions (ven. 13) dépend de la création du formulaire : si le lien n'est pas prêt, décaler la révélation sans toucher à la suite.</div>
+<div class="box info"><b>Rythme à partir du samedi 21 :</b> 2 affiches de biographie par jour dans le feed (une à midi, une en soirée, à confirmer avec l'équipe), plus 3 à 5 stories dont le décompte. Les biographies ne doivent pas être décalées : chaque jour de retard fait déborder la dernière sur le jour J.</div>
 {foot(5)}</section>
 <section class="page tight">
 <h1>4. Calendrier de communication (suite)</h1>
 <h2>Jour par jour (2/2)</h2>
 <table><tr><th>Date</th><th>Publication</th><th>Canal / format</th></tr>{"".join(tr(r) for r in rows2)}</table>
 <h2>Règles de publication</h2>
-<ul><li><b>Inscription :</b> chaque publication reprend « Inscription obligatoire · 150 places · participation gratuite » et le QR code, une fois le lien ouvert.</li>
+<ul><li><b>Inscription :</b> chaque publication reprend « Inscription obligatoire · 150 places · participation gratuite » et le lien milmo-zone242.vercel.app/wzw.html#programme (QR code à ajouter).</li>
 <li><b>Table ronde :</b> pas de direct ni de vidéo (règle du programme). Pas de photo ni de citation de ce temps, sauf accord de l'équipe d'animation.</li>
-<li><b>Intervenantes :</b> une publication par session, avec les affiches de biographie correspondantes. Pélagie (panels 1, 3, 4) et Hestia (panels 2, 4) ont une seule affiche de biographie, reprise à chaque session.</li>
+<li><b>Intervenantes :</b> deux affiches de biographie par jour, regroupées par session quand c'est possible. Pélagie (panels 1, 3, 4) et Hestia (panels 2, 4) ont une seule affiche, reprise à chaque session. L'ordre complet est validé par l'équipe ; Pasteure Veronica ouvre la série.</li>
 <li><b>Hashtags :</b> #ZoneWoman #Restaurée #Ointe #Envoyée.</li>
 <li><b>Horaires :</b> écrits « 9h00 ».</li></ul>
 <h2>Contenus déjà disponibles</h2>
@@ -203,8 +198,8 @@ S.append(f'''<section class="page">
 <tr><td>Invitées venues « par une amie »</td><td>À fixer</td><td>Question posée à l'inscription : « Qui t'a invitée ? »</td></tr></table>
 <h2>Risques et parades</h2>
 <table><tr><th>Risque</th><th>Parade</th></tr>
-<tr><td>Formulaire non prêt : inscriptions non ouvertes</td><td>Créer le formulaire dès cette semaine (script prêt), annoncer un seul lien et un seul QR code.</td></tr>
-<tr><td>Photos HD des intervenantes en retard</td><td>Date butoir le 16 novembre ; en secours, cartes avec monogramme ou illustration.</td></tr>
+<tr><td>Formulaire non prêt : inscriptions non ouvertes</td><td>Vérifier que le lien fourni ouvre bien le formulaire, annoncer un seul lien et un seul QR code.</td></tr>
+<tr><td>Photos HD des intervenantes en retard</td><td>Reçues pour 13 panélistes ; pour les autres, en secours, cartes avec monogramme ou illustration.</td></tr>
 <tr><td>Programme modifié après publication</td><td>Figer le programme avant le 16 novembre ; toute modification passe par une personne.</td></tr>
 <tr><td>Délais d'impression (bâche, kakémono, badges)</td><td>Envoyer à l'imprimeur au plus tard le lundi 23 novembre.</td></tr>
 <tr><td>Captation de la table ronde</td><td>Rappeler la règle à l'équipe tournage et au direct ; couper le direct pendant 17h15-18h15.</td></tr>
