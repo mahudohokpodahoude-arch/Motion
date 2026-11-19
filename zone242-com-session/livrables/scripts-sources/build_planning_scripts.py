@@ -34,9 +34,7 @@ P.append("""<h1>Planning de publication</h1>
 <tr><td><b>Ven 27</b></td><td><b>9h00</b> Bios : Servante Roukiyatou PIWO, Pasteure Murielle, Imalia</td><td><b>7h30</b> Story Jour J · <b>18h00</b> Rappel de la soirée · <b>19h45</b> Soirée de lancement (direct possible) · Kit du direct</td></tr>
 <tr><td><b>Sam 28</b></td><td>Citations par panel, dans l'heure qui suit chacun : <b>11h30</b>, <b>14h45</b>, <b>15h45</b>, <b>17h00</b> (jamais la table ronde)</td><td><b>20h00</b> « Samedi en 60 secondes » · « Une phrase, un panel »</td></tr>
 <tr><td><b>Dim 29</b></td><td>Culte de clôture 8h45 · Agapè des Femmes 11h30 · photos</td><td><b>10h00</b> « Ce que je retiens » · <b>16h00</b> Remerciements</td></tr>
-<tr><td><b>Lun 30 →</b></td><td>Témoignages, un extrait de panel par semaine</td><td><b>16h00</b> Récap du week-end · <b>20h00</b> « Ce qui a été restauré en moi »</td></tr></table>
-<div class="note"><b>Heures :</b> 16h00 et 20h00 du vendredi 20 sont les vôtres. Toutes les autres sont ma proposition (12h30 et 16h00 pour les bios, 20h00 pour la vidéo du jour, 7h30 pour les stories). À corriger avec les statistiques de la page : onglet « Audience ».</div>
-<div class="note"><b>À confirmer :</b> l'ordre des bios après Veronica ; l'orthographe « Pasteure Veronica » ; le contenu de la vidéo de la Prophétesse Mary et qui la tourne ; l'orthographe de « Pasteure Delmica » ; le rôle de Servante Roukiyatou PIWO (absente du programme) ; les noms de famille de Dr Sylvie, Dr Marjolaine, Mme Tossou, Murielle et Imalia ; les textes des bios, à recevoir la veille de chaque publication.</div>""")
+<tr><td><b>Lun 30 →</b></td><td>Témoignages, un extrait de panel par semaine</td><td><b>16h00</b> Récap du week-end · <b>20h00</b> « Ce qui a été restauré en moi »</td></tr></table>""")
 html = f"<!doctype html><meta charset=utf-8><style>{CSS}</style>" + "".join(P)
 f = H / "planning_scripts.html"; f.write_text(html)
 from playwright.sync_api import sync_playwright
