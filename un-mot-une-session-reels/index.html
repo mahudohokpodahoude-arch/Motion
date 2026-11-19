@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Un mot, une session · Week-end Zone Women</title>
+    <script src="gsap/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Bebas"; src: url("assets/bebas-neue-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Mont"; font-weight: 600; src: url("assets/montserrat-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Mont"; font-weight: 800; src: url("assets/montserrat-latin-800-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #ee1a02; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; color: #fff; font-family: "Bebas", sans-serif;
+        background: linear-gradient(160deg, #ee1a02 0%, #f12e04 36%, #f5541a 72%, #fb7a2a 100%); }
+      .abs { position: absolute; }
+      .sh { inset: 0; }
+      .s1 { background: #ff7a33; opacity: .18; clip-path: polygon(0 0, 22% 0, 8% 100%, 0 100%); }
+      .s2 { background: #b80f00; opacity: .20; clip-path: polygon(38% 0, 52% 0, 34% 100%, 20% 100%); }
+      .s3 { background: #ff9a4a; opacity: .16; clip-path: polygon(70% 0, 84% 0, 66% 100%, 52% 100%); }
+      .s4 { background: #c01200; opacity: .18; clip-path: polygon(90% 0, 100% 0, 100% 100%, 76% 100%); }
+      #glow { left: 90px; top: 480px; width: 900px; height: 900px; background: radial-gradient(closest-side, rgba(255,190,140,.65), rgba(255,190,140,0)); }
+      #top { left: 70px; right: 70px; top: 96px; height: 90px; }
+      #seg { display: flex; gap: 10px; }
+      #seg i { display: block; flex: 1; height: 8px; border-radius: 4px; background: rgba(255,255,255,.3); overflow: hidden; }
+      #seg b { display: block; width: 100%; height: 100%; background: #fff; transform-origin: 0 50%; transform: scaleX(0); }
+      #kick { left: 70px; top: 126px; font-family: "Mont"; font-weight: 800; font-size: 26px; letter-spacing: .2em; color: #ffe3cf; }
+      #cnt { right: 70px; top: 112px; font-size: 54px; letter-spacing: .06em; }
+      .cw { inset: 0; opacity: 0; }
+      .word { left: 0; width: 1080px; text-align: center; line-height: .86; letter-spacing: .01em; white-space: nowrap; top: 520px;
+        text-shadow: 0 10px 34px rgba(120,10,0,.35); }
+      .word div { display: block; }
+      .word span { display: inline-block; }
+      .nm { left: 80px; width: 920px; text-align: center; top: 1090px; font-family: "Mont"; font-weight: 800; letter-spacing: .06em; line-height: 1.25; }
+      .nm .k { display: block; font-size: 28px; letter-spacing: .24em; color: #ffe3cf; margin-bottom: 8px; }
+      .nm .t { display: block; font-size: 46px; }
+      .pill { left: 50%; top: 1285px; transform-origin: 50% 50%; background: #fff; color: #d8300a; border-radius: 70px; padding: 18px 54px 6px; font-size: 92px; letter-spacing: .05em; white-space: nowrap; box-shadow: 0 16px 36px rgba(90,0,0,.35); }
+      .pill small { font-family: "Mont"; font-weight: 800; font-size: 30px; letter-spacing: .14em; color: #8a3a22; margin-right: 18px; vertical-align: .24em; }
+      #foot { left: 0; width: 1080px; top: 1520px; text-align: center; }
+      #lock { display: block; margin: 0 auto; width: 270px; filter: drop-shadow(0 0 14px rgba(255,255,255,.45)); }
+      #gr { margin-top: 18px; font-family: "Mont"; font-weight: 800; font-size: 28px; letter-spacing: .16em; color: #fff; }
+      #ins { margin-top: 10px; font-family: "Mont"; font-weight: 800; font-size: 24px; letter-spacing: .14em; color: #ffe3cf; opacity: 0; }
+      #wipe { inset: 0; background: #0260a6; transform: translateX(-101%); }
+      #wipe2 { inset: 0; background: #fff; transform: translateX(-101%); opacity: .9; }
+      #flash { inset: 0; background: #fff; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="36" data-width="1080" data-height="1920">
+      <div class="sh abs s1"></div><div class="sh abs s2"></div><div class="sh abs s3"></div><div class="sh abs s4"></div>
+      <div id="glow" class="abs"></div>
+      <div id="top" class="abs"><div id="seg"></div></div>
+      <div id="kick" class="abs">UN MOT · UNE SESSION</div>
+      <div id="cnt" class="abs">01 / 06</div>
+      <div id="cards"></div>
+      <div id="foot" class="abs"><img id="lock" src="assets/lockup.png" alt="" /><div id="gr">27–29 NOVEMBRE · GRATUIT · 150 PLACES</div><div id="ins">INSCRIPTION : LIEN EN BIO</div></div>
+      <div id="wipe" class="abs"></div><div id="wipe2" class="abs"></div><div id="flash" class="abs"></div>
+      <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="36" data-track-index="1" data-volume="1"></audio>
+    </div>
+    <script>
+      const $ = (s) => document.querySelector(s);
+      const CARDS = [
+        { w: [["GUÉRIR", 400]], k: "PANEL 1", t: "GUÉRIR DES TRAUMATISMES<br>ÉMOTIONNELS", h: "10H30", top: 560 },
+        { w: [["PRENDRE", 270], ["SOIN DE SOI", 222]], k: "SESSION", t: "BELLE ET EN BONNE SANTÉ", h: "12H00", top: 520 },
+        { w: [["SERVIR", 400]], k: "PANEL 2", t: "ME VOICI, ENVOIE-MOI !", h: "14H00", top: 560 },
+        { w: [["BIEN", 340], ["GÉRER", 340]], k: "PANEL 3", t: "FEMME, FOI ET FINANCES", h: "15H00", top: 450 },
+        { w: [["BÂTIR", 400]], k: "PANEL 4", t: "MA MAISON, MA MISSION", h: "16H00", top: 560 },
+        { w: [["OSER EN", 300], ["PARLER", 300]], k: "GRANDE TABLE RONDE", t: "LES CONVERSATIONS QUE LES FEMMES<br>N'OSENT PAS AVOIR", h: "17H15", top: 470, fs: 38 },
+      ];
+      const seg = $("#seg"); CARDS.forEach(() => { seg.insertAdjacentHTML("beforeend", "<i><b></b></i>"); });
+      const cards = $("#cards"); const E = [];
+      CARDS.forEach((c, i) => {
+        const wd = c.w.map(([txt, fs]) => `<div style="font-size:${fs}px">${[...txt].map((ch) => `<span>${ch === " " ? "&nbsp;" : ch}</span>`).join("")}</div>`).join("");
+        cards.insertAdjacentHTML("beforeend", `<div class="cw abs" id="cw${i}"><div class="word abs" style="top:${c.top}px">${wd}</div>
+          <div class="nm abs"><span class="k">${c.k}</span><span class="t" style="font-size:${c.fs || 46}px">${c.t}</span></div>
+          <div class="pill abs"><small>SAMEDI</small>${c.h}</div></div>`);
+        const cw = $("#cw" + i);
+        E.push({ cw, word: cw.querySelector(".word"), letters: cw.querySelectorAll(".word span"), nm: cw.querySelector(".nm"), pill: cw.querySelector(".pill") });
+      });
+      const tl = gsap.timeline({ paused: true });
+      gsap.set("#seg b", { scaleX: 0 }); gsap.set(".pill", { xPercent: -50, scale: 0 }); gsap.set(".nm", { opacity: 0, y: 40 });
+      gsap.set(".word span", { opacity: 0 });
+      CARDS.forEach((c, i) => {
+        const t0 = i * 6, e = E[i];
+        // transition : bande bleue puis bande blanche, flash, changement de carte au milieu
+        tl.fromTo("#wipe", { xPercent: 0, x: "-101%" }, { x: "0%", duration: .22, ease: "power3.in" }, t0 - .22 < 0 ? 0 : t0 - .22);
+        tl.fromTo("#wipe2", { x: "-101%" }, { x: "0%", duration: .22, ease: "power3.in" }, (t0 - .12 < 0 ? .1 : t0 - .12));
+        tl.set(e.cw, { opacity: 1 }, t0 + .12); if (i) tl.set(E[i - 1].cw, { opacity: 0 }, t0 + .12);
+        tl.set("#cnt", { textContent: `0${i + 1} / 06` }, t0 + .12);
+        tl.to("#wipe", { x: "101%", duration: .3, ease: "power3.out" }, t0 + .16);
+        tl.to("#wipe2", { x: "101%", duration: .3, ease: "power3.out" }, t0 + .22);
+        tl.set(["#wipe", "#wipe2"], { x: "-101%" }, t0 + .6);
+        tl.fromTo("#flash", { opacity: .5 }, { opacity: 0, duration: .35, ease: "power2.out" }, t0 + .14);
+        // le mot : lettres qui claquent une à une
+        tl.fromTo(e.letters, { opacity: 0, y: 260, rotation: (k) => (((k * 37 + 11) % 17) / 17 - .5) * 30, scale: 1.7 },
+          { opacity: 1, y: 0, rotation: 0, scale: 1, duration: .5, ease: "back.out(2.2)", stagger: .06 }, t0 + .5);
+        tl.fromTo(e.word, { textShadow: "18px 0 #0260a6, -18px 0 #ffb27a, 0 10px 34px rgba(120,10,0,.35)" }, { textShadow: "7px 7px 0 #0260a6, 0 12px 34px rgba(120,10,0,.35)", duration: .35, ease: "power2.out" }, t0 + 1.05);
+        tl.fromTo(e.word, { scale: 1 }, { scale: 1.05, duration: 4.4, ease: "sine.inOut" }, t0 + 1.2);
+        // titre et heure
+        tl.fromTo(e.nm, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .45, ease: "power3.out" }, t0 + 1.7);
+        tl.to(e.pill, { scale: 1, duration: .5, ease: "back.out(2.4)" }, t0 + 2.2);
+        tl.to(e.pill, { scale: 1.05, duration: .5, yoyo: true, repeat: 5, ease: "sine.inOut" }, t0 + 2.8);
+        // sortie
+        tl.to(e.letters, { y: -300, opacity: 0, duration: .28, ease: "power3.in", stagger: .02 }, t0 + 5.3);
+        tl.to([e.nm, e.pill], { opacity: 0, duration: .25 }, t0 + 5.45);
+        tl.to(seg.children[i].firstChild, { scaleX: 1, duration: 6, ease: "none" }, t0);
+      });
+      tl.to("#ins", { opacity: 1, duration: .4 }, 30 + 2.6);
+      tl.to("#foot", { opacity: 0, duration: .5 }, 35.4);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
