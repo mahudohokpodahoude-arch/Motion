@@ -1,0 +1,11 @@
+HABILLAGE OBS - fenetres transparentes (canevas 1920x1080)
+
+Disposition A : habillage_A_verset_grand_orateur_petit_1920x1080.png
+  VERSET  : X=60   Y=175  Largeur=1200 Hauteur=675
+  ORATEUR : X=1300 Y=175  Largeur=560  Hauteur=315
+
+Disposition B : habillage_B_50_50_1920x1080.png
+  VERSET  : X=40   Y=285  Largeur=910  Hauteur=512
+  ORATEUR : X=970  Y=285  Largeur=910  Hauteur=512
+
+Ordre des calques dans OBS (du bas vers le haut) : 1) ecran des versets  2) camera orateur  3) PNG habillage (tout en haut).
