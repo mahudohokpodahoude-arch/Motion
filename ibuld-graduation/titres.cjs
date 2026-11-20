@@ -23,12 +23,13 @@ const L = [
 (async () => {
   const b = await chromium.launch();
   const p = await b.newPage({ viewport: { width: 1920, height: 1080 } });
-  fs.mkdirSync('out/titres',{recursive:true});
+  
+  for (const th of ['royal','rubis']) { fs.mkdirSync(`out/titres_${th}`,{recursive:true});
   for (const [i,[k,tag,name,role]] of L.entries()) {
     await p.goto('file://'+path.resolve(__dirname,'titres.html'));
-    await p.evaluate(([t,n,r])=>{tag.textContent=t;nameEl=document.getElementById('name');nameEl.textContent=n;const ro=document.getElementById('role');ro.textContent=r;ro.style.display=r?'block':'none';},[tag,name,role]);
+    await p.evaluate(([t,n,r,th])=>{document.body.className=th;document.getElementById('tag').textContent=t;document.getElementById('name').textContent=n;const ro=document.getElementById('role');ro.textContent=r;ro.style.display=r?'block':'none';},[tag,name,role,th]);
     await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(150);
-    await p.screenshot({ path: `out/titres/${String(i+1).padStart(2,'0')}_${k}.png`, omitBackground: true });
-  }
+    await p.screenshot({ path: `out/titres_${th}/${String(i+1).padStart(2,'0')}_${k}.png`, omitBackground: true });
+  } }
   await b.close();
 })();
