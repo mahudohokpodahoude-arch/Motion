@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>IBULD — Titres intervenants</title>
+<style>
+@font-face{font-family:Cinzel;font-weight:600;src:url(fonts/cinzel-latin-600-normal.woff2)}
+@font-face{font-family:Cinzel;font-weight:700;src:url(fonts/cinzel-latin-700-normal.woff2)}
+@font-face{font-family:Cormorant;font-style:italic;font-weight:600;src:url(fonts/cormorant-garamond-latin-600-italic.woff2)}
+@font-face{font-family:Montserrat;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;background:transparent;overflow:hidden}
+:root{--gold:linear-gradient(172deg,#fff1bd 0%,#f1cf75 25%,#c99532 55%,#f3d98a 78%,#b07c1c 100%)}
+.lt{position:absolute;left:110px;bottom:100px;display:flex;align-items:stretch;max-width:1500px}
+.bar{width:14px;background:linear-gradient(180deg,#f6dc8e,#b9882a 50%,#f1d27c);border-radius:3px 0 0 3px;box-shadow:0 0 18px rgba(233,197,101,.5)}
+.box{position:relative;padding:22px 64px 24px 38px;background:linear-gradient(100deg,rgba(2,34,24,.96),rgba(4,52,37,.94) 70%,rgba(4,52,37,.95));
+  border:1.5px solid rgba(233,197,101,.75);border-left:0;box-shadow:0 22px 50px rgba(0,0,0,.5),inset 0 0 0 5px rgba(2,22,16,.55),inset 0 0 0 6px rgba(233,197,101,.22)}
+.tag{display:flex;align-items:center;gap:16px;font-family:Montserrat;font-weight:600;font-size:21px;letter-spacing:.3em;text-transform:uppercase;color:#e9c565;white-space:nowrap}
+.tag s{width:9px;height:9px;transform:rotate(45deg);background:#e9c565;box-shadow:0 0 10px rgba(233,197,101,.8)}
+.name{margin-top:12px;font-family:Cinzel;font-weight:700;font-size:58px;letter-spacing:.04em;line-height:1.1;white-space:nowrap;
+  background:var(--gold);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 2px rgba(0,0,0,.55))}
+.role{margin-top:6px;font-family:Cormorant;font-style:italic;font-weight:600;font-size:34px;color:#f4ecd6;line-height:1.1}
+.tab{position:absolute;right:-1.5px;top:-1.5px;width:0}
+</style></head><body>
+<div class="lt"><div class="bar"></div><div class="box"><div class="tag"><s></s><span id="tag"></span></div><div class="name" id="name"></div><div class="role" id="role"></div></div></div>
+<script>
+const D=window.DATA||[];
+</script></body></html>
