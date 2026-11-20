@@ -17,25 +17,25 @@ function html(cfg){
 @font-face{font-family:Montserrat;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2)}
 *{margin:0;padding:0;box-sizing:border-box}html,body{width:1920px;height:1080px;background:transparent;overflow:hidden}
 svg{position:absolute;inset:0}
-.hd{position:absolute;left:60px;top:38px;font-family:Montserrat;font-weight:800;font-size:46px;letter-spacing:.14em;color:#fff;text-shadow:0 4px 0 rgba(0,0,0,.35)}
+.hd{position:absolute;left:60px;top:38px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.6));font-family:Montserrat;font-weight:800;font-size:46px;letter-spacing:.14em;color:#fff;text-shadow:0 4px 0 rgba(0,0,0,.35)}
 .hd2{position:absolute;right:60px;top:46px;font-family:Montserrat;font-weight:800;font-size:34px;letter-spacing:.3em;color:#ffc82e}
-.ft{position:absolute;left:0;right:0;bottom:0;height:74px;background:#043320;border-top:6px solid #ffc82e;display:flex;align-items:center;justify-content:center;font-family:Montserrat;font-weight:700;font-size:28px;letter-spacing:.5em;color:#ffe08a}
+.ft{position:absolute;left:0;right:0;bottom:0;height:74px;text-shadow:0 3px 6px rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;font-family:Montserrat;font-weight:700;font-size:28px;letter-spacing:.5em;color:#ffe08a}
 .panel{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:Montserrat;color:#fff;border:${B}px solid #ffc82e;border-radius:${16+B}px;background:linear-gradient(180deg,#06452b,#032a1a);box-shadow:0 10px 24px rgba(0,0,0,.4)}
 .k{font-weight:800;font-size:30px;letter-spacing:.22em;color:#ffe08a}.g{font-weight:800;font-size:68px;margin-top:6px;text-shadow:0 4px 0 rgba(0,0,0,.35)}.d{font-weight:700;font-size:32px;margin-top:14px}
 </style>
 <svg viewBox="0 0 1920 1080"><defs><radialGradient id="g" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#12905a"/><stop offset=".5" stop-color="#0a5e3a"/><stop offset="1" stop-color="#043320"/></radialGradient>
 <mask id="m"><rect width="1920" height="1080" fill="white"/>${holes}</mask></defs>
-<rect width="1920" height="1080" fill="url(#g)" mask="url(#m)"/>${rings}</svg>
-<div class="hd">CÉRÉMONIE DE GRADUATION</div><div class="hd2">IBULD</div>${panel}<div class="ft">EXCELLENCE • LEADERSHIP • IMPACT</div>`;
+<g style="filter:drop-shadow(0 4px 6px rgba(0,0,0,.55))">${rings}</g></svg>
+${cfg.bare?'':`<div class="hd">CÉRÉMONIE DE GRADUATION</div><div class="hd2">IBULD</div>${panel}<div class="ft">EXCELLENCE • LEADERSHIP • IMPACT</div>`}`;
 }
 (async () => {
   fs.mkdirSync('out/habillage', { recursive: true });
   const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1920, height: 1080 } });
-  for (const [k, cfg] of Object.entries(L)) {
+  const base = L.verset_grand_orateur_portrait;
+  for (const [name, cfg] of [['sans_fond_cadres_et_textes', base], ['sans_fond_cadres_seuls', { ...base, bare: true }]]) {
     fs.writeFileSync('_h.html', html(cfg));
     await p.goto('file://' + path.resolve(__dirname, '_h.html')); await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(150);
-    await p.screenshot({ path: `out/habillage/habillage_${k}_1920x1080.png`, omitBackground: true });
+    await p.screenshot({ path: `out/habillage/habillage_${name}_1920x1080.png`, omitBackground: true });
   }
   fs.unlinkSync('_h.html'); await b.close();
-  fs.writeFileSync('out/habillage/_coords.json', JSON.stringify(L));
 })();

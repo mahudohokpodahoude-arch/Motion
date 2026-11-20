@@ -1,11 +1,18 @@
-HABILLAGE OBS - fenetres transparentes (canevas 1920x1080)
-Fichier : habillage_verset_grand_orateur_portrait_1920x1080.png
+HABILLAGE OBS SANS FOND - PNG transparent (canevas 1920x1080)
 
+Fichiers :
+  habillage_sans_fond_cadres_et_textes_1920x1080.png  -> cadres dores + titre + devise (rien d'autre)
+  habillage_sans_fond_cadres_seuls_1920x1080.png      -> cadres dores uniquement
+
+Tout le reste est transparent : on voit ce qui est place derriere.
+
+Fenetres (memes coordonnees pour les deux fichiers) :
   VERSET  : X=40    Y=200  Largeur=1290 Hauteur=725   (16:9)
   ORATEUR : X=1360  Y=200  Largeur=520  Hauteur=725   (portrait, environ 5:7)
 
 Ordre des calques dans OBS (du bas vers le haut) :
-  1) camera orateur   2) ecran des versets   3) PNG habillage (tout en haut)
+  1) votre arriere-plan (image ou video)
+  2) camera orateur   3) ecran des versets
+  4) PNG habillage (tout en haut)
 
-Camera orateur : Transformer > Type de boite englobante = "Mettre a l'echelle pour les limites exterieures",
-taille 520 x 725, alignement centre. Si votre OBS propose "Rogner a la boite englobante", cochez-le.
+Les textes (titre, devise) sont blancs et jaunes avec une ombre : prevoyez un arriere-plan assez sombre pour qu'ils restent lisibles.
