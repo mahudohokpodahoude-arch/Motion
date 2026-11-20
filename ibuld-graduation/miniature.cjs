@@ -7,7 +7,7 @@ const html = `<!doctype html><meta charset=utf-8><style>
 *{box-sizing:border-box;margin:0;padding:0}html,body{width:1280px;height:720px;overflow:hidden}
 body{position:relative;font-family:Montserrat;color:#fff;background:radial-gradient(900px 620px at 72% 45%,#14a468 0%,#0a6a41 42%,#043320 100%)}
 svg{position:absolute;inset:0}
-.glow{position:absolute;right:-20px;top:340px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,214,90,.55),rgba(255,214,90,0) 68%)}
+.glow{position:absolute;right:-30px;top:360px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,214,90,.55),rgba(255,214,90,0) 68%)}
 .live{position:absolute;left:50px;top:44px;display:flex;align-items:center;gap:14px;background:#e11d2a;border-radius:10px;padding:10px 26px 10px 20px;font-weight:900;font-size:36px;letter-spacing:.06em;box-shadow:0 8px 0 rgba(0,0,0,.3)}
 .live i{width:22px;height:22px;border-radius:50%;background:#fff}
 .t{position:absolute;left:50px;top:136px;width:1200px}
@@ -16,14 +16,13 @@ svg{position:absolute;inset:0}
 .d{margin-top:10px;font-weight:800;font-size:54px;line-height:1.1;text-shadow:0 4px 0 rgba(0,0,0,.35)}
 .pill{position:absolute;left:50px;bottom:46px;display:inline-flex;border-radius:10px;overflow:hidden;font-weight:900;font-size:40px;box-shadow:0 8px 0 rgba(0,0,0,.3)}
 .pill span{padding:12px 26px}.pill .a{background:#ffc82e;color:#06301c}.pill .b{background:#04301c}
-.logo{position:absolute;right:56px;top:430px;width:330px;border-radius:24px;box-shadow:0 0 0 7px #ffc82e,0 22px 40px rgba(0,0,0,.55)}
+.logo{position:absolute;right:56px;top:450px;width:340px;border-radius:24px;box-shadow:0 0 0 7px #ffc82e,0 22px 40px rgba(0,0,0,.55)}
 .loc{position:absolute;left:50px;bottom:150px;width:auto;text-align:center;font-weight:800;font-size:27px;letter-spacing:.04em;text-shadow:0 3px 0 rgba(0,0,0,.4)}
 </style>
 <svg viewBox="0 0 1280 720"><polygon points="1280,0 1280,150 1130,0" fill="#ffc82e"/><polygon points="1280,0 1280,80 1200,0" fill="#053d25"/></svg>
 <div class="glow"></div>
 <div class="live"><i></i>EN DIRECT</div>
 <div class="t"><div class="k">CÉRÉMONIE DE</div><div class="g">GRADUATION</div><div class="d">Remise des diplômes</div></div>
-<div class="pill"><span class="a">SAMEDI 21 NOV. 2026</span><span class="b">09H00</span></div>
 <img class="logo" src="assets/logo-ibuld-crop.png">
 `;
 (async () => {
