@@ -35,7 +35,7 @@ body{font-family:Montserrat;color:#fff;position:relative;background:radial-gradi
 .ev{text-align:right;font-weight:700;font-size:26px;letter-spacing:.2em;color:#fff;line-height:1.6;text-shadow:0 2px 0 rgba(0,0,0,.35)}
 .col{position:absolute;left:140px;right:140px;top:190px;bottom:170px;display:flex;flex-direction:column;justify-content:center}
 .time{align-self:flex-start;display:inline-flex;align-items:center;gap:16px;background:var(--gold);color:#1a1240;font-weight:800;font-size:44px;letter-spacing:.08em;padding:12px 34px;border-radius:6px;box-shadow:0 10px 24px rgba(0,0,0,.4)}
-.title{margin-top:40px;font-weight:800;font-size:132px;line-height:1.08;color:#fff;text-shadow:0 5px 0 rgba(0,0,0,.35),0 10px 30px rgba(0,0,0,.45)}
+.title{margin-top:0;font-weight:800;font-size:132px;line-height:1.08;color:#fff;text-shadow:0 5px 0 rgba(0,0,0,.35),0 10px 30px rgba(0,0,0,.45)}
 .sub{margin-top:20px;font-weight:700;font-size:56px;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35)}
 .who{margin-top:46px;display:flex;align-items:stretch;gap:0;align-self:flex-start;box-shadow:0 14px 30px rgba(0,0,0,.45);border-radius:8px;overflow:hidden}
 .lab{background:#0f0a42;display:flex;align-items:center;font-weight:800;font-size:26px;letter-spacing:.22em;color:var(--gold);padding:0 30px;writing-mode:horizontal-tb;white-space:nowrap}
@@ -53,7 +53,7 @@ const shapes = `<svg class="shape" viewBox="0 0 1920 1080"><polygon points="0,10
     const seg = E.map((_, j) => `<i class="${j < i ? 'd' : j === i ? 'c' : ''}"></i>`).join('');
     const html = `<!doctype html><meta charset=utf-8><style>${css}</style>${shapes}
 <div class="top"><img class="logo" src="assets/logo-ibuld-crop.png"><div class="ev">CÉRÉMONIE DE GRADUATION</div></div>
-<div class="col"><div class="time">${time}</div><div class="title">${title}</div>${sub ? `<div class="sub">${sub}</div>` : ''}</div>
+<div class="col"><div class="title">${title}</div>${sub ? `<div class="sub">${sub}</div>` : ''}</div>
 <div class="pg"><div class="seg">${seg}</div><div class="cnt"><span>ÉTAPE ${i + 1} / ${N}</span><span>IBULD</span></div></div>`;
     fs.writeFileSync('_e.html', html);
     await p.goto('file://' + path.resolve(__dirname, '_e.html')); await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(120);

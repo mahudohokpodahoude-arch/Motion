@@ -24,7 +24,7 @@ const L = [
   const b = await chromium.launch();
   const p = await b.newPage({ viewport: { width: 1920, height: 1080 } });
   
-  for (const th of ['royal','rubis']) { fs.mkdirSync(`out/titres_${th}`,{recursive:true});
+  for (const th of ['vert']) { fs.mkdirSync(`out/titres_${th}`,{recursive:true});
   for (const [i,[k,tag,name,role]] of L.entries()) {
     await p.goto('file://'+path.resolve(__dirname,'titres.html'));
     await p.evaluate(([t,n,r,th])=>{document.body.className=th;document.getElementById('tag').textContent=t;document.getElementById('name').textContent=n;const ro=document.getElementById('role');ro.textContent=r;ro.style.display=r?'block':'none';},[tag,name,role,th]);
