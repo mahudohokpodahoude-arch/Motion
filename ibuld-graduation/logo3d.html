@@ -1,0 +1,53 @@
+<!doctype html><meta charset=utf-8><style>
+html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#043320}
+#bg{position:absolute;inset:0;background:radial-gradient(1200px 850px at 50% 45%,#12905a 0%,#0a5e3a 45%,#043320 100%)}
+#rays{position:absolute;left:210px;top:-260px;width:1500px;height:1500px;background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,226,140,0) 0deg 8deg,rgba(255,226,140,.12) 10deg,rgba(255,226,140,0) 12deg);-webkit-mask-image:radial-gradient(circle,#000 0,transparent 62%);mask-image:radial-gradient(circle,#000 0,transparent 62%)}
+canvas{position:absolute;inset:0}
+body.alpha #bg,body.alpha #rays{display:none}html.alpha,body.alpha{background:transparent}
+</style>
+<div id=bg></div><div id=rays></div>
+<script type=importmap>{"imports":{"three":"./anim3d/three/build/three.module.js"}}</script>
+<script type=module>
+import * as THREE from 'three';
+import { RoomEnvironment } from './anim3d/three/examples/jsm/environments/RoomEnvironment.js';
+if(new URLSearchParams(location.search).has('alpha')){document.body.classList.add('alpha');document.documentElement.classList.add('alpha')}
+const W=1920,H=1080;
+const r=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});
+r.setSize(W,H);r.setPixelRatio(1);r.setClearColor(0x000000,0);r.toneMapping=THREE.ACESFilmicToneMapping;r.toneMappingExposure=0.95;
+document.body.appendChild(r.domElement);
+const scene=new THREE.Scene();
+const pm=new THREE.PMREMGenerator(r);scene.environment=pm.fromScene(new RoomEnvironment(),0.04).texture;
+const cam=new THREE.PerspectiveCamera(22,W/H,0.1,100);cam.position.set(0,0,12.6);
+const key=new THREE.DirectionalLight(0xfff1c8,1.1);key.position.set(4,5,8);scene.add(key);
+const rim=new THREE.DirectionalLight(0x9fffd0,1.4);rim.position.set(-6,-2,-5);scene.add(rim);
+// emblème seul, sans cadre : silhouette découpée + épaisseur par couches
+const w=4.7,h=w*592/936,d=.2,NL=26;
+const loader=new THREE.TextureLoader();
+const tex=await loader.loadAsync('assets/emblem-cut.png');tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=8;
+const am=await loader.loadAsync('assets/emblem-cut-alpha.png');
+const g=new THREE.Group();
+const edge=new THREE.MeshStandardMaterial({color:0xd9a521,metalness:1,roughness:.4,alphaMap:am,alphaTest:.5,envMapIntensity:.9});
+for(let i=0;i<NL;i++){const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),edge);m.position.z=-d/2+d*i/(NL-1);g.add(m)}
+const face=()=>new THREE.MeshBasicMaterial({map:tex,transparent:true,alphaTest:.02,toneMapped:false});
+const front=new THREE.Mesh(new THREE.PlaneGeometry(w,h),face());front.position.z=d/2+.004;
+const back=new THREE.Mesh(new THREE.PlaneGeometry(w,h),face());back.rotation.y=Math.PI;back.position.z=-d/2-.004;
+g.add(front,back);scene.add(g);
+// ombre au sol
+const sh=new THREE.Mesh(new THREE.CircleGeometry(2.0,48),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.35}));sh.rotation.x=-Math.PI/2;sh.position.y=-1.95;scene.add(sh);
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),P=(t,a,b)=>cl((t-a)/(b-a)),io=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,oc=x=>1-Math.pow(1-x,3);
+const alpha=document.body.classList.contains('alpha');
+window.setT=t=>{
+  const spin=io(P(t,.2,3.6));                       // un tour complet
+  const sway=Math.sin(Math.max(0,t-3.6)*1.7)*.22*P(t,3.6,4.4)+Math.sin(t*.9)*.05;   // léger balancement
+  g.rotation.y=-Math.PI*.9+spin*(Math.PI*2.9)+sway;
+  g.rotation.x=-.12+Math.sin(t*1.1)*.05;
+  const e=oc(P(t,0,1.0));g.scale.setScalar(.45+.55*e);
+  g.position.y=Math.sin(t*1.8)*.08;
+  r.domElement.style.opacity=P(t,0,.4);
+  key.position.x=4-Math.sin(t*1.4)*6;               // la lumière glisse : reflets qui bougent
+  sh.material.opacity=.3*e*(alpha?0:1);sh.scale.setScalar(.8+.1*Math.cos(g.rotation.y*2));
+  document.getElementById('rays').style.transform=`rotate(${t*7}deg)`;
+  r.render(scene,cam);
+};
+window.setT(0);window.ready=true;
+</script>
