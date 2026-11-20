@@ -1,6 +1,7 @@
 HABILLAGE OBS SANS FOND - PNG transparent (canevas 1920x1080)
 
 Fichiers :
+  habillage_cadre_vert_fenetres_transparentes_1920x1080.png -> cadre VERT plein autour, seules les 2 fenetres sont transparentes
   habillage_sans_fond_cadres_et_textes_1920x1080.png  -> cadres dores + titre + devise (rien d'autre)
   habillage_sans_fond_cadres_seuls_1920x1080.png      -> cadres dores uniquement
 
