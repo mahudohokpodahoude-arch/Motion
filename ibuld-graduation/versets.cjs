@@ -30,9 +30,8 @@ const frame = `<div class="f1"></div><div class="f2"></div>${corner}`;
 const sample = `<div class="txt"><div class="v">« Si donc le Fils vous affranchit,<br>vous serez réellement libres. »</div><div class="r">JEAN 8.36</div></div>`;
 const pages = {
   'verset_fond_vert': green('#12905a','#0a5e3a','#043320') + frame + cornerJS,
-  'verset_fond_vert_logo': green('#12905a','#0a5e3a','#043320') + frame + `<img class="logo" src="assets/emblem-cut.png">` + cornerJS,
   'verset_fond_sombre': green('#0c6d43','#06402a','#021c11') + frame + cornerJS,
-  'verset_EXEMPLE_avec_texte': green('#12905a','#0a5e3a','#043320') + frame + `<img class="logo" src="assets/emblem-cut.png">` + sample + cornerJS,
+  'verset_EXEMPLE_avec_texte': green('#12905a','#0a5e3a','#043320') + frame + sample + cornerJS,
 };
 (async () => {
   fs.mkdirSync('out/versets', { recursive: true });
