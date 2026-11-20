@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>IBULD — Invitation — Cérémonie de graduation</title>
+<style>
+@font-face{font-family:Cinzel;font-weight:500;src:url(fonts/cinzel-latin-500-normal.woff2)}
+@font-face{font-family:Cinzel;font-weight:600;src:url(fonts/cinzel-latin-600-normal.woff2)}
+@font-face{font-family:Cinzel;font-weight:700;src:url(fonts/cinzel-latin-700-normal.woff2)}
+@font-face{font-family:Cinzel;font-weight:800;src:url(fonts/cinzel-latin-800-normal.woff2)}
+@font-face{font-family:Cormorant;font-style:italic;font-weight:500;src:url(fonts/cormorant-garamond-latin-500-italic.woff2)}
+@font-face{font-family:Cormorant;font-style:italic;font-weight:600;src:url(fonts/cormorant-garamond-latin-600-italic.woff2)}
+@font-face{font-family:Cormorant;font-style:normal;font-weight:500;src:url(fonts/cormorant-garamond-latin-500-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:500;src:url(fonts/montserrat-latin-500-normal.woff2)}
+@font-face{font-family:Montserrat;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}
+:root{
+  --gold:linear-gradient(172deg,#fff1bd 0%,#f1cf75 22%,#c99532 48%,#f3d98a 68%,#a8741a 100%);
+  --g1:#e9c565;--g2:#b9882a;--cream:#f4ecd6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;background:#02150f;overflow:hidden}
+#c{position:relative;width:1920px;height:1080px;overflow:hidden;
+  background:
+   radial-gradient(900px 760px at 25% 46%,rgba(30,120,80,.55),transparent 70%),
+   radial-gradient(1400px 900px at 70% 55%,#06382a 0%,#032218 55%,#01120c 100%);}
+/* rayons de lumière derrière le logo */
+.rays{position:absolute;left:-380px;top:-300px;width:1360px;height:1360px;opacity:.5;
+  background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,226,140,.0) 0deg 7deg,rgba(255,226,140,.10) 8.5deg,rgba(255,226,140,0) 10deg);
+  -webkit-mask-image:radial-gradient(circle,#000 0,transparent 62%);mask-image:radial-gradient(circle,#000 0,transparent 62%)}
+.bloom{position:absolute;left:100px;top:210px;width:640px;height:640px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,214,120,.38),rgba(255,214,120,0) 68%);filter:blur(10px)}
+/* colonnade en filigrane, côté droit */
+.arch{position:absolute;right:-40px;bottom:-20px;width:1100px;height:760px;opacity:.07}
+/* bokeh */
+.bk{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,225,150,.55),rgba(255,225,150,0) 70%);filter:blur(2px)}
+.grain{position:absolute;inset:0;opacity:.30;mix-blend-mode:soft-light}
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 55%,rgba(0,0,0,.55) 100%)}
+/* cadres */
+.frame{position:absolute;inset:34px;border:2px solid #d4a946;
+  box-shadow:0 0 30px rgba(233,197,101,.18),inset 0 0 40px rgba(0,0,0,.35)}
+.frame2{position:absolute;inset:52px;border:1px solid rgba(233,197,101,.45)}
+.corner{position:absolute;width:150px;height:150px}
+.corner svg{width:100%;height:100%;display:block}
+.tl{left:20px;top:20px}.tr{right:20px;top:20px;transform:scaleX(-1)}
+.bl{left:20px;bottom:20px;transform:scaleY(-1)}.br{right:20px;bottom:20px;transform:scale(-1,-1)}
+/* gauche */
+.left{position:absolute;left:96px;top:96px;width:640px;height:888px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.logo{width:560px;height:auto;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent),linear-gradient(180deg,transparent,#000 12%,#000 95%,transparent);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent),linear-gradient(180deg,transparent,#000 12%,#000 95%,transparent);mask-composite:intersect;
+  filter:drop-shadow(0 18px 40px rgba(0,0,0,.55)) saturate(1.05)}
+.motto{margin-top:6px;font-family:Cinzel;font-weight:600;font-size:23px;letter-spacing:.3em;padding-left:.3em;white-space:nowrap}
+.inst{margin-top:26px;text-align:center;font-family:Cinzel;font-weight:500;font-size:19px;letter-spacing:.34em;line-height:2;color:#e9d9a6;text-transform:uppercase;padding-left:.34em}
+.inst b{font-weight:600;color:#f3d98a}
+.rule{display:flex;align-items:center;gap:14px;margin:18px 0 4px;width:360px}
+.rule i{flex:1;height:1px;background:linear-gradient(90deg,transparent,#d9ac45)}
+.rule i:last-child{transform:scaleX(-1)}
+.rule s{width:9px;height:9px;transform:rotate(45deg);background:#e9c565;box-shadow:0 0 10px rgba(233,197,101,.8)}
+/* séparateur vertical */
+.vsep{position:absolute;left:786px;top:150px;bottom:150px;width:2px;background:linear-gradient(transparent,#d9ac45 18%,#f4dc92 50%,#d9ac45 82%,transparent)}
+.vsep::before{content:"";position:absolute;left:-6px;top:50%;width:14px;height:14px;transform:translateY(-50%) rotate(45deg);background:#0b3a2b;border:2px solid #e9c565;box-shadow:0 0 14px rgba(233,197,101,.7)}
+/* droite */
+.right{position:absolute;left:850px;right:110px;top:96px;bottom:96px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;padding:6px 0}
+.foil{background:var(--gold);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 2px rgba(0,0,0,.55)) drop-shadow(0 0 18px rgba(233,197,101,.18))}
+.eyebrow{display:flex;align-items:center;gap:26px;font-family:Cinzel;font-weight:600;font-size:30px;letter-spacing:.7em;padding-left:.7em;color:#e9c565}
+.eyebrow i{width:150px;height:1px;background:linear-gradient(90deg,transparent,#e9c565)}
+.eyebrow i:last-child{transform:scaleX(-1)}
+.t1{font-family:Cinzel;font-weight:600;font-size:44px;letter-spacing:.34em;padding-left:.34em;line-height:1}
+.t2{font-family:Cinzel;font-weight:800;font-size:104px;letter-spacing:.05em;line-height:1;margin-top:8px}
+.t3{font-family:Cormorant;font-style:italic;font-weight:600;font-size:60px;line-height:1;margin-top:10px;color:var(--cream);text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.t3 span{display:inline-block;padding:0 40px;position:relative}
+.t3 span::before,.t3 span::after{content:"";position:absolute;top:56%;width:90px;height:1px;background:linear-gradient(90deg,transparent,#d9ac45)}
+.t3 span::before{right:100%}.t3 span::after{left:100%;transform:scaleX(-1)}
+.para{font-family:Cormorant;font-style:italic;font-weight:500;font-size:30px;line-height:1.4;color:#efe5c8;max-width:860px;text-wrap:balance;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.para em{font-style:italic;color:#f3d98a;font-weight:600}
+/* date */
+.when{display:flex;align-items:center;gap:44px;padding:8px 56px 8px 44px;border-radius:2px;position:relative;
+  background:linear-gradient(180deg,rgba(4,45,32,.85),rgba(2,28,20,.85));
+  box-shadow:0 18px 40px rgba(0,0,0,.45),inset 0 0 0 1px rgba(233,197,101,.55),inset 0 0 0 5px rgba(2,22,16,.9),inset 0 0 0 6px rgba(233,197,101,.25)}
+.when .n{font-family:Cinzel;font-weight:800;font-size:150px;line-height:.95;letter-spacing:-.01em}
+.when .vl{width:2px;align-self:stretch;margin:22px 0;background:linear-gradient(transparent,#e9c565,transparent)}
+.when .d{text-align:left}
+.when .d .a{font-family:Cinzel;font-weight:600;font-size:28px;letter-spacing:.42em;color:#e9d9a6}
+.when .d .b{font-family:Cinzel;font-weight:700;font-size:54px;letter-spacing:.08em;line-height:1.1;margin:2px 0 6px;white-space:nowrap}
+.when .d .c{display:flex;align-items:center;gap:16px;font-family:Montserrat;font-weight:600;font-size:30px;letter-spacing:.2em;color:var(--cream)}
+.when .d .c svg{width:30px;height:30px}
+/* lieu */
+.where{display:flex;align-items:center;gap:30px;text-align:left;max-width:980px}
+.pin{flex:none;width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#f7e19a,#b98725 70%);box-shadow:0 8px 20px rgba(0,0,0,.5),0 0 0 3px rgba(2,22,16,.9),0 0 0 4px rgba(233,197,101,.6)}
+.pin svg{width:38px;height:38px}
+.where .h{font-family:Cinzel;font-weight:700;font-size:40px;letter-spacing:.1em;line-height:1.1}
+.where .s{font-family:Montserrat;font-weight:500;font-size:19px;line-height:1.5;color:#d9d1b4;margin-top:8px;letter-spacing:.01em}
+.honor{font-family:Cormorant;font-style:italic;font-weight:600;font-size:44px;line-height:1}
+.honor::before,.honor::after{content:"✦";font-style:normal;font-size:20px;margin:0 22px;vertical-align:middle;color:#e9c565;-webkit-text-fill-color:#e9c565}
+</style></head>
+<body><div id="c">
+  <div class="rays"></div><div class="bloom"></div>
+  
+  <i class="bk" style="left:1500px;top:130px;width:60px;height:60px;opacity:.35"></i>
+  <i class="bk" style="left:1710px;top:300px;width:34px;height:34px;opacity:.5"></i>
+  <i class="bk" style="left:1250px;top:60px;width:26px;height:26px;opacity:.45"></i>
+  <i class="bk" style="left:1620px;top:880px;width:70px;height:70px;opacity:.28"></i>
+  <i class="bk" style="left:60px;top:700px;width:44px;height:44px;opacity:.35"></i>
+  <i class="bk" style="left:700px;top:90px;width:30px;height:30px;opacity:.4"></i>
+  <svg class="grain" width="1920" height="1080"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="7"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+  <div class="vig"></div>
+  <div class="frame"></div><div class="frame2"></div>
+  <template id="orn"><svg viewBox="0 0 150 150" fill="none" stroke="#e9c565" stroke-linecap="round">
+    <path d="M14 140V40Q14 14 40 14H140" stroke-width="3"/>
+    <path d="M28 140V52Q28 28 52 28H140" stroke-width="1" opacity=".7"/>
+    <path d="M44 44Q70 44 70 70Q70 44 96 44" stroke-width="1.6"/><path d="M44 44Q44 70 70 70" stroke-width="1.6" opacity=".0"/>
+    <circle cx="14" cy="14" r="6" fill="#e9c565" stroke="none"/>
+    <path d="M44 44l8 8 8-8-8-8z" fill="#e9c565" stroke="none"/>
+  </svg></template>
+  <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+
+  <section class="left">
+    <img class="logo" src="assets/logo-ibuld-crop.png" alt="IBULD">
+    <div class="motto foil">EXCELLENCE&ensp;•&ensp;LEADERSHIP&ensp;•&ensp;IMPACT</div>
+    <div class="rule"><i></i><s></s><i></i></div>
+    <div class="inst">Institut Biblique<br>Universitaire de <b>Leadership</b><br>et de Développement</div>
+  </section>
+  <div class="vsep"></div>
+
+  <section class="right">
+    <div class="eyebrow"><i></i><span class="foil">INVITATION</span><i></i></div>
+    <div>
+      <div class="t1 foil">CÉRÉMONIE DE</div>
+      <div class="t2 foil">GRADUATION</div>
+      <div class="t3"><span>Remise des diplômes</span></div>
+    </div>
+    <p class="para">J’ai le plaisir de vous inviter à la cérémonie de graduation de l’Institut Biblique Universitaire de Leadership et de Développement, qui marque <em>l’aboutissement de mon parcours.</em></p>
+    <div class="when">
+      <div class="n foil">21</div><div class="vl"></div>
+      <div class="d">
+        <div class="a">SAMEDI</div>
+        <div class="b foil">NOVEMBRE 2026</div>
+        <div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="#e9c565" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 6v6.5l4 2.2"/></svg>09H00</div>
+      </div>
+    </div>
+    <div class="where">
+      <div class="pin"><svg viewBox="0 0 24 24" fill="#03271c"><path d="M12 1.5a7.5 7.5 0 0 0-7.5 7.5c0 5.6 6.4 12.1 7.1 12.8a.6.6 0 0 0 .8 0c.7-.7 7.1-7.2 7.1-12.8A7.5 7.5 0 0 0 12 1.5zm0 10.3a2.8 2.8 0 1 1 0-5.6 2.8 2.8 0 0 1 0 5.6z"/></svg></div>
+      <div><div class="h foil">MILMO AKPAKPA SACRÉ-CŒUR</div>
+      <div class="s">Rue pavée à droite après la Maison du Peuple, 1<sup style="font-size:.6em">er</sup> von à gauche,<br>3<sup style="font-size:.6em">e</sup> maison à gauche (Rue du Complexe scolaire Ronsard), Cotonou.</div></div>
+    </div>
+    <div class="honor foil">Votre présence sera un réel honneur</div>
+  </section>
+</div>
+<script>
+document.querySelectorAll('.corner').forEach(e=>e.appendChild(document.getElementById('orn').content.cloneNode(true)));
+</script></body></html>
