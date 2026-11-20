@@ -1,11 +1,11 @@
 HABILLAGE OBS - fenetres transparentes (canevas 1920x1080)
+Fichier : habillage_verset_grand_orateur_portrait_1920x1080.png
 
-Disposition A : habillage_A_verset_grand_orateur_petit_1920x1080.png
-  VERSET  : X=60   Y=175  Largeur=1200 Hauteur=675
-  ORATEUR : X=1300 Y=175  Largeur=560  Hauteur=315
+  VERSET  : X=40    Y=200  Largeur=1290 Hauteur=725   (16:9)
+  ORATEUR : X=1360  Y=200  Largeur=520  Hauteur=725   (portrait, environ 5:7)
 
-Disposition B : habillage_B_50_50_1920x1080.png
-  VERSET  : X=40   Y=285  Largeur=910  Hauteur=512
-  ORATEUR : X=970  Y=285  Largeur=910  Hauteur=512
+Ordre des calques dans OBS (du bas vers le haut) :
+  1) camera orateur   2) ecran des versets   3) PNG habillage (tout en haut)
 
-Ordre des calques dans OBS (du bas vers le haut) : 1) ecran des versets  2) camera orateur  3) PNG habillage (tout en haut).
+Camera orateur : Transformer > Type de boite englobante = "Mettre a l'echelle pour les limites exterieures",
+taille 520 x 725, alignement centre. Si votre OBS propose "Rogner a la boite englobante", cochez-le.

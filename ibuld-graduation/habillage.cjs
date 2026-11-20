@@ -2,8 +2,7 @@ const { chromium } = require('playwright');
 const path = require('path'), fs = require('fs');
 // fenêtres transparentes : [nom, x, y, w, h]  (toutes en 16:9)
 const L = {
-  A_verset_grand_orateur_petit: { win: [['VERSET',60,175,1200,675],['ORATEUR',1300,175,560,315]], panel: [1300,520,560,330] },
-  B_50_50: { win: [['VERSET',40,285,910,512],['ORATEUR',970,285,910,512]], panel: null },
+  verset_grand_orateur_portrait: { win: [['VERSET',40,200,1290,725],['ORATEUR',1360,200,520,725]], panel: null },
 };
 const rr=(x,y,w,h,r)=>`M${x+r} ${y}H${x+w-r}Q${x+w} ${y} ${x+w} ${y+r}V${y+h-r}Q${x+w} ${y+h} ${x+w-r} ${y+h}H${x+r}Q${x} ${y+h} ${x} ${y+h-r}V${y+r}Q${x} ${y} ${x+r} ${y}Z`;
 const B=7;
