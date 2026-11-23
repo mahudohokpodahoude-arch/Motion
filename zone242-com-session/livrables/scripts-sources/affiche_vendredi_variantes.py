@@ -4,7 +4,7 @@ from playwright.sync_api import sync_playwright
 R = pathlib.Path("/home/user/Motion"); OUT = pathlib.Path(sys.argv[1]).resolve(); OUT.mkdir(parents=True, exist_ok=True)
 T = OUT / "_res"; T.mkdir(exist_ok=True)
 for src, n in [("teaser-wzw-reels/assets/montserrat-latin-600-normal.woff2", "m6.woff2"), ("teaser-wzw-reels/assets/montserrat-latin-800-normal.woff2", "m8.woff2"), ("teaser-wzw-reels/assets/bebas-neue-latin-400-normal.woff2", "bb.woff2"),
-               ("un-mot-une-session-reels/assets/lockup.png", "lockup.png"), ("annonce-wzw-reference/assets/photos/mary.png", "mary.png"), ("presentation-dr-hestia/assets/logos_alpha.png", "logos.png"),
+               ("un-mot-une-session-reels/assets/lockup.png", "lockup.png"), ("zone242-com-session/livrables/scripts-sources/mary_net.png", "mary.png"), ("presentation-dr-hestia/assets/logos_alpha.png", "logos.png"),
                ("teaser-wzw-reels/assets/W1.png", "w1.png"), ("teaser-wzw-reels/assets/W2.png", "w2.png")]: shutil.copy(R / src, T / n)
 CSS = """@font-face{font-family:B;src:url(bb.woff2)}@font-face{font-family:M;font-weight:600;src:url(m6.woff2)}@font-face{font-family:M;font-weight:800;src:url(m8.woff2)}
 *{margin:0;padding:0;box-sizing:border-box}body{width:1080px;height:1080px;position:relative;overflow:hidden;font-family:B;color:#fff;background:linear-gradient(150deg,#ee1a02 0%,#f12e04 36%,#f5541a 74%,#fb7a2a 100%)}
@@ -37,10 +37,10 @@ V["B"] = BG + LOGOS + f'''
 <div class="a" style="left:430px;top:0;width:650px;height:1080px;overflow:hidden;{MASK(86)}"><img class="mary" src="mary.png" style="position:absolute;left:-30px;top:60px;height:1100px"></div>
 <img class="a lock" src="lockup.png" style="left:64px;top:150px;width:360px">
 <div class="a ft" style="left:64px;top:342px;font-size:21px;letter-spacing:.22em">SOIRÉE D'OUVERTURE</div>
-<div class="a" style="left:64px;top:392px;font-size:230px;line-height:.82;color:#fff;text-shadow:0 8px 30px rgba(110,10,0,.35)">19H45</div>
-<div class="a" style="left:64px;top:608px;width:400px;height:150px;background:#0260a6;clip-path:polygon(0 0,100% 6%,100% 100%,0 94%)"></div>
-<div class="a" style="left:92px;top:622px;font-size:40px;line-height:1;letter-spacing:.06em">VENDREDI</div>
-<div class="a" style="left:90px;top:656px;font-size:100px;line-height:.9">27 NOV.</div>
+<div class="a" style="left:64px;top:400px;font-size:170px;line-height:.82;color:#fff;text-shadow:0 8px 30px rgba(110,10,0,.35)">19H45</div>
+<div class="a" style="left:64px;top:560px;width:400px;height:150px;background:#0260a6;clip-path:polygon(0 0,100% 6%,100% 100%,0 94%)"></div>
+<div class="a" style="left:92px;top:574px;font-size:40px;line-height:1;letter-spacing:.06em">VENDREDI</div>
+<div class="a" style="left:90px;top:608px;font-size:100px;line-height:.9">27 NOV.</div>
 <div class="a ft" style="left:64px;top:810px;font-size:0px"></div>
 <div class="a" style="left:64px;top:830px"><span class="lab" style="font-size:22px;padding:7px 20px">PROPHÉTESSE</span></div>
 <div class="a" style="left:64px;top:868px"><span class="lab" style="font-size:34px;padding:9px 26px">MARY FAVOUR TONGSI</span></div>
