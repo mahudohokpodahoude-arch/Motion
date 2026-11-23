@@ -34,7 +34,7 @@ def page(W, H, story):
 <div class="a" style="left:0;top:0;width:1080px;height:1080px;background:radial-gradient(ellipse at 50% 22%,rgba(255,170,110,.85) 0%,rgba(255,170,110,0) 55%)"></div>
 <div class="a" style="left:0;top:0;width:1080px;height:640px;background:#ffb27a;opacity:.18;clip-path:polygon(0 0,100% 0,100% 28%,50% 100%,0 28%)"></div>
 <img class="a" src="logos.png" style="left:40px;top:36px;width:104px">
-<div class="a" style="left:0;top:0;width:1080px;height:560px;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 80%,transparent 100%);mask-image:linear-gradient(180deg,#000 80%,transparent 100%)"><img class="mary" src="mary.png" style="position:absolute;left:290px;top:-4px;height:850px"></div>
+<div class="a" style="left:0;top:0;width:1080px;height:560px;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 80%,transparent 100%);mask-image:linear-gradient(180deg,#000 80%,transparent 100%)"><img class="mary" src="mary.png" style="position:absolute;left:240px;top:-4px;height:850px"></div>
 <div class="a" style="left:0;width:1080px;top:512px;text-align:center"><span style="display:inline-block;background:#0b2a5c;color:#fff;font-family:M;font-weight:800;font-size:22px;letter-spacing:.12em;padding:7px 20px">PROPHÉTESSE</span></div>
 <div class="a" style="left:0;width:1080px;top:550px;text-align:center"><span style="display:inline-block;background:#0b2a5c;color:#fff;font-family:M;font-weight:800;font-size:32px;letter-spacing:.06em;padding:9px 26px">MARY FAVOUR TONGSI</span></div>
 <div class="a foot" style="left:0;width:1080px;top:612px;text-align:center;font-size:19px;letter-spacing:.24em">INVITÉE D'HONNEUR</div>
