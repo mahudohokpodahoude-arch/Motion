@@ -7,7 +7,7 @@ OUT = pathlib.Path(sys.argv[1]).resolve(); OUT.mkdir(parents=True, exist_ok=True
 TMP = OUT / "_res"; TMP.mkdir(exist_ok=True)
 for src, name in [(R / "teaser-wzw-reels/assets/montserrat-latin-600-normal.woff2", "m6.woff2"), (R / "teaser-wzw-reels/assets/montserrat-latin-800-normal.woff2", "m8.woff2"),
                   (R / "teaser-wzw-reels/assets/bebas-neue-latin-400-normal.woff2", "bb.woff2"), (R / "un-mot-une-session-reels/assets/lockup.png", "lockup.png"),
-                  (R / "annonce-wzw-reference/assets/photos/mary.png", "mary.png"), (R / "teaser-wzw-reels/assets/W1.png", "w1.png"), (R / "teaser-wzw-reels/assets/W2.png", "w2.png")]:
+                  (R / "annonce-wzw-reference/assets/photos/mary.png", "mary.png"), (R / "presentation-dr-hestia/assets/logos_alpha.png", "logos.png"), (R / "teaser-wzw-reels/assets/W1.png", "w1.png"), (R / "teaser-wzw-reels/assets/W2.png", "w2.png")]:
     shutil.copy(src, TMP / name)
 CSS = """
 @font-face{font-family:B;src:url(bb.woff2)}@font-face{font-family:M;font-weight:600;src:url(m6.woff2)}@font-face{font-family:M;font-weight:800;src:url(m8.woff2)}
@@ -29,20 +29,22 @@ def page(W, H, story):
          f'<img class="a gw" src="w1.png" style="left:{700 if not s else 640}px;top:{H-620 if not s else H-760}px;height:{760 if not s else 980}px">')
     sl = ('<div class="a sl" style="background:#ff7a33;opacity:.16;clip-path:polygon(0 0,22% 0,8% 100%,0 100%)"></div>'
           '<div class="a sl" style="background:#b80f00;opacity:.18;clip-path:polygon(38% 0,52% 0,34% 100%,20% 100%)"></div>')
-    if not s:   # carré
+    if not s:   # carré : composition centrée sur l'axe x = 540, marges 90, sur le modèle de l'affiche officielle
         body = f"""
-<div class="a glow" style="left:380px;top:120px;width:760px;height:760px"></div>
-<img class="a mary" src="mary.png" style="left:470px;top:150px;height:960px">
-<img class="a lock" src="lockup.png" style="left:56px;top:50px;width:330px">
-<div class="a blue" style="left:56px;top:300px;font-size:44px;letter-spacing:.06em;padding:8px 26px 2px;transform:skewX(-8deg)"><span style="display:inline-block;transform:skewX(8deg)">PROPHÉTESSE</span></div>
-<div class="a" style="left:56px;top:362px;font-size:128px;line-height:.86;text-shadow:0 6px 24px rgba(110,10,0,.4)">MARY FAVOUR<br>TONGSI</div>
-<div class="a foot" style="left:60px;top:604px;font-size:24px;letter-spacing:.14em">INVITÉE D'HONNEUR</div>
-<div class="a" style="left:56px;top:668px;font-size:96px;line-height:.9;color:#ffe3cf;text-shadow:0 5px 20px rgba(110,10,0,.35)">SOIRÉE D'OUVERTURE</div>
-<div class="a" style="left:56px;top:780px;font-size:36px;letter-spacing:.06em">VENDREDI</div>
-<div class="a blue" style="left:56px;top:812px;font-size:196px;line-height:.82;background:none;color:#0260a6;text-shadow:0 0 22px rgba(255,255,255,.3)">27</div>
-<div class="a" style="left:215px;top:828px;font-size:44px;line-height:1;letter-spacing:.04em">NOVEMBRE<br>2026</div>
-<div class="a" style="left:215px;top:926px;background:#fff;color:#d8300a;font-size:72px;line-height:1;padding:10px 26px 2px;border-radius:12px;box-shadow:0 10px 24px rgba(90,0,0,.3)">19H45</div>
-<div class="a" style="left:0;top:985px;width:1080px;height:95px;background:linear-gradient(180deg,rgba(90,8,0,0),rgba(90,8,0,.7))"></div><div class="a foot" style="left:56px;top:1020px;font-size:19px;line-height:1.4;text-shadow:0 2px 6px rgba(0,0,0,.5)">ZONE 242 – SIKÈCODJI · RUE DE GOLF FM<br>GRATUIT · 150 PLACES · INSCRIPTION OBLIGATOIRE</div>"""
+<div class="a" style="left:0;top:0;width:1080px;height:1080px;background:radial-gradient(ellipse at 50% 22%,rgba(255,170,110,.85) 0%,rgba(255,170,110,0) 55%)"></div>
+<div class="a" style="left:0;top:0;width:1080px;height:640px;background:#ffb27a;opacity:.18;clip-path:polygon(0 0,100% 0,100% 28%,50% 100%,0 28%)"></div>
+<img class="a" src="logos.png" style="left:40px;top:36px;width:104px">
+<img class="a mary" src="mary.png" style="left:369px;top:10px;height:520px;-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 72%,transparent 100%)">
+<div class="a" style="left:0;width:1080px;top:498px;text-align:center"><span style="display:inline-block;background:#0b2a5c;color:#fff;font-family:M;font-weight:800;font-size:22px;letter-spacing:.12em;padding:7px 20px">PROPHÉTESSE</span></div>
+<div class="a" style="left:0;width:1080px;top:536px;text-align:center"><span style="display:inline-block;background:#0b2a5c;color:#fff;font-family:M;font-weight:800;font-size:32px;letter-spacing:.06em;padding:9px 26px">MARY FAVOUR TONGSI</span></div>
+<div class="a foot" style="left:0;width:1080px;top:600px;text-align:center;font-size:19px;letter-spacing:.24em">INVITÉE D'HONNEUR</div>
+<img class="a lock" src="lockup.png" style="left:305px;top:632px;width:470px">
+<div class="a" style="left:0;width:1080px;top:872px;text-align:center;font-size:58px;line-height:1;letter-spacing:.05em;text-shadow:0 4px 16px rgba(110,10,0,.35)">SOIRÉE D'OUVERTURE · 19H45</div>
+<div class="a" style="left:90px;top:944px;font-size:32px;line-height:1;letter-spacing:.04em">VENDREDI</div>
+<div class="a" style="left:88px;top:972px;font-size:96px;line-height:.82;color:#0260a6">27</div>
+<div class="a" style="left:214px;top:984px;font-size:34px;line-height:1.02;letter-spacing:.04em">NOVEMBRE<br>2026</div>
+<div class="a" style="left:560px;top:946px;width:430px;height:104px;background:linear-gradient(180deg,rgba(2,96,166,0),rgba(2,96,166,.9));clip-path:polygon(0 0,100% 8%,96% 100%,4% 92%)"></div>
+<div class="a" style="left:590px;top:952px;font-family:M;font-weight:800;font-size:20px;line-height:1.45;letter-spacing:.04em">ZONE 242 – SIKÈCODJI<br>RUE DE GOLF FM<br><span style="font-weight:600;font-size:17px;letter-spacing:.02em">Gratuit · 150 places · inscription obligatoire</span></div>"""
     else:       # story
         body = f"""
 <div class="a glow" style="left:60px;top:560px;width:980px;height:980px"></div>
@@ -61,7 +63,7 @@ def page(W, H, story):
     return f"<!doctype html><meta charset=utf-8><style>{CSS}body{{width:{W}px;height:{H}px}}</style>{g}{sl}{body}"
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path="/opt/pw-browsers/chromium", args=["--no-sandbox"])
-    for name, W, H, st in [("Affiche_Vendredi_WZW_1080x1080", 1080, 1080, False), ("Affiche_Vendredi_WZW_story_1080x1920", 1080, 1920, True)]:
+    for name, W, H, st in [("Affiche_Vendredi_WZW_1080x1080", 1080, 1080, False)]:
         f = TMP / f"{name}.html"; f.write_text(page(W, H, st))
         pg = b.new_context(viewport={"width": W, "height": H}).new_page(); pg.goto("file://" + str(f)); pg.evaluate("document.fonts.ready"); pg.wait_for_timeout(500)
         pg.screenshot(path=str(OUT / f"{name}.png"))
