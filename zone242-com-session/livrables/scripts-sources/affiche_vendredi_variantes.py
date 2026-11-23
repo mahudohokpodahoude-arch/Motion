@@ -42,6 +42,8 @@ V["B"] = BG + LOGOS + f'''
 <div class="a" style="left:92px;top:574px;font-size:40px;line-height:1;letter-spacing:.06em">VENDREDI</div>
 <div class="a" style="left:90px;top:608px;font-size:100px;line-height:.9">27 NOV.</div>
 <div class="a ft" style="left:64px;top:810px;font-size:0px"></div>
+<div class="a" style="left:64px;top:728px;font-size:31px;line-height:1;letter-spacing:.02em;color:#ffe3cf;text-shadow:0 3px 10px rgba(110,10,0,.35)">THÈME : RESTAURÉE · OINTE · ENVOYÉE</div>
+<div class="a" style="left:64px;top:768px;background:rgba(11,42,92,.85);padding:7px 12px;font-family:M;font-weight:800;font-size:12px;letter-spacing:.01em;color:#fff;white-space:nowrap">« LES FEMMES PRENNENT LE CONTRÔLE DE LA ZONE »</div>
 <div class="a" style="left:64px;top:830px"><span class="lab" style="font-size:22px;padding:7px 20px">PROPHÉTESSE</span></div>
 <div class="a" style="left:64px;top:868px"><span class="lab" style="font-size:34px;padding:9px 26px">MARY FAVOUR TONGSI</span></div>
 <div class="a ft" style="left:64px;top:938px;font-size:19px;letter-spacing:.22em">INVITÉE D'HONNEUR</div>
