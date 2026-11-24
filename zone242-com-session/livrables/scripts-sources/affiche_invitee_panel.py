@@ -10,9 +10,7 @@ T = OUT / "_res"; T.mkdir(exist_ok=True)
 for src, n in [("teaser-wzw-reels/assets/montserrat-latin-600-normal.woff2", "m6.woff2"), ("teaser-wzw-reels/assets/montserrat-latin-800-normal.woff2", "m8.woff2"), ("teaser-wzw-reels/assets/bebas-neue-latin-400-normal.woff2", "bb.woff2"),
                ("un-mot-une-session-reels/assets/lockup.png", "lockup.png"), ("presentation-dr-hestia/assets/logos_alpha.png", "logos.png"), ("teaser-wzw-reels/assets/W1.png", "w1.png"), ("teaser-wzw-reels/assets/W2.png", "w2.png")]:
     shutil.copy(R / src, T / n)
-BOX = {"A": (225, 360, 455, 590), "B": (268, 585, 462, 905)}[sys.argv[2]]
-P = Image.open(HERE / "affiche_officielle_16x9_reference.png").convert("RGB").crop(BOX)
-P = P.resize((P.width * 3, P.height * 3), Image.LANCZOS).filter(ImageFilter.UnsharpMask(2, 60, 3)); P.save(T / "p.png")
+subprocess.run([sys.executable, str(HERE / "completer_bras.py"), str(R / "annonce-wzw-reference/assets/photos/anne.png"), str(T / "p.png"), "240"], check=True, capture_output=True)
 CSS = """@font-face{font-family:B;src:url(bb.woff2)}@font-face{font-family:M;font-weight:600;src:url(m6.woff2)}@font-face{font-family:M;font-weight:800;src:url(m8.woff2)}
 *{margin:0;padding:0;box-sizing:border-box}body{width:1080px;height:1080px;position:relative;overflow:hidden;font-family:B;color:#fff;background:linear-gradient(150deg,#ee1a02 0%,#f12e04 36%,#f5541a 74%,#fb7a2a 100%)}
 .a{position:absolute}.lock{filter:drop-shadow(0 0 16px rgba(255,255,255,.55))}.mary{filter:drop-shadow(0 18px 34px rgba(70,0,0,.4))}
@@ -22,7 +20,7 @@ body = ('<div class="a" style="inset:0;background:radial-gradient(ellipse at 62%
  '<img class="a" src="w1.png" style="left:-140px;top:300px;height:900px;opacity:.07;filter:brightness(2)"><img class="a" src="w2.png" style="left:600px;top:-120px;height:820px;opacity:.07;filter:brightness(2)">'
  '<div class="a" style="inset:0;background:#b80f00;opacity:.14;clip-path:polygon(0 0,18% 0,6% 100%,0 100%)"></div><div class="a" style="inset:0;background:#ff9a4a;opacity:.14;clip-path:polygon(78% 0,100% 0,100% 100%,62% 100%)"></div>'
  '<img class="a" src="logos.png" style="left:40px;top:36px;width:104px">'
- '<div class="a" style="left:520px;top:120px;width:560px;height:900px;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 86%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 86%,transparent 100%)"><img src="p.png" style="position:absolute;left:0;top:0;width:560px;height:auto;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 88%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 88%,transparent 100%);filter:drop-shadow(0 14px 30px rgba(70,0,0,.35))"></div>'
+ '<div class="a" style="left:250px;top:0;width:830px;height:1080px;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 80%,transparent 100%);mask-image:linear-gradient(180deg,#000 80%,transparent 100%)"><img src="p.png" style="position:absolute;left:-18px;top:150px;height:960px;filter:drop-shadow(0 18px 34px rgba(70,0,0,.4))"></div>'
  '<img class="a lock" src="lockup.png" style="left:64px;top:150px;width:360px">'
  '<div class="a ft" style="left:64px;top:342px;font-size:21px;letter-spacing:.22em">ELLE VOUS INVITE</div>'
  '<div class="a" style="left:64px;top:400px;font-size:170px;line-height:.82;text-shadow:0 8px 30px rgba(110,10,0,.35)">10H30</div>'
