@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>ZONE 242 · Générique 5 s</title>
+<style>
+  @font-face { font-family: M; font-weight: 800; src: url(../fonts/montserrat-latin-800-normal.woff2); }
+  @font-face { font-family: M; font-weight: 600; src: url(../fonts/montserrat-latin-600-normal.woff2); }
+  @font-face { font-family: Mono; font-weight: 500; src: url(../fonts/ibm-plex-mono-latin-500-normal.woff2); }
+  html, body { margin: 0; background: #111214; }
+  svg { display: block; width: 1080px; height: 1920px; }
+  .mono { font-family: Mono; font-weight: 500; }
+</style>
+</head>
+<body>
+<svg id="stage" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="haloGrad">
+      <stop offset="0" stop-color="#F6FBC4" stop-opacity="1"/>
+      <stop offset=".25" stop-color="#E6F24A" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#E6F24A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx=".5" cy=".46" r=".75">
+      <stop offset=".55" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".55"/>
+    </radialGradient>
+    <clipPath id="clipWord"><rect x="0" y="1090" width="1080" height="190"/></clipPath>
+  </defs>
+
+  <rect width="1080" height="1920" fill="#111214"/>
+
+  <g id="cam">
+    <g id="rails" stroke="#F2EEE6" stroke-width="1.5" opacity="0"></g>
+    <circle id="halo" r="0" fill="url(#haloGrad)"/>
+    <g id="symbol"><g id="corners"></g><rect id="center" fill="#E6F24A"/></g>
+    <circle id="core" r="0" fill="#F6FBC4"/>
+
+    <g clip-path="url(#clipWord)">
+      <text id="word" x="540" y="1230" text-anchor="middle" font-family="M" font-weight="800" font-size="168" fill="#F2EEE6">ZONE <tspan id="num" fill="#E6F24A">242</tspan></text>
+    </g>
+    <rect id="rule" y="1310" height="3" fill="#F2EEE6" opacity=".35"/>
+    <text id="tag" class="mono" x="540" y="1380" text-anchor="middle" font-size="27" letter-spacing="6" fill="#F2EEE6"></text>
+  </g>
+
+  <rect id="flash" width="1080" height="1920" fill="#F4F8CF" opacity="0"/>
+  <rect width="1080" height="1920" fill="url(#vignette)" pointer-events="none"/>
+
+  <g class="mono" font-size="22" letter-spacing="5" fill="#8C8B86">
+    <text id="hudTL" x="80" y="110"></text>
+    <text id="hudTR" x="1000" y="110" text-anchor="end"></text>
+    <text id="hudBL" x="80" y="1830"></text>
+    <text id="hudBR" x="1000" y="1830" text-anchor="end"></text>
+  </g>
+</svg>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const $ = id => document.getElementById(id);
+const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+const set = (n, a) => { for (const k in a) n.setAttribute(k, a[k]); };
+
+const CHAUX = '#F2EEE6', LUMIERE = '#E6F24A';
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const eOutCubic = k => 1 - Math.pow(1 - k, 3);
+const eInCubic = k => k * k * k;
+const eInOut = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const eOutExpo = k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
+const eOutBack = (k, s = 1.7) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2);
+const eOutQuint = k => 1 - Math.pow(1 - k, 5);
+
+const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789°′·/+';
+const hash = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+function scramble(str, t, t0, perChar, frame) {
+  let out = '';
+  for (let i = 0; i < str.length; i++) {
+    const at = t0 + i * perChar;
+    if (str[i] === ' ' || t >= at + 0.15) out += str[i];
+    else if (t >= at) out += GLYPHS[Math.floor(hash(i, frame) * GLYPHS.length)];
+    else out += ' ';
+  }
+  return out;
+}
+
+// timeline (120 BPM, 1 beat = 0.5 s)
+const DUR = 5;
+const T_LOCK = 1.5;                 // beat 3 : the lock-on hit
+const C = { x: 540, y: 800 }, S = 440;
+
+const L = {};
+function layout() {
+  const cg = $('corners');
+  L.corners = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([sx, sy]) => {
+    const g = el('g', {}, cg); const p = el('path', { fill: CHAUX }, g); return { g, p, sx, sy };
+  });
+  // converging light rails (vertical + horizontal hairlines through the symbol)
+  const r = $('rails');
+  L.rv = el('line', { y1: 0, y2: 1920 }, r);
+  L.rh = el('line', { x1: 0, x2: 1080 }, r);
+}
+const cornerPath = s => { const th = s * .13, arm = s * .385; return `M 0 0 H ${arm} V ${th} H ${th} V ${arm} H 0 Z`; };
+
+function render(t) {
+  const frame = Math.round(t * 60);
+  // camera: settles in, then breathes forward
+  const camS = lerp(1.07, 1.0, eOutQuint(prog(t, 0, T_LOCK))) + 0.025 * eInOut(prog(t, T_LOCK + .3, DUR));
+  $('cam').setAttribute('transform', `translate(540,900) scale(${camS}) translate(-540,-900)`);
+
+  // 1. light point wakes up (0 - 0.55)
+  const wake = eOutExpo(prog(t, 0.05, 0.55));
+  const flick = t < 0.55 ? (0.75 + 0.25 * Math.sin(t * 90)) : 1;
+  const pre = 1 - prog(t, 0.85, 1.15);               // point gives way to the corners
+  set($('core'), { cx: C.x, cy: C.y, r: wake * 9 * flick * pre });
+  const halo = (wake * 120 * flick * pre) + 380 * Math.exp(-Math.pow((t - T_LOCK) / 0.1, 2));
+  set($('halo'), { cx: C.x, cy: C.y, r: Math.max(halo, 0) });
+
+  // hairlines extend from the point
+  const rk = eOutExpo(prog(t, 0.4, 1.2));
+  const rOp = (rk * .22) * (1 - prog(t, T_LOCK, T_LOCK + .4));
+  $('rails').setAttribute('opacity', rOp);
+  set(L.rv, { x1: C.x, x2: C.x, y1: C.y - 1000 * rk, y2: C.y + 1000 * rk });
+  set(L.rh, { y1: C.y, y2: C.y, x1: C.x - 700 * rk, x2: C.x + 700 * rk });
+
+  // 2. focus hunting: far -> hold -> snap on the beat
+  const inA = eOutExpo(prog(t, 0.7, 1.2));
+  const snap = eOutBack(prog(t, T_LOCK - 0.1, T_LOCK + 0.12), 2.4);
+  const spread = lerp(lerp(3.6, 1.5, inA), 1.0, snap);
+  const rise = eOutCubic(prog(t, T_LOCK + .2, T_LOCK + 1.0)); // symbol lifts a touch as the name arrives
+  const cy = C.y - 20 * rise;
+  L.corners.forEach(c => {
+    c.p.setAttribute('d', cornerPath(S));
+    const off = (S / 2) * spread;
+    c.g.setAttribute('transform', `translate(${C.x + c.sx * off},${cy + c.sy * off}) scale(${-c.sx},${-c.sy})`);
+    c.g.setAttribute('opacity', clamp(prog(t, 0.75, 0.95)));
+  });
+  // light point becomes the centre square at the hit
+  const cK = eOutBack(prog(t, T_LOCK, T_LOCK + .3), 2.6);
+  const cs = S * .23 * cK;
+  set($('center'), { x: C.x - cs / 2, y: cy - cs / 2, width: Math.max(cs, 0), height: Math.max(cs, 0),
+    rx: lerp(cs / 2, 0, eOutCubic(prog(t, T_LOCK, T_LOCK + .35))), opacity: t < T_LOCK ? 0 : 1 });
+  $('flash').setAttribute('opacity', t >= T_LOCK ? .2 * Math.exp(-(t - T_LOCK) * 16) : 0);
+
+  // 3. wordmark slams up from behind its mask, tracking tightens (1.55 - 2.35)
+  const wk = eOutQuint(prog(t, T_LOCK + .05, T_LOCK + .75));
+  set($('word'), { transform: `translate(0,${(1 - wk) * 210})`, 'letter-spacing': lerp(36, 4, wk), opacity: wk > 0 ? 1 : 0 });
+  // "242" takes a second hit on beat 4 (t = 2.0): a small scale pulse in light
+  const pulse = Math.exp(-Math.max(t - 2.0, 0) * 9) * (t >= 2.0 ? 1 : 0);
+  set($('num'), { 'font-size': 168 * (1 + .05 * pulse) });
+
+  // 4. rule + tagline (2.0 - 3.0)
+  const rl = eOutExpo(prog(t, 2.0, 2.6));
+  set($('rule'), { x: 540 - 300 * rl, width: 600 * rl });
+  $('tag').textContent = scramble('CONNECTER · TRANSFORMER · ENVOYER', t, 2.15, 0.02, frame);
+
+  // HUD (editorial, same grid as the brand book)
+  $('hudTL').textContent = scramble('ZONE 242 BY MILMO', t, 0.75, 0.03, frame);
+  $('hudTR').textContent = t >= T_LOCK ? scramble('06°22′N  002°25′E', t, T_LOCK + .1, 0.03, frame) : '';
+  $('hudBL').textContent = scramble('ACTES 2:42', t, 2.6, 0.04, frame);
+  $('hudBR').textContent = scramble('COTONOU', t, T_LOCK + .2, 0.04, frame);
+}
+
+window.ready = document.fonts.ready.then(() => { layout(); render(0); });
+window.render = render;
+window.ready.then(() => {
+  const q = new URLSearchParams(location.search);
+  if (q.has('t')) { render(+q.get('t')); return; }
+  if (q.has('render')) return;
+  const t0 = performance.now();
+  const loop = now => { render(((now - t0) / 1000) % (DUR + .8)); requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+});
+</script>
+</body>
+</html>

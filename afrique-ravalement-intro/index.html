@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Afrique Ravalement · Intro Rubrique Question</title>
+<style>
+  @font-face { font-family: M; font-weight: 800; src: url(assets/montserrat-latin-800-normal.woff2); }
+  @font-face { font-family: M; font-weight: 600; src: url(assets/montserrat-latin-600-normal.woff2); }
+  html, body { margin: 0; background: #111; }
+  svg { display: block; width: 1080px; height: 1920px; }
+  text { font-family: M; }
+</style>
+</head>
+<body>
+<svg id="stage" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="glow" cx=".5" cy=".42" r=".7">
+      <stop offset="0" stop-color="#C9622A" stop-opacity="1"/>
+      <stop offset="1" stop-color="#B05316" stop-opacity="1"/>
+    </radialGradient>
+    <radialGradient id="vig" cx=".5" cy=".45" r=".8">
+      <stop offset=".6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".28"/>
+    </radialGradient>
+    <clipPath id="clipA"><rect x="0" y="800" width="1080" height="520"/></clipPath>
+    <clipPath id="clipB"><rect x="0" y="800" width="1080" height="700"/></clipPath>
+    <clipPath id="clipLogo"><rect id="logoClip" x="0" y="0" width="0" height="1920"/></clipPath>
+  </defs>
+
+  <rect width="1080" height="1920" fill="#111"/>
+  <rect id="bg" width="1080" height="1920" fill="url(#glow)"/>
+  <rect id="bgv" width="1080" height="1920" fill="url(#vig)"/>
+
+  <!-- diagonal light sweep -->
+  <rect id="sweep" x="-300" y="-200" width="160" height="2400" fill="#fff" opacity="0" transform="rotate(18 540 960)"/>
+
+  <g id="logoG" clip-path="url(#clipLogo)">
+    <image id="logo" href="assets/logo_noir_crop.png" width="820" height="282" x="-410" y="-141" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+
+  <!-- phase A -->
+  <g clip-path="url(#clipA)">
+    <g id="A">
+      <text id="a1" x="540" y="1000" text-anchor="middle" font-weight="800" fill="#fff">RUBRIQUE</text>
+      <text id="a2" x="540" y="1150" text-anchor="middle" font-weight="800" fill="#fff">QUESTION</text>
+      <text id="a3" x="540" y="1250" text-anchor="middle" font-weight="800" fill="#111" letter-spacing="9" font-size="38">POUR AFRIQUE RAVALEMENT</text>
+    </g>
+  </g>
+
+  <!-- phase B -->
+  <g clip-path="url(#clipB)">
+    <g id="B">
+      <text id="b1" x="540" y="1000" text-anchor="middle" font-weight="800" fill="#fff">UNE</text>
+      <text id="b2" x="540" y="1150" text-anchor="middle" font-weight="800" fill="#fff">QUESTION <tspan id="qm" fill="#111">?</tspan></text>
+      <text id="b3" x="540" y="1270" text-anchor="middle" font-weight="600" fill="#111" font-size="50">Posez votre question,</text>
+      <text id="b4" x="540" y="1340" text-anchor="middle" font-weight="800" fill="#fff" font-size="50">Afrique Ravalement répond</text>
+    </g>
+  </g>
+  <rect id="rule" y="1385" height="6" fill="#111"/>
+
+  <image id="tpl" href="assets/template_1080.png" width="1080" height="1920" opacity="0"/>
+  <rect id="flash" width="1080" height="1920" fill="#fff" opacity="0"/>
+  <rect id="wipe" width="1080" height="1920" fill="#111"/>
+</svg>
+
+<script>
+const $ = id => document.getElementById(id);
+const set = (n, a) => { for (const k in a) n.setAttribute(k, a[k]); };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const eOutCubic = k => 1 - Math.pow(1 - k, 3);
+const eOutQuint = k => 1 - Math.pow(1 - k, 5);
+const eOutExpo = k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
+const eInCubic = k => k * k * k;
+const eInOutQuint = k => k < .5 ? 16 * k ** 5 : 1 - Math.pow(-2 * k + 2, 5) / 2;
+const eOutBack = (k, s = 1.7) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2);
+
+const DUR = 5, T_HIT = 1.3;
+function fit(ids, w) {               // one font-size so the widest line is w px wide
+  const probe = $(ids[0]); let widest = 0;
+  ids.forEach(i => { set($(i), { 'font-size': 100 }); widest = Math.max(widest, $(i).getBBox().width); });
+  const fs = 100 * w / widest; ids.forEach(i => set($(i), { 'font-size': fs })); return fs;
+}
+function layout() { L.fa = fit(['a1', 'a2'], 800); L.fb = fit(['b1', 'b2'], 800); }
+const L = {};
+
+function render(t) {
+  // opening wipe: ink -> orange from the bottom (0 - 0.45)
+  const w = eOutExpo(prog(t, 0.0, 0.5));
+  set($('wipe'), { y: 1920 * w, height: 1920 * (1 - w) + 1 });
+  $('wipe').setAttribute('opacity', w >= 1 ? 0 : 1);
+
+  // logo: wipes in left -> right, lands on beat (0.4 - 1.3), then lifts to the top
+  const rev = eOutQuint(prog(t, 0.35, 1.2));
+  const lift = eInOutQuint(prog(t, 1.55, 2.2));
+  const lx = 540, ly = lerp(820, 400, lift), ls = lerp(1.0, 0.74, lift) * lerp(0.94, 1, eOutCubic(prog(t, 0.35, 1.3)));
+  $('logoG').setAttribute('transform', `translate(${lx},${ly}) scale(${ls})`);
+  set($('logoClip'), { x: -420, width: 840 * rev, y: -300, height: 600 });
+  // clip is in logoG local space (before transform) -> keep it in local coords
+  $('logoClip').parentNode.setAttribute('clipPathUnits', 'userSpaceOnUse');
+
+  // flash + light sweep at the hit
+  $('flash').setAttribute('opacity', t >= T_HIT ? .16 * Math.exp(-(t - T_HIT) * 18) : 0);
+  const sw = prog(t, T_HIT, T_HIT + .7);
+  set($('sweep'), { x: lerp(-300, 1300, eOutCubic(sw)), opacity: sw > 0 && sw < 1 ? .13 : 0 });
+
+  // phase A: "RUBRIQUE QUESTION / POUR AFRIQUE RAVALEMENT" (2.05 - 3.3)
+  const ia = i => eOutQuint(prog(t, 2.05 + i * .12, 2.65 + i * .12));
+  const oa = eInCubic(prog(t, 3.1, 3.4));
+  const up = (k, o) => (1 - k) * 560 - o * 560;
+  set($('a1'), { transform: `translate(0,${up(ia(0), oa)})` });
+  set($('a2'), { transform: `translate(0,${up(ia(1), oa)})` });
+  set($('a3'), { transform: `translate(0,${up(ia(2), oa)})`, opacity: 1 });
+
+  // phase B: "UNE QUESTION ?" then the promise (3.3 - 5)
+  const ib = i => eOutQuint(prog(t, 3.3 + i * .12, 3.9 + i * .12));
+  set($('b1'), { transform: `translate(0,${(1 - ib(0)) * 700})` });
+  const qb = eOutBack(prog(t, 3.42, 3.9), 2.2);
+  set($('b2'), { transform: `translate(0,${(1 - ib(1)) * 700})` });
+  set($('qm'), { 'font-size': L.fb * (1 + .06 * Math.exp(-Math.max(t - 3.9, 0) * 8) * (t > 3.9 ? 1 : 0)) });
+  set($('b3'), { transform: `translate(0,${(1 - ib(2)) * 700})` });
+  set($('b4'), { transform: `translate(0,${(1 - ib(3)) * 700})` });
+  const rl = eOutExpo(prog(t, 3.95, 4.5));
+  set($('rule'), { x: 540 - 260 * rl, width: 520 * rl });
+
+  // brand footer from the template (socials, address, phones)
+  $('tpl').setAttribute('opacity', eOutCubic(prog(t, 3.9, 4.4)));
+}
+
+window.ready = document.fonts.ready.then(() => { layout(); render(0); });
+window.render = render;
+window.ready.then(() => {
+  const q = new URLSearchParams(location.search);
+  if (q.has('t')) { render(+q.get('t')); return; }
+  if (q.has('render')) return;
+  const t0 = performance.now();
+  const loop = now => { render(((now - t0) / 1000) % (DUR + .8)); requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+});
+</script>
+</body>
+</html>
