@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Afrique Ravalement · Intro dynamique</title>
+<style>
+  @font-face { font-family: M; font-weight: 800; src: url(assets/montserrat-latin-800-normal.woff2); }
+  @font-face { font-family: M; font-weight: 600; src: url(assets/montserrat-latin-600-normal.woff2); }
+  html, body { margin: 0; background: #111; }
+  svg { display: block; width: 1080px; height: 1920px; }
+  text { font-family: M; }
+</style>
+</head>
+<body>
+<svg id="stage" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="glow" cx=".5" cy=".42" r=".7">
+      <stop offset="0" stop-color="#C9622A"/><stop offset="1" stop-color="#B05316"/>
+    </radialGradient>
+    <radialGradient id="vig" cx=".5" cy=".45" r=".8">
+      <stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/>
+    </radialGradient>
+    <clipPath id="clipA"><rect x="0" y="800" width="1080" height="520"/></clipPath>
+  </defs>
+
+  <rect width="1080" height="1920" fill="#111"/>
+  <g id="cam">
+    <rect x="-100" y="-100" width="1280" height="2120" fill="url(#glow)"/>
+    <g id="stripes" opacity=".04"></g>
+    <g id="rings" fill="none" stroke="#fff" stroke-width="3"></g>
+    <g id="spray" fill="#fff"></g>
+
+    <g id="logoG"><image href="assets/logo_noir_crop.png" width="820" height="282" x="-410" y="-141"/></g>
+
+    <g clip-path="url(#clipA)">
+      <g id="A"></g>
+      <text id="a3" x="540" y="1250" text-anchor="middle" font-weight="800" fill="#111" letter-spacing="9" font-size="38">POUR AFRIQUE RAVALEMENT</text>
+    </g>
+    <g id="B"></g>
+    <rect id="b4bar" fill="#111" rx="0"/>
+    <text id="b3" x="540" y="1270" text-anchor="middle" font-weight="600" fill="#111" font-size="50">Posez votre question,</text>
+    <text id="b4" x="540" y="1342" text-anchor="middle" font-weight="800" fill="#fff" font-size="50">Afrique Ravalement répond</text>
+
+    <g id="band"><rect x="-1400" y="-42" width="2800" height="84" fill="#111"/>
+      <text id="bandT" y="13" font-weight="800" font-size="36" letter-spacing="4" fill="#fff"></text></g>
+
+    <image id="tpl" href="assets/template_1080.png" width="1080" height="1920" opacity="0"/>
+    <rect width="1080" height="1920" fill="url(#vig)" pointer-events="none"/>
+  </g>
+
+  <rect id="bar" y="-100" width="1500" height="2120" fill="#111"/>
+  <rect id="bar2" y="-100" width="14" height="2120" fill="#fff"/>
+  <g id="cols"></g>
+  <rect id="flash" width="1080" height="1920" fill="#fff" opacity="0"/>
+</svg>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const $ = id => document.getElementById(id);
+const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+const set = (n, a) => { for (const k in a) n.setAttribute(k, a[k]); };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const eOutCubic = k => 1 - Math.pow(1 - k, 3);
+const eOutQuint = k => 1 - Math.pow(1 - k, 5);
+const eOutExpo = k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
+const eInOutCubic = k => k < .5 ? 4 * k ** 3 : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const eInOutQuint = k => k < .5 ? 16 * k ** 5 : 1 - Math.pow(-2 * k + 2, 5) / 2;
+const eOutBack = (k, s = 1.7) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2);
+const hash = (a, b = 0) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+const DUR = 5, BEATS = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5];
+const L = { A1: [], A2: [], B1: [], B2: [], spray: [], rings: [], cols: [], stripes: [] };
+
+// per-letter text: each glyph is its own group so it can bounce, spin and scale
+function letters(str, fs, fill, cy, parent, extraFill = {}) {
+  const m = el('text', { 'font-family': 'M', 'font-weight': 800, 'font-size': fs, x: 0, y: 0, visibility: 'hidden' }, $('stage'));
+  m.textContent = str;
+  const total = m.getComputedTextLength(), x0 = 540 - total / 2, out = [];
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === ' ') continue;
+    const e = m.getExtentOfChar(i);
+    const g = el('g', {}, parent);
+    const t = el('text', { x: 0, y: 0, 'text-anchor': 'middle', 'font-weight': 800, 'font-size': fs, fill: extraFill[i] || fill }, g);
+    t.textContent = str[i];
+    out.push({ g, px: x0 + e.x + e.width / 2, y: cy, c: fs * .36, i });
+  }
+  m.remove(); return out;
+}
+function fitSize(strs, w) {
+  let widest = 0;
+  strs.forEach(s => { const m = el('text', { 'font-family': 'M', 'font-weight': 800, 'font-size': 100, visibility: 'hidden' }, $('stage')); m.textContent = s; widest = Math.max(widest, m.getComputedTextLength()); m.remove(); });
+  return 100 * w / widest;
+}
+const place = (l, dy, r, s, op = 1) => {
+  l.g.setAttribute('transform', `translate(${l.px},${l.y + dy}) translate(0,${-l.c}) rotate(${r}) scale(${s}) translate(0,${l.c})`);
+  l.g.setAttribute('opacity', op);
+};
+
+function layout() {
+  const fa = fitSize(['RUBRIQUE', 'QUESTION'], 800), fb = fitSize(['UNE', 'QUESTION ?'], 800);
+  L.fb = fb;
+  L.A1 = letters('RUBRIQUE', fa, '#fff', 1000, $('A'));
+  L.A2 = letters('QUESTION', fa, '#fff', 1150, $('A'));
+  L.B1 = letters('UNE', fb, '#fff', 1000, $('B'));
+  L.B2 = letters('QUESTION ?', fb, '#fff', 1150, $('B'), { 9: '#111' });
+  for (let i = 0; i < 10; i++) L.rings.push(el('circle', { r: 0, opacity: 0 }, $('rings')));
+  for (let i = 0; i < 100; i++) L.spray.push(el('circle', { r: 0 }, $('spray')));
+  for (let i = 0; i < 7; i++) L.cols.push(el('rect', { x: i * 156, y: 0, width: 157, height: 1920, fill: '#111' }, $('cols')));
+  for (let i = 0; i < 9; i++) L.stripes.push(el('rect', { x: i * 360 - 360, y: -600, width: 130, height: 3200, fill: '#fff', transform: 'rotate(18 540 960)' }, $('stripes')));
+  // marquee text
+  const unit = 'AFRIQUE RAVALEMENT  •  RUBRIQUE QUESTION  •  ';
+  const bt = $('bandT'); bt.textContent = unit; L.unitW = bt.getComputedTextLength(); bt.textContent = unit.repeat(6);
+  L.b4w = $('b4').getComputedTextLength();
+}
+
+function logoT(t) {
+  const k = eOutExpo(prog(t, 0.45, 0.85)), lift = eInOutQuint(prog(t, 1.0, 1.55));
+  return { s: lerp(2.4, 1, k) * lerp(1, .74, lift), r: lerp(-8, 0, k), x: 540, y: lerp(820, 400, lift), vis: t >= 0.45 };
+}
+const NOZ = { x: -62, y: -93 };       // nozzle tip in logo space
+function nozzle(t) {
+  const T = logoT(t), a = T.r * Math.PI / 180;
+  return { x: T.x + T.s * (NOZ.x * Math.cos(a) - NOZ.y * Math.sin(a)), y: T.y + T.s * (NOZ.x * Math.sin(a) + NOZ.y * Math.cos(a)) };
+}
+const BURSTS = [0.62, 1.12];
+const SHAKES = [[0.5, 16], [1.0, 9], [1.5, 5], [2.0, 5], [3.0, 18], [3.5, 6], [4.0, 6]];
+
+function render(t) {
+  const frame = Math.round(t * 60);
+  // ---- camera shake on every hit
+  let amp = 0; for (const [b, a] of SHAKES) if (t >= b) amp += a * Math.exp(-(t - b) * 15);
+  const sx = (hash(frame, 1) - .5) * 2 * amp, sy = (hash(frame, 2) - .5) * 2 * amp, sr = (hash(frame, 3) - .5) * amp * .05;
+  $('cam').setAttribute('transform', `translate(${sx},${sy}) rotate(${sr} 540 960)`);
+
+  // ---- background: drifting light stripes
+  const off = (t * 140) % 360;
+  L.stripes.forEach((s, i) => s.setAttribute('x', i * 360 - 360 + off));
+
+  // ---- shock rings, one per beat
+  L.rings.forEach((c, i) => {
+    const age = t - (BEATS[i] ?? 99);
+    if (age < 0 || age > 1) { c.setAttribute('opacity', 0); return; }
+    const T = logoT(t);
+    set(c, { cx: T.x, cy: T.y, r: 60 + 1150 * eOutCubic(age), opacity: (BEATS[i] === 3.0 || BEATS[i] === 0.5 ? .45 : .22) * (1 - age), 'stroke-width': lerp(10, 2, age) });
+  });
+
+  // ---- water spray from the nozzle
+  let pi = 0;
+  BURSTS.forEach((t0, bi) => {
+    const o = nozzle(t0);
+    for (let j = 0; j < 50; j++, pi++) {
+      const c = L.spray[pi]; const age = t - t0, life = lerp(.7, 1.2, hash(j, bi + 7));
+      if (age < 0 || age > life) { c.setAttribute('r', 0); continue; }
+      const ang = (-38 + 52 * hash(j, bi + 1)) * Math.PI / 180, v = lerp(500, 1600, hash(j, bi + 2) ** 1.4);
+      const x = o.x + Math.cos(ang) * v * age, y = o.y + Math.sin(ang) * v * age + .5 * 1800 * age * age;
+      set(c, { cx: x, cy: y, r: lerp(3, 11, hash(j, bi + 3)) * (1 - .6 * age / life), opacity: .9 * (1 - Math.pow(age / life, 2)) });
+    }
+  });
+
+  // ---- logo slam, then lift
+  const T = logoT(t);
+  $('logoG').setAttribute('transform', `translate(${T.x},${T.y}) rotate(${T.r}) scale(${T.s})`);
+  $('logoG').setAttribute('opacity', T.vis ? 1 : 0);
+
+  // ---- phase A letters (1.4 - 2.8)
+  const aOn = t < 2.82;
+  $('A').setAttribute('display', aOn ? 'inline' : 'none');
+  [...L.A1, ...L.A2].forEach((l, n) => {
+    const row = n < L.A1.length ? 0 : 1, idx = row ? n - L.A1.length : n;
+    const p = prog(t, 1.4 + row * .18 + idx * .035, 1.4 + row * .18 + idx * .035 + .45);
+    const k = eOutQuint(p);
+    place(l, (1 - k) * 440, (1 - k) * (idx % 2 ? 14 : -14), lerp(1.15, 1, k));
+  });
+  set($('a3'), { transform: `translate(0,${(1 - eOutQuint(prog(t, 2.0, 2.5))) * 170})`, display: aOn ? 'inline' : 'none' });
+
+  // ---- phase B letters (2.92 - ...)
+  const bOn = t >= 2.9;
+  $('B').setAttribute('display', bOn ? 'inline' : 'none');
+  [...L.B1, ...L.B2].forEach((l, n) => {
+    const row = n < L.B1.length ? 0 : 1, idx = row ? n - L.B1.length : n;
+    const isQ = row && idx === L.B2.length - 1;
+    const st = 2.95 + row * .1 + idx * .04 + (isQ ? .12 : 0);
+    const p = prog(t, st, st + .4), k = eOutBack(p, 2.6);
+    const spin = isQ ? (1 - eOutQuint(prog(t, st, st + .75))) * 360 : (1 - eOutCubic(p)) * (idx % 2 ? 12 : -12);
+    place(l, (1 - eOutCubic(p)) * -70, spin, Math.max(k, 0), p > 0 ? 1 : 0);
+  });
+  set($('b3'), { transform: `translate(0,${(1 - eOutQuint(prog(t, 3.55, 3.95))) * 90})`, opacity: prog(t, 3.55, 3.75) });
+  const bw = eOutExpo(prog(t, 3.75, 4.1)), bx = 540 - L.b4w / 2 - 26, bwid = L.b4w + 52;
+  set($('b4bar'), { x: bx, y: 1294, width: bwid * bw, height: 76 });
+  set($('b4'), { opacity: t >= 3.82 ? 1 : 0, transform: `translate(${(1 - eOutQuint(prog(t, 3.82, 4.2))) * -60},0)` });
+
+  // ---- marquee band
+  const bk = eOutBack(prog(t, 1.5, 1.95), 1.8);
+  const bandOn = t >= 1.5;
+  set($('band'), { transform: `translate(540,1565) rotate(-4) scale(1,${Math.max(bk, 0)})`, opacity: bandOn ? 1 : 0 });
+  set($('bandT'), { x: -1000 - ((t * 280) % L.unitW) });
+
+  // ---- footer from the template
+  const fk = eOutCubic(prog(t, 4.15, 4.6));
+  set($('tpl'), { opacity: fk, transform: `translate(0,${(1 - fk) * 40})` });
+
+  // ---- swipe transition (2.55 - 3.05)
+  const sw = eInOutCubic(prog(t, 2.55, 3.05)), bxp = lerp(-1700, 1150, sw);
+  set($('bar'), { x: bxp, opacity: sw > 0 && sw < 1 ? 1 : 0 });
+  set($('bar2'), { x: bxp + 1500 - 4, opacity: sw > 0 && sw < 1 ? 1 : 0 });
+
+  // ---- opening: 7 columns lift away, staggered (0 - 0.5)
+  L.cols.forEach((c, i) => {
+    const k = eOutExpo(prog(t, i * .045, i * .045 + .32));
+    set(c, { y: -1920 * k, opacity: k >= 1 ? 0 : 1 });
+  });
+
+  // ---- white flashes on the big hits
+  const fl = (t >= .5 ? .35 * Math.exp(-(t - .5) * 22) : 0) + (t >= 3.0 ? .3 * Math.exp(-(t - 3.0) * 22) : 0);
+  $('flash').setAttribute('opacity', fl);
+}
+
+window.ready = document.fonts.ready.then(() => { layout(); render(0); });
+window.render = render;
+window.ready.then(() => {
+  const q = new URLSearchParams(location.search);
+  if (q.has('t')) { render(+q.get('t')); return; }
+  if (q.has('render')) return;
+  const t0 = performance.now();
+  const loop = now => { render(((now - t0) / 1000) % (DUR + .8)); requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+});
+</script>
+</body>
+</html>
