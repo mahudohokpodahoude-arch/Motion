@@ -79,7 +79,7 @@ for fr in [146.8, 220.0, 293.7, 369.99, 440.0, 554.4]:
         pad += np.sin(2*np.pi*(fr + det*fr/220) * t + rng.uniform(0, 6.28)) / 18
 place(sosfilt(f('lowpass', 2600), pad) * a, 3.0, .5, verb=.55)
 # 4.15 : footer shimmer
-for i, fr in enumerate([2093, 2637, 3136]): tick(4.15 + i * .06, fr, .06)
+
 
 # --- reverb (synthetic exponential-noise IR) + master
 ir_len = int(1.8 * SR); tt = np.arange(ir_len) / SR
