@@ -93,13 +93,13 @@ const popAll = (G, t0, step, t, dir = 1) => G.list.forEach((l, n) => {
   place(l, (1 - eOutCubic(p)) * -70 * dir, (1 - eOutCubic(p)) * (n % 2 ? 12 : -12), Math.max(k, 0), p > 0 ? 1 : 0);
 });
 
-const POS = { head: 740, ph1: 915, ph2: 1015, mail: 1245, ic: 1450, name: 1650 };
+const POS = { head: 745, ph1: 925, ph2: 1010, mail: 1245, ic: 1450, name: 1650 };
 function layout() {
-  L.head = letters('CONTACTEZ-NOUS', 600, '#111', 540, POS.head, $('head'));
-  L.P1 = letters('01 90 51 28 29', 600, '#fff', 590, POS.ph1, $('P1'));
-  L.P2 = letters('01 69 13 83 83', 600, '#fff', 590, POS.ph2, $('P2'));
-  L.M = letters('hello@afriqueravalement.com', 880, '#fff', 540, POS.mail, $('M'), 800);
-  L.S = letters('Afrique Ravalement', 640, '#fff', 540, POS.name, $('S'));
+  L.head = letters('CONTACTEZ-NOUS', 500, '#111', 540, POS.head, $('head'));
+  L.P1 = letters('01 90 51 28 29', 500, '#fff', 610, POS.ph1, $('P1'));
+  L.P2 = letters('01 69 13 83 83', 500, '#fff', 610, POS.ph2, $('P2'));
+  L.M = letters('hello@afriqueravalement.com', 740, '#fff', 540, POS.mail, $('M'), 800);
+  L.S = letters('Afrique Ravalement', 530, '#fff', 540, POS.name, $('S'));
   for (let i = 0; i < 10; i++) L.rings.push(el('circle', { r: 0, opacity: 0 }, $('rings')));
   for (let i = 0; i < 60; i++) L.spray.push(el('circle', { r: 0 }, $('spray')));
   for (let i = 0; i < 7; i++) L.cols.push(el('rect', { x: i * 156, y: 0, width: 157, height: 1920, fill: '#111' }, $('cols')));
@@ -148,16 +148,16 @@ function render(t) {
 
   // phones: black bar wipes in, icon spins, numbers pop
   const pb = eOutExpo(prog(t, 1.25, 1.6));
-  set($('phBar'), { x: 120, y: 835, width: 840 * pb, height: 230 });
+  set($('phBar'), { x: 170, y: 845, width: 740 * pb, height: 210 });
   const ip = eOutBack(prog(t, 1.45, 1.85), 2.4);
-  set($('phIcon'), { transform: `translate(215,950) rotate(${(1 - eOutQuint(prog(t, 1.45, 2.0))) * -360}) scale(${Math.max(ip, 0)})` });
+  set($('phIcon'), { transform: `translate(260,950) rotate(${(1 - eOutQuint(prog(t, 1.45, 2.0))) * -360}) scale(${Math.max(ip, 0)})` });
   popAll(L.P1, 1.5, .028, t); popAll(L.P2, 1.62, .028, t);
 
   // mail
   const mp = eOutBack(prog(t, 2.0, 2.4), 2.4);
   set($('mailIcon'), { transform: `translate(540,1160) scale(${Math.max(mp, 0)})` });
   popAll(L.M, 2.15, .022, t);
-  const mr = eOutExpo(prog(t, 2.7, 3.0)); set($('mailRule'), { x: 540 - 440 * mr, y: 1290, width: 880 * mr });
+  const mr = eOutExpo(prog(t, 2.7, 3.0)); set($('mailRule'), { x: 540 - 370 * mr, y: 1285, width: 740 * mr });
 
   // socials: three icons pop with a spin, then the name on a black bar
   [0, 1, 2].forEach(i => {
@@ -165,7 +165,7 @@ function render(t) {
     set($('ic' + i), { transform: `translate(${540 + (i - 1) * 190},${POS.ic}) rotate(${(1 - eOutQuint(p)) * 360}) scale(${Math.max(k, 0)})` });
   });
   const nb = eOutExpo(prog(t, 3.1, 3.5)), nw = L.S.total + 70;
-  set($('nameBar'), { x: 540 - nw / 2, y: POS.name - 62, width: nw * nb, height: 100 });
+  set($('nameBar'), { x: 540 - nw / 2, y: POS.name - 54, width: nw * nb, height: 86 });
   popAll(L.S, 3.35, .03, t);
 
   // opening columns + hit flash
