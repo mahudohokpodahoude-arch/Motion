@@ -30,7 +30,7 @@ if (args[0] === '--stills') {
 } else {
   const out = args[0] ?? path.join(here, 'AfriqueRavalement_intro_5s.mp4');
   const fps = Number(args[1] ?? 60);
-  const DUR = 5;
+  const DUR = Number(process.env.DUR ?? 5);
   const ff = spawn('ffmpeg', ['-y', '-f', 'image2pipe', '-framerate', String(fps), '-i', '-',
     '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-preset', 'slow', '-crf', '16',
     '-movflags', '+faststart', out], { stdio: ['pipe', 'inherit', 'inherit'] });

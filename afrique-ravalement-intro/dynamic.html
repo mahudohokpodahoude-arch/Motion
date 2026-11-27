@@ -32,10 +32,6 @@
 
     <g id="logoG"><image href="assets/logo_noir_crop.png" width="820" height="282" x="-410" y="-141"/></g>
 
-    <g clip-path="url(#clipA)">
-      <g id="A"></g>
-      <text id="a3" x="540" y="1250" text-anchor="middle" font-weight="800" fill="#111" letter-spacing="9" font-size="38">POUR AFRIQUE RAVALEMENT</text>
-    </g>
     <g id="B"></g>
     <rect id="b4bar" fill="#111" rx="0"/>
     <text id="b4" x="540" y="1292" text-anchor="middle" font-weight="800" fill="#fff" font-size="50">Afrique Ravalement répond</text>
@@ -46,8 +42,6 @@
     <rect width="1080" height="1920" fill="url(#vig)" pointer-events="none"/>
   </g>
 
-  <rect id="bar" y="-100" width="1500" height="2120" fill="#111"/>
-  <rect id="bar2" y="-100" width="14" height="2120" fill="#fff"/>
   <g id="cols"></g>
   <rect id="flash" width="1080" height="1920" fill="#fff" opacity="0"/>
 </svg>
@@ -67,7 +61,7 @@ const eInOutCubic = k => k < .5 ? 4 * k ** 3 : 1 - Math.pow(-2 * k + 2, 3) / 2;
 const eInOutQuint = k => k < .5 ? 16 * k ** 5 : 1 - Math.pow(-2 * k + 2, 5) / 2;
 const eOutBack = (k, s = 1.7) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2);
 const hash = (a, b = 0) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
-const DUR = 5, BEATS = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5];
+const DUR = 4, BEATS = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5];
 const L = { A1: [], A2: [], B1: [], B2: [], spray: [], rings: [], cols: [], stripes: [] };
 
 // per-letter text: each glyph is its own group so it can bounce, spin and scale
@@ -98,8 +92,6 @@ const place = (l, dy, r, s, op = 1) => {
 function layout() {
   const fa = fitSize(['RUBRIQUE', 'QUESTION'], 800), fb = fitSize(['UNE', 'QUESTION ?'], 800);
   L.fb = fb;
-  L.A1 = letters('RUBRIQUE', fa, '#fff', 1000, $('A'));
-  L.A2 = letters('QUESTION', fa, '#fff', 1150, $('A'));
   L.B1 = letters('UNE', fb, '#fff', 1000, $('B'));
   L.B2 = letters('QUESTION ?', fb, '#fff', 1150, $('B'), { 9: '#111' });
   for (let i = 0; i < 10; i++) L.rings.push(el('circle', { r: 0, opacity: 0 }, $('rings')));
@@ -107,7 +99,7 @@ function layout() {
   for (let i = 0; i < 7; i++) L.cols.push(el('rect', { x: i * 156, y: 0, width: 157, height: 1920, fill: '#111' }, $('cols')));
   for (let i = 0; i < 9; i++) L.stripes.push(el('rect', { x: i * 360 - 360, y: -600, width: 130, height: 3200, fill: '#fff', transform: 'rotate(18 540 960)' }, $('stripes')));
   // marquee text
-  const unit = 'AFRIQUE RAVALEMENT  •  RUBRIQUE QUESTION  •  ';
+  const unit = 'AFRIQUE RAVALEMENT  •  UNE QUESTION  •  ';
   const bt = $('bandT'); bt.textContent = unit; L.unitW = bt.getComputedTextLength(); bt.textContent = unit.repeat(6);
   L.b4w = $('b4').getComputedTextLength();
 }
@@ -122,7 +114,7 @@ function nozzle(t) {
   return { x: T.x + T.s * (NOZ.x * Math.cos(a) - NOZ.y * Math.sin(a)), y: T.y + T.s * (NOZ.x * Math.sin(a) + NOZ.y * Math.cos(a)) };
 }
 const BURSTS = [0.62, 1.12];
-const SHAKES = [[0.5, 16], [1.0, 9], [1.5, 5], [2.0, 5], [3.0, 18], [3.5, 6], [4.0, 6]];
+const SHAKES = [[0.5, 16], [1.0, 9], [1.5, 18], [2.0, 5], [2.5, 5]];
 
 function render(t) {
   const frame = Math.round(t * 60);
@@ -140,7 +132,7 @@ function render(t) {
     const age = t - (BEATS[i] ?? 99);
     if (age < 0 || age > 1) { c.setAttribute('opacity', 0); return; }
     const T = logoT(t);
-    set(c, { cx: T.x, cy: T.y, r: 60 + 1150 * eOutCubic(age), opacity: (BEATS[i] === 3.0 || BEATS[i] === 0.5 ? .45 : .22) * (1 - age), 'stroke-width': lerp(10, 2, age) });
+    set(c, { cx: T.x, cy: T.y, r: 60 + 1150 * eOutCubic(age), opacity: (BEATS[i] === 1.5 || BEATS[i] === 0.5 ? .45 : .22) * (1 - age), 'stroke-width': lerp(10, 2, age) });
   });
 
   // ---- water spray from the nozzle
@@ -161,31 +153,18 @@ function render(t) {
   $('logoG').setAttribute('transform', `translate(${T.x},${T.y}) rotate(${T.r}) scale(${T.s})`);
   $('logoG').setAttribute('opacity', T.vis ? 1 : 0);
 
-  // ---- phase A letters (1.4 - 2.8)
-  const aOn = t < 2.82;
-  $('A').setAttribute('display', aOn ? 'inline' : 'none');
-  [...L.A1, ...L.A2].forEach((l, n) => {
-    const row = n < L.A1.length ? 0 : 1, idx = row ? n - L.A1.length : n;
-    const p = prog(t, 1.4 + row * .18 + idx * .035, 1.4 + row * .18 + idx * .035 + .45);
-    const k = eOutQuint(p);
-    place(l, (1 - k) * 440, (1 - k) * (idx % 2 ? 14 : -14), lerp(1.15, 1, k));
-  });
-  set($('a3'), { transform: `translate(0,${(1 - eOutQuint(prog(t, 2.0, 2.5))) * 170})`, display: aOn ? 'inline' : 'none' });
-
   // ---- phase B letters (2.92 - ...)
-  const bOn = t >= 2.9;
-  $('B').setAttribute('display', bOn ? 'inline' : 'none');
   [...L.B1, ...L.B2].forEach((l, n) => {
     const row = n < L.B1.length ? 0 : 1, idx = row ? n - L.B1.length : n;
     const isQ = row && idx === L.B2.length - 1;
-    const st = 2.95 + row * .1 + idx * .04 + (isQ ? .12 : 0);
+    const st = 1.45 + row * .1 + idx * .04 + (isQ ? .12 : 0);
     const p = prog(t, st, st + .4), k = eOutBack(p, 2.6);
     const spin = isQ ? (1 - eOutQuint(prog(t, st, st + .75))) * 360 : (1 - eOutCubic(p)) * (idx % 2 ? 12 : -12);
     place(l, (1 - eOutCubic(p)) * -70, spin, Math.max(k, 0), p > 0 ? 1 : 0);
   });
-  const bw = eOutExpo(prog(t, 3.75, 4.1)), bx = 540 - L.b4w / 2 - 26, bwid = L.b4w + 52;
+  const bw = eOutExpo(prog(t, 2.25, 2.6)), bx = 540 - L.b4w / 2 - 26, bwid = L.b4w + 52;
   set($('b4bar'), { x: bx, y: 1244, width: bwid * bw, height: 76 });
-  set($('b4'), { opacity: t >= 3.82 ? 1 : 0, transform: `translate(${(1 - eOutQuint(prog(t, 3.82, 4.2))) * -60},0)` });
+  set($('b4'), { opacity: t >= 2.32 ? 1 : 0, transform: `translate(${(1 - eOutQuint(prog(t, 2.32, 2.7))) * -60},0)` });
 
   // ---- marquee band
   const bk = eOutBack(prog(t, 1.5, 1.95), 1.8);
@@ -195,11 +174,6 @@ function render(t) {
 
   // ---- footer from the template
 
-  // ---- swipe transition (2.55 - 3.05)
-  const sw = eInOutCubic(prog(t, 2.55, 3.05)), bxp = lerp(-1700, 1150, sw);
-  set($('bar'), { x: bxp, opacity: sw > 0 && sw < 1 ? 1 : 0 });
-  set($('bar2'), { x: bxp + 1500 - 4, opacity: sw > 0 && sw < 1 ? 1 : 0 });
-
   // ---- opening: 7 columns lift away, staggered (0 - 0.5)
   L.cols.forEach((c, i) => {
     const k = eOutExpo(prog(t, i * .045, i * .045 + .32));
@@ -207,7 +181,7 @@ function render(t) {
   });
 
   // ---- white flashes on the big hits
-  const fl = (t >= .5 ? .35 * Math.exp(-(t - .5) * 22) : 0) + (t >= 3.0 ? .3 * Math.exp(-(t - 3.0) * 22) : 0);
+  const fl = (t >= .5 ? .35 * Math.exp(-(t - .5) * 22) : 0) + (t >= 1.5 ? .3 * Math.exp(-(t - 1.5) * 22) : 0);
   $('flash').setAttribute('opacity', fl);
 }
 

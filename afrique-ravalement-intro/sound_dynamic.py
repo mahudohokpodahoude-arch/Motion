@@ -47,39 +47,28 @@ def spray(t0, g=.35):
 def tick(t0, fr, g=.12, pan=0.0):
     tt = ts(0.1); place(np.sin(2*np.pi*fr*tt) * env(0.1, .0006, 45), t0, g, pan=pan, verb=.35)
 
-# 0.0 -> 0.5 : opening columns lifting (quick staggered whoosh)
+# 0.0 -> 0.5 : columns lifting
 for i in range(7): whoosh(i * .045, .3, 600, 4000, .12)
-# 0.5 : logo slam, 0.58 spray
+# 0.5 : logo slam + spray
 hit(0.5, 1.0); spray(0.58)
-# 1.0 : second hit (logo lifts) + spray
-hit(1.0, .7, 55); spray(1.1, .3); whoosh(1.0, .5, 400, 3000, .3)
-# 1.4 -> 2.2 : letters rising, stepped ticks
-for i in range(16):
-    tick(1.4 + (i % 8) * .035 + (i // 8) * .18 + .05, 1319 + (i % 5) * 220, .09, pan=np.sin(i) * .5)
-# 1.5 : marquee band whoosh
-whoosh(1.5, .45, 800, 5000, .25)
-# 2.0 : beat
-hit(2.0, .35, 70)
-# 2.3 -> 3.0 : riser into the swipe, big hit when letters land
-d = 0.7; t = ts(d); k = (t / d) ** 2.2
-place(sosfilt(f('highpass', 500), noise(d)) * k * .35 + np.sin(2*np.pi*np.cumsum(220 * (10 ** (t / d))) / SR) * k * .2, 2.3, .6, verb=.35)
-whoosh(2.55, .5, 300, 3500, .4)
-hit(3.0, 1.0, 50)
-# 3.0 -> 3.5 : letters pop, pentatonic ticks; the "?" spins
+# 1.0 : lift
+hit(1.0, .6, 55); spray(1.1, .25); whoosh(1.0, .5, 400, 3000, .3)
+# 1.3 -> 1.5 : riser into the big hit; 1.5 : letters land
+d = 0.45; t = ts(d); k = (t / d) ** 2.2
+place(sosfilt(f('highpass', 500), noise(d)) * k * .3 + np.sin(2*np.pi*np.cumsum(220 * (10 ** (t / d))) / SR) * k * .18, 1.05, .6, verb=.35)
+hit(1.5, 1.0, 50)
 for i, fr in enumerate([1568, 1760, 1976, 1568, 2349, 1976, 2093, 1760, 1319, 2637, 3136]):
-    tick(3.0 + i * .045, fr, .1, pan=np.sin(i * 1.3) * .6)
-whoosh(3.4, .45, 1500, 7000, .2)
-# 3.55 / 3.75 : the promise lines, bar wipe
-whoosh(3.72, .25, 800, 4000, .25); tick(3.82, 2349, .12)
-# 3.0 -> 5.0 : warm pad
-d = 2.0; t = ts(d); a = np.minimum(t / 0.5, 1) ** 2 * np.minimum((d - t) / 0.6, 1)
+    tick(1.45 + i * .045, fr, .1, pan=np.sin(i * 1.3) * .6)
+whoosh(1.9, .45, 1500, 7000, .2)
+# 2.25 : the answer bar wipes in
+whoosh(2.22, .25, 800, 4000, .25); tick(2.32, 2349, .12)
+# 1.5 -> 4.0 : warm pad
+d = 2.5; t = ts(d); a = np.minimum(t / 0.5, 1) ** 2 * np.minimum((d - t) / 0.7, 1)
 pad = np.zeros_like(t)
 for fr in [146.8, 220.0, 293.7, 369.99, 440.0, 554.4]:
     for det in (-1.7, 0, 1.9):
         pad += np.sin(2*np.pi*(fr + det*fr/220) * t + rng.uniform(0, 6.28)) / 18
-place(sosfilt(f('lowpass', 2600), pad) * a, 3.0, .5, verb=.55)
-# 4.15 : footer shimmer
-
+place(sosfilt(f('lowpass', 2600), pad) * a, 1.5, .5, verb=.55)
 
 # --- reverb (synthetic exponential-noise IR) + master
 ir_len = int(1.8 * SR); tt = np.arange(ir_len) / SR
