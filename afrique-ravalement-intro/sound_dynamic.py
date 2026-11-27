@@ -70,7 +70,7 @@ for i, fr in enumerate([1568, 1760, 1976, 1568, 2349, 1976, 2093, 1760, 1319, 26
     tick(3.0 + i * .045, fr, .1, pan=np.sin(i * 1.3) * .6)
 whoosh(3.4, .45, 1500, 7000, .2)
 # 3.55 / 3.75 : the promise lines, bar wipe
-tick(3.55, 1760, .12); whoosh(3.72, .25, 800, 4000, .25); tick(3.82, 2349, .12)
+whoosh(3.72, .25, 800, 4000, .25); tick(3.82, 2349, .12)
 # 3.0 -> 5.0 : warm pad
 d = 2.0; t = ts(d); a = np.minimum(t / 0.5, 1) ** 2 * np.minimum((d - t) / 0.6, 1)
 pad = np.zeros_like(t)

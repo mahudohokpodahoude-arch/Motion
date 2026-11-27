@@ -38,8 +38,7 @@
     </g>
     <g id="B"></g>
     <rect id="b4bar" fill="#111" rx="0"/>
-    <text id="b3" x="540" y="1270" text-anchor="middle" font-weight="600" fill="#111" font-size="50">Posez votre question,</text>
-    <text id="b4" x="540" y="1342" text-anchor="middle" font-weight="800" fill="#fff" font-size="50">Afrique Ravalement répond</text>
+    <text id="b4" x="540" y="1292" text-anchor="middle" font-weight="800" fill="#fff" font-size="50">Afrique Ravalement répond</text>
 
     <g id="band"><rect x="-1400" y="-42" width="2800" height="84" fill="#111"/>
       <text id="bandT" y="13" font-weight="800" font-size="36" letter-spacing="4" fill="#fff"></text></g>
@@ -184,9 +183,8 @@ function render(t) {
     const spin = isQ ? (1 - eOutQuint(prog(t, st, st + .75))) * 360 : (1 - eOutCubic(p)) * (idx % 2 ? 12 : -12);
     place(l, (1 - eOutCubic(p)) * -70, spin, Math.max(k, 0), p > 0 ? 1 : 0);
   });
-  set($('b3'), { transform: `translate(0,${(1 - eOutQuint(prog(t, 3.55, 3.95))) * 90})`, opacity: prog(t, 3.55, 3.75) });
   const bw = eOutExpo(prog(t, 3.75, 4.1)), bx = 540 - L.b4w / 2 - 26, bwid = L.b4w + 52;
-  set($('b4bar'), { x: bx, y: 1294, width: bwid * bw, height: 76 });
+  set($('b4bar'), { x: bx, y: 1244, width: bwid * bw, height: 76 });
   set($('b4'), { opacity: t >= 3.82 ? 1 : 0, transform: `translate(${(1 - eOutQuint(prog(t, 3.82, 4.2))) * -60},0)` });
 
   // ---- marquee band
