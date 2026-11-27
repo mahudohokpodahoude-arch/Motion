@@ -1,0 +1,178 @@
+{
+  "version": 1,
+  "historyId": "09637b4e-31e9-42ff-877f-90a8526e78a8",
+  "currentRevision": null,
+  "pendingChanges": false,
+  "files": {
+    "assets/W1.png": {
+      "hash": "4d1278245b61ebb77219bad9308401808a2c642cdbadde1e4028bd5307948f1f",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/4d/4d1278245b61ebb77219bad9308401808a2c642cdbadde1e4028bd5307948f1f"
+    },
+    "assets/W2.png": {
+      "hash": "7e022c5d290a8a5dd0aa33da351e2a6032507df21aa0b60254b8b9daf6cbd8fa",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/7e/7e022c5d290a8a5dd0aa33da351e2a6032507df21aa0b60254b8b9daf6cbd8fa"
+    },
+    "assets/WEEKEND.png": {
+      "hash": "e80332799b4ed1d0c1c96fc9b1cf19b90454dbd84228cf4ffec310802c2608f5",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/e8/e80332799b4ed1d0c1c96fc9b1cf19b90454dbd84228cf4ffec310802c2608f5"
+    },
+    "assets/WOMEN.png": {
+      "hash": "6ae4e486255df7669a49db55bb70954db024710fe30831c44bdb81a47b683d57",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/6a/6ae4e486255df7669a49db55bb70954db024710fe30831c44bdb81a47b683d57"
+    },
+    "assets/Z.png": {
+      "hash": "12a331a664a381015466d7a060b655180a54e7c1bd87e53ddeba3933a45fe89b",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/12/12a331a664a381015466d7a060b655180a54e7c1bd87e53ddeba3933a45fe89b"
+    },
+    "assets/ZONE.png": {
+      "hash": "cd72bc22ce0e2b528c944de2828458c536b24b64dddfc8d5b48f5abdafc28396",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/cd/cd72bc22ce0e2b528c944de2828458c536b24b64dddfc8d5b48f5abdafc28396"
+    },
+    "assets/lockup_masque.png": {
+      "hash": "9c9f4d5eb04ed14d4bd6c9554af7d0393e239c3a5034905a07fc64ed3152819a",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/9c/9c9f4d5eb04ed14d4bd6c9554af7d0393e239c3a5034905a07fc64ed3152819a"
+    },
+    "assets/logos_alpha.png": {
+      "hash": "abc5e56bc7cd7c4fbf2a3275816db476238506e50e80050ab9e79f468c520abd",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/ab/abc5e56bc7cd7c4fbf2a3275816db476238506e50e80050ab9e79f468c520abd"
+    },
+    "assets/musique.mp3": {
+      "hash": "ec351e1e8b97e98e1e642338fa35658219367fe64ec8b53ec06fa64a5077a0d7",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/ec/ec351e1e8b97e98e1e642338fa35658219367fe64ec8b53ec06fa64a5077a0d7"
+    },
+    "assets/musique.wav": {
+      "hash": "b535bda1034c14407e703f1b16c9681cc5e825565c091f9f1b3880c1bc2f3c0e",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/b5/b535bda1034c14407e703f1b16c9681cc5e825565c091f9f1b3880c1bc2f3c0e"
+    },
+    "gsap/README.md": {
+      "hash": "36224e521bdd9b79dc74ef262effc1a636d960b9be918bc2412ed69f9eee27b0",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/36/36224e521bdd9b79dc74ef262effc1a636d960b9be918bc2412ed69f9eee27b0"
+    },
+    "gsap/gsap.min.js": {
+      "hash": "c174bfce53a729418d57a8ad8625e7247c793a22fef8e2851e3cfa3de9cd8280",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/c1/c174bfce53a729418d57a8ad8625e7247c793a22fef8e2851e3cfa3de9cd8280"
+    },
+    "hyperframes.json": {
+      "hash": "ad5dadeef78a520800a9e5cdd27a92ff5ac37f11b6a07f611b6b52b9f8c79a17",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/ad/ad5dadeef78a520800a9e5cdd27a92ff5ac37f11b6a07f611b6b52b9f8c79a17"
+    },
+    "index.html": {
+      "hash": "480380a8726ffcdaf1bb77fe0e11444526632b73849078bcd89151c9a568df8f",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/48/480380a8726ffcdaf1bb77fe0e11444526632b73849078bcd89151c9a568df8f"
+    },
+    "tools/musique.py": {
+      "hash": "7a1ccb43b3d1072217b07fc8411b4fe774c842dc454cd84f7a0ec93cec64d316",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/7a/7a1ccb43b3d1072217b07fc8411b4fe774c842dc454cd84f7a0ec93cec64d316"
+    },
+    "tools/pieces.json": {
+      "hash": "fa3105106760d304bc1cc431643c3b703a26fcbfebb69b82ee0a729c3e4ad045",
+      "content": "/root/.cache/hyperframes/history/09637b4e-31e9-42ff-877f-90a8526e78a8/blobs/fa/fa3105106760d304bc1cc431643c3b703a26fcbfebb69b82ee0a729c3e4ad045"
+    }
+  },
+  "revisions": {},
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": {
+      "revision": null,
+      "id": "ca439683-9491-4357-936d-55edd177e68d-3"
+    },
+    "revisions": {},
+    "unversioned": [
+      {
+        "scope": "full",
+        "id": "ca439683-9491-4357-936d-55edd177e68d-0",
+        "image": "/tmp/snA/frame-00-at-1.2s.png",
+        "time": 1.2,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1795790800754,
+        "contentHash": "c7b72bbc4906280ac97c3bf2dc7e5fc4e9b53a278daa6164fe740acf260e23eb",
+        "revision": null,
+        "inputFingerprint": "6c167e480b4a802171e59480a3a8d6c8c0b8f007a312078cfa6c4175fc02ff3d",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "ca439683-9491-4357-936d-55edd177e68d-1",
+        "image": "/tmp/snA/frame-01-at-2.6s.png",
+        "time": 2.6,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1795790800754,
+        "contentHash": "b4dfb2a5b9c599f4770c7c0bae5d1a73c6879139585b5abdf9afa0445a1a1ed0",
+        "revision": null,
+        "inputFingerprint": "6c167e480b4a802171e59480a3a8d6c8c0b8f007a312078cfa6c4175fc02ff3d",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "ca439683-9491-4357-936d-55edd177e68d-2",
+        "image": "/tmp/snA/frame-02-at-4.7s.png",
+        "time": 4.7,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1795790800754,
+        "contentHash": "7f5cb2b1700237cd0b21063ca8bcde874edef67d916ba6175c51cda29405cc9d",
+        "revision": null,
+        "inputFingerprint": "6c167e480b4a802171e59480a3a8d6c8c0b8f007a312078cfa6c4175fc02ff3d",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "ca439683-9491-4357-936d-55edd177e68d-3",
+        "image": "/tmp/snA/frame-03-at-4.85s.png",
+        "time": 4.85,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1795790800754,
+        "contentHash": "2064f0f069ebf7c38e6f49a92a29b7a6931b32473b2967dc1cf741717a2db889",
+        "revision": null,
+        "inputFingerprint": "6c167e480b4a802171e59480a3a8d6c8c0b8f007a312078cfa6c4175fc02ff3d",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "renders": {
+    "latest": {
+      "id": "0f718910-0259-4032-a632-52f5108f2fef",
+      "completedAt": 1795790961997,
+      "output": "/home/user/Motion/logo-wzw-anime-portrait/logo-wzw-anime-5s-1080x1920.mp4",
+      "status": "completed",
+      "revision": null
+    },
+    "retainedRevisions": []
+  },
+  "pendingArtifactCleanup": []
+}
