@@ -11,7 +11,7 @@ for src, n in [("teaser-wzw-reels/assets/montserrat-latin-600-normal.woff2", "m6
 def rr(x, y, w, h, r): return f"M{x+r} {y}H{x+w-r}A{r} {r} 0 0 1 {x+w} {y+r}V{y+h-r}A{r} {r} 0 0 1 {x+w-r} {y+h}H{x+r}A{r} {r} 0 0 1 {x} {y+h-r}V{y+r}A{r} {r} 0 0 1 {x+r} {y}Z"
 L = {
  "portrait": dict(W=1080, H=1920, V=(60, 250, 960, 820), P=(60, 1120, 960, 560), title=(60, 34, 46), logo=(790, 20, 230), band=(60, 1742, 960, 90, 22, .38), vfs=50, vtop=70, reftop=110),
- "horizontal_large": dict(W=1920, H=1080, V=(70, 150, 640, 700), P=(740, 150, 1110, 700), title=(70, 30, 54), logo=(1590, 26, 260), band=(70, 904, 1780, 84, 30, .5), vfs=60, vtop=100, reftop=130),
+ "portrait_video": dict(W=1920, H=1080, V=(70, 140, 430, 764), P=(560, 140, 1290, 764), title=(70, 24, 50), logo=(1620, 8, 220), band=(70, 936, 1780, 84, 30, .5), vfs=66, vtop=120, reftop=150),
 }
 def html(c, verse=None, ref=None, hole=True):
     W, H = c["W"], c["H"]; VX, VY, VW, VH = c["V"]; PX, PY, PW, PH = c["P"]; tx, ty, tfs = c["title"]; lx, ly, lw = c["logo"]; bx, by, bw, bh, bfs, bls = c["band"]
@@ -42,12 +42,12 @@ def shot(name, h, W, H):
         pg = b.new_context(viewport={"width": W, "height": H}).new_page(); pg.goto("file://" + str(f)); pg.evaluate("document.fonts.ready"); pg.wait_for_timeout(500)
         pg.screenshot(path=str(OUT / f"{name}.png"), omit_background=True); b.close()
 FAKE = "Ici s’écrit le verset du jour, en une ou deux phrases, bien lisible."
-for key, c in L.items():
+for key, c in [(k, v) for k, v in L.items() if k == "portrait_video"]:
     W, H = c["W"], c["H"]; VX, VY, VW, VH = c["V"]
     shot(f"Habillage_Verset_{key}_{W}x{H}_calque_transparent", html(c), W, H)
     shot("_ex", html(c, FAKE, "Livre 0:00 (exemple)"), W, H)
     ov = Image.open(OUT / "_ex.png").convert("RGBA"); vid = Image.new("RGBA", ov.size, (24, 26, 36, 255)); d = ImageDraw.Draw(vid)
     for i in range(VH): d.line([(VX, VY + i), (VX + VW, VY + i)], fill=(40 + i // 12, 44 + i // 14, 70 + i // 8, 255))
-    cx = VX + VW // 2; d.ellipse([cx - 110, VY + 150, cx + 110, VY + 370], fill=(210, 160, 130, 255)); d.rectangle([cx - 170, VY + 370, cx + 170, VY + VH], fill=(30, 30, 38, 255))
+    cx = VX + VW // 2; d.ellipse([cx - 90, VY + 170, cx + 90, VY + 350], fill=(210, 160, 130, 255)); d.rectangle([cx - 150, VY + 350, cx + 150, VY + VH], fill=(30, 30, 38, 255))
     vid.alpha_composite(ov); vid.convert("RGB").save(OUT / f"Exemple_Habillage_Verset_{key}_{W}x{H}.png"); (OUT / "_ex.png").unlink()
 shutil.rmtree(T); print("ok")
