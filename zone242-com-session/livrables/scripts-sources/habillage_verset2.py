@@ -15,7 +15,7 @@ L = {
 }
 def html(c, verse=None, ref=None, hole=True):
     W, H = c["W"], c["H"]; VX, VY, VW, VH = c["V"]; PX, PY, PW, PH = c["P"]; tx, ty, tfs = c["title"]; lx, ly, lw = c["logo"]; bx, by, bw, bh, bfs, bls = c["band"]
-    cp = ("clip-path:path(evenodd,'M0 0H" + str(W) + "V" + str(H) + "H0Z " + rr(VX, VY, VW, VH, 26) + "');") if hole else ""
+    cp = ("clip-path:path(evenodd,'M0 0H" + str(W) + "V" + str(H) + "H0Z " + rr(VX, VY, VW, VH, 26) + " " + rr(PX, PY, PW, PH, 26) + "');") if hole else ""
     v = ""
     if verse:
         v = f'<div class="a" style="left:{PX+60}px;top:{PY+c["vtop"]}px;width:{PW-120}px;text-align:center;font-family:M;font-weight:800;font-size:{c["vfs"]}px;line-height:1.36;text-shadow:0 4px 18px rgba(110,10,0,.35)">{verse}</div>'
@@ -27,13 +27,10 @@ def html(c, verse=None, ref=None, hole=True):
 <img class="a" src="w1.png" style="left:-120px;top:{int(H*.4)}px;height:{int(min(W,H)*.95)}px;opacity:.07;filter:brightness(2)"><img class="a" src="w2.png" style="left:{int(W*.55)}px;top:-160px;height:{int(min(W,H)*.9)}px;opacity:.07;filter:brightness(2)">
 <div class="a" style="inset:0;background:#b80f00;opacity:.14;clip-path:polygon(0 0,12% 0,3% 100%,0 100%)"></div><div class="a" style="inset:0;background:#ff9a4a;opacity:.14;clip-path:polygon(84% 0,100% 0,100% 100%,70% 100%)"></div></div>
 <div class="a" style="left:{VX-6}px;top:{VY-6}px;width:{VW+12}px;height:{VH+12}px;border-radius:32px;border:6px solid #fff;box-shadow:0 0 0 3px rgba(11,42,92,.65),0 18px 40px rgba(70,0,0,.4)"></div>
-<div class="a" style="left:{PX}px;top:{PY}px;width:{PW}px;height:{PH}px;border-radius:26px;background:radial-gradient(ellipse at 50% 40%,#f5541a,#d9300a 70%);border:6px solid rgba(255,255,255,.9);box-shadow:0 18px 40px rgba(70,0,0,.4)"></div>
+<div class="a" style="left:{PX-6}px;top:{PY-6}px;width:{PW+12}px;height:{PH+12}px;border-radius:32px;border:6px solid #fff;box-shadow:0 0 0 3px rgba(11,42,92,.65),0 18px 40px rgba(70,0,0,.4)"></div>
 <div class="a" style="left:{PX+24}px;top:{PY+24}px;width:{PW-48}px;height:{PH-48}px;border-radius:16px;border:2px solid rgba(255,255,255,.35)"></div>
 <div class="a" style="left:{PX+PW/2-26}px;top:{PY-20}px;width:52px;height:40px;background:#0b2a5c;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></svg></div>
 {v}
-<div class="a" style="left:{tx}px;top:{ty}px;font-size:{tfs}px;line-height:.92;letter-spacing:.02em;text-shadow:0 4px 14px rgba(110,10,0,.35)">LES FEMMES PRENNENT<br>LE CONTRÔLE DE LA ZONE</div>
-<img class="a" src="lockup.png" style="left:{lx}px;top:{ly}px;width:{lw}px;filter:drop-shadow(0 0 14px rgba(255,255,255,.55))">
-<div class="a" style="left:{bx}px;top:{by}px;width:{bw}px;height:{bh}px;border-radius:42px;background:linear-gradient(90deg,#0b2a5c,#0260a6);border:4px solid #fff;box-shadow:0 12px 26px rgba(60,0,0,.4);display:flex;align-items:center;justify-content:center;font-family:M;font-weight:800;font-size:{bfs}px;letter-spacing:{bls}em;white-space:nowrap">27–29 NOVEMBRE · ZONE 242 · SIKÈCODJI</div>
 """
 def shot(name, h, W, H):
     f = T / (name + ".html"); f.write_text(h)
