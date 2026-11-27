@@ -14,7 +14,6 @@ def html(tag, name):
 @font-face{{font-family:B;src:url(bb.woff2)}}@font-face{{font-family:M;font-weight:800;src:url(m8.woff2)}}
 *{{margin:0;padding:0;box-sizing:border-box}}html,body{{width:1920px;height:1080px;background:transparent;overflow:hidden}}.a{{position:absolute}}</style>
 <div class="a" style="left:0;top:850px;width:1920px;height:230px;background:#f24a10;border-top:6px solid #fff;box-shadow:0 -10px 30px rgba(30,0,0,.35)"></div>
-<div class="a" style="left:575px;top:900px;width:5px;height:130px;background:#fff;border-radius:3px"></div>
 <div class="a" style="left:1840px;top:950px;width:22px;height:22px;background:#fff;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);opacity:.9"></div>
 <div class="a" style="left:0;top:856px;width:560px;height:224px;display:flex;align-items:center;justify-content:center;font-family:B;font-size:84px;letter-spacing:.05em;color:#fff;text-shadow:0 3px 8px rgba(110,10,0,.45)">{tag}</div>
 <div class="a" style="left:650px;top:856px;width:1170px;height:224px;display:flex;align-items:center;font-family:M;font-weight:800;font-size:{fs}px;color:#fff;white-space:nowrap">{name}</div>"""
