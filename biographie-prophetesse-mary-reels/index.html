@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Biographie · Prophétesse Mary TONGSI · Week-end Zone Women</title>
+    <script src="gsap/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Bebas"; src: url("assets/bebas-neue-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Mont"; font-weight: 600; src: url("assets/montserrat-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Mont"; font-weight: 800; src: url("assets/montserrat-latin-800-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #ee1a02; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Mont", sans-serif; color: #fff; background: #ee1a02; }
+      .abs { position: absolute; }
+      .bg { left: 0; top: 0; width: 1920px; height: 1080px; }
+      .bg.red { background: linear-gradient(115deg, #ee1a02 0%, #f12e04 38%, #f5541a 72%, #fb7a2a 100%); }
+      .bg.blue { background: #0260a6; } .bg.cream { background: #ffe3cf; }
+      .bg i { position: absolute; display: block; }
+      .bg.red i.a { inset: 0; background: #ff7a33; opacity: .18; clip-path: polygon(0 0, 14% 0, 5% 100%, 0 100%); }
+      .bg.red i.b { inset: 0; background: #b80f00; opacity: .2; clip-path: polygon(26% 0, 36% 0, 22% 100%, 12% 100%); }
+      .bg.blue i.a { inset: 0; background: #f5541a; opacity: .9; clip-path: polygon(78% 0, 100% 0, 100% 100%, 64% 100%); }
+      .bg.cream i.a { inset: 0; background: #ee1a02; opacity: .12; clip-path: polygon(0 0, 22% 0, 8% 100%, 0 100%); }
+      #mary { height: 1250px; filter: drop-shadow(0 24px 40px rgba(60,0,0,.4)); transform-origin: 50% 40%; }
+      .fgc { left: 0; top: 0; width: 1920px; height: 1080px; opacity: 0; }
+      .pill { display: inline-flex; align-items: center; gap: 14px; background: #121212; color: #fff; font-weight: 800; font-size: 34px; letter-spacing: .1em; padding: 16px 30px; border-radius: 14px; box-shadow: 0 10px 22px rgba(0,0,0,.25); transform-origin: 0 50%; white-space: nowrap; }
+      .pill svg { width: 34px; height: 34px; stroke: #f5541a; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      .big { font-family: "Bebas", sans-serif; line-height: .86; letter-spacing: .01em; white-space: nowrap; text-shadow: 8px 8px 0 rgba(0,0,0,.22); }
+      .big div { display: block; transform-origin: 0 100%; }
+      .cream-t .big { color: #121212; text-shadow: 8px 8px 0 rgba(238,26,2,.25); }
+      .num { font-family: "Bebas", sans-serif; font-size: 420px; line-height: .8; letter-spacing: .01em; white-space: nowrap; text-shadow: 14px 14px 0 rgba(0,0,0,.25); transform-origin: 0 100%; }
+      .cream-t .num { color: #ee1a02; text-shadow: 14px 14px 0 rgba(2,96,166,.35); }
+      .lab { display: inline-block; background: #f5541a; color: #fff; font-weight: 800; font-size: 46px; letter-spacing: .08em; padding: 16px 34px; border-radius: 12px; transform-origin: 0 50%; white-space: nowrap; }
+      .cream-t .lab { background: #121212; color: #ffe3cf; }
+      .card { background: #fff; color: #121212; border-radius: 22px; padding: 14px 30px; height: 112px; box-shadow: 0 16px 34px rgba(60,0,0,.28); width: 860px; display: flex; align-items: center; gap: 22px; transform-origin: 0 50%; }
+      .card .dot { width: 20px; height: 20px; border-radius: 50%; background: #f5541a; flex: none; }
+      .card b { display: block; font-size: 38px; font-weight: 800; line-height: 1.15; }
+      .card small { display: block; font-size: 28px; font-weight: 600; color: #d8300a; line-height: 1.2; }
+      .sub { font-weight: 800; font-size: 34px; line-height: 1.35; letter-spacing: .1em; color: #ffe3cf; }
+      .cap { font-size: 44px; line-height: 1.32; font-weight: 600; color: #fff; text-shadow: 0 3px 14px rgba(60,0,0,.35); }
+      .cream-t .cap { color: #10143a; text-shadow: none; }
+      .cap span { color: rgba(255,255,255,.45); }
+      .cream-t .cap span { color: rgba(16,20,58,.35); }
+      .lock { filter: drop-shadow(0 0 18px rgba(255,255,255,.5)); }
+      #star { }
+      .star { width: 20px; height: 20px; background: rgba(255,255,255,.7); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+      #flash { inset: 0; background: #fff; opacity: 0; }
+      #wipe { left: 0; top: 0; width: 1920px; height: 1080px; background: #121212; transform: translateX(-110%) skewX(-14deg); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="91.18" data-width="1920" data-height="1080">
+      <div id="bgs"></div>
+      <div id="stars"></div>
+      <img id="mary" class="abs" src="assets/mary.png" alt="" />
+      <div id="fg"></div>
+      <div id="wipe" class="abs"></div><div id="flash" class="abs"></div>
+      <audio id="snd" src="assets/musique.mp3" data-start="0" data-duration="91.18" data-track-index="1" data-volume="1"></audio>
+    </div>
+    <script>
+      const $ = (s) => document.querySelector(s);
+      const SC = [{"kind": "title", "bg": "red", "pose": "A", "side": "L", "k": "BIOGRAPHIE", "cap": "La Prophétesse *Mary Favour TONGSI.* Une *femme de feu,* pionnière du leadership féminin."}, {"kind": "big", "bg": "blue", "pose": "B", "side": "L", "k": "MINISTÈRE", "lines": [["MINISTRE DE", 190], ["PUISSANCE", 250]], "cap": "*Ministre de puissance,* engagée dans l'édification du Corps de Christ."}, {"kind": "num", "bg": "cream", "pose": "D", "side": "R", "k": "FORMATION", "n": 1996, "lab": "PÉTROCHIMIE · LAGOS", "cap": "Ingénieure diplômée en *pétrochimie* de l'Université d'État de Lagos, en *1996.*"}, {"kind": "num", "bg": "blue", "pose": "A", "side": "L", "k": "CARRIÈRE", "n": 1997, "lab": "SHELL NIGERIA", "cap": "Elle débute chez *Shell Nigeria* en *1997.*"}, {"kind": "big", "bg": "red", "pose": "C", "side": "L", "k": "L'APPEL", "lines": [["ELLE RÉPOND", 160], ["À L'APPEL", 240]], "cap": "Un an plus tard, par *obéissance* à la voix de Dieu, elle renonce à une brillante carrière pour *répondre à l'Appel.*"}, {"kind": "big", "bg": "cream", "pose": "A", "side": "L", "k": "COTONOU", "lines": [["COTONOU", 300]], "cap": "Elle s'installe à *Cotonou* et se consacre entièrement à l'œuvre du ministère."}, {"kind": "big", "bg": "blue", "pose": "D", "side": "R", "k": "JEUNESSE", "lines": [["LEADER DE", 180], ["JEUNESSE", 250]], "cap": "Dès ses années universitaires, elle est *leader de jeunesse* et *enseignante* dans plusieurs églises au Nigeria."}, {"kind": "num", "bg": "red", "pose": "B", "side": "L", "k": "MILMO", "n": 2002, "lab": "COFONDATRICE DE MILMO", "cap": "En *2002,* avec son époux, l'Apôtre *Augustin TONGSI,* elle cofonde la Mission Internationale Lumière du Monde, *MILMO.*"}, {"kind": "num", "bg": "cream", "pose": "A", "side": "L", "k": "IMPACT", "n": 10, "lab": "ÉGLISES IMPLANTÉES", "plus": true, "cap": "Ensemble, ils ont implanté *une dizaine d'églises* et formé de nombreux *ouvriers de l'Évangile.*"}, {"kind": "cards", "bg": "blue", "pose": "D", "side": "R", "k": "PARCOURS", "cards": [["Living Word Bible Institute", "Enseignante · 2000–2003"], ["Élisée School · Paris", "Université Prophétique · 2012"], ["UBILD", "Enseignante · 2010–2016"], ["Conseillère matrimoniale", ""]], "cap": "Enseignante à *Living Word Bible Institute,* diplômée de l'Université Prophétique *Élisée School* à Paris, conseillère matrimoniale, enseignante à l'*UBILD.*"}, {"kind": "big", "bg": "red", "pose": "C", "side": "L", "k": "MINISTÈRE", "lines": [["MIRACLES", 170], ["GUÉRISONS", 170], ["SIGNES PROPHÉTIQUES", 105]], "cap": "Son ministère est marqué par des *miracles,* des *guérisons,* des *signes prophétiques,* des *foyers restaurés.*"}, {"kind": "cards", "bg": "cream", "pose": "B", "side": "L", "k": "AUJOURD'HUI", "cards": [["Vice-Présidente", "MIWAS Bénin"], ["Présidente", "Association Femmes de Valeur"], ["Présidente", "Femmes MILMO · Couronne d'Excellence"]], "cap": "*Vice-Présidente* de MIWAS Bénin, *Présidente* de l'Association Femmes de Valeur, et *Présidente* du mouvement des femmes de la Mission MILMO, Couronne d'Excellence."}, {"kind": "big", "bg": "blue", "pose": "A", "side": "L", "k": "MISSION", "lines": [["BÂTIR DES", 160], ["FEMMES FORTES", 160]], "sub": "ÉPOUSE ET MÈRE DE DEUX ENFANTS", "cap": "Épouse et mère de deux enfants, elle *bâtit des femmes fortes,* restaure les familles et manifeste la *lumière de Christ.*"}, {"kind": "final", "bg": "red", "pose": "A", "side": "L", "k": "INVITÉE D'HONNEUR", "cap": "Rendez-vous avec elle au *Week-end Zone Women,* du *27 au 29 novembre,* à Zone 242, Sikècodji."}], ST = [0.3, 6.645, 10.877, 16.881, 21.305, 27.629, 31.947, 38.441, 45.745, 51.173, 61.379, 67.019, 75.775, 82.226], DU = [5.995, 3.883, 5.653, 4.075, 5.973, 3.968, 6.144, 6.955, 5.077, 9.856, 5.291, 8.405, 6.101, 7.701], D = 91.18;
+      const POSE = { A: [1010, -110, 1250], B: [1180, 120, 1000], C: [1000, -300, 1750], D: [-30, 60, 1150] };
+      const IC = '<svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5L12 16.5 5.5 21l2-7.5L2 9h7z"/></svg>';
+      const PHW = 0.676;   // largeur / hauteur de la photo
+      const bgs = $("#bgs"), fg = $("#fg");
+      // étoiles
+      const stars = $("#stars"); [[80,90],[1840,120],[300,980],[1700,950],[960,60],[40,540],[1880,560],[620,1030],[1300,40]].forEach(([x, y], i) => stars.insertAdjacentHTML("beforeend", `<div class="star abs" style="left:${x}px;top:${y}px;width:${14 + (i % 3) * 6}px;height:${14 + (i % 3) * 6}px"></div>`));
+      // construction des scènes
+      const E = [];
+      SC.forEach((c, i) => {
+        bgs.insertAdjacentHTML("beforeend", `<div class="bg abs ${c.bg}" id="bg${i}"><i class="a"></i><i class="b"></i></div>`);
+        const left = c.side === "R" ? 960 : 90, cw = 880, t = c.bg === "cream" ? "cream-t" : "";
+        let h = `<div class="pill k abs" style="left:${left}px;top:90px">${IC}${c.k}</div>`;
+        if (c.kind === "title") {
+          h += `<div class="big abs" style="left:${left}px;top:170px;font-size:150px;color:#ffe3cf"><div>PROPHÉTESSE</div></div>`;
+          h += `<div class="big abs" style="left:${left}px;top:290px;font-size:235px"><div>MARY</div><div>TONGSI</div></div>`;
+          h += `<div class="lab abs" style="left:${left}px;top:735px;font-size:38px">Mary OGUGA épouse TONGSI</div>`;
+        } else if (c.kind === "big") {
+          let y = 190; const items = c.lines.map(([tx, fs]) => { const o = `<div style="font-size:${fs}px">${tx}</div>`; return o; }).join("");
+          h += `<div class="big abs bl" style="left:${left}px;top:${y}px">${items}</div>`;
+          if (c.sub) h += `<div class="sub abs" style="left:${left}px;top:640px">${c.sub}</div>`;
+        } else if (c.kind === "num") {
+          h += `<div class="num abs nm" style="left:${left}px;top:215px">0</div>`;
+          h += `<div class="lab abs lb" style="left:${left}px;top:650px">${c.lab}</div>`;
+        } else if (c.kind === "cards") {
+          h += c.cards.map((cd, j) => `<div class="card abs cdd" style="left:${left}px;top:${180 + j * 128}px"><span class="dot"></span><div><b>${cd[0]}</b>${cd[1] ? `<small>${cd[1]}</small>` : ""}</div></div>`).join("");
+        } else if (c.kind === "final") {
+          h += `<img class="lock abs" id="flock" src="assets/lockup.png" style="left:${left}px;top:170px;width:700px" alt="">`;
+          h += `<div class="big abs" style="left:${left}px;top:565px;font-size:150px;color:#ffe3cf"><div>27–29 NOVEMBRE</div></div>`;
+          h += `<div class="sub abs" style="left:${left}px;top:715px">ZONE 242 · SIKÈCODJI<br>GRATUIT · 150 PLACES · LIEN EN BIO</div>`;
+        }
+        // légende
+        let key = false; const spans = [];
+        c.cap.split(" ").forEach((x) => { let k2 = key; if (x.startsWith("*")) { key = true; k2 = true; x = x.slice(1); } if (x.endsWith("*")) { key = false; k2 = true; x = x.slice(0, -1); } spans.push(`<span data-k="${k2 ? 1 : 0}">${x}</span>`); });
+        h += `<div class="cap abs" style="left:${left}px;top:${c.kind === "cards" ? 180 + c.cards.length * 128 + 40 : c.kind === "title" ? 830 : c.kind === "final" ? 850 : 790}px;width:${cw}px;${c.kind === "cards" ? "font-size:36px;" : ""}">${spans.join(" ")}</div>`;
+        fg.insertAdjacentHTML("beforeend", `<div class="fgc abs ${t}" id="fg${i}">${h}</div>`);
+        const e = $("#fg" + i);
+        E.push({ e, k: e.querySelector(".k"), big: e.querySelectorAll(".big div"), nm: e.querySelector(".nm"), lb: e.querySelector(".lb, .lab"), cards: e.querySelectorAll(".cdd"), words: [...e.querySelectorAll(".cap span")], cap: e.querySelector(".cap"), sub: e.querySelector(".sub"), flock: e.querySelector("#flock") });
+      });
+      const tl = gsap.timeline({ paused: true });
+      gsap.set(".bg", { opacity: 0 }); gsap.set(".fgc", { opacity: 0 }); gsap.set(".cap", { opacity: 0 });
+      document.querySelectorAll(".star").forEach((s, i) => tl.fromTo(s, { opacity: .2, scale: .8 }, { opacity: 1, scale: 1.3, duration: .7 + (i % 3) * .2, ease: "sine.inOut", yoyo: true, repeat: 160 }, (i % 5) * .13));
+      const pose = (p) => { const [l, t, h] = POSE[p]; return { left: l, top: t, height: h }; };
+      gsap.set("#mary", { ...pose(SC[0].pose), opacity: 0 });
+      SC.forEach((c, i) => {
+        const s = ST[i], d = DU[i] + 0.35, e = E[i];
+        const sceneStart = i === 0 ? 0 : s - 0.12;
+        // transition : bande sombre diagonale + flash, changement de scène
+        if (i) { tl.fromTo("#wipe", { x: "-110%" }, { x: "110%", duration: .5, ease: "power3.inOut", immediateRender: false }, s - .45);
+                 tl.fromTo("#flash", { opacity: .45 }, { opacity: 0, duration: .3, ease: "power2.out", immediateRender: false }, s - .12); }
+        tl.set(`#bg${i}`, { opacity: 1 }, i ? s - .2 : 0); if (i) tl.set(`#bg${i - 1}`, { opacity: 0 }, s - .2);
+        tl.set(e.e, { opacity: 1 }, i ? s - .2 : 0); if (i) tl.set(E[i - 1].e, { opacity: 0 }, s - .2);
+        // Mary : nouvelle pose avec un coup de zoom
+        const P = pose(c.pose);
+        if (i === 0) { tl.to("#mary", { opacity: 1, duration: .5 }, .1); tl.fromTo("#mary", { x: 300 }, { x: 0, duration: .8, ease: "power4.out" }, .1); }
+        else tl.to("#mary", { ...P, duration: .6, ease: "power3.inOut" }, s - .3);
+        tl.fromTo("#mary", { scale: 1.1 }, { scale: 1, duration: .9, ease: "expo.out", immediateRender: false }, s + .15);
+        tl.to("#mary", { scale: 1.035, duration: Math.max(1, d - 1.2), ease: "sine.inOut" }, s + 1.0);
+        // éléments
+        tl.fromTo(e.k, { opacity: 0, x: -60, scale: .8 }, { opacity: 1, x: 0, scale: 1, duration: .4, ease: "back.out(2)" }, s + .1);
+        if (e.big.length) tl.fromTo(e.big, { opacity: 0, y: 140, scale: 1.25 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: "expo.out", stagger: .16 }, s + .3);
+        if (e.sub) tl.fromTo(e.sub, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .4, ease: "power3.out" }, s + .9);
+        if (e.nm) { const o = { v: 0 }; tl.fromTo(e.nm, { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: .5, ease: "expo.out" }, s + .3);
+          const target = c.n, from = target > 100 ? target - 40 : 0;
+          tl.to(o, { v: 1, duration: Math.min(1.6, DU[i] - 1.4), ease: "power3.out", onUpdate: () => { e.nm.textContent = Math.round(from + (target - from) * o.v) + (c.plus ? "+" : ""); } }, s + .4);
+          tl.fromTo(e.lb, { opacity: 0, x: -80, rotation: -4 }, { opacity: 1, x: 0, rotation: -2, duration: .5, ease: "back.out(2)" }, s + 1.0); }
+        else if (e.lb && c.kind === "title") tl.fromTo(e.lb, { opacity: 0, x: -80 }, { opacity: 1, x: 0, rotation: -2, duration: .5, ease: "back.out(2)" }, s + 1.1);
+        if (e.cards.length) tl.fromTo(e.cards, { opacity: 0, x: -120 }, { opacity: 1, x: 0, duration: .45, ease: "back.out(1.8)", stagger: Math.min(.7, (DU[i] - 2.2) / e.cards.length) }, s + .5);
+        if (e.flock) tl.fromTo(e.flock, { opacity: 0, scale: .8 }, { opacity: 1, scale: 1, duration: .6, ease: "back.out(1.8)", transformOrigin: "0 50%" }, s + .3);
+        // légende mot à mot, calée sur la voix
+        tl.fromTo(e.cap, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .3, ease: "power2.out" }, s + .05);
+        const lens = e.words.map((w) => w.textContent.length + 1), tot = lens.reduce((a, b) => a + b, 0); let acc = 0;
+        e.words.forEach((w, j) => {
+          const t = s + .12 + (acc / tot) * DU[i] * .96; acc += lens[j];
+          tl.to(w, { color: c.bg === "cream" ? "#10143a" : "#ffffff", duration: .12, ease: "none" }, t);
+          if (w.dataset.k === "1") tl.set(w, { fontWeight: 800 }, t);
+        });
+      });
+      tl.to("#fg", { opacity: 0, duration: .8 }, D - .85);
+      tl.to("#mary", { opacity: 0, duration: .8 }, D - .85);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

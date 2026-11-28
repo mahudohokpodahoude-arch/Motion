@@ -1,0 +1,1 @@
+{"name":"logo-wzw-3d","private":true,"type":"module","scripts":{"check":"npx --yes hyperframes@0.8.166 check","render":"npx --yes hyperframes@0.8.166 render"}}

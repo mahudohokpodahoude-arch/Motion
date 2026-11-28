@@ -1,0 +1,121 @@
+<!doctype html>
+<html
+  lang="fr"
+  data-composition-variables='[
+    {"id":"color_blue","type":"color","label":"Bleu ZONE (officiel)","default":"#1900CF"},
+    {"id":"color_orange","type":"color","label":"Orange ZONE (officiel)","default":"#FF5A36"},
+    {"id":"color_night","type":"color","label":"Nuit (fond)","default":"#04031A"},
+    {"id":"color_light","type":"color","label":"Lumière (points, lignes, texte)","default":"#F2F0FF"},
+    {"id":"color_blue_glow","type":"color","label":"Bleu lumière (tracés)","default":"#4B3BFF"},
+    {"id":"color_chaux","type":"color","label":"Chaux (champ final)","default":"#F7F6FB"},
+    {"id":"s1_l1","type":"string","label":"01 · ligne 1","default":"UNE VISION."},
+    {"id":"s1_l2","type":"string","label":"01 · ligne 2","default":"UNE MISSION."},
+    {"id":"s1_l3","type":"string","label":"01 · ligne 3","default":"UN MOUVEMENT."}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>ZONE 242 — Film institutionnel 3D</title>
+    <script src="vendor/gsap/gsap.min.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three/build/three.module.js",
+          "three/addons/": "./vendor/three/examples/jsm/"
+        }
+      }
+    </script>
+    <style>
+      @font-face { font-family: "Montserrat"; font-weight: 300; src: url("assets/fonts/montserrat-latin-300-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 400; src: url("assets/fonts/montserrat-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 500; src: url("assets/fonts/montserrat-latin-500-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 600; src: url("assets/fonts/montserrat-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 700; src: url("assets/fonts/montserrat-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 800; src: url("assets/fonts/montserrat-latin-800-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 900; src: url("assets/fonts/montserrat-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "IBM Plex Mono"; font-weight: 400; src: url("assets/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "IBM Plex Mono"; font-weight: 500; src: url("assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #04031a; }
+      #root {
+        position: relative; width: 100%; height: 100%; overflow: hidden;
+        background: var(--color_night, #04031a);
+        font-family: "Montserrat", sans-serif; color: var(--color_light, #f2f0ff);
+        --orange: var(--color_orange, #ff5a36);
+        --blue: var(--color_blue, #1900cf);
+        --light: var(--color_light, #f2f0ff);
+      }
+      #gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+      .layer { position: absolute; inset: 0; pointer-events: none; }
+      .scene-type { position: absolute; inset: 0; }
+
+      /* étiquettes 3D (IBM Plex Mono) */
+      .lbl {
+        position: absolute; left: 0; top: 0; opacity: 0; white-space: nowrap;
+        font: 500 21px/1 "IBM Plex Mono", monospace; letter-spacing: 0.22em; color: var(--light);
+        text-shadow: 0 0 18px rgba(4, 3, 26, 0.85);
+        display: flex; align-items: center; gap: 14px;
+      }
+      .lbl[data-align="right"] { flex-direction: row-reverse; }
+      .lbl-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 14px var(--orange); display: block; }
+
+      /* typographie */
+      .t-heavy { font-weight: 800; letter-spacing: -0.02em; line-height: 1.04; text-transform: uppercase; }
+      .mask { overflow: hidden; padding: 0.2em 0.04em 0.06em; margin: -0.2em -0.04em -0.06em; }
+      .w { display: inline-block; white-space: nowrap; }
+      .ch { display: inline-block; will-change: transform; }
+      .ch.dot { color: var(--orange); }
+      .shadowed { text-shadow: 0 0 46px rgba(11, 7, 51, 0.95), 0 0 3px rgba(11, 7, 51, 0.7); }
+
+      .t-abs { position: absolute; white-space: nowrap; }
+      #s1-l1, #s1-l2, #s1-l3 { position: absolute; left: 0; width: 1920px; text-align: center; font-size: 84px; white-space: nowrap; }
+      #s1-l1 { top: 386px; }
+      #s1-l2 { top: 488px; }
+      #s1-l3 { top: 590px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="90" data-width="1920" data-height="1080">
+      <canvas id="gl" class="clip" data-start="0" data-duration="90" data-track-index="0" width="1920" height="1080"></canvas>
+      <div id="labels" class="layer" data-layout-allow-overflow></div>
+
+      <!-- 01 · L'ÉVEIL D'UNE VISION -->
+      <h2 id="s1-l1" class="clip t-heavy mask dotted shadowed" data-start="1.6" data-duration="3.9" data-track-index="2" data-text="s1_l1">UNE VISION.</h2>
+      <h2 id="s1-l2" class="clip t-heavy mask dotted shadowed" data-start="2.6" data-duration="2.9" data-track-index="3" data-text="s1_l2">UNE MISSION.</h2>
+      <h2 id="s1-l3" class="clip t-heavy mask dotted shadowed" data-start="3.6" data-duration="1.9" data-track-index="4" data-text="s1_l3">UN MOUVEMENT.</h2>
+    </div>
+
+    <script type="module">
+      import { buildWorld } from "./src/world.js";
+      import { buildTypography } from "./src/typography.js";
+      import cues from "./src/cues.json" with { type: "json" };
+
+      window.__hf = window.__hf || {};
+      window.__hf.buildReady = window.__hf.buildReady || {};
+      const getVars = window.__hyperframes && window.__hyperframes.getVariables;
+      const vars = (getVars && getVars()) || {};
+
+      const ready = (async () => {
+        await Promise.all([
+          document.fonts.load('800 96px "Montserrat"'),
+          document.fonts.load('300 40px "Montserrat"'),
+          document.fonts.load('700 60px "Montserrat"'),
+          document.fonts.load('500 21px "IBM Plex Mono"'),
+        ]);
+        const world = await buildWorld({
+          canvas: document.getElementById("gl"),
+          labelLayer: document.getElementById("labels"),
+          vars,
+          cues,
+        });
+        window.addEventListener("hf-seek", (e) => world.renderAt(e.detail.time));
+        world.renderAt(window.__hfThreeTime || 0);
+        const tl = buildTypography(gsap, vars, cues);
+        window.__timelines["main"] = tl;
+      })();
+      window.__hf.buildReady["zone242-world"] = ready;
+    </script>
+  </body>
+</html>

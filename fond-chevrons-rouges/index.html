@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Fond animé — chevrons rouges (boucle 10 s)</title>
+    <script src="vendor/gsap/gsap.min.js"></script>
+    <script type="importmap">
+      { "imports": { "three": "./vendor/three/build/three.module.js" } }
+    </script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #16232b; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #16232b; }
+      #gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    </style>
+  </head>
+  <body>
+    <!-- Fond pour paroles de chanson, d'après l'image fournie (assets/reference-chevrons.jpg) : chevrons rouges
+         pointés vers le centre, sur le bleu nuit de l'image. Les chevrons avancent vers le centre ; le centre reste
+         sombre pour que les paroles blanches restent lisibles. Boucle parfaite de 10 s. -->
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10" data-width="1920" data-height="1080">
+      <canvas id="gl" class="clip" data-start="0" data-duration="10" data-track-index="0" width="1920" height="1080"></canvas>
+    </div>
+
+    <script>
+      // Pas d'animation GSAP : le mouvement vient du shader, piloté par le temps HyperFrames.
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+
+    <script type="module">
+      import * as THREE from "three";
+
+      const LOOP = 10; // secondes — durée de la boucle
+      const SLOTS = 2; // crans parcourus par boucle : chaque bande prend la place de celle de devant en 5 s
+      const W = 1920, H = 1080;
+
+      // ---------- géométrie mesurée sur l'image fournie (unités : l'image de 5000 px de large, apex au centre)
+      // Les branches ne sont pas tout à fait à 45° : x = pointe − 0,9419·|y| en haut, − 1,0124·|y| en bas.
+      // d = x + pente·|y| est donc constant le long d'une branche. Pointe de chaque bande (en d), de la petite
+      // flèche du bord au dernier chevron extérieur :
+      const APEX = [96, 547, 1101, 1668, 2112, 2400];
+      // épaisseur de la bande / pas entre deux pointes, pour une bande placée au cran −1, 0, 1 … 6
+      // (fine au bord, la plus épaisse au cran 2 = le grand chevron, plus fine ensuite)
+      const FILL = [0.106, 0.106, 0.421, 0.671, 0.339, 0.459, 0.5, 0.5];
+      const SLOPE_IN = 1 / 451, SLOPE_OUT = 1 / 288; // pas avant la première et après la dernière pointe
+
+      // pentes d'une interpolation cubique monotone (Fritsch–Carlson)
+      function pchipSlopes(xs, ys, m0, mN) {
+        const n = xs.length, h = [], dl = [];
+        for (let i = 0; i < n - 1; i++) { h.push(xs[i + 1] - xs[i]); dl.push((ys[i + 1] - ys[i]) / h[i]); }
+        const m = new Array(n).fill(0);
+        m[0] = m0; m[n - 1] = mN;
+        for (let i = 1; i < n - 1; i++) {
+          if (dl[i - 1] * dl[i] <= 0) continue;
+          const w1 = 2 * h[i] + h[i - 1], w2 = h[i] + 2 * h[i - 1];
+          m[i] = (w1 + w2) / (w1 / dl[i - 1] + w2 / dl[i]);
+        }
+        return m;
+      }
+      const SLOTS_IDX = APEX.map((_, i) => i);
+      const warpSlopes = pchipSlopes(APEX, SLOTS_IDX, SLOPE_IN, SLOPE_OUT);
+      const unwarpSlopes = pchipSlopes(SLOTS_IDX, APEX, 1 / SLOPE_IN, 1 / SLOPE_OUT);
+      const fillSlopes = pchipSlopes(FILL.map((_, i) => i), FILL, 0, 0);
+
+      const vert = /* glsl */ `
+        varying vec2 vUv;
+        void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`;
+
+      const frag = /* glsl */ `
+        precision highp float;
+        varying vec2 vUv;
+        uniform float uTime, uLoop, uSlots;
+        uniform float uApex[6], uWm[6], uIm[6], uFill[8], uFm[8];
+        uniform float uSlopeIn, uSlopeOut;
+
+        const float K = 1920.0 / 5000.0;                    // pixels par unité de l'image de référence
+        const vec3 BG  = vec3(22.0, 35.0, 43.0) / 255.0;    // bleu nuit de l'image (#16232B)
+        const vec3 RED = vec3(228.0, 9.0, 30.0) / 255.0;    // rouge vif (#E4091E)
+        const vec3 HI  = vec3(255.0, 18.0, 42.0) / 255.0;   // taches claires sur les bandes
+        const vec3 SPRAY = vec3(150.0, 38.0, 52.0) / 255.0; // bombage bordeaux sur le fond
+        const float M_UP = 0.9419, M_DOWN = 1.0124;         // pentes des branches haute / basse
+
+        float herm(float t, float p0, float p1, float m0, float m1, float h) {
+          float t2 = t * t, t3 = t2 * t;
+          return (2.0 * t3 - 3.0 * t2 + 1.0) * p0 + (t3 - 2.0 * t2 + t) * h * m0
+               + (-2.0 * t3 + 3.0 * t2) * p1 + (t3 - t2) * h * m1;
+        }
+        float hermD(float t, float p0, float p1, float m0, float m1, float h) {
+          float t2 = t * t;
+          return ((6.0 * t2 - 6.0 * t) * p0 + (3.0 * t2 - 4.0 * t + 1.0) * h * m0
+                + (-6.0 * t2 + 6.0 * t) * p1 + (3.0 * t2 - 2.0 * t) * h * m1) / h;
+        }
+        // s = w(d) : position « en crans » (la bande k a sa pointe en s = k) et ds/dd
+        vec2 warp(float d) {
+          if (d <= uApex[0]) return vec2((d - uApex[0]) * uSlopeIn, uSlopeIn);
+          if (d >= uApex[5]) return vec2(5.0 + (d - uApex[5]) * uSlopeOut, uSlopeOut);
+          vec2 r = vec2(0.0, uSlopeIn);
+          for (int i = 0; i < 5; i++) {
+            float a = uApex[i], b = uApex[i + 1];
+            if (d >= a && d < b) {
+              float h = b - a, t = (d - a) / h, fi = float(i);
+              r = vec2(herm(t, fi, fi + 1.0, uWm[i], uWm[i + 1], h), hermD(t, fi, fi + 1.0, uWm[i], uWm[i + 1], h));
+            }
+          }
+          return r;
+        }
+        // d = W(s) : où se trouve la pointe d'une bande placée au cran s
+        float unwarp(float s) {
+          if (s <= 0.0) return uApex[0] + s / uSlopeIn;
+          if (s >= 5.0) return uApex[5] + (s - 5.0) / uSlopeOut;
+          float r = 0.0;
+          for (int i = 0; i < 5; i++) {
+            float fi = float(i);
+            if (s >= fi && s < fi + 1.0) r = herm(s - fi, uApex[i], uApex[i + 1], uIm[i], uIm[i + 1], 1.0);
+          }
+          return r;
+        }
+        // épaisseur relative d'une bande placée au cran s
+        float fillAt(float s) {
+          float x = clamp(s, -1.0, 6.0) + 1.0;
+          float r = uFill[7];
+          for (int i = 0; i < 7; i++) {
+            float fi = float(i);
+            if (x >= fi && x < fi + 1.0) r = herm(x - fi, uFill[i], uFill[i + 1], uFm[i], uFm[i + 1], 1.0);
+          }
+          return r;
+        }
+        // opacité du rouge sur une bande placée au cran sig, à l'abscisse x
+        float bandAlpha(float sig, float x) {
+          float a = max(unwarp(sig), 1.0);
+          // chevrons intérieurs : rouge plein qui s'éclaire vers la pointe
+          float inner = 1.0 - 0.51 * pow(1.0 - clamp(x / a, 0.0, 1.0), 1.6);
+          inner *= 1.0 - smoothstep(1150.0, 1550.0, x);
+          // chevrons extérieurs : rayures unies qui s'éteignent vers le centre (mesuré : A·(1 − x/1500)²)
+          // éclat mesuré des rayures 4, 5, 6 (0,79 · 0,97 · 0,72), raccordé en douceur d'un cran à l'autre
+          float A = 0.79 + 0.18 * smoothstep(3.0, 4.0, sig) - 0.25 * smoothstep(4.0, 5.0, sig) - 0.22 * smoothstep(5.0, 6.0, sig);
+          float fo = max(1.0 - x / 1500.0, 0.0);
+          return mix(inner, A * fo * fo, smoothstep(2.0, 3.0, sig));
+        }
+        // couverture anticrénelée de l'intervalle [lo, hi] (fw : largeur d'un pixel dans la même unité)
+        float cover(float q, float lo, float hi, float fw) {
+          return clamp((q - lo) / fw + 0.5, 0.0, 1.0) * clamp((hi - q) / fw + 0.5, 0.0, 1.0);
+        }
+
+        // hachages sans sinus (Dave Hoskins, licence MIT)
+        vec4 hash44(vec4 p4) {
+          p4 = fract(p4 * vec4(0.1031, 0.1030, 0.0973, 0.1099));
+          p4 += dot(p4, p4.wzxy + 33.33);
+          return fract((p4.xxyz + p4.yzzw) * p4.zywx);
+        }
+        float hash12(vec2 p) {
+          vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+          p3 += dot(p3, p3.yzx + 33.33);
+          return fract((p3.x + p3.y) * p3.z);
+        }
+        // mouchetis : une tache au plus par cellule d'une grille posée sur les bandes (cran mobile × long de la
+        // branche), périodique sur uSlots crans pour que la boucle raccorde ; taches rondes à l'écran.
+        // pPerp : taille d'une cellule (en px) perpendiculairement aux bandes ; uE : coordonnée le long de la branche (px)
+        vec2 dots(float pp, float uE, float pxPerSlot, float cp, float cu, float np, float density, float seed) {
+          vec2 g = vec2(pp / cp, uE / cu);
+          vec2 gi = floor(g);
+          float prob = clamp(density * cp * pxPerSlot * cu, 0.0, 0.95);  // taches par px² × aire de la cellule
+          float best = 0.0, tone = 0.0;
+          for (int j = -1; j <= 1; j++) {
+            for (int i = -1; i <= 1; i++) {
+              vec2 c = gi + vec2(float(i), float(j));
+              vec4 h = hash44(vec4(mod(c.x, np), c.y, seed, seed * 1.618 + 0.5));
+              if (h.w < prob) {                                 // une tache naît ou s'efface en fondu, jamais d'un coup
+                vec2 ctr = c + 0.12 + 0.76 * h.xy;
+                float dp = (ctr.x - g.x) * cp * pxPerSlot;      // écart perpendiculaire aux bandes (px)
+                float du = (ctr.y - g.y) * cu;                  // écart le long de la branche (px)
+                float dist = sqrt(dp * dp + du * du);
+                float r = 0.8 + 2.8 * pow(h.z, 2.4);            // rayons mesurés : médiane ≈ 1,3 px, p95 ≈ 3,3 px
+                float cov = clamp(r - dist + 0.5, 0.0, 1.0) * clamp((prob - h.w) / 0.06, 0.0, 1.0);
+                if (cov > best) { best = cov; tone = h.y; }
+              }
+            }
+          }
+          return vec2(best, tone);
+        }
+
+        void main() {
+          vec2 px = vec2(vUv.x * 1920.0, (1.0 - vUv.y) * 1080.0);   // pixels, origine en haut à gauche
+          float side = step(960.0, px.x);                           // 0 : chevrons de gauche, 1 : de droite (miroir)
+          float xr = px.x / K;
+          float x = mix(xr, 5000.0 - xr, side);                     // distance au bord, en unités de l'image
+          float yr = (px.y - 540.0) / K;
+          float ay = abs(yr);
+          float m = yr < 0.0 ? M_UP : M_DOWN;
+          float nrm = sqrt(1.0 + m * m);
+          float d = x + m * ay;                                      // constant le long d'une branche
+          float uE = (ay - m * x) / nrm * K;                         // position le long de la branche (px)
+          vec2 wd = warp(d);
+          float s = wd.x, ws = max(wd.y, 1e-6);
+          float phi = uSlots * uTime / uLoop;                        // avance, en crans
+          float pp = s - phi;                                        // coordonnée qui suit les bandes
+          float sig = ceil(pp) + phi;                                // cran de la bande dont la pointe est juste devant
+          float q = sig - s;                                         // 0 = sur sa pointe … 1 = pointe de la précédente
+          float fw = max(fwidth(s), 1e-6);
+
+          float f0 = fillAt(sig), f1 = fillAt(sig - 1.0);
+          float c0 = cover(q, 0.0, f0, fw);
+          float c1 = cover(q - 1.0, 0.0, f1, fw);                    // bord anticrénelé de la bande précédente
+          float a0 = bandAlpha(sig, x) * c0;
+          float a1 = bandAlpha(sig - 1.0, x) * c1;
+          float covBand = max(c0, c1);
+          // fine rayure pâle juste derrière le grand chevron (mesurée : 0,5·(1 − x/1200)²)
+          float bf = smoothstep(2.4, 2.9, sig) * (1.0 - smoothstep(3.1, 3.6, sig));
+          float ff = max(1.0 - x / 1200.0, 0.0);
+          float aFaint = 0.5 * bf * ff * ff * cover(q, 0.635, 0.725, fw);
+          float alpha = max(max(a0, a1), aFaint);
+          vec3 col = mix(BG, RED, alpha);
+
+          // mouchetis (densités mesurées sur l'image, en taches par px²) : taches claires sur les bandes ;
+          // bombage bordeaux autour, plus dense près des bandes et du bord, absent au centre
+          float pxPerSlot = K / (ws * nrm);                          // px d'écran par cran, perpendiculairement
+          float gapPx = (q > f0 ? min(q - f0, 1.0 - q) : 0.0) * pxPerSlot;
+          float fx = pow(clamp(1.0 - x / 1300.0, 0.0, 1.0), 1.1);
+          float dDark = 0.0060 * fx * (0.55 + 0.9 * exp(-gapPx / 25.0));
+          float dBand = 0.0085 * (1.0 - 0.75 * smoothstep(500.0, 1250.0, x)) * smoothstep(0.01, 0.06, alpha);
+          float dens = mix(dDark, dBand, covBand);
+          float seed = 7.0 + 13.0 * side + 29.0 * step(0.0, yr);
+          vec2 s1 = dots(pp, uE, pxPerSlot, 2.0 / 28.0, 9.0, 28.0, dens * 0.5, seed);
+          vec2 s2 = dots(pp, uE, pxPerSlot, 2.0 / 20.0, 13.0, 20.0, dens * 0.5, seed + 3.0);
+          float spot = max(s1.x, s2.x);
+          float tone = s1.x > s2.x ? s1.y : s2.y;
+          float wOn = covBand * smoothstep(0.25, 0.7, alpha);        // éclats clairs : seulement sur le rouge franc
+          col = mix(col, HI, spot * wOn * 0.35 * (0.6 + 0.8 * tone));
+          col = mix(col, SPRAY, spot * (1.0 - wOn) * (0.30 + 0.18 * tone) * (0.75 + 0.25 * fx));
+
+          col += (hash12(px + 0.5) - 0.5) / 255.0;                   // tramage fixe contre les aplats en escalier
+          gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
+        }`;
+
+      window.__hf = window.__hf || {};
+      window.__hf.buildReady = window.__hf.buildReady || {};
+      const ready = (async () => {
+        const canvas = document.getElementById("gl");
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, preserveDrawingBuffer: true });
+        renderer.setPixelRatio(1);
+        renderer.setSize(W, H, false);
+        const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        const mat = new THREE.ShaderMaterial({
+          uniforms: {
+            uTime: { value: 0 }, uLoop: { value: LOOP }, uSlots: { value: SLOTS },
+            uApex: { value: APEX }, uWm: { value: warpSlopes }, uIm: { value: unwarpSlopes },
+            uFill: { value: FILL }, uFm: { value: fillSlopes },
+            uSlopeIn: { value: SLOPE_IN }, uSlopeOut: { value: SLOPE_OUT },
+          },
+          vertexShader: vert, fragmentShader: frag, depthTest: false, depthWrite: false,
+        });
+        const scene = new THREE.Scene();
+        const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat);
+        quad.frustumCulled = false;
+        scene.add(quad);
+
+        const renderAt = (t) => {
+          mat.uniforms.uTime.value = t;
+          renderer.render(scene, cam);
+        };
+        window.addEventListener("hf-seek", (e) => renderAt(e.detail.time));
+        renderAt(window.__hfThreeTime || 0);
+      })();
+      window.__hf.buildReady["fond-chevrons"] = ready;
+    </script>
+  </body>
+</html>
